@@ -35,20 +35,15 @@
 <body>
 	<script src="js/script.js"></script>
 
-	<!--add portrait in left-side siderbar-->
-	<div id="left-side" class="col-sm-3 sidebar hidden-xs">
-		<header class="sidebar-header" role="banner">
-			<a href="javascript:void(0)">
-				<img src="/images/portrait.jpg" class="image-circle" style="width:100px" />
-			</a>
-		</header>
-	</div>
-
-	<div id="bio" class="text-center">
-		Fighting to be god.
-	</div>
-
 	<nav class="navbar-default visible-xs">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="/">首页</a></li>
@@ -58,34 +53,46 @@
 		</div>
 	</nav>
 
-	<div class="navigator text-center">
-		<a href="/index.html" title="首页" class="fa fa-home"></a>
-		<a href="/category.html" title="分类" class="fa fa-folder-open"></a>
-		<a href="/tag.html" title="标签" class="fa fa-tag"></a>
-	</div>
 
-	<div class="series-block text-center">
-		<p>
-			<a href="/ssgithubPage.html">Github建站过程</a>
-		</p>
-	</div>
+	<!--add portrait in left-side siderbar-->
+	<div id="left-side" class="col-sm-3 sidebar hidden-xs">
+		<header class="sidebar-header" role="banner">
+			<a href="javascript:void(0)">
+				<img src="/images/portrait.jpg" class="image-circle" style="width:100px" />
+			</a>
+		
+			<h3 class="title">
+				<a href="/"></a>
+			</h3>
+		</header>
 
-	<nav class="navbar-default visible-xs">
-		<div class="navbar-header">
+		<div id="bio" class="text-center">
+			Fighting to be god.
 		</div>
 
-		<div class="collapse navbar-collapse">
+		<div class="navigator text-center">
+			<a href="/index.html" title="首页" class="fa fa-home"></a>
+			<a href="/category.html" title="分类" class="fa fa-folder-open"></a>
+			<a href="/tag.html" title="标签" class="fa fa-tag"></a>
 		</div>
-	</nav>
 
-	<div class="nav left">
+		<div class="series-block text-center">
+			<p>
+				<a href="/ssgithubPage.html">Github建站过程</a>
+			</p>
+		</div>
 
+
+		<div class="foot text-center">
+			<p>Powered by</p>
+			<p>
+				<a href="https://github.com/">Github</a>
+				<a href="http://jekyllrb.com/">jekyll</a>
+				<a href="http://www.bootcss.com/">bootstrap</a>
+			</p>
+		</div>
 	</div>
 
-	<div class="body center">
-	</div>
-
-	<div class="nav right">
-	</div>
+	
 </body>
 </html>
