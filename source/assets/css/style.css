@@ -1,4 +1,11 @@
-@import url(//fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);
+/*@import url(//fonts.googleapis.com/css?family=Ubuntu:500&subset=latin,latin-ext);*/
+html{
+	width: 966px;
+	background-color: #f9f9f9;
+	margin:0px auto; //整体居中
+	/*overflow:scroll;
+	overflow-x:hidden;*/
+}
 
 body{
 	color: #2c3e50;
