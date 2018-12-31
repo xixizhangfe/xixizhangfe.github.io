@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="前两天有人给建议，让学学react，周末时间学习了一下，并做了一些demo。初学者可以参考我的github。在学习以及做demo的过程，发现其实react和vue有很多相像的地方，于是想对比一下这两个框架。 1、设计思想react和vue设计思想是类似的，都是组件化开发（component），双向数据绑定，props参数传递，组件通信，state状态管理器，lifecircle生命周期等。 2、代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue还是react">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/vue还是react/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="前两天有人给建议，让学学react，周末时间学习了一下，并做了一些demo。初学者可以参考我的github。在学习以及做demo的过程，发现其实react和vue有很多相像的地方，于是想对比一下这两个框架。 1、设计思想react和vue设计思想是类似的，都是组件化开发（component），双向数据绑定，props参数传递，组件通信，state状态管理器，lifecircle生命周期等。 2、代">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue还是react">
+<meta name="twitter:description" content="前两天有人给建议，让学学react，周末时间学习了一下，并做了一些demo。初学者可以参考我的github。在学习以及做demo的过程，发现其实react和vue有很多相像的地方，于是想对比一下这两个框架。 1、设计思想react和vue设计思想是类似的，都是组件化开发（component），双向数据绑定，props参数传递，组件通信，state状态管理器，lifecircle生命周期等。 2、代">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/vue还是react/">
+
+
+
+
+
+  <title>vue还是react | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/vue还是react/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue还是react</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T09:04:06+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前两天有人给建议，让学学react，周末时间学习了一下，并做了一些demo。初学者可以参考<a href="https://github.com/xixizhangfe" target="_blank" rel="noopener">我的github</a>。在学习以及做demo的过程，发现其实react和vue有很多相像的地方，于是想对比一下这两个框架。</p>
+<h3 id="1、设计思想"><a href="#1、设计思想" class="headerlink" title="1、设计思想"></a>1、设计思想</h3><p>react和vue设计思想是类似的，都是组件化开发（component），双向数据绑定，props参数传递，组件通信，state状态管理器，lifecircle生命周期等。</p>
+<h3 id="2、代码结构"><a href="#2、代码结构" class="headerlink" title="2、代码结构"></a>2、代码结构</h3><p>react和vue代码结构有很大不同，vue采用模板，需要学习整套模板指令（当然也不难）；react使用的JSX，不需要学习模板指令，只需要会HTML和js就行了。</p>
+<p>从这个角度说，<strong>vue的模板结构</strong></p>
+<p>优点：</p>
+<ul>
+<li>更容易理解</li>
+<li>功能和布局分开</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要学习模板语法（不过这也很简单啦）</li>
+</ul>
+<p><strong>react的JSX：</strong></p>
+<p>优点：</p>
+<ul>
+<li>不需要学习指令，只需要会HTML和js</li>
+<li>渲染函数更易于调试和测试（vue也提供了使用模板或者渲染函数的选项）</li>
+<li>安全（这个待找资料）</li>
+</ul>
+<p>缺点:</p>
+<ul>
+<li>对新手而言不如vue容易上手</li>
+</ul>
+<h3 id="3、状态（state）"><a href="#3、状态（state）" class="headerlink" title="3、状态（state）"></a>3、状态（state）</h3><ul>
+<li>react里的数据是不可变的（immutable）</li>
+</ul>
+<p>必须使用setState方法</p>
+<p>why？</p>
+<p>react是通过比较当前状态和前一个状态的区别来决定何时以及如何重新渲染DOM的内容，因此需要使用不可变得状态。</p>
+<ul>
+<li>vue中数据是可变的（mutated）</li>
+</ul>
+<p>vue是如何对状态进行管理的？</p>
+<p>当向状态中添加一个新对象时，vue将遍历其中的所有属性，并且将他们装换为getter，setter方法。然后vue的响应系统开始对该状态的跟踪弄，当该状态的内容发生变化时，就会自动重新渲染DOM。</p>
+<p>不过vue的响应系统还是有些坑的，比如它无法检测属性的添加和删除，以及某些数组的更改，这时候就要用Vue API中的类似于React的set方法的措施来解决。</p>
+<h3 id="4、项目规模"><a href="#4、项目规模" class="headerlink" title="4、项目规模"></a>4、项目规模</h3><ul>
+<li>如果你的应用需要尽可能的小和快，请使用vue</li>
+</ul>
+<p>vue的渲染系统比react的更快。react压缩版本体积是vue的两倍大，但不能带来双倍的功能。</p>
+<ul>
+<li>如果你计划构建一个大型应用程序，请使用react（大型项目需要透明度和可测试性）</li>
+</ul>
+<p>vue的模板容易出现难以注意到的运行时错误，同时也不容易测试，重构和分解。</p>
+<p>相比之下，js模板可以组织成经过良好分解，且使用DRY（don’t repeat yourself-避免重复代码）原则的代码的组件，因而具有更强的可重用性和可测试性。</p>
+<p>vue也有组件系统和渲染函数，但是react渲染系统可配置型更强，并包含如shallow rendering这样的特性，可结合react的测试工具一起使用，从而大大提高代码的可测试性以及可维护性。</p>
+<h3 id="5、适用于web端和原生App的框架"><a href="#5、适用于web端和原生App的框架" class="headerlink" title="5、适用于web端和原生App的框架"></a>5、适用于web端和原生App的框架</h3><p>React Native适用于移动端开发，所以react更适合同时兼顾web端和原生App的项目。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/react的5个demo/" rel="next" title="react的5个demo">
+                <i class="fa fa-chevron-left"></i> react的5个demo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/vue踩坑之路/" rel="prev" title="vue踩坑之路">
+                vue踩坑之路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、设计思想"><span class="nav-number">1.</span> <span class="nav-text">1、设计思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、代码结构"><span class="nav-number">2.</span> <span class="nav-text">2、代码结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、状态（state）"><span class="nav-number">3.</span> <span class="nav-text">3、状态（state）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、项目规模"><span class="nav-number">4.</span> <span class="nav-text">4、项目规模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、适用于web端和原生App的框架"><span class="nav-number">5.</span> <span class="nav-text">5、适用于web端和原生App的框架</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

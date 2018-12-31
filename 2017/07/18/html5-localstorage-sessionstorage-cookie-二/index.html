@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="html5, localStorage, 前端,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="document对象的cookie属性 cookie是一小段文本信息，伴随在http请求里。 它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。 它是浏览器提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它 cookie是存于用户硬盘的一个">
+<meta name="keywords" content="html5, localStorage, 前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5 localstorage&#x2F;sessionstorage&#x2F;cookie (cookie篇)">
+<meta property="og:url" content="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-二/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="document对象的cookie属性 cookie是一小段文本信息，伴随在http请求里。 它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。 它是浏览器提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它 cookie是存于用户硬盘的一个">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/5.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/6.png">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.850Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html5 localstorage&#x2F;sessionstorage&#x2F;cookie (cookie篇)">
+<meta name="twitter:description" content="document对象的cookie属性 cookie是一小段文本信息，伴随在http请求里。 它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。 它是浏览器提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它 cookie是存于用户硬盘的一个">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-二/">
+
+
+
+
+
+  <title>html5 localstorage/sessionstorage/cookie (cookie篇) | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-二/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">html5 localstorage/sessionstorage/cookie (cookie篇)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T09:44:15+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="document对象的cookie属性"><a href="#document对象的cookie属性" class="headerlink" title="document对象的cookie属性"></a>document对象的cookie属性</h2><ul>
+<li>cookie是一小段文本信息，伴随在http请求里。</li>
+<li>它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。</li>
+<li>它是<strong>浏览器</strong>提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它</li>
+<li>cookie是存于用户硬盘的一个文件，这个文件通常对应于一个域名，也就是说，<strong>cookie可以跨越同一域名下的多个网页，但不能跨越多个域名调用</strong>。</li>
+</ul>
+<h2 id="cookie的根本用途"><a href="#cookie的根本用途" class="headerlink" title="cookie的根本用途"></a>cookie的根本用途</h2><p>cookie将信息存储于用于硬盘，因此可以作为全局变量，这是它最大的一个优点。</p>
+<p><strong>它最根本的用途是能够帮助web站点保存有关访问者的信息</strong>。</p>
+<h3 id="cookie的几种小用途"><a href="#cookie的几种小用途" class="headerlink" title="cookie的几种小用途"></a>cookie的几种小用途</h3><ul>
+<li>保存用户登录信息：这是最常用的，可以通过cookie保存用户的id</li>
+<li>创建购物车：把已选商品保存在cookie中，可以实现不同页面之间数据的同步（<strong>同一域名下可以共享cookie</strong>），同时在提交订单的时候又会把这些cookie传到后台。</li>
+<li>跟踪用户行为：通过cookie记录用户的偏好信息，然后向用户推荐个性化推广信息。<strong>这是可以禁用的，也是cookie的缺点之一</strong>。</li>
+</ul>
+<h2 id="cookie是如何工作的？"><a href="#cookie是如何工作的？" class="headerlink" title="cookie是如何工作的？"></a>cookie是如何工作的？</h2><p>cookie是存在于用户硬盘中的，用户每次访问站点时，浏览器会根据URL在本地硬盘上查找与该URL有关的cookie，如果该cookie存在，就会将该cookie填充进request header里的cookie字段，与http请求一起发送到该站点。</p>
+<h2 id="cookie的格式和常见的属性"><a href="#cookie的格式和常见的属性" class="headerlink" title="cookie的格式和常见的属性"></a>cookie的格式和常见的属性</h2><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/4.png" alt=""><br>字符串规律：</p>
+<ul>
+<li>每个cookie都是键值对的形式</li>
+<li>名称和值都必须是<strong>URL编码</strong>的</li>
+<li>两对cookie之间用分号和空格隔开</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/5.png" alt=""><br>name、value不必多说，自然是cookie的名和值。</p>
+<p>domain，path，expires/max-age，size，http，secure等均是cookie的属性</p>
+<p>我们先手动添加几个cookie，代码如下：</p>
+<pre><code>document.cookie = &quot;test1=myCookie1;&quot;
+document.cookie = &quot;test2=myCookie2; domain=.google.com.hk; path=/webhp&quot;
+document.cookie = &quot;test3=myCookie3; domain=.google.com.hk; expires=Sat, 04 Nov 2017 16:00:00 GMT; secure&quot;
+document.cookie = &quot;test4=myCookie4; domain=.google.com.hk; max-age=10800;&quot;
+</code></pre><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/6.png" alt=""></p>
+<h4 id="domain和path"><a href="#domain和path" class="headerlink" title="domain和path"></a>domain和path</h4><p>这两个共同决定了cookie能被哪些页面共享。</p>
+<p>如果未设置domain和path，则默认为设置cookie的那个域，如test1所示；</p>
+<p>domain可以包含子域，也可以不包含。domain选项中，可以是”.google.com.hk”(不包含子域,表示它对google.com.hk的所有子域都有效)，也可以是”<a href="http://www.google.com.hk&quot;(包含子域)。" target="_blank" rel="noopener">www.google.com.hk&quot;(包含子域)。</a></p>
+<p>path用于控制cookie发送的指定域的路径，默认为”/“，表示指定域下的所有路径都能访问，它是在域名的基础下，指定可以访问的路径。例如cookie设置为”domain=.google.com.hk; path=/webhp”，那么只有”.google.com.hk/webhp”及”/webhp”下的任一子目录如”/webhp/aaa”或”/webhp/bbb”会发送cookie信息，而”.google.com.hk”就不会发送，即使它们来自同一个域。</p>
+<h4 id="expries-max-age失效时间"><a href="#expries-max-age失效时间" class="headerlink" title="expries/max-age失效时间"></a>expries/max-age失效时间</h4><p>expries 和 max-age 是用来决定cookie的生命周期的，也就是cookie何时会被删除。</p>
+<p>expries 表示的是失效时间，准确讲是「时刻」，max-age表示的是生效的「时间段」，以「秒」为单位。</p>
+<p>若 max-age 为正值，则表示 cookie 会在 max-age 秒后失效。如例四中设置”max-age=10800;”，也就是生效时间是3个小时，那么 cookie 将在三小时后失效。</p>
+<p>若 max-age 为负值，则cookie将在浏览器会话结束后失效，即 session，max-age的默认值为-1。若 max-age 为0，则表示删除cookie。</p>
+<h4 id="secure"><a href="#secure" class="headerlink" title="secure"></a>secure</h4><p>默认情况为空，不指定 secure 选项，即不论是 http 请求还是 https 请求，均会发送cookie。</p>
+<p>是 cookie 的安全标志，是cookie中唯一的一个非键值对儿的部分。指定后，cookie只有在使用SSL连接（如HTTPS请求或其他安全协议请求的）时才会发送到服务器。</p>
+<h4 id="httponly（即http）"><a href="#httponly（即http）" class="headerlink" title="httponly（即http）"></a>httponly（即http）</h4><p>httponly属性是用来限制客户端脚本对cookie的访问。将 cookie 设置成 httponly 可以减轻xss（跨站脚本攻击 Cross Site Scripting）攻击的危害，</p>
+<p>防止cookie被窃取，以增强cookie的安全性。（由于cookie中可能存放身份验证信息，放在cookie中容易泄露）</p>
+<p>默认情况是不指定 httponly，即可以通过 js 去访问。</p>
+<h4 id="如何利用以上属性设置cookie？"><a href="#如何利用以上属性设置cookie？" class="headerlink" title="如何利用以上属性设置cookie？"></a>如何利用以上属性设置cookie？</h4><ul>
+<li><p>服务端设置<br>服务器通过发送一个名为Set-cookie的HTTP头来创建一个cookie，作为Response Headers的一部分，每个Set-cookie表示一个cookie（如果想设置多个cookie，需要些多个Set-cookie），每个属性也是以键值对的形式（secure除外），属性间以分号加空格隔开。格式如下(只有cookie的名字和值是必须的):</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-cookie: name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端设置<br>客户端设置cookie的格式和Set-cookie头中使用的格式一样。如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &quot;name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]&quot;</span><br></pre></td></tr></table></figure>
+<p>  若想要添加多个cookie，只能重复执行 document.cookie（如上）。这可能和平时写的 js 不太一样，一般重复赋值是会覆盖的，</p>
+<p>  但对于cookie，重复执行 document.cookie 并「不覆盖」，而是「添加」（针对「不同名」的）。</p>
+</li>
+</ul>
+<h4 id="cookie的缺点"><a href="#cookie的缺点" class="headerlink" title="cookie的缺点"></a>cookie的缺点</h4><ul>
+<li>安全性： 由于cookie在http中是明文传递的，其中包含的数据都可以被他人访问，可能会被篡改、盗用</li>
+<li>大小限制：cookie的大小限制在4kb左右，不适合大量存储</li>
+<li>增加流量：cookie每次请求都会被自动添加到Request Header中，无形中增加了流量。cookie信息越大，对服务器请求的时间越长。</li>
+</ul>
+<h2 id="cookie存储在哪里"><a href="#cookie存储在哪里" class="headerlink" title="cookie存储在哪里"></a>cookie存储在哪里</h2><p>面试被问到，一脸懵….</p>
+<p>cookie失效分为3种：<br>1、设置过期时间失效（只要设置了过期时间cookie就会存储在硬盘里面）<br>2、当会话结束时失效，即关闭浏览器窗口（如果没有设置expires，cookie就会存储在内存里面）<br>3、手动删除cookie失效</p>
+<p>测试1：<br>打开浏览器，进入控制台，输入：</p>
+<pre><code>document.cookie=&quot;test=myCookie1;&quot;
+</code></pre><p>然后打开Application，找到cookie，此时就能看到我们设置的test1了，<br>这时候我们关闭这个网页（注意不是关闭浏览器），再重新打开刚才那个窗口，发现test1还在；<br>如果关闭浏览器，再重新打开刚才那个窗口，发现此时test1已经不见了。</p>
+<p>测试2：<br>打开浏览器，进入控制台，输入：</p>
+<pre><code>document.cookie=&quot;test3=myCookie3; expires=Sat, 04 Nov 2017 16:00:00 GMT;&quot;
+</code></pre><p>关闭浏览器，再重新打开刚才那个窗口，发现此时test3还在。</p>
+<p>转载自：<a href="http://www.cnblogs.com/cxying93/p/6107459.html" target="_blank" rel="noopener">http://www.cnblogs.com/cxying93/p/6107459.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/html5-localStorage-前端/" rel="tag"># html5, localStorage, 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/18/html5-localstorage/" rel="next" title="html5 localstorage/sessionstorage/cookie （一）">
+                <i class="fa fa-chevron-left"></i> html5 localstorage/sessionstorage/cookie （一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/" rel="prev" title="html5 localstorage/sessionstorage/cookie (local storage篇)">
+                html5 localstorage/sessionstorage/cookie (local storage篇) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#document对象的cookie属性"><span class="nav-number">1.</span> <span class="nav-text">document对象的cookie属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie的根本用途"><span class="nav-number">2.</span> <span class="nav-text">cookie的根本用途</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie的几种小用途"><span class="nav-number">2.1.</span> <span class="nav-text">cookie的几种小用途</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie是如何工作的？"><span class="nav-number">3.</span> <span class="nav-text">cookie是如何工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie的格式和常见的属性"><span class="nav-number">4.</span> <span class="nav-text">cookie的格式和常见的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#domain和path"><span class="nav-number">4.0.1.</span> <span class="nav-text">domain和path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#expries-max-age失效时间"><span class="nav-number">4.0.2.</span> <span class="nav-text">expries/max-age失效时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#secure"><span class="nav-number">4.0.3.</span> <span class="nav-text">secure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#httponly（即http）"><span class="nav-number">4.0.4.</span> <span class="nav-text">httponly（即http）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何利用以上属性设置cookie？"><span class="nav-number">4.0.5.</span> <span class="nav-text">如何利用以上属性设置cookie？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie的缺点"><span class="nav-number">4.0.6.</span> <span class="nav-text">cookie的缺点</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie存储在哪里"><span class="nav-number">5.</span> <span class="nav-text">cookie存储在哪里</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

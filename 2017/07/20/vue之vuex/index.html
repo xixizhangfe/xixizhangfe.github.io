@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Vuex是一种状态管理模式，采用集中式存储管理应用的所有组件的状态。 Vuex的核心——storestore的特点store包含应用中大部分的状态（state）。 Vuex和单纯的全局对象有以下两点不同： 1. Vuex的状态存储是响应式的。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。 2. 不能直接改变store中的状态。唯一途径就是显示提交m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue之vuex">
+<meta property="og:url" content="http://yoursite.com/2017/07/20/vue之vuex/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="Vuex是一种状态管理模式，采用集中式存储管理应用的所有组件的状态。 Vuex的核心——storestore的特点store包含应用中大部分的状态（state）。 Vuex和单纯的全局对象有以下两点不同： 1. Vuex的状态存储是响应式的。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。 2. 不能直接改变store中的状态。唯一途径就是显示提交m">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue之vuex">
+<meta name="twitter:description" content="Vuex是一种状态管理模式，采用集中式存储管理应用的所有组件的状态。 Vuex的核心——storestore的特点store包含应用中大部分的状态（state）。 Vuex和单纯的全局对象有以下两点不同： 1. Vuex的状态存储是响应式的。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。 2. 不能直接改变store中的状态。唯一途径就是显示提交m">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/20/vue之vuex/">
+
+
+
+
+
+  <title>vue之vuex | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/vue之vuex/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue之vuex</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T11:01:35+08:00">
+                2017-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vuex是一种<strong>状态管理模式</strong>，采用集中式存储管理应用的所有组件的状态。</p>
+<h2 id="Vuex的核心——store"><a href="#Vuex的核心——store" class="headerlink" title="Vuex的核心——store"></a>Vuex的核心——store</h2><h3 id="store的特点"><a href="#store的特点" class="headerlink" title="store的特点"></a>store的特点</h3><p>store包含应用中大部分的状态（state）。</p>
+<p>Vuex和单纯的全局对象有以下两点不同：</p>
+<p>1. <strong>Vuex的状态存储是响应式的</strong>。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。</p>
+<p>2. <strong>不能直接改变store中的状态</strong>。唯一途径就是显示提交mutations（commit mutations）。这样设计的目的是：我们能跟踪每一个状态的变化。</p>
+<h3 id="store的创建"><a href="#store的创建" class="headerlink" title="store的创建"></a>store的创建</h3><p>store创建时包含：</p>
+<p>state, getters, mutations, actions, modules</p>
+<p>这里给一个例子，在项目里新建store.js，写如下代码</p>
+<pre><code>import Vue from &apos;vue&apos;
+import Vuex from &apos;vuex&apos;
+
+Vue.use(Vuex)
+
+// root state object.
+// each Vuex instance is just a single state tree.
+const state = {
+  count: 0
+}
+
+// mutations are operations that actually mutates the state.
+// each mutation handler gets the entire state tree as the
+// first argument, followed by additional payload arguments.
+// mutations must be synchronous and can be recorded by plugins
+// for debugging purposes.
+const mutations = {
+  increment (state) {
+    state.count++
+  },
+  decrement (state) {
+    state.count--
+  }
+}
+
+// actions are functions that causes side effects and can involve
+// asynchronous operations.
+const actions = {
+  increment: ({ commit }) =&gt; commit(&apos;increment&apos;),
+  decrement: ({ commit }) =&gt; commit(&apos;decrement&apos;),
+  incrementIfOdd ({ commit, state }) {
+    if ((state.count + 1) % 2 === 0) {
+      commit(&apos;increment&apos;)
+    }
+  },
+  incrementAsync ({ commit }) {
+    return new Promise((resolve, reject) =&gt; {
+      setTimeout(() =&gt; {
+        commit(&apos;increment&apos;)
+        resolve()
+      }, 1000)
+    })
+  }
+}
+
+// getters are functions
+const getters = {
+  evenOrOdd: state =&gt; state.count % 2 === 0 ? &apos;even&apos; : &apos;odd&apos;
+}
+
+// A Vuex instance is created by combining the state, mutations, actions,
+// and getters.
+export default new Vuex.Store({
+  state,
+  getters,
+  actions,
+  mutations
+})
+</code></pre><h3 id="getters创建"><a href="#getters创建" class="headerlink" title="getters创建"></a>getters创建</h3><p>getters会暴露为store.getters对象。</p>
+<p>getters传入的参数：</p>
+<p>第一个是state对象，第二个参数（可选），可以是其他getters，比如</p>
+<pre><code>getters: {
+      // ...
+     doneTodosCount: (state, getters) =&gt; {
+        return getters.doneTodos.length
+      }
+}
+</code></pre><h3 id="store里状态的使用"><a href="#store里状态的使用" class="headerlink" title="store里状态的使用"></a>store里状态的使用</h3><p>有了store，那么怎么在组件中使用呢？</p>
+<p>下面给个例子，新建count.vue文件，</p>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    Clicked: {{ $store.state.count }} times, count is {{ evenOrOdd }}.
+    &lt;button @click=&quot;increment&quot;&gt;+&lt;/button&gt;
+    &lt;button @click=&quot;decrement&quot;&gt;-&lt;/button&gt;
+    &lt;button @click=&quot;incrementIfOdd&quot;&gt;Increment if odd&lt;/button&gt;
+    &lt;button @click=&quot;incrementAsync&quot;&gt;Increment async&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { mapGetters, mapActions } from &apos;vuex&apos;
+
+export default {
+  // computed: mapGetters([
+  //   &apos;evenOrOdd&apos;
+  // ]),
+  computed: {
+    // 使用getters的方式
+    evenOrOdd () {
+      return this.$store.getters.evenOrOdd;
+    }
+  },
+  methods: mapActions([
+    &apos;increment&apos;,
+    &apos;decrement&apos;,
+    &apos;incrementIfOdd&apos;,
+    &apos;incrementAsync&apos;
+  ])
+}
+&lt;/script&gt;
+</code></pre><p>下面开始详细介绍  </p>
+<h4 id="先说怎么获取state"><a href="#先说怎么获取state" class="headerlink" title="先说怎么获取state"></a>先说怎么获取state</h4><p>一个组件从store中读取状态的最简单的办法是在计算属性中返回某个状态：</p>
+<p>比如上面代码中，可以在computed里加上：</p>
+<pre><code>count() {
+    return this.$store.state.count;
+}
+</code></pre><p>当一个组件需要获取多个状态时，可以使用mapState辅助函数帮助我们生成计算属性。</p>
+<p>可以把刚才写的count(){}函数替换为：</p>
+<pre><code>mapState({
+    count: state =&gt; state.count,
+    countAlias: &apos;count&apos;,
+    countPlusLocalState (state) {
+          return state.count + this.localCount
+    }
+})
+</code></pre><p>当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。</p>
+<pre><code>computed: mapState([
+      // 映射 this.count 为 store.state.count
+      &apos;count&apos;
+])
+</code></pre><h4 id="再说怎么获getters"><a href="#再说怎么获getters" class="headerlink" title="再说怎么获getters"></a>再说怎么获getters</h4><p>也是在computed属性里写，如同count.vue里所写，可以用普通函数的形式，也可以用mapGetters.    </p>
+<p>mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性，可以使用对象展开运算符将getters混入computed对象中：</p>
+<pre><code>computed: {
+      // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+          &apos;doneTodosCount&apos;,
+          &apos;anotherGetter&apos;,
+          // ...
+    ])
+  }
+</code></pre><h3 id="mutations和actions区别"><a href="#mutations和actions区别" class="headerlink" title="mutations和actions区别"></a>mutations和actions区别</h3><p><strong>mutations只支持同步函数。</strong></p>
+<p>每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，devtools 不知道什么时候回调函数实际上被调用 —— 实质上任何在回调函数中进行的的状态的改变都是不可追踪的。</p>
+<p>Action 类似于 mutation，不同在于：</p>
+<ul>
+<li>Action 提交的是 mutation，而不是直接变更状态。</li>
+<li>Action 可以包含任意异步操作。</li>
+</ul>
+<p>action里面的方法可以通过store.dispatch(‘increment’)触发。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/19/css浮动float属性/" rel="next" title="css浮动float属性">
+                <i class="fa fa-chevron-left"></i> css浮动float属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/20/nodejs之koa2框架/" rel="prev" title="nodejs之koa2框架">
+                nodejs之koa2框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex的核心——store"><span class="nav-number">1.</span> <span class="nav-text">Vuex的核心——store</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#store的特点"><span class="nav-number">1.1.</span> <span class="nav-text">store的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#store的创建"><span class="nav-number">1.2.</span> <span class="nav-text">store的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getters创建"><span class="nav-number">1.3.</span> <span class="nav-text">getters创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#store里状态的使用"><span class="nav-number">1.4.</span> <span class="nav-text">store里状态的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先说怎么获取state"><span class="nav-number">1.4.1.</span> <span class="nav-text">先说怎么获取state</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再说怎么获getters"><span class="nav-number">1.4.2.</span> <span class="nav-text">再说怎么获getters</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutations和actions区别"><span class="nav-number">1.5.</span> <span class="nav-text">mutations和actions区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

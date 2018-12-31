@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="react创建类之class与createClass区别以下使用class和createClass两种方式分别写一个组件： var InputControlES5 = React.createClass({        propTypes: {          initialValue: React.PropTypes.string        },        defaultProps:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React class与createClass">
+<meta property="og:url" content="http://yoursite.com/2017/07/23/React-class与createClass/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="react创建类之class与createClass区别以下使用class和createClass两种方式分别写一个组件： var InputControlES5 = React.createClass({        propTypes: {          initialValue: React.PropTypes.string        },        defaultProps:">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React class与createClass">
+<meta name="twitter:description" content="react创建类之class与createClass区别以下使用class和createClass两种方式分别写一个组件： var InputControlES5 = React.createClass({        propTypes: {          initialValue: React.PropTypes.string        },        defaultProps:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/23/React-class与createClass/">
+
+
+
+
+
+  <title>React class与createClass | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/React-class与createClass/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React class与createClass</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T08:55:12+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="react创建类之class与createClass区别"><a href="#react创建类之class与createClass区别" class="headerlink" title="react创建类之class与createClass区别"></a>react创建类之class与createClass区别</h1><p>以下使用class和createClass两种方式分别写一个组件：</p>
+<pre><code>var InputControlES5 = React.createClass({ 
+      propTypes: { 
+        initialValue: React.PropTypes.string 
+      }, 
+      defaultProps: { 
+        initialValue: &apos;&apos; 
+      }, 
+      // 设置 initial state 
+      getInitialState: function() { 
+        return { 
+          text: this.props.initialValue || &apos;placeholder&apos; 
+        }; 
+      }, 
+      handleChange: function(event) { 
+        this.setState({ 
+          text: event.target.value 
+        }); 
+      }, 
+      render: function() { 
+        return (
+          &lt;div&gt; Type something:
+            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
+          &lt;/div&gt; 
+        ); 
+      } 
+    }); 
+
+
+    class InputControlES6 extends React.Component { 
+      constructor(props) { 
+        super(props); 
+        // 设置 initial state 
+        this.state = { 
+          text: props.initialValue || &apos;placeholder&apos; 
+        }; 
+        // ES6 类中函数必须手动绑定 this.
+        handleChange = this.handleChange.bind(this); 
+      } 
+
+      handleChange(event) { 
+        this.setState({ 
+          text: event.target.value 
+        }); 
+      } 
+
+      render() { 
+        return (
+          &lt;div&gt; Type something:
+            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
+          &lt;/div&gt; 
+        ); 
+      } 
+    } 
+
+    InputControlES6.propTypes = { 
+      initialValue: React.PropTypes.string 
+    }; 
+    InputControlES6.defaultProps = { 
+      initialValue: &apos;&apos; 
+    };
+</code></pre><p>区别如下：</p>
+<h3 id="函数绑定"><a href="#函数绑定" class="headerlink" title="函数绑定"></a>函数绑定</h3><p>createClass在成员函数创建时就已经由react自动绑定好了，需要调用的时候直接使用this.whateverFn即可，函数中的this变量在函数调用时会被正确的设置。</p>
+<p>class中，函数不是自动绑定的，必须手动绑定。有三种方法：</p>
+<ul>
+<li>在构造函数中绑定</li>
+<li>成员函数在定义时使用胖箭头函数</li>
+<li>行内绑定：在调用时使用.bind（不推荐）</li>
+</ul>
+<p>那么es6 class中如果react没有帮我们绑定this，那么此时的this是哪里来的呢？</p>
+<p>有博文说到this本来是指向的生成的Dom节点的div的<a href="https://segmentfault.com/a/1190000009169542" target="_blank" rel="noopener">支撑实例</a>（<a href="https://mingjiezhang.github.io/2016/08/28/%E7%90%86%E8%A7%A3React%E4%B8%ADes6%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6%E7%9A%84this/" target="_blank" rel="noopener">理解React中es6方法创建组件的this</a>）,</p>
+<h3 id="构造函数是否调用super方法"><a href="#构造函数是否调用super方法" class="headerlink" title="构造函数是否调用super方法"></a>构造函数是否调用super方法</h3><p>class需要接受props作为参数，并调用super(props)。</p>
+<p>createClass并不需要这步。</p>
+<h3 id="初始化state"><a href="#初始化state" class="headerlink" title="初始化state"></a>初始化state</h3><p>createClass初始化state，接受一个getInitialState函数作为参数一部分，这个函数会在组件挂载时被调用一次。</p>
+<p>class使用构造函数，在调用super之后，直接设置state即可。</p>
+<h3 id="propTypes和defaultProps的位置"><a href="#propTypes和defaultProps的位置" class="headerlink" title="propTypes和defaultProps的位置"></a>propTypes和defaultProps的位置</h3><p>createClass中将propTypes和defaultProps作为你传入的对象的属性。</p>
+<p>class中，这些变成了类本身的属性，所以他们需要在类定义完成之后被加到类头上。</p>
+<p>如果开启了ES7 的属性初始化器（property initializer），可以使用下面的简写法：</p>
+<pre><code>class Person extends React.Component { 
+      static propTypes = { 
+        name: React.PropTypes.string, 
+        age: React.PropTypes.string 
+      }; 
+      static defaultProps = { 
+        name: &apos;&apos;, 
+        age: -1 
+      }; 
+      ... 
+    }
+</code></pre><h2 id="所以该用哪一个呢？"><a href="#所以该用哪一个呢？" class="headerlink" title="所以该用哪一个呢？"></a>所以该用哪一个呢？</h2><p>Facebook 已经声明 React.createClass 最终会被 ES6 class 取代，不过他们也说「我们不会废弃 React.createClass，直到我们找到目前 mixin 用例的替代方案，并且在语言中支持类属性初始化器」。</p>
+<p>只要有可能，尽量使用无状态函数组件。他们很简单，也会迫使你保持 UI 组件简单。</p>
+<p>对于需要 state、生命周期方法、或（通过 refs）访问底层 DOM 节点的复杂组件，使用 class。</p>
+<p>不过了解全部三种风格总是有好处的。当你在 StackOverflow 或别的地方查问题的时候，你可能会看到 ES5 和 ES6 两种风格的答案。ES6 风格正在积聚人气，但并不是唯一的风格。</p>
+<p>转载自：</p>
+<p><a href="http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html" target="_blank" rel="noopener">http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/22/react笔记/" rel="next" title="react笔记">
+                <i class="fa fa-chevron-left"></i> react笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/23/react元素、react组件、react组件支撑实例/" rel="prev" title="react元素、react组件、react组件支撑实例">
+                react元素、react组件、react组件支撑实例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#react创建类之class与createClass区别"><span class="nav-number">1.</span> <span class="nav-text">react创建类之class与createClass区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数绑定"><span class="nav-number">1.0.1.</span> <span class="nav-text">函数绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数是否调用super方法"><span class="nav-number">1.0.2.</span> <span class="nav-text">构造函数是否调用super方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化state"><span class="nav-number">1.0.3.</span> <span class="nav-text">初始化state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#propTypes和defaultProps的位置"><span class="nav-number">1.0.4.</span> <span class="nav-text">propTypes和defaultProps的位置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所以该用哪一个呢？"><span class="nav-number">1.1.</span> <span class="nav-text">所以该用哪一个呢？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="上一篇文章讲了一下shadowsocks翻墙原理（shadowsocks翻墙原理）,这里要理论与实践结合了。开始~ 这里我定义一些规则，避免混淆:  VPS = 你在搬瓦工购买的机器 ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port ss服务IP = VPS的IP = 执行shadowsocks.sh打印">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadowsocks搭建">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/shadowsocks搭建/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="上一篇文章讲了一下shadowsocks翻墙原理（shadowsocks翻墙原理）,这里要理论与实践结合了。开始~ 这里我定义一些规则，避免混淆:  VPS = 你在搬瓦工购买的机器 ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port ss服务IP = VPS的IP = 执行shadowsocks.sh打印">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-2?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-3.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-2.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-1.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-3.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-4.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-1.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-2.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__sslocal%E9%85%8D%E7%BD%AE.jpg?raw=true">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shadowsocks搭建">
+<meta name="twitter:description" content="上一篇文章讲了一下shadowsocks翻墙原理（shadowsocks翻墙原理）,这里要理论与实践结合了。开始~ 这里我定义一些规则，避免混淆:  VPS = 你在搬瓦工购买的机器 ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port ss服务IP = VPS的IP = 执行shadowsocks.sh打印">
+<meta name="twitter:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/shadowsocks搭建/">
+
+
+
+
+
+  <title>shadowsocks搭建 | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shadowsocks搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T12:56:23+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇文章讲了一下shadowsocks翻墙原理（<a href="https://xixizhangfe.github.io/2018/09/16/shadowsocks%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener">shadowsocks翻墙原理</a>）,这里要理论与实践结合了。开始~</p>
+<p>这里我定义一些规则，避免混淆:</p>
+<ul>
+<li>VPS = 你在搬瓦工购买的机器</li>
+<li>ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port</li>
+<li>ss服务IP = VPS的IP = 执行shadowsocks.sh打印出的Your Server IP</li>
+<li>ss服务IP != shadowsocks.json里的server</li>
+<li>加密方式 = 执行shadowsocks.sh打印出的Your Encryption Method = shadowsocks.json里的method</li>
+<li>ssserver = 你在VPS上启动的shadowsocks服务 = shadowsocks服务端</li>
+<li>sslocal = 你在自己的电脑上安装的shadowsocks客户端 = shadowsocks客户端</li>
+<li>ssserver密码 = 执行shadowsocks.sh打印出的password = shadowsocks.json里的password</li>
+</ul>
+<p>文章里可能出现各种叫法，是为了适应不同的语境，不理解的话可以按照上述规则查看。</p>
+<h1 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h1><p>我是在<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>购买的，当然这是师兄推荐的，否则以我的性格又得纠结死在哪儿买…哈哈哈</p>
+<p>我买的是19.9$/年，512M，应该足够用了（嗯，其实就是看这个最便宜 嘿嘿）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true" alt="搬瓦工套餐选择"></p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>购买以后呢，就可以在<a href="https://www.bwh1.net/clientarea.php" target="_blank" rel="noopener">我的账户</a>里，点击Services-My service，就能看到了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-2?raw=true" alt="购买详情"></p>
+<p>然后点击右边的KiwiVM Control Panel进入管理界面。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-3.png?raw=true" alt="管理界面"></p>
+<p>在Main control里可以看到相关配置信息</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-2.png?raw=true" alt="main control"></p>
+<p>然后你可以选择重装系统，也可以使用默认的。我是重新安装了，如果要重新安装，需要先在Main controls里点击stop进行关机，然后点右侧Install new OS,选择右边的操作系统(我选择的是centos-7-x86_64)，然后点击同意，最后点击reload。大概等个1-2分钟，就好了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-1.png?raw=true" alt="reload"></p>
+<p>Reload后会给一个随机的root用户密码，以及随机端口号。然后点击Main controls，就可以看到你的VPS的IP地址(IP address)和端口号（SSH Port）了，这个是会用到的。（注意：这个端口号只有在登录的时候才会用到，后面配置shadowsocks的时候都不会用到。不要和shadowsocks服务的端口混淆。）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-3.png?raw=true" alt="reload port"></p>
+<p>稍后，就可以进入虚拟机了，用自带的工具，或者其他ssh工具即可。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-4.png?raw=true" alt="command"></p>
+<p>我觉得自带的不好用，用的是ssh,即在本地终端，用ssh连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 分配的端口号(就是上面说的SSH Port)   VPS的IP地址</span><br></pre></td></tr></table></figure>
+<p>然后命令行会提示你输入密码，密码要是不知道，可以通过点击Root password modification，随机产生新的密码。</p>
+<p>输入后，就可以进入登录到你的VPS操作了。</p>
+<h1 id="安装shadowsocks-server端"><a href="#安装shadowsocks-server端" class="headerlink" title="安装shadowsocks server端"></a>安装shadowsocks server端</h1><p>这一步安装的就是上一篇文章中的ss server。</p>
+<p>此处可以利用一个共享的python一键安装脚本。用root用户执行下面的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget</span><br><span class="line">wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>成功后，就会打出日志，最后几行就是ss server的信息。在后面配置ss local的时候都会用到。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-1.png?raw=true" alt="打印的信息"></p>
+<p>其中，Your password(密码)、Your Encryption Method(加密方式)是那个一键安装脚本里写的默认值，你可以修改那个脚本。密码可以不用改，Your Encryption Method这个是必须要改的，因为脚本默认的是aes-256-gcm，但是后面我们配置ss local时是没有这个选项的，所以我改成了aes-256-cfb。更改的方式也很简单，就是打开/etc/shadowsocks.sh这个脚本，然后找到下图里的内容，应该就在脚本的前面，然后把aes-256-cfb放到第一个（注意：本来aes-256-cfb本来不是在第一个的，第一个是aes-256-gcm，图中是我修改后的）。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-2.png?raw=true" alt="sh脚本"></p>
+<p>改完后，重新执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>执行完毕后，打印出来的信息就是你刚才修改的。</p>
+<p>这只是修改密码和加密方式的一种方式。你还可以通过/etc/shadowsocks.json来修改。这种方式更简单明了，推荐推荐推荐！！！  </p>
+<p>如果你已经通过上面那个脚本修改了，打开这个文件，就会看到port、password、method和刚才修改后打印出的日志是一样的，但server不一样，是0.0.0.0（表示可以接收任意IP的请求），因此注意这个server不需要修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;port&quot;:&quot;xxxx&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;teddysun.com&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想修改port、password、method，就可以改这个文件。然后执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks restart</span><br></pre></td></tr></table></figure>
+<p>以后你想修改port、password、method，都可以只修改这个shadowsocks.json文件，然后重启一下shadowsocks就可以了。</p>
+<p>到此，你的ss server就配置成功了。</p>
+<p>当然，如果不放心，你可以做一些验证。</p>
+<ul>
+<li><p>在你自己的电脑，打开终端：</p>
+<ul>
+<li><p>测试你的VPS是否能ping通：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping VPS的IP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试shadowsocks服务端口是否已通</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ss服务IP ss服务端口号</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在你的VPS机器上</p>
+<ul>
+<li><p>查看进程里是否有ssserver，如果打印出信息就代表ssserver在运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep ssserver</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务端口是否在监听，如果打印出信息，则代表端口号在监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:shadowsocks.json里的端口号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks status</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>另外，提供一些常用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动ssserver: service shadowsocks start</span><br><span class="line">停止ssserver: service shadowsocks stop</span><br><span class="line">重启ssserver: service shadowsocks restart</span><br><span class="line">查看ssserver状态: service shadowsocks status</span><br></pre></td></tr></table></figure>
+<h2 id="配置多用户"><a href="#配置多用户" class="headerlink" title="配置多用户"></a>配置多用户</h2><p>如果你想配置多用户，可以把shadowsocks.json改成下图，即把port和password合并：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">	&quot;port1&quot;:&quot;password1&quot;,</span><br><span class="line">	&quot;port2&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="安装shadowsocks客户端"><a href="#安装shadowsocks客户端" class="headerlink" title="安装shadowsocks客户端"></a>安装shadowsocks客户端</h1><p>我的是mac，大家可以根据自己的需要在网上下载，应该很多。这里给出一个地址<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="noopener">下载链接</a>。</p>
+<p>安装后，就会在浏览器看到一个小图标，点击图标，选择服务器-服务器设置，就会弹出下图设置框：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__sslocal%E9%85%8D%E7%BD%AE.jpg?raw=true" alt="sslocal配置"></p>
+<ul>
+<li>点击+号，新建一个服务器</li>
+<li>地址是ss服务IP, 冒号后面的是端口号，就是ss服务端口号</li>
+<li>加密方式就是加密方式</li>
+<li>密码就是ssserver密码</li>
+<li>备注随便填</li>
+<li>点击确定</li>
+<li>另外有三种模式可以选择：PAC自动模式、全局模式、手动模式，PAC自动模式只有在访问被墙的网页时才会走ssserver，全局模式是所有访问的网页都会走ssserver，一般情况下我们就用PAC自动模式就好了，如果访问的某些网站比较慢，比如MDN，可以采用全局模式</li>
+</ul>
+<p>至此，全部配置完毕。可以愉快的上网学习了！</p>
+<h1 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h1><p>配置后，发现还是无法翻墙。可能是ss服务端口号被防火墙阻挡了，因此，可以登录你的VPS，把防火墙关闭，或者把你的ss服务端口号加入到防火墙允许的列表中。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/16/shadowsocks原理/" rel="next" title="shadowsocks原理">
+                <i class="fa fa-chevron-left"></i> shadowsocks原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/16/shadowsocks与VPN区别/" rel="prev" title="shadowsocks与VPN区别">
+                shadowsocks与VPN区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#购买VPS"><span class="nav-number">1.</span> <span class="nav-text">购买VPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装shadowsocks-server端"><span class="nav-number">3.</span> <span class="nav-text">安装shadowsocks server端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置多用户"><span class="nav-number">3.1.</span> <span class="nav-text">配置多用户</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装shadowsocks客户端"><span class="nav-number">4.</span> <span class="nav-text">安装shadowsocks客户端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可能出现的问题"><span class="nav-number">5.</span> <span class="nav-text">可能出现的问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

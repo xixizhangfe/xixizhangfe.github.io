@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。   demo都是采用ES6语法写的，不懂的可以学习一下。   DEMO 1    - 最简单的react渲染代码：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;!D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react的5个demo">
+<meta property="og:url" content="http://yoursite.com/2017/07/23/react的5个demo/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。   demo都是采用ES6语法写的，不懂的可以学习一下。   DEMO 1    - 最简单的react渲染代码：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;!D">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/12.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/14.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/15.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/16.png">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react的5个demo">
+<meta name="twitter:description" content="下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。   demo都是采用ES6语法写的，不懂的可以学习一下。   DEMO 1    - 最简单的react渲染代码：12345678910111213141516171819202122232425262728293031323334353637&amp;lt;!D">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/12.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/23/react的5个demo/">
+
+
+
+
+
+  <title>react的5个demo | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react的5个demo/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">react的5个demo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T21:08:03+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。</p>
+<blockquote>
+<ul>
+<li>demo都是采用<strong>ES6语法</strong>写的，不懂的可以学习一下。</li>
+</ul>
+</blockquote>
+<h1 id="DEMO-1-最简单的react渲染"><a href="#DEMO-1-最简单的react渲染" class="headerlink" title="DEMO 1    - 最简单的react渲染"></a>DEMO 1    - 最简单的react渲染</h1><h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下"><a href="#在浏览器中显示的效果如下" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/12.png" alt="这里写图片描述"></p>
+<h3 id="讲解："><a href="#讲解：" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>页面中，只有<code>&lt;div id=&#39;name&#39;&gt;</code>这里的内容是使用react渲染出来的，代码中这里是空的，依赖下面的js进行渲染</li>
+<li><p>首先看下 <code>class Text extends React.Component</code> 这块，这里是声明一个组件，名字叫做Text,名字随意起，<strong>但第一个字母必须大写</strong>，用来区分html中原生的标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其中参数有很多，但都可以省略，唯有<code>render</code>不可以省略，因为这是用来表述这个插件被加载后，显示的是什么样子，它的返回结果，就是加载在页面上最终的样式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">   <span class="tag">&lt;<span class="name">Text</span>/&gt;</span>,</span><br><span class="line">    document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这段代码是用来渲染react组件的，第一个参数是组件，第二个参数是要渲染的位置。</p>
+<ul>
+<li>使用<code>&lt;Text/&gt;</code>的 方式就可以实例化组件，或者写成<code>&lt;Text&gt;&lt;/Text&gt;</code>，要注意下，react中标签的闭合非常严格，<strong>任何标签的关闭与打开必须一一对应</strong>，否则会报错。    </li>
+<li>到目前为止，就完成了一次渲染，将Text组件render函数返回的内容，填充到了id=root的div中。</li>
+</ul>
+<hr>
+<h1 id="DEMO-2-带有参数的react"><a href="#DEMO-2-带有参数的react" class="headerlink" title="DEMO 2    - 带有参数的react"></a>DEMO 2    - 带有参数的react</h1><p>往往在使用中，文本的内容并不是写死的，而是需要被我们指定，这样组件才能更通用。下面介绍下，如何向react中传递参数。</p>
+<p>###代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.props.name&#125;! age=&#123;this.props.age&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;React&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="在浏览器中显示的效果如下-1"><a href="#在浏览器中显示的效果如下-1" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/13.png" alt="这里写图片描述">   </p>
+<h3 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h3><ul>
+<li>首先，这个大体上跟第一个demo类似，唯有实例化Text时，多了参数。</li>
+<li>当我们传递参数时，写了两种方式，一种是 <code>name=&quot;react&quot;</code>另一种是<code>age={11}</code>，这两种写法是有区别的，并不仅仅因为一个是<code>str</code>，一个是<code>int</code>。如果是<code>str</code>这种类型，写成 <code>name=&quot;xxx&quot;</code>或者<code>name={&quot;xxx&quot;}</code>都是可以的，加了{}的意思就是js中的变量，更加精确了。而后者<code>age={181}</code>是不可以去掉{}的，这样会引起异常，所以这里要注意下，并且建议任何类型都加上{}来确保统一。</li>
+<li>当在Text初始化时添加了参数，在组件内部，都收集在this.props中，使用时只要{this.props.name}既可以获取name对应的值，如果取得key并不存在，这里不会报错，只是取到的值是空的。当然可以在<code>getDefaultProps</code>中定义默认的props值，即使在没有传递参数的情况下，也能取到默认值。</li>
+<li>props中的参数，在初始化传递后，便不能再修改。</li>
+</ul>
+<hr>
+<h1 id="DEMO-3-state，react的核心"><a href="#DEMO-3-state，react的核心" class="headerlink" title="DEMO 3        - state，react的核心"></a>DEMO 3        - state，react的核心</h1><p>state算是react的核心了，任何页面的变化，刷新都是state的变化引起。在react中，只要调用了setState都会引起render的重新执行。下面介绍下如何通过键盘事件触发状态变化。</p>
+<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            name: this.props.name</span><br><span class="line">          &#125;;</span><br><span class="line">          this.keyUp = this.keyUp.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        keyUp(e) &#123;</span><br><span class="line">          this.setState(&#123;name: e.target.value&#125;, function() &#123;</span><br><span class="line">            console.log(this.state.name);</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.state.name&#125;!</span><br><span class="line">              &lt;input type=&quot;text&quot; name=&quot;&quot; onKeyUp=&#123;this.keyUp&#125; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;react&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-2"><a href="#在浏览器中显示的效果如下-2" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/14.png" alt="这里写图片描述"></p>
+<h3 id="讲解：-1"><a href="#讲解：-1" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>这次组件中多了一个函数，<code>keyUp</code>，keyUp是我自定义的函数，用来响应键盘事件的。</li>
+<li>我们先看constructor函数，这里constructor接收props，并采用super(props)去继承父组件的方法和属性，`this.state = {<pre><code>  name: this.props.name
+};`是初始化state；另外，`this.keyUp = this.keyUp.bind(this);`是绑定this，否则this是react组件支撑实例，而不是组件实例。
+</code></pre></li>
+<li>再看render函数，文字渲染中加了{this.state.name}，这个是react内部的状态，可以理解是存储数据的k-v结构，这里的v支持的对象较多。{this.state.name}就是引用状态中的name属性，与props的区别在于，如果state中不存在这个属性，是会报错的，所以我们要在constructor中初始化这个状态的初始值。</li>
+<li>render中还多了一个<input onkeyup="{this.keyUp}">，onKeyUp是注册键盘键弹起的事件，当按键按下后弹起，就会触发onKeyUp事件，然后通过绑定的this.keyUp，将事件传递给了自己定义的keyUp函数中。</li>
+<li>keyUp函数中，使用了this.setState({name: e.target.value})，setState是react中内部的函数，专门用来更新状态的，这里是讲状态中name的值变更为引起事件的value值。</li>
+<li>在react中，每次状态的变化，都会引起render函数的重新渲染，这是它自己的机制，我们无需人为处理，当键盘输入内容时，会触发状态变化，导致render重新渲染，渲染的过程会从state中取出变量，所以我们就看到了页面的内容发生了变化。</li>
+<li>我们在setState下面加了一个console，通过控制台可以发现，每次打印的值并不是当前输入的值，而是上一次输入的值，这是怎么回事呢？在setState中，这是一个异步处理的函数，并不是同步的，console在setState后立刻执行了，所以这时候状态还没有真正变更完，所以这里取到的状态仍旧是更新前的。这里要特殊注意下。如果需要在更新状态后，再执行操作怎么办呢，setState还有第二个参数，接受一个callback，我们尝试将keyUp中代码改成这样</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;name: e.target.value&#125;, function()&#123;</span><br><span class="line">    console.log(this.state.name);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这时候log打印出来的只就是我们期望的内容，当每次状态更新成功后，都会调用传进去的callback函数。</li>
+<li>react中渲染dom有自己的优化方式，首先它在内存中构建一套虚拟的dom，每次更新前将虚拟dom与浏览器中dom对比，只讲有变化的部分进行更新，这样大大的提高了性能。或者我们可以重写函数来控制是否刷新，当然这种方式我们并不提倡。</li>
+</ul>
+<hr>
+<h1 id="DEMO-4-网络请求触发状态变化"><a href="#DEMO-4-网络请求触发状态变化" class="headerlink" title="DEMO 4        -    网络请求触发状态变化"></a>DEMO 4        -    网络请求触发状态变化</h1><p>上一节讲到状态变化触发render的重新渲染，这里将常用的网络请求引入，结合到状态变化中。</p>
+<h3 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            username: &apos;&apos;,</span><br><span class="line">            lastGistUrl: &apos;&apos;,</span><br><span class="line">            dateTime: &apos;&apos;</span><br><span class="line">          &#125;</span><br><span class="line">          this.request = this.request.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        request() &#123;</span><br><span class="line">          $.ajax(&#123;</span><br><span class="line">            type: &apos;get&apos;,</span><br><span class="line">            url: this.props.url,</span><br><span class="line">            success: function(result)&#123;</span><br><span class="line">              var lastGist = result[0];</span><br><span class="line">              this.setState(&#123;</span><br><span class="line">                username: lastGist.owner.login,</span><br><span class="line">                lastGistUrl: lastGist.html_url,</span><br><span class="line">                dateTime: new Date().getTime()</span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;.bind(this)</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        componentDidMount() &#123;</span><br><span class="line">          setInterval(this.request, 1000)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              &#123;this.state.username&#125;用户最新的Gist地址为：</span><br><span class="line">              &lt;a href=&#123;this.state.lastGistUrl&#125;&gt;&#123;this.state.lastGistUrl&#125;&lt;/a&gt;</span><br><span class="line">              &lt;div&gt;&#123;this.state.dateTime&#125;&lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text url=&quot;https://api.github.com/users/octocat/gists&quot;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-3"><a href="#在浏览器中显示的效果如下-3" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/15.png" alt="这里写图片描述"> </p>
+<p>###讲解：</p>
+<ul>
+<li>这个例子中，页面每秒会请求一次网络，将请求到的数据中时间戳更新到状态中。</li>
+<li>仍旧是先看代码，相比于上一个例子，这里多了两个函数<code>request</code>和<code>componentDidMount</code>，其中<code>request</code>是请求网络的函数，<code>componentDidMount</code>是react内部的函数，也是react生命周期的一部分，它会在render第一次渲染前执行，而且只会执行一次。</li>
+<li>先看request，一个普通的ajax请求，在success回调中，服务器返回result，然后将里面的值赋给state中的username、lastGistUrl属性。这时状态发生了变化，render函数会重新渲染。</li>
+<li>为什么success回调函数最后会加一个bind(this)？因为这个函数已经不是react内部的函数了，它是一个外部函数，它里面的this并不是react组件中的this，所以要将外部函数绑定到react中，并能使用react内部的方法，例如setState，就要在函数最后bind(this)，这样就完成了绑定。</li>
+<li>再看下<code>componentDidMount</code>函数，这个函数在render渲染前会执行，里面的代码也很简单，增加了一个定时器，1秒钟执行一次request。</li>
+<li>这里应该在加一个回调，就是定时器在初始化时创建，却没有对应的销毁，所以在组件销毁的时候，应该在这个生命周期中销毁定时器。</li>
+</ul>
+<hr>
+<h1 id="DEMO-5-组件的嵌套使用"><a href="#DEMO-5-组件的嵌套使用" class="headerlink" title="DEMO 5        -    组件的嵌套使用"></a>DEMO 5        -    组件的嵌套使用</h1><p>在封装react时，我们往往按照最小单位封装，例如封装一个通用的div，一个通用的span，或者一个通用的table等，所以各自组件对应的方法都会随着组件封装起来，例如div有自己的方法可以更改背景色，span可以有自己的方法更改字体大小，或者table有自己的方法来更新table的内容等~ 这里我们用一个div相互嵌套的例子来查看父子组件如何相互嵌套及调用各自的方法。在下面的例子中，父组件与子组件都有一个方法，来改变自身的背景色，我们实现父子组件相互调用对方的方法，来改变对方的背景色。</p>
+<h3 id="代码：-3"><a href="#代码：-3" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      .child&#123;</span><br><span class="line">        height: 100px;</span><br><span class="line">        width: 200px;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">      li&#123;</span><br><span class="line">        list-style: none;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">        class Parent extends React.Component&#123; </span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.child1ChangeColor=this.child1ChangeColor.bind(this);</span><br><span class="line">            this.child2ChangeColor=this.child2ChangeColor.bind(this);</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          child1ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child1&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          child2ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child2&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123; </span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;parent&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                  &lt;br/&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第一个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第二个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;hr/&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child1&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child2&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            ) </span><br><span class="line">          &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        class Child extends React.Component&#123;</span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123;</span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;child&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        ReactDOM.render(</span><br><span class="line">          &lt;Parent /&gt;, </span><br><span class="line">          document.getElementById(&apos;root&apos;) </span><br><span class="line">        );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-4"><a href="#在浏览器中显示的效果如下-4" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/16.png" alt="这里写图片描述"></p>
+<h3 id="讲解：-2"><a href="#讲解：-2" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>首先说下，刚打开页面并不是这样的，背景都是白色的。这里的截图是点击各个按钮后变色的样子。</li>
+<li>在这个例子中，蓝色的div是一个父组件，它里面包含了两个子组件，分别是红色和橙色，这两个子组件实际上是一模一样的。我们先看下父组件如何调用子组件。</li>
+<li>代码中，子组件里面定义了changeColor函数，用来接收onClick事件，并将点击的按钮的data-color属性值作为色值，更改到state中的color属性中，然后触发render来更新背景色。在父组件调用子组件时，我们写了<child ref="child1" parentchangecolor="{this.changeColor}">，里面的ref=”child1”就是react中提供的一个属性标签，它与普通的props不同，这里写上ref=”xxx”后，在父组件中，使用this.refs[“child1”]就可以引用对应的子组件，当然这里的ref的值是可以随意定义，只要不重复就好。这样就可以实现组组件引用子组件，然后直接调用里面的方法就好，例如<code>child1ChangeColor</code>中就有<code>this.refs[&quot;child1&quot;].changeColor(e);</code>的使用。连起来说下逻辑，在点击父组件中第一列中的按钮后，触发onClick事件，然后onClick事件后，传递到child1ChangeColor后，将事件传递进入，然后再次传递给子组件的changeColor中，因为子组件的changeColor是更改子组件自身的state，所以这时候子组件再次渲染，于是改变了颜色。这就是父组件调用子组件的逻辑。</child></li>
+<li>再说下子组件何如调用父组件的方法，父组件自身也有一个changeColor函数，用来改变自身的背景色。当父组件调用子组件时，<child ref="child1" parentchangecolor="{this.changeColor}">，通过props，也就是第二个例子中讲的那样，通过参数的方式传递给子组件，这样子组件中就可以使用this.props.parentChangeColor，来把子组件的onClick事件传递给父组件的changeColor方法中，来改变父组件的背景色。这就是子组件调用父组件函数的方法。</child></li>
+<li>还有一种情况，就是一个父组件下有多个子组件，但是子组件中并没有直接的关系，这时候如果一个子组件调用另一个子组件的方法，就得通过他们共同的父组件来作为中转，在父组件中增加函数来作为中转的函数，来实现子组件间的调用。</li>
+</ul>
+<p>github地址：<a href="https://github.com/xixizhangfe/react-demo" target="_blank" rel="noopener">react5个demo</a></p>
+<p>参考：<a href="http://blog.csdn.net/iambinger/article/details/51803606" target="_blank" rel="noopener">http://blog.csdn.net/iambinger/article/details/51803606</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/react之生命周期/" rel="next" title="react之生命周期">
+                <i class="fa fa-chevron-left"></i> react之生命周期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/vue还是react/" rel="prev" title="vue还是react">
+                vue还是react <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO-1-最简单的react渲染"><span class="nav-number">1.</span> <span class="nav-text">DEMO 1    - 最简单的react渲染</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码："><span class="nav-number">1.0.1.</span> <span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中显示的效果如下"><span class="nav-number">1.0.2.</span> <span class="nav-text">在浏览器中显示的效果如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解："><span class="nav-number">1.0.3.</span> <span class="nav-text">讲解：</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO-2-带有参数的react"><span class="nav-number">2.</span> <span class="nav-text">DEMO 2    - 带有参数的react</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中显示的效果如下-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">在浏览器中显示的效果如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解"><span class="nav-number">2.0.2.</span> <span class="nav-text">讲解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO-3-state，react的核心"><span class="nav-number">3.</span> <span class="nav-text">DEMO 3        - state，react的核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码：-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中显示的效果如下-2"><span class="nav-number">3.0.2.</span> <span class="nav-text">在浏览器中显示的效果如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解：-1"><span class="nav-number">3.0.3.</span> <span class="nav-text">讲解：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO-4-网络请求触发状态变化"><span class="nav-number">4.</span> <span class="nav-text">DEMO 4        -    网络请求触发状态变化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码：-2"><span class="nav-number">4.0.1.</span> <span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中显示的效果如下-3"><span class="nav-number">4.0.2.</span> <span class="nav-text">在浏览器中显示的效果如下</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEMO-5-组件的嵌套使用"><span class="nav-number">5.</span> <span class="nav-text">DEMO 5        -    组件的嵌套使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码：-3"><span class="nav-number">5.0.1.</span> <span class="nav-text">代码：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中显示的效果如下-4"><span class="nav-number">5.0.2.</span> <span class="nav-text">在浏览器中显示的效果如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讲解：-2"><span class="nav-number">5.0.3.</span> <span class="nav-text">讲解：</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

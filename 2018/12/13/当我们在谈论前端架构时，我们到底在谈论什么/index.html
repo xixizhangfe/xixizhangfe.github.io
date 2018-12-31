@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端 架构,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="架构到底是什么？前端架构又是什么？我们先看维基百科对软件架构的定义。    软件架构是一个系统的草图。软件架构描述的对象是直接构成系统的抽象组件。各个组件之间的连接则明确和相对细致地描述组件之间的通讯。在实现阶段，这些抽象组件被细化为实际的组件，比如具体某个类或者对象。在面向对象领域中，组件之间的连接通常用接口来实现。    传统架构的离家近和前端架构的理解略有不同，这个稍后讨论，我们先看看传统意">
+<meta name="keywords" content="前端 架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当我们在谈论前端架构时，我们到底在谈论什么（转）">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/当我们在谈论前端架构时，我们到底在谈论什么/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="架构到底是什么？前端架构又是什么？我们先看维基百科对软件架构的定义。    软件架构是一个系统的草图。软件架构描述的对象是直接构成系统的抽象组件。各个组件之间的连接则明确和相对细致地描述组件之间的通讯。在实现阶段，这些抽象组件被细化为实际的组件，比如具体某个类或者对象。在面向对象领域中，组件之间的连接通常用接口来实现。    传统架构的离家近和前端架构的理解略有不同，这个稍后讨论，我们先看看传统意">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://pjnwg6wvx.bkt.clouddn.com/%E6%9E%B6%E6%9E%84%E6%B5%81%E7%A8%8B.webp">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="当我们在谈论前端架构时，我们到底在谈论什么（转）">
+<meta name="twitter:description" content="架构到底是什么？前端架构又是什么？我们先看维基百科对软件架构的定义。    软件架构是一个系统的草图。软件架构描述的对象是直接构成系统的抽象组件。各个组件之间的连接则明确和相对细致地描述组件之间的通讯。在实现阶段，这些抽象组件被细化为实际的组件，比如具体某个类或者对象。在面向对象领域中，组件之间的连接通常用接口来实现。    传统架构的离家近和前端架构的理解略有不同，这个稍后讨论，我们先看看传统意">
+<meta name="twitter:image" content="http://pjnwg6wvx.bkt.clouddn.com/%E6%9E%B6%E6%9E%84%E6%B5%81%E7%A8%8B.webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/13/当我们在谈论前端架构时，我们到底在谈论什么/">
+
+
+
+
+
+  <title>当我们在谈论前端架构时，我们到底在谈论什么（转） | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/当我们在谈论前端架构时，我们到底在谈论什么/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">当我们在谈论前端架构时，我们到底在谈论什么（转）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-13T14:24:20+08:00">
+                2018-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="架构到底是什么？前端架构又是什么？"><a href="#架构到底是什么？前端架构又是什么？" class="headerlink" title="架构到底是什么？前端架构又是什么？"></a>架构到底是什么？前端架构又是什么？</h2><p>我们先看维基百科对软件架构的定义。  </p>
+<blockquote>
+<p>软件架构是一个系统的草图。软件架构描述的对象是直接构成系统的抽象组件。<br>各个组件之间的连接则明确和相对细致地描述组件之间的通讯。在实现阶段，这些抽象组件被细化为实际的组件，比如具体某个类或者对象。<br>在面向对象领域中，组件之间的连接通常用接口来实现。  </p>
+</blockquote>
+<p>传统架构的离家近和前端架构的理解略有不同，这个稍后讨论，我们先看看传统意义上对于软件架构的定义。</p>
+<p>这两句话里可以总结出几个核心名词出来，抽象、解耦、组合，而架构的实际工作，其实就是对这些架构方法和实际场景的梳理把握。</p>
+<p>传统意义上的架构师，在实际项目层面，高级些的负责整个系统的整体分解服务分层设计等，而低级的架构师，则负责其中某些模块的系统分析。在项目产出上看，分别是架构图和系统分析图。</p>
+<p>架构图体现的是整个大型服务包含的模块，及其运行关系。而系统分析，则是每个服务内部的具体逻辑以及与外部服务接驳的方式。</p>
+<p>软件工程师在拿到这些分析之后，就可以用框架将其按照架构师的逻辑来实现，这种工作方式，可以保证大型软件的系统合理解耦，并且可以合理实现。</p>
+<p>而对于软件工程师这一环来说，他们无需关心整个系统是如何运行的，只需要按照系统分析来实现自己部分的逻辑，将大型软件工程化。</p>
+<p><b>这里就引申出了前端架构的重点。</b></p>
+<p>其实，前端在整个软件工程中扮演的只是其中的一部分，它的定位较为特殊，不是独立的子系统，却又跨域于整个系统之间，而且最重要的特点是它的内部极为分散。</p>
+<p>这就造就了我们无法用传统的软件架构来定义“前端架构”这个词汇。实际上，通常所说的前端架构在整体软件工程中扮演的是架构之下，代码之上的一个层面，它关注的不是整个系统的解耦和组合，而是横向的面的开展效率和一致性。（这里排除了非常复杂的SPA应用的场景）</p>
+<p>很多前端同学其实对于“架构”这个词非常的困惑，我觉得没有必要去斟字酌句，非要将它做成一个固定的职位或者职责。</p>
+<p>在项目层面，甚至某个页面层面，遇到复杂的交互和数据逻辑，你做一个抽象，你抽离组件，你设计组件的参数和内部状态，这些是不是架构？当然是！它是一个微小系统的内部架构。</p>
+<p>前端是一个和服务端工程完全悖论的领域，服务端可能从整体来看就是一整个系统，然后抽象，然后分层，最后组合，到了细化的软件层面的时候，就是一些固定的组合逻辑。</p>
+<p>而对于前端来说，没有整体的概念，一个公司的前端，必然是分散于各个业务各个系统之间的，虽然这些业务系统最后可能也是一个整体。</p>
+<p>但是对于前端来说，他们就是分散的，反而在每个前端系统内部，又有一套软件工程的思想，像我刚才说的，针对一个页面进行解耦抽象组合。</p>
+<p><b>所以，我们总结前端架构的第一层含义：某个系统内部的逻辑抽象和组合。</b></p>
+<p>我们继续观察前端系统的特点，前面也提到了，前端的系统是分散的，这个分散不光是最终实现上的分散，甚至连刚才提到的抽象组合也是分散的，甚至在团队上也是分散的，这样分散的局面，如何变得可控而让整个前端开发变成一个工程式的工作？这就引申出了前端届最重要的一个词汇：工程化。</p>
+<p><b>实际上，这就是我们要的总结的前端架构第二层含义：中立于各个系统又植根于各个系统中的前端工程化。</b></p>
+<p><b>工程化的核心关注点是什么？可控，效率！</b></p>
+<p>事实上，接下来讲的一切都是围绕这两点，由【可控】，我们分化出<b>开发框架</b>、<b>开发规范</b>，甚至是<strong>脚手架</strong>的一些开发约束，还有诸多<strong>开发流程</strong>和<strong>开发工具</strong>的保障，诸如<strong>Review机制</strong>和<strong>Eslint检查</strong>、<strong>线上错误报警</strong>等。</p>
+<p>由【效率】，我们分化出<strong>组件库</strong>复用跨业务的组件，<strong>脚手架</strong>将整个流程封装进几个固定的命令，<strong>mock</strong>系统快速模拟数据等。</p>
+<h2 id="架构师的工作方式和职责"><a href="#架构师的工作方式和职责" class="headerlink" title="架构师的工作方式和职责"></a>架构师的工作方式和职责</h2><p>针对上述对架构的定义，我们来看看具体在日常中如何开展架构工作。通常，对于一个成熟的前端团队来说，建立一个专门的架构师小组来说是一个比较合理的结构。</p>
+<p>这个小组可以是虚拟的，也可以是专门的脱离于项目之外的，特别是业务开发较多时其实工程化需要做的事情还是很多的。</p>
+<p>再聊聊架构师的工作方式，首先要抛弃传统的工作思想，之前在业务团队的时候，很多事情都是有专门的人来安排（诸如PM、PD），然后一些技术上的事情则往往草草产出，在成立架构组织后这两个方面都会发生很大的变化。</p>
+<ol>
+<li>脱离于业务之外后，对自我规划、自我任务和时间管理的要求变高了，要有非常强的自我管理意识。</li>
+<li>技术的产出要有严格的流程，因为你产出的是通用方案，要保证技术方案的质量，这时候需要有一套流程，从发现问题到调研到初步方案到评审确认可行性到详细架构系统分析到开始编码到推广到文档。</li>
+<li>之前一整个项目组一起做的流程，现在可能都落到了你头上，看似繁琐但是却是毕业的，因为你是一个专业的架构师。</li>
+</ol>
+<p><img src="http://pjnwg6wvx.bkt.clouddn.com/%E6%9E%B6%E6%9E%84%E6%B5%81%E7%A8%8B.webp" alt="架构流程"></p>
+<p>这里我特别想强调下这种思维的转换，程序员通常比较厌恶这种流程上的事情，喜欢自己捣鼓研究敲代码，殊不知其实对于程序员来说最简单的事情其实就是敲代码，如果你一直想敲代码不想做设计/规划/推广，那绝对是在精神换上偷懒。</p>
+<p>而有挑战的事情是什么呢？是设计，设计数据结构，设计组件，设计解决方案。更有挑战的则是将这些设计做完美，做通用，并落地。</p>
+<p>所以，做架构绝非只是一直在做有意思的事情，底层的调研，代码的实现只是其中一部分，一个很重要的自我衡量的标准就是工作时间中最多只有20%是在写代码，而且越少越好，正如上面所说，你的工作是设计落地完善的通用方案，解决特定的问题，而不是玩新技术给团队挖坑。</p>
+<p>转换了工作角色之后，我们再来聊聊架构的职责。</p>
+<ol>
+<li>宏观上，把控整个团队的技术选型和技术栈，技术发展方向。这看似是一次性的工作，但是却是需要持续优化的。例如推动整个公司向Vue或者React转换，推进ReactNative的实施，需要架构师对这些技术栈有深入的了解，能够正确的权衡选型，评估风险，并且给出切实可落地的方案。</li>
+<li><p>各个技术栈的技术体系。业务开发的技术体系，包含脚手架，开发框架，开发规范，组件库，配套工具等。</p>
+<ul>
+<li><p>细说起来其实是个挺庞大的事情，每一部分都可以展开成一个话题。例如脚手架，其实是在管理规范或者简化一个业务项目从创建到开发到调试到测试到发布的整个过程（通常会做诸多定制）</p>
+</li>
+<li><p>例如开发框架，抛开底层的mvvm框架，上层需要做封装，将一些难以理解的概念或者写法繁琐的东西封装起来，同时糅合一些强制的开发规范，还有就是通过框架层规避开发中可能会出问题的风险点（例如数据类型转换之类）</p>
+</li>
+<li><p>这里提到的每个点可能都是个大工程，而且可能会有好几套体系，例如Vue体系，React native体系。</p>
+</li>
+<li><p>其中有些体系甚至要做到让不是前端的开发去写前端，稍后我会介绍。其封装、规范、工具需要做到简单强大的程度可想而知。</p>
+</li>
+</ul>
+</li>
+<li><p>统一环境管理，开发发布流程制定等。制定公司统一的前端开发方式/流程，中间可能会需要一些工具来提高开发效率，推进这些工具如何融入流程被大家接受等。</p>
+<ul>
+<li><p>还有前端开发需要的测试、预发、线上环境资源管理的方式、权限等。</p>
+</li>
+<li><p>但是业务开发需要做的事情可能就一两步而且非常简单，这种维护方式转化成最终集成结果，把复杂的方案包装成极简的使用方式，这也是架构的重要职责之一。</p>
+</li>
+</ul>
+</li>
+<li><p>提供特殊解决方案，例如服务端渲染，可能原理不难，但是需要有专人将其构建成低入侵、高性能、高可靠、统一的服务集群，业务可以非常低成本的接入，并且不需要关心起运维、可用性、性能问题。</p>
+<ul>
+<li>其他例如 数据统计大点、跨端调用等，都需要做一些统一的封装处理，让业务方方便使用。</li>
+</ul>
+</li>
+<li><p>提供一些特殊的工具和系统，例如性能收集，错误收集，mock系统，在线调试，可视化编辑，短链管理等。</p>
+</li>
+<li>提供业务中除了UI组件之外公用的部分业务，独立维护，我们称之为业务SDK，例如跟金融相关的钱包业务，数据业务，聊天业务，全景业务，都会作为独立的业务系统服务于其他业务。</li>
+</ol>
+<p>转自<a href="https://juejin.im/entry/59800fe651882537d00e0179" target="_blank" rel="noopener">https://juejin.im/entry/59800fe651882537d00e0179</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-架构/" rel="tag"># 前端 架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/11/前端简史/" rel="next" title="前端简史（转）">
+                <i class="fa fa-chevron-left"></i> 前端简史（转）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/31/《月亮和六便士》/" rel="prev" title="《月亮和六便士》">
+                《月亮和六便士》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#架构到底是什么？前端架构又是什么？"><span class="nav-number">1.</span> <span class="nav-text">架构到底是什么？前端架构又是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构师的工作方式和职责"><span class="nav-number">2.</span> <span class="nav-text">架构师的工作方式和职责</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

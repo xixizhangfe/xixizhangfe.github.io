@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近搬瓦工上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~ 翻墙的原理防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadowsocks原理">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/shadowsocks原理/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近搬瓦工上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~ 翻墙的原理防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.853Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shadowsocks原理">
+<meta name="twitter:description" content="之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近搬瓦工上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~ 翻墙的原理防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于">
+<meta name="twitter:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
+
+
+
+
+
+  <title>shadowsocks原理 | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shadowsocks原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T11:12:37+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~</p>
+<h1 id="翻墙的原理"><a href="#翻墙的原理" class="headerlink" title="翻墙的原理"></a>翻墙的原理</h1><p>防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于不同的请求具有不同的数据特征，不同的协议具有不同的特征，比如HTTP/HTTPS这类请求，会很明确的告诉GFW它们要请求哪些域名，再比如TCP请求，它只会告诉GFW它们要请求哪个IP。防火墙采用<strong>黑名单</strong>方式，有域名黑名单和IP黑名单，像常见的国外网站<a href="www.google.com">谷歌</a>，<a href="www.facebook.com">Facebook</a>等都是在黑名单里的（<a href="https://zh.wikipedia.org/zh-hans/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A2%AB%E5%B0%81%E9%94%81%E7%BD%91%E7%AB%99%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">封锁网站列表</a>）。 </p>
+<p>也就是说，当你访问一个在黑名单列表里的网站时，就会被GFW拦截。但如果你有一台国外的服务器，并且这个服务器不在GFW的黑名单列表里，你就可以访问这台服务器了。因此，翻墙的一个方案就出来了：你想看什么网页，就告诉国外的机器，让国外的机器代理抓取，然后送回来。我们要做的就是保证你于国外机器通讯时不被GFW怀疑和窃听。</p>
+<p>ssh tunnel是比较具有代表性的防窃听通讯隧道，通过ssh与境外服务器建立一条加密通道，此时GFW会将通讯当做普通的流量，但是随着用的人越来越多，GFW不干了，它开始通过一些流量特征分析，识别哪些连接是ssh隧道，并对它进行干扰，于是众多隧道都走不通了。</p>
+<h1 id="shadowsocks是如何翻墙的呢？"><a href="#shadowsocks是如何翻墙的呢？" class="headerlink" title="shadowsocks是如何翻墙的呢？"></a>shadowsocks是如何翻墙的呢？</h1><p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true" alt="shadowsocks翻墙原理"></p>
+<h2 id="这里要理解一个概念，就是socks5是什么？"><a href="#这里要理解一个概念，就是socks5是什么？" class="headerlink" title="这里要理解一个概念，就是socks5是什么？"></a>这里要理解一个概念，就是socks5是什么？</h2><p>这是一个比较成熟的代理协议，被大多数操作系统、浏览器、客户端软件支持，以前翻墙大多数是这个协议。</p>
+<p>在GFW外面部署一个socks5协议的server，在GFW内使用一个支持socks5协议的客户端连接server，通过一定的认证和加密将数据通过TCP socket按照socks5协议发送数据包给server，在server端根据socks5协议解密后将明文包转发给某个GFW外的目标机器，从而实现翻墙。</p>
+<p>因为数据都是经过协商加密的，所以一开始GFW是没法发现的，后来socks5协议大量被用于翻墙，GFW就开发相应的流量识别策略，毕竟连接协商阶段的流量是明文的，因此总有办法截掉你的连接，所以socks5开始变得不那么稳定了。</p>
+<h2 id="那么shadowsocks是如何做到的呢？"><a href="#那么shadowsocks是如何做到的呢？" class="headerlink" title="那么shadowsocks是如何做到的呢？"></a>那么shadowsocks是如何做到的呢？</h2><p>再看上面那张图片，shadowsocks在客户端本地部署了一个socks5 server端（也就是shadowsocks软件），用户使用一个支持socks5协议的客户端软件（如浏览器）连接这个socks5 server发送数据。</p>
+<p>这个socks5 server是shadowsocks按照socks5协议开发的，它解密数据为明文后，按照shadowsocks自定义的一种新的通讯协议（GFW没时间来分析这个协议）加密后发送给GFW外部署的shadowsocks server，这个server按照shadowsocks定义的协议解密数据为明文，转发给墙外的目标机。</p>
+<p>shadowsocks之所以在客户端本地启动一个socks5代理server，是因为socks5协议已被大多数操作系统、浏览器、客户端软件支持，因此我们只需要配置一下浏览器通过shadowsocks的socks5 server代理，那么shadowsocks就可以拦截到浏览器的流量，通过重新包装发送给远程的shadowsocks server了，这对于一个新的翻墙工具的普及无疑是很有利的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/weixin_42075590/article/details/80717291" target="_blank" rel="noopener">shadowsocks原理</a></p>
+<p><a href="https://blog.csdn.net/ai2000ai/article/details/80829131" target="_blank" rel="noopener">shadowsocks原理简介及安装指南</a></p>
+<p>感谢以上作者！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/call与apply/" rel="next" title="call与apply">
+                <i class="fa fa-chevron-left"></i> call与apply
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/16/shadowsocks搭建/" rel="prev" title="shadowsocks搭建">
+                shadowsocks搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#翻墙的原理"><span class="nav-number">1.</span> <span class="nav-text">翻墙的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shadowsocks是如何翻墙的呢？"><span class="nav-number">2.</span> <span class="nav-text">shadowsocks是如何翻墙的呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#这里要理解一个概念，就是socks5是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">这里要理解一个概念，就是socks5是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那么shadowsocks是如何做到的呢？"><span class="nav-number">2.2.</span> <span class="nav-text">那么shadowsocks是如何做到的呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">2.3.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

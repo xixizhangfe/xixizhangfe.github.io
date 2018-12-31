@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1、检测数组Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。 对于数组，  直接利用索引修改某个项目，即：vm.items[indexOfItem] = newValue; 直接修改数组的长度，即：vm.items.length = newLength;  这两种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue踩坑之路">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/vue踩坑之路/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="1、检测数组Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。 对于数组，  直接利用索引修改某个项目，即：vm.items[indexOfItem] = newValue; 直接修改数组的长度，即：vm.items.length = newLength;  这两种">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/19.png">
+<meta property="og:updated_time" content="2018-12-31T16:34:07.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue踩坑之路">
+<meta name="twitter:description" content="1、检测数组Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。 对于数组，  直接利用索引修改某个项目，即：vm.items[indexOfItem] = newValue; 直接修改数组的长度，即：vm.items.length = newLength;  这两种">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/18.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/vue踩坑之路/">
+
+
+
+
+
+  <title>vue踩坑之路 | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/vue踩坑之路/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue踩坑之路</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T17:05:03+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1、检测数组"><a href="#1、检测数组" class="headerlink" title="1、检测数组"></a>1、检测数组</h3><p>Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。</p>
+<p>对于数组，</p>
+<ul>
+<li>直接利用索引修改某个项目，即：vm.items[indexOfItem] = newValue;</li>
+<li>直接修改数组的长度，即：vm.items.length = newLength;</li>
+</ul>
+<p>这两种旧方式虽然可以修改数组，但是不会同步显示在view视图中，需要改成如下方式：</p>
+<ul>
+<li>修改数组中某个项目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Vue.set</span><br><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br><span class="line">// Array.prototype.splice</span><br><span class="line">vm.items.splice(indexOfItem, 1, newValue)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改数组的长度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.items.splice(newLength)</span><br></pre></td></tr></table></figure>
+<h3 id="2、检测对象"><a href="#2、检测对象" class="headerlink" title="2、检测对象"></a>2、检测对象</h3><p>Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。例如：</p>
+<pre><code>var vm = new Vue({
+    data: {
+        a:1
+    }
+})
+// vm.a是响应的
+vm.b = 2;
+// vm.b 是非响应的
+</code></pre><p><strong>那有什么办法是在实例创建之后添加属性并且让它是响应的？</strong></p>
+<p>对于Vue实例，可以使用<code>$set(key, value)</code>实例方法。Vue不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property)，然而它可以使用Vue.set(object,key, value)方法将响应属性添加到嵌套的对象上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.set(vm.someObject, &apos;b&apos;,2)</span><br></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	this.$set(this.someObject, &apos;b&apos;, 2)</span><br><span class="line">```	</span><br><span class="line">	</span><br><span class="line">有时候想向已有对象上添加一些属性，例如使用 Object.assign() 或 _.extend() 方法来添加属性。但是，添加到对象上的新属性不会触发更新(**但是呢，亲测，如果放在methods里，是可以触发更新的呀！！！只是在console中不会更新，有点奇怪！！！**)。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：</span><br></pre></td></tr></table></figure></p>
+<p>// 代替 <code>Object.assign(this.someObject, { a: 1, b: 2 })</code><br>this.someObject = Object.assign({}, this.someObject, { a: 1, b:2})<br><code>`</code></p>
+<p>综上，我们来举个例子：</p>
+<p>如下代码:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;vue&lt;/title&gt;
+  &lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;style&gt;
+    li:hover {
+      cursor: pointer;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;item,index in items&quot; v-on:click=&quot;handle(index)&quot;&gt;
+        &lt;span&gt;{{item.name}}&lt;/span&gt;
+        &lt;span&gt;{{numbers[index]}}&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    var vm = new Vue({
+      el: &quot;.wrap&quot;,
+      data: {
+        numbers: [],
+        items: [
+          {name: &apos;jjj&apos;},
+          {name: &apos;kkk&apos;},
+          {name: &apos;lll&apos;},
+        ]
+      },
+      methods: {
+        handle: function (index) {
+          // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+           if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+             this.numbers[index] = 1;
+           } else {
+             this.numbers[index]++;
+           }
+        }
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h5 id="1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化："><a href="#1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化：" class="headerlink" title="1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化："></a>1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化：</h5><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/18.png" alt="这里写图片描述"></p>
+<p>此时是不是应该换成我们的正确方法啦~~</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;vue&lt;/title&gt;
+  &lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;style&gt;
+    li:hover {
+      cursor: pointer;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;item,index in items&quot; v-on:click=&quot;handle(index)&quot;&gt;
+        &lt;span&gt;{{item.name}}&lt;/span&gt;
+        &lt;span&gt;{{numbers[index]}}&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    var vm = new Vue({
+      el: &quot;.wrap&quot;,
+      data: {
+        numbers: [],
+        items: [
+          {name: &apos;jjj&apos;},
+          {name: &apos;kkk&apos;},
+          {name: &apos;lll&apos;},
+        ]
+      },
+      methods: {
+        handle: function (index) {
+          // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+           if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+             // this.numbers[index] = 1;
+             Vue.set(this.numbers, index, 1);
+           } else {
+             // this.numbers[index]++;
+             Vue.set(this.numbers, index, ++this.numbers[index]);
+           }
+        }
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>这次发现了，哇塞，变了！</p>
+<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/19.png" alt="这里写图片描述">    </p>
+<p>另外，大家试试第二种正确的方式，把<code>Vue.set(this.numbers, index, 1);</code>换成<code>this.$set(this.numbers, index, 1);</code>，把<code>Vue.set(this.numbers, index, ++this.numbers[index]);</code>换成<code>this.$set(this.numbers, index, ++this.numbers[index])</code>,会发现也是会变化哦~</p>
+<p>当然我们这里说的变化时视图的变化，console里的数据老方法旧方法都是可以变的。</p>
+<h5 id="2、点击时给items中元素添加一个属性，-“id”-index"><a href="#2、点击时给items中元素添加一个属性，-“id”-index" class="headerlink" title="2、点击时给items中元素添加一个属性，{“id”: index}"></a>2、点击时给items中元素添加一个属性，{“id”: index}</h5><p>这里有点奇怪~~~</p>
+<ul>
+<li><p>如果是用老方法,也是可以渲染的，这跟网上的一些说法不同，只是在console中直接这么用确实不能渲染。</p>
+<pre><code>methods: {
+    handle: function (index) {
+      // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+       if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+         // this.numbers[index] = 1;
+         // Vue.set(this.numbers, index, 1);
+         // this.$set(this.numbers, index, 1); 
+
+         Object.assign(this.items[index], {&quot;id&quot;: index});
+       } else {
+         // this.numbers[index]++;
+         // Vue.set(this.numbers, index, ++this.numbers[index]);
+         this.$set(this.numbers, index, ++this.numbers[index])
+       }
+    }
+  }
+</code></pre></li>
+</ul>
+<p>这样也是可以的！</p>
+<p>如果把<code>Object.assign(this.items[index], {&quot;id&quot;: index});</code>改成新方法<code>Vue.set(this.items, index, (Object.assign({},this.items[index], {&quot;id&quot;: index})));</code>，当然也没问题，而且在console中使用也没问题。</p>
+<p>所以为了确保无论如何都会渲染，那就采用新方法吧！！！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/24/vue还是react/" rel="next" title="vue还是react">
+                <i class="fa fa-chevron-left"></i> vue还是react
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/webpack相关/" rel="prev" title="webpack相关">
+                webpack相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、检测数组"><span class="nav-number">1.</span> <span class="nav-text">1、检测数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、检测对象"><span class="nav-number">2.</span> <span class="nav-text">2、检测对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化："><span class="nav-number">2.0.1.</span> <span class="nav-text">1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、点击时给items中元素添加一个属性，-“id”-index"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、点击时给items中元素添加一个属性，{“id”: index}</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
