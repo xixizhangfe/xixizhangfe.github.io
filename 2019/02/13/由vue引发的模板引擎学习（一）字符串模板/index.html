@@ -101,12 +101,12 @@
 <meta property="og:site_name" content="xixijiang的主页">
 <meta property="og:description" content="1. 前言又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。 2. 模板引擎的概念模板引擎是为了使用户">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://segmentfault.com/img/remote/1460000010313800">
-<meta property="og:updated_time" content="2019-02-16T13:53:01.633Z">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png">
+<meta property="og:updated_time" content="2019-02-16T14:09:29.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="由vue引发的模板引擎学习（一）字符串模板">
 <meta name="twitter:description" content="1. 前言又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。 2. 模板引擎的概念模板引擎是为了使用户">
-<meta name="twitter:image" content="https://segmentfault.com/img/remote/1460000010313800">
+<meta name="twitter:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png">
 
 
 
@@ -354,7 +354,7 @@
 <p>所以这就带来了一些思考，有没有一种方式能将前端结构与数据分开，从而老司机们就创造出了各种基于字符串的模板引擎。</p>
 <h3 id="5-基于字符串的模板引擎"><a href="#5-基于字符串的模板引擎" class="headerlink" title="5. 基于字符串的模板引擎"></a>5. 基于字符串的模板引擎</h3><p>这些模板引擎又分为两类：一种是不包含逻辑处理，只做数据绑定用的，如<a href="https://github.com/janl/mustache.js/blob/master/mustache.js" target="_blank" rel="noopener">mustache.js</a>；另一种是既有逻辑处理，也有数据绑定的，如<a href="http://www.embeddedjs.com/" target="_blank" rel="noopener">ejs</a>。</p>
 <p>下面以EJS的语法为例，实现一个简单的字符串模板引擎、模板引擎的编译流程如下：</p>
-<p><img src="https://segmentfault.com/img/remote/1460000010313800" alt="基于字符串的模板引擎编译原理"></p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png" alt="基于字符串的模板引擎编译原理"></p>
 <p>还是上面的例子，如果用EJS的语法来写，应该是这样的：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;% for (var i = 0; i &lt; data.length; i++) &#123;%&gt;</span><br><span class="line">			&lt;li&gt;&lt;%= data[i] %&gt;&lt;/li&gt;</span><br><span class="line">		&lt;% &#125; %&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 <p>其中，&lt;%= 和 %&gt;之间的是JS表达式，而在&lt;% 和 %&gt; 之间是普通的JS语句，可以进行逻辑判断和条件循环等操作。</p>
