@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="1. 前言又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。 2. 模板引擎的概念模板引擎是为了使用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="由vue引发的模板引擎学习（一）字符串模板">
+<meta property="og:url" content="http://yoursite.com/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="1. 前言又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。 2. 模板引擎的概念模板引擎是为了使用户">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://segmentfault.com/img/remote/1460000010313800">
+<meta property="og:updated_time" content="2019-02-16T13:53:01.633Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="由vue引发的模板引擎学习（一）字符串模板">
+<meta name="twitter:description" content="1. 前言又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。 2. 模板引擎的概念模板引擎是为了使用户">
+<meta name="twitter:image" content="https://segmentfault.com/img/remote/1460000010313800">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/">
+
+
+
+
+
+  <title>由vue引发的模板引擎学习（一）字符串模板 | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">由vue引发的模板引擎学习（一）字符串模板</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-13T20:32:25+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。</p>
+<h3 id="2-模板引擎的概念"><a href="#2-模板引擎的概念" class="headerlink" title="2. 模板引擎的概念"></a>2. 模板引擎的概念</h3><p>模板引擎是为了使用户界面与业务数据分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。</p>
+<h3 id="3-web前端模板引擎"><a href="#3-web前端模板引擎" class="headerlink" title="3. web前端模板引擎"></a>3. web前端模板引擎</h3><p>这里将介绍三种模板引擎技术，分别是：</p>
+<ul>
+<li>基于字符串的模板</li>
+<li>基于DOM操作的模板</li>
+<li>基于虚拟DOM的模板</li>
+</ul>
+<h3 id="4-为什么需要模板引擎？"><a href="#4-为什么需要模板引擎？" class="headerlink" title="4. 为什么需要模板引擎？"></a>4. 为什么需要模板引擎？</h3><p>页面中经常有些内容依赖于后端数据。比如，我们有这样一段代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;li&gt;喜洋洋&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;懒洋洋&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;美羊羊&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;灰太狼&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;红太狼&lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>实际上面的li里的内容通常是从后端获取的，并不能写死，所以在没有模板引擎的情况下，我们需要这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 这里data应该是请求后端接口得到的，这里只是为了模拟一下</span><br><span class="line">var data = [&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;];</span><br><span class="line">var container = document.getElementById(&apos;container&apos;);</span><br><span class="line">var str = &apos;&lt;ul&gt;&apos;;</span><br><span class="line">for (var i = data.length - 1; i &gt;= 0; i--) &#123;</span><br><span class="line">	str += &apos;&lt;li&gt;&apos; + data[i] + &apos;&lt;/li&gt;&apos;;</span><br><span class="line">&#125;</span><br><span class="line">str += &apos;&lt;/ul&gt;&apos;;</span><br><span class="line">container.innerHTML = str;</span><br></pre></td></tr></table></figure>
+<p>写过的同学应该都有这样的体验：</p>
+<ul>
+<li>开发效率低，字符串拼接写起来麻烦</li>
+<li>容易出错，尤其是结构复杂的情况</li>
+<li>代码看起来不清晰明了</li>
+<li>可维护性低，后期改起来不方便</li>
+<li>可扩展性低，想要增加新需求时更该不方便</li>
+</ul>
+<p>所以这就带来了一些思考，有没有一种方式能将前端结构与数据分开，从而老司机们就创造出了各种基于字符串的模板引擎。</p>
+<h3 id="5-基于字符串的模板引擎"><a href="#5-基于字符串的模板引擎" class="headerlink" title="5. 基于字符串的模板引擎"></a>5. 基于字符串的模板引擎</h3><p>这些模板引擎又分为两类：一种是不包含逻辑处理，只做数据绑定用的，如<a href="https://github.com/janl/mustache.js/blob/master/mustache.js" target="_blank" rel="noopener">mustache.js</a>；另一种是既有逻辑处理，也有数据绑定的，如<a href="http://www.embeddedjs.com/" target="_blank" rel="noopener">ejs</a>。</p>
+<p>下面以EJS的语法为例，实现一个简单的字符串模板引擎、模板引擎的编译流程如下：</p>
+<p><img src="https://segmentfault.com/img/remote/1460000010313800" alt="基于字符串的模板引擎编译原理"></p>
+<p>还是上面的例子，如果用EJS的语法来写，应该是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;% for (var i = 0; i &lt; data.length; i++) &#123;%&gt;</span><br><span class="line">			&lt;li&gt;&lt;%= data[i] %&gt;&lt;/li&gt;</span><br><span class="line">		&lt;% &#125; %&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，&lt;%= 和 %&gt;之间的是JS表达式，而在&lt;% 和 %&gt; 之间是普通的JS语句，可以进行逻辑判断和条件循环等操作。</p>
+<p><strong><br>那么模板引擎需要做的事情是什么呢？就是将上述模板编译成第4小结里的js。<br></strong></p>
+<p>那我们现在比较一下第4小结里的js与所写模板的区别，就可以知道如何将模板编译成想要的js：<br>我们将例子中的模板字符串用template表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var template = `</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;% for(var i=0; i&lt;data.supplies.length; i++) &#123;%&gt;</span><br><span class="line">        &lt;li&gt;&lt;%= data.supplies[i] %&gt;&lt;/li&gt;</span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">`;</span><br></pre></td></tr></table></figure>
+<p>1.我们首先需要将普通html与模板语法区分开<br>这一步可以用正则表达式判断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 匹配JS语句</span><br><span class="line">var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">// 匹配JS表达式</span><br><span class="line">var expReg = /&lt;%=(.+?)%&gt;/g;</span><br></pre></td></tr></table></figure>
+<p>2.需要定义一个变量str，保存编译后的模板。普通的html无需任何处理，需当做字符串拼接到str上；JS表达式不是当做字符串而是直接拼接到str上；JS语句则不需要拼接，直接执行。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;&apos;;</span><br><span class="line">// 需要定义一个拼接函数</span><br><span class="line">function echo(html) &#123;</span><br><span class="line">	str += html;</span><br><span class="line">&#125;</span><br><span class="line">template = template</span><br><span class="line">	//转换JS表达式</span><br><span class="line">	.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">	// 转换JS语句</span><br><span class="line">	.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line"></span><br><span class="line">// 内容为空的部分</span><br><span class="line">var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">template = template.replace(empty, &apos;&apos;);</span><br></pre></td></tr></table></figure>
+<p>到这一步，得到的template为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">template = &apos;echo(`&lt;ul&gt;`); </span><br><span class="line">  for (var i = 0; i &lt; data.length; i++) &#123; </span><br><span class="line"> echo(`&lt;li&gt;`); </span><br><span class="line"> echo(  data[i]  ); </span><br><span class="line"> echo(`&lt;/li&gt;`); </span><br><span class="line">  &#125;  </span><br><span class="line"> echo(`&lt;/ul&gt;`)&apos;;</span><br></pre></td></tr></table></figure>
+<p>3.此时，我们需要将上面写的代码封装成一个函数，并将模板字符串作为参数传递进去，该函数返回编译后的模板，该函数称之为编译函数compile。这里返回的模板应该是一个函数（实际是个字符串），并且参数是所需要的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function compile(template) &#123;</span><br><span class="line">	// 匹配JS语句</span><br><span class="line">	var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">	// 匹配JS表达式</span><br><span class="line">	var expReg = /&lt;%=(.+?)%&gt;/g;</span><br><span class="line">	</span><br><span class="line">	template = template</span><br><span class="line">		//转换JS表达式</span><br><span class="line">		.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">		// 转换JS语句</span><br><span class="line">		.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">	template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line">	</span><br><span class="line">	// 内容为空的部分</span><br><span class="line">	var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">	template = template.replace(empty, &apos;&apos;);</span><br><span class="line">	</span><br><span class="line">	// 这里借助了es6的语法$&#123;&#125;</span><br><span class="line">	var script = `(function parse(data) &#123;</span><br><span class="line">		var str = &apos;&apos;;</span><br><span class="line">		// 需要定义一个拼接函数</span><br><span class="line">		function echo(html) &#123;</span><br><span class="line">			str += html;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		$&#123;template&#125;</span><br><span class="line">		</span><br><span class="line">		return str;</span><br><span class="line">	&#125;)`;</span><br><span class="line">	return script;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.由于compile函数返回的是个字符串，要想该字符串转为真正的函数执行，需要借助eval，最后再将数据传给compile的子函数parse函数，这样就得到了想到的html结构，最后只需要插入dom即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var parse = eval(compile(template));</span><br><span class="line">var output = parse([&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;]);</span><br><span class="line">document.getElementById(&apos;container&apos;).innerHTML = output;</span><br></pre></td></tr></table></figure>
+<p>完整的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var parse = eval(compile(template));</span><br><span class="line">var output = parse([&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;]);</span><br><span class="line">document.getElementById(&apos;container&apos;).innerHTML = output;</span><br><span class="line"></span><br><span class="line">function compile(template) &#123;</span><br><span class="line">	// 匹配JS语句</span><br><span class="line">	var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">	// 匹配JS表达式</span><br><span class="line">	var expReg = /&lt;%=(.+?)%&gt;/g;</span><br><span class="line">	</span><br><span class="line">	template = template</span><br><span class="line">		//转换JS表达式</span><br><span class="line">		.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">		// 转换JS语句</span><br><span class="line">		.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">	template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line">	</span><br><span class="line">	// 内容为空的部分</span><br><span class="line">	var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">	template = template.replace(empty, &apos;&apos;);</span><br><span class="line">	</span><br><span class="line">	// 这里借助了es6的语法$&#123;&#125;</span><br><span class="line">	var script = `(function parse(data) &#123;</span><br><span class="line">		var str = &apos;&apos;;</span><br><span class="line">		// 需要定义一个拼接函数</span><br><span class="line">		function echo(html) &#123;</span><br><span class="line">			str += html;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		$&#123;template&#125;</span><br><span class="line">		</span><br><span class="line">		return str;</span><br><span class="line">	&#125;)`;</span><br><span class="line">	return script;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文章：<a href="https://segmentfault.com/a/1190000010313795" target="_blank" rel="noopener">Web前端模板引擎の字符串模板</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/31/《月亮和六便士》/" rel="next" title="《月亮和六便士》">
+                <i class="fa fa-chevron-left"></i> 《月亮和六便士》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-模板引擎的概念"><span class="nav-number">2.</span> <span class="nav-text">2. 模板引擎的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-web前端模板引擎"><span class="nav-number">3.</span> <span class="nav-text">3. web前端模板引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-为什么需要模板引擎？"><span class="nav-number">4.</span> <span class="nav-text">4. 为什么需要模板引擎？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-基于字符串的模板引擎"><span class="nav-number">5.</span> <span class="nav-text">5. 基于字符串的模板引擎</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

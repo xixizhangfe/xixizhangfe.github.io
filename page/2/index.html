@@ -263,6 +263,139 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/shadowsocks原理/" itemprop="url">shadowsocks原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T11:12:37+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~</p>
+<h1 id="翻墙的原理"><a href="#翻墙的原理" class="headerlink" title="翻墙的原理"></a>翻墙的原理</h1><p>防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于不同的请求具有不同的数据特征，不同的协议具有不同的特征，比如HTTP/HTTPS这类请求，会很明确的告诉GFW它们要请求哪些域名，再比如TCP请求，它只会告诉GFW它们要请求哪个IP。防火墙采用<strong>黑名单</strong>方式，有域名黑名单和IP黑名单，像常见的国外网站<a href="www.google.com">谷歌</a>，<a href="www.facebook.com">Facebook</a>等都是在黑名单里的（<a href="https://zh.wikipedia.org/zh-hans/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A2%AB%E5%B0%81%E9%94%81%E7%BD%91%E7%AB%99%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">封锁网站列表</a>）。 </p>
+<p>也就是说，当你访问一个在黑名单列表里的网站时，就会被GFW拦截。但如果你有一台国外的服务器，并且这个服务器不在GFW的黑名单列表里，你就可以访问这台服务器了。因此，翻墙的一个方案就出来了：你想看什么网页，就告诉国外的机器，让国外的机器代理抓取，然后送回来。我们要做的就是保证你于国外机器通讯时不被GFW怀疑和窃听。</p>
+<p>ssh tunnel是比较具有代表性的防窃听通讯隧道，通过ssh与境外服务器建立一条加密通道，此时GFW会将通讯当做普通的流量，但是随着用的人越来越多，GFW不干了，它开始通过一些流量特征分析，识别哪些连接是ssh隧道，并对它进行干扰，于是众多隧道都走不通了。</p>
+<h1 id="shadowsocks是如何翻墙的呢？"><a href="#shadowsocks是如何翻墙的呢？" class="headerlink" title="shadowsocks是如何翻墙的呢？"></a>shadowsocks是如何翻墙的呢？</h1><p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true" alt="shadowsocks翻墙原理"></p>
+<h2 id="这里要理解一个概念，就是socks5是什么？"><a href="#这里要理解一个概念，就是socks5是什么？" class="headerlink" title="这里要理解一个概念，就是socks5是什么？"></a>这里要理解一个概念，就是socks5是什么？</h2><p>这是一个比较成熟的代理协议，被大多数操作系统、浏览器、客户端软件支持，以前翻墙大多数是这个协议。</p>
+<p>在GFW外面部署一个socks5协议的server，在GFW内使用一个支持socks5协议的客户端连接server，通过一定的认证和加密将数据通过TCP socket按照socks5协议发送数据包给server，在server端根据socks5协议解密后将明文包转发给某个GFW外的目标机器，从而实现翻墙。</p>
+<p>因为数据都是经过协商加密的，所以一开始GFW是没法发现的，后来socks5协议大量被用于翻墙，GFW就开发相应的流量识别策略，毕竟连接协商阶段的流量是明文的，因此总有办法截掉你的连接，所以socks5开始变得不那么稳定了。</p>
+<h2 id="那么shadowsocks是如何做到的呢？"><a href="#那么shadowsocks是如何做到的呢？" class="headerlink" title="那么shadowsocks是如何做到的呢？"></a>那么shadowsocks是如何做到的呢？</h2><p>再看上面那张图片，shadowsocks在客户端本地部署了一个socks5 server端（也就是shadowsocks软件），用户使用一个支持socks5协议的客户端软件（如浏览器）连接这个socks5 server发送数据。</p>
+<p>这个socks5 server是shadowsocks按照socks5协议开发的，它解密数据为明文后，按照shadowsocks自定义的一种新的通讯协议（GFW没时间来分析这个协议）加密后发送给GFW外部署的shadowsocks server，这个server按照shadowsocks定义的协议解密数据为明文，转发给墙外的目标机。</p>
+<p>shadowsocks之所以在客户端本地启动一个socks5代理server，是因为socks5协议已被大多数操作系统、浏览器、客户端软件支持，因此我们只需要配置一下浏览器通过shadowsocks的socks5 server代理，那么shadowsocks就可以拦截到浏览器的流量，通过重新包装发送给远程的shadowsocks server了，这对于一个新的翻墙工具的普及无疑是很有利的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/weixin_42075590/article/details/80717291" target="_blank" rel="noopener">shadowsocks原理</a></p>
+<p><a href="https://blog.csdn.net/ai2000ai/article/details/80829131" target="_blank" rel="noopener">shadowsocks原理简介及安装指南</a></p>
+<p>感谢以上作者！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/call与apply/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1826,307 +1959,6 @@ CustomButton.defaultProps = {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/状态提升/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/状态提升/" itemprop="url">状态提升</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T15:00:10+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通常，几个组件拥有相同的数据，此时就需要将这个数据放到最近的公共祖先的状态里。</p>
-<p>接下来，我们将创建一个温度计算器，并根据给定水温判断是否沸腾。最终效果如图所示：<br><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/17.png" alt="result"></p>
-<p>也就是两个输入框分别对应摄氏温度和华氏温度，只要有一个输入框内容变化，另一个也会相应变化，并判断是否会沸腾。</p>
-<p>我们先考虑只有摄氏温度输入框的情况，</p>
-<pre><code>class Calculator extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;
-      };
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.setState({temperature: e.target.value})
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in celsius:&lt;/legend&gt;
-          &lt;input onChange={this.handleChange} /&gt;
-          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre><p>接着我们再考虑有两个输入框的情况，这时候应该把输入框单独作为一个组件提取出来：</p>
-<pre><code>class TemperatureInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;
-      };
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.setState({temperature: e.target.value})
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
-          &lt;input onChange={this.handleChange} /&gt;
-          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-
-  const scaleName = {
-    &apos;c&apos;: &apos;celsius&apos;,
-    &apos;f&apos;: &apos;Fahrenheit&apos;
-  }
-
-  class Calculator extends React.Component {
-    render() {
-      return (
-        &lt;div&gt;
-          &lt;TemperatureInput scale={scaleName.c}/&gt;
-          &lt;TemperatureInput scale={scaleName.f}/&gt;
-        &lt;/div&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre><p>好，现在得到了两个输入框，可是这两个输入框是独立的，一个框的内容不会同步到另一个，由于以前使用vue的时候，我会想到非父子组件通信，也就是通过两个子组件的共同父组件来传递值，react这里也一样，遵循的原则是数据流top-down-flow，所以也不应该考虑一个组件传值给另一个组件，也应该采用公共组件的方式，那么这里我们就应该把我们想要的值放到公共组件Calculator里.</p>
-<p>整个工作流程应该是这样的：两个组件都接受父组件的数据，组件一数据变化了，就去触发父组件的事件，这个被触发的事件就去更新父组件的状态，这一更新状态，react就要去重新render了，因为这时组件二的数据也随着变了，所以也就同步显示了。</p>
-<pre><code>class TemperatureInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.props.onTemperatureChange(e.target.value)
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
-          &lt;input value={this.props.temperature} onChange={this.handleChange}/&gt;
-          &lt;BoilingVerdict celsius={this.props.temperature}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-
-  const scaleName = {
-    &apos;c&apos;: &apos;celsius&apos;,
-    &apos;f&apos;: &apos;Fahrenheit&apos;
-  }
-
-  class Calculator extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;,
-        scale: &apos;c&apos;
-      };
-      this.handleCelsiusChange=this.handleCelsiusChange.bind(this);
-      this.handleFahrenheitChange=this.handleFahrenheitChange.bind(this);
-    }
-
-    handleCelsiusChange(temperature) {
-      this.setState({scale:&apos;c&apos;, temperature});
-    }
-    handleFahrenheitChange(temperature) {
-      this.setState({scale:&apos;f&apos;, temperature});
-    }
-
-    render() {
-      const temperature = this.state.temperature;
-      const scale = this.state.scale;
-      const celsius = scale === &apos;f&apos; ? tryConvert(temperature, toCelsius) : temperature;
-      const fahrenheit = scale === &apos;c&apos; ? tryConvert(temperature, toFahrenheit) : temperature;
-
-      return (
-        &lt;div&gt;
-          &lt;TemperatureInput scale={scaleName.c} temperature={celsius} onTemperatureChange={this.handleCelsiusChange}/&gt;
-          &lt;TemperatureInput scale={scaleName.f} temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange}/&gt;
-        &lt;/div&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  function toCelsius(fahrenheit) {
-    return (fahrenheit - 32) * 5 / 9;
-  }
-
-  function toFahrenheit(celsius) {
-    return (celsius * 9 / 5) + 32;
-  }
-
-  function tryConvert(temperature, convert) {
-    const input = parseFloat(temperature);
-    if (Number.isNaN(input)) {
-      return &apos;&apos;;
-    }
-    const output = convert(input);
-    const rounded = Math.round(output * 1000) / 1000;
-    return rounded.toString();
-  }
-
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2175,7 +2007,7 @@ CustomButton.defaultProps = {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

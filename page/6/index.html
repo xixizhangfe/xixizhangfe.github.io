@@ -263,6 +263,215 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/Vue-js（-）/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/06/Vue-js（-）/" itemprop="url">Vue.js（-）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T10:06:43+08:00">
+                2017-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/8.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/9.png" alt=""></p>
+<p>我们执行以下代码：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/vue/2.1.3/vue.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;p&gt;{{ message }}&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+    var app = new Vue({
+        el: &apos;#app&apos;,
+        data: {
+            message: &quot;xuxiao is boy&quot;
+        },
+        beforeCreate: function() {
+            console.group(&apos;beforeCreate 创建前状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //undefined
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //undefined 
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message)
+        },
+        created: function() {
+            console.group(&apos;created 创建完毕状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //undefined
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化 
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化
+        },
+        beforeMount: function() {
+            console.group(&apos;beforeMount 挂载前状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + (this.$el)); //已被初始化
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化  
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化  
+        },
+        mounted: function() {
+            console.group(&apos;mounted 挂载结束状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //已被初始化
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化 
+        },
+        beforeUpdate: function() {
+            console.group(&apos;beforeUpdate 更新前状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
+        },
+        updated: function() {
+            console.group(&apos;updated 更新完成状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
+        },
+        beforeDestroy: function() {
+            console.group(&apos;beforeDestroy 销毁前状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
+        },
+        destroyed: function() {
+            console.group(&apos;destroyed 销毁完成状态===============》&apos;);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
+            console.log(this.$el);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
+            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message)
+        }
+    })
+    &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/10.png" alt=""></p>
+<p>可以看出，<br>beforecreated：el 和 data 并未初始化 </p>
+<p>created:完成了 data 数据的初始化，el没有</p>
+<p>beforeMount：完成了 el 和 data 初始化 </p>
+<p>mounted ：完成挂载</p>
+<h2 id="如何用"><a href="#如何用" class="headerlink" title="如何用"></a>如何用</h2><p>beforecreate : 举个栗子：可以在这加个loading事件</p>
+<p>created ：在这结束loading，还做一些初始化，实现函数自执行 </p>
+<p>mounted ： 在这发起后端请求，拿回数据，配合路由钩子做一些事情</p>
+<p>beforeDestory： 你确认删除XX吗？ destoryed ：当前组件已被删除，清空相关内容</p>
+<p>转载自：<a href="https://segmentfault.com/a/1190000008010666" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008010666</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/15/JS中表达式和语句的区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -507,7 +716,7 @@ console.log(me) //Uncaught ReferenceError: me is not defined `
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
