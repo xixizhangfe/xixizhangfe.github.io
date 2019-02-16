@@ -58,7 +58,7 @@ container.innerHTML = str;
 
 下面以EJS的语法为例，实现一个简单的字符串模板引擎、模板引擎的编译流程如下：
 
-![基于字符串的模板引擎编译原理](https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png)
+![基于字符串的模板引擎编译原理](https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png?raw=true)
 
 还是上面的例子，如果用EJS的语法来写，应该是这样的：
 
