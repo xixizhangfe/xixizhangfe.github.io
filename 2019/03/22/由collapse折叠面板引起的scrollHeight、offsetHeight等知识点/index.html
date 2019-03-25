@@ -94,20 +94,20 @@
 
 
 
-<meta name="description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
+<meta name="description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元素的实际高度呢？ 首先来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="获取隐藏元素的高度">
 <meta property="og:url" content="http://yoursite.com/2019/03/22/由collapse折叠面板引起的scrollHeight、offsetHeight等知识点/index.html">
 <meta property="og:site_name" content="xixijiang的主页">
-<meta property="og:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
+<meta property="og:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元素的实际高度呢？ 首先来">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true">
 <meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/clienHeight.png?raw=true">
 <meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true">
-<meta property="og:updated_time" content="2019-03-25T00:58:41.814Z">
+<meta property="og:updated_time" content="2019-03-25T01:17:57.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="获取隐藏元素的高度">
-<meta name="twitter:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
+<meta name="twitter:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元素的实际高度呢？ 首先来">
 <meta name="twitter:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true">
 
 
@@ -334,7 +334,7 @@
 
       
         <p>最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。</p>
-<p>对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。</p>
+<p>对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。</p>
 <p>那么如何拿到过渡元素的实际高度呢？</p>
 <p>首先来看，一般隐藏元素的方式有如下几种：</p>
 <ol>
