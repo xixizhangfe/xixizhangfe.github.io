@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="前端， css，css3,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -94,18 +94,20 @@
 
 
 
-<meta name="description" content="display: none隐藏元素，不占网页中的任何空间，让这个元素彻底消失（看不见也摸不着） overflow: hidden让超出的元素隐藏，就是在设置该属性的时候他会根据你设置的宽高把多余的那部分剪掉 visibility: hidden他是把那个层隐藏了，也就是你看不到它的内容但是它内容所占据的空间还是存在的。（看不见但摸得到） { display: none; /* 不占据空间，无法点击">
-<meta name="keywords" content="前端， css，css3">
+<meta name="description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
 <meta property="og:type" content="article">
-<meta property="og:title" content="display: none, overflow: hidden, visibility: hidden之间的区别">
-<meta property="og:url" content="http://yoursite.com/2017/07/19/display-none-overflow-hidden-visibility-hidden之间的区别/index.html">
+<meta property="og:title" content="获取隐藏元素的高度">
+<meta property="og:url" content="http://yoursite.com/2019/03/22/由collapse折叠面板引起的scrollHeight、offsetHeight等知识点/index.html">
 <meta property="og:site_name" content="xixijiang的主页">
-<meta property="og:description" content="display: none隐藏元素，不占网页中的任何空间，让这个元素彻底消失（看不见也摸不着） overflow: hidden让超出的元素隐藏，就是在设置该属性的时候他会根据你设置的宽高把多余的那部分剪掉 visibility: hidden他是把那个层隐藏了，也就是你看不到它的内容但是它内容所占据的空间还是存在的。（看不见但摸得到） { display: none; /* 不占据空间，无法点击">
+<meta property="og:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-31T16:34:07.849Z">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true">
+<meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true">
+<meta property="og:updated_time" content="2019-03-24T15:09:54.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="display: none, overflow: hidden, visibility: hidden之间的区别">
-<meta name="twitter:description" content="display: none隐藏元素，不占网页中的任何空间，让这个元素彻底消失（看不见也摸不着） overflow: hidden让超出的元素隐藏，就是在设置该属性的时候他会根据你设置的宽高把多余的那部分剪掉 visibility: hidden他是把那个层隐藏了，也就是你看不到它的内容但是它内容所占据的空间还是存在的。（看不见但摸得到） { display: none; /* 不占据空间，无法点击">
+<meta name="twitter:title" content="获取隐藏元素的高度">
+<meta name="twitter:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
+<meta name="twitter:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true">
 
 
 
@@ -134,13 +136,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/19/display-none-overflow-hidden-visibility-hidden之间的区别/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/22/由collapse折叠面板引起的scrollHeight、offsetHeight等知识点/">
 
 
 
 
 
-  <title>display: none, overflow: hidden, visibility: hidden之间的区别 | xixijiang的主页</title>
+  <title>获取隐藏元素的高度 | xixijiang的主页</title>
   
 
 
@@ -263,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/display-none-overflow-hidden-visibility-hidden之间的区别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/由collapse折叠面板引起的scrollHeight、offsetHeight等知识点/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="xixijiang">
@@ -280,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">display: none, overflow: hidden, visibility: hidden之间的区别</h1>
+          <h1 class="post-title" itemprop="name headline">获取隐藏元素的高度</h1>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T09:33:09+08:00">
-                2017-07-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-22T08:33:17+08:00">
+                2019-03-22
               </time>
             
 
@@ -330,27 +332,40 @@
       
 
       
-        <h3 id="display-none"><a href="#display-none" class="headerlink" title="display: none"></a>display: none</h3><p>隐藏元素，不占网页中的任何空间，让这个元素彻底消失（看不见也摸不着）</p>
-<h3 id="overflow-hidden"><a href="#overflow-hidden" class="headerlink" title="overflow: hidden"></a>overflow: hidden</h3><p>让超出的元素隐藏，就是在设置该属性的时候他会根据你设置的宽高把多余的那部分剪掉</p>
-<h3 id="visibility-hidden"><a href="#visibility-hidden" class="headerlink" title="visibility: hidden"></a>visibility: hidden</h3><p>他是把那个层隐藏了，也就是你看不到它的内容但是它内容所占据的空间还是存在的。（看不见但摸得到）</p>
-<pre><code>{ display: none; /* 不占据空间，无法点击 */ } 
-
-{ visibility: hidden; /* 占据空间，无法点击 */ } 
-
-{ height: 0; overflow: hidden; /* 不占据空间，无法点击 */ } 
-
-{ position: absolute; top: -999em; /* 不占据空间，无法点击 */ } 
-
-{ position: relative; top: -999em; /* 占据空间，无法点击 */ } 
-
-{ position: absolute; visibility: hidden; /* 不占据空间，无法点击 */ } 
-
-{ opacity: 0; filter:Alpha(opacity=0); /* 占据空间，可以点击 */ } 
-
-{ position: absolute; opacity: 0; filter:Alpha(opacity=0); /* 不占据空间，可以点击 */ } 
-</code></pre><h3 id="重绘与回流"><a href="#重绘与回流" class="headerlink" title="重绘与回流"></a>重绘与回流</h3><p>修改常规流中元素的display通常会造成文档重排。修改visibility属性只会造成本元素的重绘。 </p>
-<h3 id="是否可以读到"><a href="#是否可以读到" class="headerlink" title="是否可以读到"></a>是否可以读到</h3><p>读屏器不会读取display: none;元素内容；会读取visibility: hidden;元素内容</p>
-<h3 id="是否加载"><a href="#是否加载" class="headerlink" title="是否加载"></a>是否加载</h3><p>这个之前腾讯的开发组做过测试，不同浏览器下面表现不同，但是基本上都是加载的，不管你是display:none还是visibility:hidden，亦或是opacity:0，都会加载的。</p>
+        <p>最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。</p>
+<p>对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。</p>
+<p>那么如何拿到过渡元素的实际高度呢？</p>
+<p>首先来看，一般隐藏元素的方式有如下几种：</p>
+<ol>
+<li><figure class="highlight plain"><figcaption><span>none;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. ```height: 0;overflow: hidden;</span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight plain"><figcaption><span>hidden;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4. ```opacity: 0;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>transform: scale(0);</code></p>
+</li>
+</ol>
+<p>以上五种，除了第一种<code>display: none;</code>是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。</p>
+<p>视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是<code>display: none;</code>元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有<code>display: none;</code>的视觉效果，此时该元素的<code>clientHeight</code>，<code>offsetHeight</code>为0，但是<code>scrollHeight</code>是存在的。因此可以利用<code>scrollHeight</code>来得到<code>display: none;</code>元素的高度。</p>
+<p>后记：</p>
+<p>由于scrollHeight、clientHeight、offsetHeight这几个容易让人混淆的概念，每次用到都是百度一下，所以这里再记录一次，决心搞定它！</p>
+<blockquote>
+<p>scrollHeight</p>
+<p>元素内容的总高度，包含滚动区域。该值等于height + padding + 伪元素高度</p>
+</blockquote>
+<p>(图片来自<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight" target="_blank" rel="noopener">MDN</a><br><img src="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true" alt="srollHeight"></p>
+<blockquote>
+<p>clientHeight</p>
+<p>元素的可见区域的高度，包括padding，但不包括border，margin，水平滚动条。该值等于heihgt + padding - 水平滚动条高度 + 伪元素高度</p>
+</blockquote>
+<blockquote>
+<p>offsetHeight</p>
+<p>元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。</p>
+<p>如果该元素被隐藏了，比如设置了<code>display: none</code>，则offsetHeight为0</p>
+</blockquote>
+<p>在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如<code>Element.scrollHeight</code>，<code>Element.clientHeight</code>，<code>HTMLElement.offsetHeight</code>。这是为什么呢？</p>
+<p>继续查看MDN文档，发现了他们之间的关系：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true" alt="element HTMLElement"></p>
+<p>好了，到此为止我们已经了解高度相关的几个属性了。所以在beforeEnter中我们可以先将过渡元素设置为<code>height: 0; overflow: hidden;</code>，在enter钩子中就可以通过el.scrollHeight获取到元素总高度，并将过渡元素的height设置为el.scrollHeight，这样就得到了过渡元素的高度。从而就可以利用transition了。</p>
 
       
     </div>
@@ -366,12 +381,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/前端，-css，css3/" rel="tag"># 前端， css，css3</a>
-          
-        </div>
-      
 
       
       
@@ -381,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/19/css绝对定位position-absolute/" rel="next" title="css绝对定位position:absolute">
-                <i class="fa fa-chevron-left"></i> css绝对定位position:absolute
+              <a href="/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/" rel="next" title="由vue引发的模板引擎学习（一）字符串模板">
+                <i class="fa fa-chevron-left"></i> 由vue引发的模板引擎学习（一）字符串模板
               </a>
             
           </div>
@@ -390,10 +399,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/19/css盒模型/" rel="prev" title="css盒模型">
-                css盒模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -445,17 +450,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
           <p class="site-author-name" itemprop="name">xixijiang</p>
@@ -506,22 +502,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#display-none"><span class="nav-number">1.</span> <span class="nav-text">display: none</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overflow-hidden"><span class="nav-number">2.</span> <span class="nav-text">overflow: hidden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visibility-hidden"><span class="nav-number">3.</span> <span class="nav-text">visibility: hidden</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重绘与回流"><span class="nav-number">4.</span> <span class="nav-text">重绘与回流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否可以读到"><span class="nav-number">5.</span> <span class="nav-text">是否可以读到</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否加载"><span class="nav-number">6.</span> <span class="nav-text">是否加载</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

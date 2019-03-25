@@ -263,6 +263,218 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/shadowsocks搭建/" itemprop="url">shadowsocks搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T12:56:23+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上一篇文章讲了一下shadowsocks翻墙原理（<a href="https://xixizhangfe.github.io/2018/09/16/shadowsocks%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener">shadowsocks翻墙原理</a>）,这里要理论与实践结合了。开始~</p>
+<p>这里我定义一些规则，避免混淆:</p>
+<ul>
+<li>VPS = 你在搬瓦工购买的机器</li>
+<li>ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port</li>
+<li>ss服务IP = VPS的IP = 执行shadowsocks.sh打印出的Your Server IP</li>
+<li>ss服务IP != shadowsocks.json里的server</li>
+<li>加密方式 = 执行shadowsocks.sh打印出的Your Encryption Method = shadowsocks.json里的method</li>
+<li>ssserver = 你在VPS上启动的shadowsocks服务 = shadowsocks服务端</li>
+<li>sslocal = 你在自己的电脑上安装的shadowsocks客户端 = shadowsocks客户端</li>
+<li>ssserver密码 = 执行shadowsocks.sh打印出的password = shadowsocks.json里的password</li>
+</ul>
+<p>文章里可能出现各种叫法，是为了适应不同的语境，不理解的话可以按照上述规则查看。</p>
+<h1 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h1><p>我是在<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>购买的，当然这是师兄推荐的，否则以我的性格又得纠结死在哪儿买…哈哈哈</p>
+<p>我买的是19.9$/年，512M，应该足够用了（嗯，其实就是看这个最便宜 嘿嘿）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true" alt="搬瓦工套餐选择"></p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>购买以后呢，就可以在<a href="https://www.bwh1.net/clientarea.php" target="_blank" rel="noopener">我的账户</a>里，点击Services-My service，就能看到了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-2?raw=true" alt="购买详情"></p>
+<p>然后点击右边的KiwiVM Control Panel进入管理界面。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-3.png?raw=true" alt="管理界面"></p>
+<p>在Main control里可以看到相关配置信息</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-2.png?raw=true" alt="main control"></p>
+<p>然后你可以选择重装系统，也可以使用默认的。我是重新安装了，如果要重新安装，需要先在Main controls里点击stop进行关机，然后点右侧Install new OS,选择右边的操作系统(我选择的是centos-7-x86_64)，然后点击同意，最后点击reload。大概等个1-2分钟，就好了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-1.png?raw=true" alt="reload"></p>
+<p>Reload后会给一个随机的root用户密码，以及随机端口号。然后点击Main controls，就可以看到你的VPS的IP地址(IP address)和端口号（SSH Port）了，这个是会用到的。（注意：这个端口号只有在登录的时候才会用到，后面配置shadowsocks的时候都不会用到。不要和shadowsocks服务的端口混淆。）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-3.png?raw=true" alt="reload port"></p>
+<p>稍后，就可以进入虚拟机了，用自带的工具，或者其他ssh工具即可。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-4.png?raw=true" alt="command"></p>
+<p>我觉得自带的不好用，用的是ssh,即在本地终端，用ssh连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 分配的端口号(就是上面说的SSH Port)   VPS的IP地址</span><br></pre></td></tr></table></figure>
+<p>然后命令行会提示你输入密码，密码要是不知道，可以通过点击Root password modification，随机产生新的密码。</p>
+<p>输入后，就可以进入登录到你的VPS操作了。</p>
+<h1 id="安装shadowsocks-server端"><a href="#安装shadowsocks-server端" class="headerlink" title="安装shadowsocks server端"></a>安装shadowsocks server端</h1><p>这一步安装的就是上一篇文章中的ss server。</p>
+<p>此处可以利用一个共享的python一键安装脚本。用root用户执行下面的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget</span><br><span class="line">wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>成功后，就会打出日志，最后几行就是ss server的信息。在后面配置ss local的时候都会用到。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-1.png?raw=true" alt="打印的信息"></p>
+<p>其中，Your password(密码)、Your Encryption Method(加密方式)是那个一键安装脚本里写的默认值，你可以修改那个脚本。密码可以不用改，Your Encryption Method这个是必须要改的，因为脚本默认的是aes-256-gcm，但是后面我们配置ss local时是没有这个选项的，所以我改成了aes-256-cfb。更改的方式也很简单，就是打开/etc/shadowsocks.sh这个脚本，然后找到下图里的内容，应该就在脚本的前面，然后把aes-256-cfb放到第一个（注意：本来aes-256-cfb本来不是在第一个的，第一个是aes-256-gcm，图中是我修改后的）。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-2.png?raw=true" alt="sh脚本"></p>
+<p>改完后，重新执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>执行完毕后，打印出来的信息就是你刚才修改的。</p>
+<p>这只是修改密码和加密方式的一种方式。你还可以通过/etc/shadowsocks.json来修改。这种方式更简单明了，推荐推荐推荐！！！  </p>
+<p>如果你已经通过上面那个脚本修改了，打开这个文件，就会看到port、password、method和刚才修改后打印出的日志是一样的，但server不一样，是0.0.0.0（表示可以接收任意IP的请求），因此注意这个server不需要修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;port&quot;:&quot;xxxx&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;teddysun.com&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想修改port、password、method，就可以改这个文件。然后执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks restart</span><br></pre></td></tr></table></figure>
+<p>以后你想修改port、password、method，都可以只修改这个shadowsocks.json文件，然后重启一下shadowsocks就可以了。</p>
+<p>到此，你的ss server就配置成功了。</p>
+<p>当然，如果不放心，你可以做一些验证。</p>
+<ul>
+<li><p>在你自己的电脑，打开终端：</p>
+<ul>
+<li><p>测试你的VPS是否能ping通：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping VPS的IP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试shadowsocks服务端口是否已通</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ss服务IP ss服务端口号</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在你的VPS机器上</p>
+<ul>
+<li><p>查看进程里是否有ssserver，如果打印出信息就代表ssserver在运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep ssserver</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务端口是否在监听，如果打印出信息，则代表端口号在监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:shadowsocks.json里的端口号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks status</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>另外，提供一些常用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动ssserver: service shadowsocks start</span><br><span class="line">停止ssserver: service shadowsocks stop</span><br><span class="line">重启ssserver: service shadowsocks restart</span><br><span class="line">查看ssserver状态: service shadowsocks status</span><br></pre></td></tr></table></figure>
+<h2 id="配置多用户"><a href="#配置多用户" class="headerlink" title="配置多用户"></a>配置多用户</h2><p>如果你想配置多用户，可以把shadowsocks.json改成下图，即把port和password合并：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">	&quot;port1&quot;:&quot;password1&quot;,</span><br><span class="line">	&quot;port2&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="安装shadowsocks客户端"><a href="#安装shadowsocks客户端" class="headerlink" title="安装shadowsocks客户端"></a>安装shadowsocks客户端</h1><p>我的是mac，大家可以根据自己的需要在网上下载，应该很多。这里给出一个地址<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="noopener">下载链接</a>。</p>
+<p>安装后，就会在浏览器看到一个小图标，点击图标，选择服务器-服务器设置，就会弹出下图设置框：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__sslocal%E9%85%8D%E7%BD%AE.jpg?raw=true" alt="sslocal配置"></p>
+<ul>
+<li>点击+号，新建一个服务器</li>
+<li>地址是ss服务IP, 冒号后面的是端口号，就是ss服务端口号</li>
+<li>加密方式就是加密方式</li>
+<li>密码就是ssserver密码</li>
+<li>备注随便填</li>
+<li>点击确定</li>
+<li>另外有三种模式可以选择：PAC自动模式、全局模式、手动模式，PAC自动模式只有在访问被墙的网页时才会走ssserver，全局模式是所有访问的网页都会走ssserver，一般情况下我们就用PAC自动模式就好了，如果访问的某些网站比较慢，比如MDN，可以采用全局模式</li>
+</ul>
+<p>至此，全部配置完毕。可以愉快的上网学习了！</p>
+<h1 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h1><p>配置后，发现还是无法翻墙。可能是ss服务端口号被防火墙阻挡了，因此，可以登录你的VPS，把防火墙关闭，或者把你的ss服务端口号加入到防火墙允许的列表中。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1745,220 +1957,6 @@ vm.b = 2;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react之生命周期/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/react之生命周期/" itemprop="url">react之生命周期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:36:31+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-mounting"><a href="#1-mounting" class="headerlink" title="1. mounting"></a>1. mounting</h2><ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-<h4 id="constructor-props"><a href="#constructor-props" class="headerlink" title="constructor(props)"></a>constructor(props)</h4><p>在mount之前，会调用它；</p>
-<p>初始化state的位置；</p>
-<p>也可以使用props来初始化state，但要注意当props更新时，state不会更新。那么除了同步props到state，还可以使用state提升。</p>
-<h4 id="componentWillMount"><a href="#componentWillMount" class="headerlink" title="componentWillMount()"></a>componentWillMount()</h4><p>当要mount的时候立即调用，它的调用发生在render()之前，所以这里设置state不会触发重新render。</p>
-<p>这是唯一一个当服务器渲染时被调用的生命周期钩子，通常我们建议使用constructor()。</p>
-<h4 id="render"><a href="#render" class="headerlink" title="render()"></a>render()</h4><p>被调用时，检查this.props，this.state，然后返回单个React元素，这个返回的React元素可以表示DOM节点，比如<div>,也可以表示自定义的组件, 比如<my-own>。</my-own></div></p>
-<p>也可以返回null或者false，表明我们不想渲染，此时ReactDOM.findDOMNode(this)将返回null。</p>
-<p>render()函数应该是纯函数，意味着不能修改组件的状态，它返回的是被调用时的结果，并且不能直接和浏览器交互。 如果需要和浏览器交互，需要在componentDidMount()或者其他生命周期中执行。如果shouldComponentUpdate()返回false，那么render将不执行。</p>
-<h4 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount()"></a>componentDidMount()</h4><p>当组件挂载之后被调用，需要得到DOM节点的操作应该在这里执行。 </p>
-<p>如果想从远程加载数据，也应在这里执行网络请求。</p>
-<p>这里设置state，会触发重新渲染。</p>
-<h2 id="2-updating"><a href="#2-updating" class="headerlink" title="2. updating"></a>2. updating</h2><ul>
-<li>componentWillReceiveProps()</li>
-<li>shouldComponentUpdate()</li>
-<li>componentWillUpdate()</li>
-<li>render()</li>
-<li>componentDidUpdate()</li>
-</ul>
-<h4 id="componentWillReceiveProps-nextProps"><a href="#componentWillReceiveProps-nextProps" class="headerlink" title="componentWillReceiveProps(nextProps)"></a>componentWillReceiveProps(nextProps)</h4><p>已经挂载的组件接收新的props之前会调用。</p>
-<p>如果需要根据props的变化来更新状态，应该比较this.props和nextProps，并且在这里使用this.setState()执行状态转换。</p>
-<p>即使props没有更新，这个方法也可能被调用，所以如果我们想处理变化，一定要比较当前props和下一个props。（当父组件造成子组件重新渲染时会遇到这种情况。）</p>
-<p>在mounting期间，react不会用初始的props来调用这个方法。只有在一些组件的props可能更新的时候，才会调用这个方法。</p>
-<p>执行this.setState不会触发这个事件。</p>
-<h4 id="shouldComponentUpdate-nextProps-nextState"><a href="#shouldComponentUpdate-nextProps-nextState" class="headerlink" title="shouldComponentUpdate(nextProps, nextState)"></a>shouldComponentUpdate(nextProps, nextState)</h4><p>这个方法能够让react知道组件的输出是否因state或props的改变而受影响。默认就是当state一变化，就会重新渲染，大部分情况下我们使用默认的。</p>
-<p>在rendering之前，当收到新的props或者state时，就会调用这个方法。当初始化渲染时，或者当使用forceUpdate()时，该方法不被调用。</p>
-<p>返回false不能阻止子组件随他们的state重新渲染。如果返回false，那么componentWillUpdate(), render(), componentDidUpdate()不会被调用。</p>
-<p>如果你发现一个组件在表示后很慢（？？？？），可以考虑变成继承式的，从React.PureComponent继承，这意味着该方法此时是shallow prop and state comparision。</p>
-<p>如果你想自己手写，那就可以比较this.props和nextprops，以及this.state和nextState,并返回false告诉react这个更新可以跳过。</p>
-<h4 id="componentWillUpdate-nextProps-nextState"><a href="#componentWillUpdate-nextProps-nextState" class="headerlink" title="componentWillUpdate(nextProps, nextState)"></a>componentWillUpdate(nextProps, nextState)</h4><p>在收到新的props或者state后，rendering之前，调用该方法。</p>
-<p>在这里可以做一些准备工作，来为更新做准备。</p>
-<p>这个方法在初始渲染的时候不会被调用。</p>
-<p>这里不能设置this.setState()，如果想根据props来更新state，应该在componentWillReceiveProps(nextProps)执行。</p>
-<h4 id="componentDidUpdate"><a href="#componentDidUpdate" class="headerlink" title="componentDidUpdate"></a>componentDidUpdate</h4><p>当更新时被调用。</p>
-<p>初始渲染的时候不被调用。</p>
-<p>当组件更新后，应该在这里操作DOM。</p>
-<p>网络请求适合放在这里，只要你比较了当前props和前一个props（当props没变化的时候，进行网络请求可能没有必要）。</p>
-<h2 id="3-unmounting"><a href="#3-unmounting" class="headerlink" title="3. unmounting"></a>3. unmounting</h2><ul>
-<li>componentWillUnmount()</li>
-</ul>
-<h4 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount()"></a>componentWillUnmount()</h4><p>当卸载一个组件时或者销毁一个组件时，会执行。</p>
-<p>可以在这里做一些清除工作，比如清除定时器，取消网络请求，清除在ComponentDidMount中创建的DOM元素。</p>
-<h2 id="4-其他API"><a href="#4-其他API" class="headerlink" title="4. 其他API"></a>4. 其他API</h2><ul>
-<li>setState()</li>
-<li>forceUpdate()</li>
-</ul>
-<h4 id="setState-updater-callback"><a href="#setState-updater-callback" class="headerlink" title="setState(updater, [callback])"></a>setState(updater, [callback])</h4><p>认为setState是一个请求，而不是一个立即执行命令，会更好。因为为了更好的性能，react会延时它，并且在一个pass里同时更新好几个组件。所以react不能保证state的变化能立即生效。</p>
-<p>setState()通常不立即更新组件。所以在componentDidUpdate或者setState的回调函数中去读取this.state，才能保证读取到的值最新的。</p>
-<p>第一个参数是一个updater函数，</p>
-<pre><code>(prevState, props) =&gt; stateChange
-</code></pre><p>prevState是前一个状态，它不应该直接被改变，相反，应该基于prevState和props建造一个新对象，从而展示变化。</p>
-<p>比如，假设我们想增加一个值，</p>
-<pre><code>this.setState((prevState, props) =&gt; {
-      return {counter: prevState.counter + props.step};
-});
-</code></pre><p>由updater函数接收的prevState和props是最新的。输出的updater将和prevState进行shallowly merged。</p>
-<p>第二个参数是一个可选的回调函数，等setState完成并组建被重新渲染后才会执行。但是我们一般建议使用componentDidUpdate()来代替这个逻辑。</p>
-<h4 id="forceUpdate-callback"><a href="#forceUpdate-callback" class="headerlink" title="forceUpdate(callback)"></a>forceUpdate(callback)</h4><p>component.forceUpdate(callback)</p>
-<p>一般只有当state或者props变化时，组件才会重新渲染。但是如果我们想根据其他数据来渲染组件，就可以调用forceUpdate(),从而跳过shouldComponentUpdate()。这会触发子组件正常的生命周期，包括子组件的shouldComponentUpdate()方法。</p>
-<p>一般要避免使用。</p>
-<h2 id="5-Class-properties"><a href="#5-Class-properties" class="headerlink" title="5. Class properties"></a>5. Class properties</h2><ul>
-<li>defaultProps</li>
-<li>displayName</li>
-</ul>
-<h4 id="defaultProps"><a href="#defaultProps" class="headerlink" title="defaultProps"></a>defaultProps</h4><p>设置默认属性，即当一个props是undefined时，才有用。如果是null，则不会采取默认值，还是null。</p>
-<p>举个例子：</p>
-<pre><code>class CustomButton extends React.Component {
-      // ...
-}
-
-CustomButton.defaultProps = {
-      color: &apos;blue&apos;
-};
-</code></pre><p>如果props.color没有提供，则默认就是blue：</p>
-<pre><code>render() {
-    return &lt;CustomButton /&gt; ; // props.color will be set to blue
-  }
-</code></pre><p>如果props.color设置为null，则还是null：</p>
-<pre><code>render() {
-    return &lt;CustomButton color={null} /&gt; ; // props.color will remain null
-  }
-</code></pre><h4 id="displayName"><a href="#displayName" class="headerlink" title="displayName"></a>displayName</h4><p>用于debugging信息。JSX会自动设置这个值。</p>
-<h2 id="6-instance-properties"><a href="#6-instance-properties" class="headerlink" title="6. instance properties"></a>6. instance properties</h2><ul>
-<li>props</li>
-<li>state</li>
-</ul>
-<h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><p>this.props包含这个组件的调用者定义的props。</p>
-<p>this.props.children是一个特殊的prop，通常是由子标签在JSX表达式中定义的，而不是在它自己的标签中。</p>
-<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p>不要直接修改this.state。</p>
-<p>把它当做不可改变的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2007,7 +2005,7 @@ CustomButton.defaultProps = {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

@@ -263,6 +263,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/javascript组件化开发方式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/javascript组件化开发方式/" itemprop="url">javascript组件化开发方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T19:46:07+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/1.mp4?raw=true" alt=""></p>
+<p>看到要求后，第一反应就是我们最普通的写法（小白写法）：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;inputBox&quot;&gt;&lt;span id=&quot;res&quot;&gt;0&lt;/span&gt;个字
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(function () {
+      var input = $(&apos;#inputBox&apos;);
+      input.on(&apos;keyup&apos;, function () {
+        var num = input.val();
+        if(num.length !== 0) {
+          $(&apos;#res&apos;).html(num.length);
+        }else{
+          $(&apos;#res&apos;).html(&apos;0&apos;);
+        }
+      })
+
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>待更新~~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2060,268 +2206,6 @@ pro.initEm = function() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/自定义对象、prototype原型属性/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/16/自定义对象、prototype原型属性/" itemprop="url">自定义对象、prototype原型属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-16T21:24:17+08:00">
-                2017-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="自定义对象"><a href="#自定义对象" class="headerlink" title="自定义对象"></a>自定义对象</h2><p>1. JS没有类，但只要有函数即可创建对象<br>2. 自定义对象的几种方式</p>
-<ul>
-<li><p>方式1: 使用无参的函数创建对象</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function person() &#123;&#125;;</span><br><span class="line">var p1 = new person();</span><br><span class="line">p1.id = &quot;1&quot;;</span><br><span class="line">p1.name = &quot;张三&quot;;</span><br><span class="line">console.log(p1); // person &#123;id: &quot;1&quot;, name: &quot;张三&quot;&#125;</span><br><span class="line">var p2 = new person();</span><br><span class="line">console.log(p2); // person &#123;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<pre><code>这种方式创建的对象的属性不会共享。
-</code></pre><ul>
-<li><p>方式2: 使用带参数的函数创建对象</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function person(id, name) &#123;</span><br><span class="line">	this.id = id;</span><br><span class="line">	this.name = name;</span><br><span class="line">&#125;</span><br><span class="line">var p1 = new person(2, &quot;李四&quot;);</span><br><span class="line">coonsole.log(p1); // person &#123;id: 2, name: &quot;李四&quot;&#125;</span><br><span class="line">var p2 = new person(3, &quot;王五&quot;);</span><br><span class="line">console.log(p2); // person &#123;id: 3, name: &quot;王五&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<ul>
-<li><p>方式3: 使用Object函数创建对象，JS默认创建了一个function Object(){}.</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var p1 = new Object();</span><br><span class="line">p1.id = 1;</span><br><span class="line">p1.name = &quot;张三&quot;;</span><br><span class="line">console.log(p1);//Object &#123;id: 1, name: &quot;张三&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<ul>
-<li><p>方式4: 使用对象字面量的方式创建</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var p1 = &#123;</span><br><span class="line">	id: 1, // key加不加引号都可以</span><br><span class="line">	name: &quot;张三&quot;</span><br><span class="line">&#125;</span><br><span class="line">console.log(p1); //Object &#123;id: 1, name: &quot;张三&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<p>3. 有了上述基础知识，那我们来实现一个简单的需求：</p>
-<p>编写一个js文件，在js文件中自定义一个数组工具对象，该工具对象要有一个找到最大值的方法，与找元素对应的索引值的方法。<br>如果抛开以上知识，我们可能会这么写：</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-function arrayTool(arr, target) {
-  var max=arr[0];
-  var index = null;
-  for(var i=0; i &lt;arr.length; i++){
-    if(arr[i] &gt; max) {
-      max = arr[i];
-    }
-    if(arr[i] == target){
-      index = i;
-    }
-  }
-  return [max, index];
-}
-console.log(arrayTool([1,3,2,6], 1)); // 
-&lt;/script&gt;
-</code></pre><p>这样写没错，输出结果是：</p>
-<p>  <img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/1.png" alt="result"></p>
-<p>但是，如果有时候我们只想获得最大值，而不想获得索引值呢？那好办，返回的结果取第一个值，<code>console.log(arrayTool([1,3,2,6], 1)[0])</code>不就行了。那如果这个数组工具有很多很多返回的值呢，难不成我们要一个个数是返回数组的第几个值？或者当我们想要其中的一部分返回值的时候，又怎么办呢？是不是很麻烦？</p>
-<p>so，我们就可以利用上面学到的方法啦~</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-function arrayTool(arr, target) {
-  this.getMax = function (arr) {
-    var max=arr[0];
-    for(var i=0; i &lt;arr.length; i++){
-      if(arr[i] &gt; max) {
-        max = arr[i];
-      }
-    }
-    return max;
-  }
-  this.getIndex = function (arr, target) {
-    for(var i=0; i &lt;arr.length; i++){
-      if(arr[i] == target){
-        return i;
-      }
-    }
-    return -1;
-  }
-}
-var tool = new arrayTool();
-var arr = [1,3,2,6];
-console.log(tool.getMax(arr));
-console.log(tool.getIndex(arr, 1));
-&lt;/script&gt;
-</code></pre><p>  输出结果是：</p>
-<p>  <img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/2.png" alt="result"></p>
-<p>  这样我们想得到什么就去调用对应的方法，多简单！</p>
-<h2 id="prototype原型属性"><a href="#prototype原型属性" class="headerlink" title="prototype原型属性"></a>prototype原型属性</h2><p>1. 如果我们想把上述getMax与getIndex方法添加到数组对象中呢？</p>
-<pre><code>// 以下这种方式是不行的，因为Array是内置对象。
-function Array() {
-    this.getMax = function () {
-    }
-    this.getIndex = function () {
-    }
-}
-</code></pre><p>2. Prototype注意的细节</p>
-<pre><code>* prototype是函数(function)的一个必备属性（书面一点的说法是“保留属性”），只要是function，就一定有一个prototype属性
-* prototype的值是一个对象
-* 可以修改任意函数的prototype属性的值
-* 一个对象会自动拥有prototype的所有成员属性和方法
-
-// 猜想Array对象内部结构：
-function Array() {
-    this.prototype = new Object(); // Array对象的必备属性，并且是一个对象
-}
-Array.prototype.getMax = function () {
-    // Array对象的prototype对象的getMax方法
-}
-new Array(); // 这个对象就自动拥有了prototype的所有成员属性和方法，即这里的getMax方法。
-</code></pre><p>3. 作用：给一个方法追加一些功能，就可以使用prototype。（jquery使用较多）<br>4. 解决需求：</p>
-<pre><code>Array.prototype.getMax = function () {
-  var max=this[0];
-    for(var i=0; i &lt;this.length; i++){
-      if(this[i] &gt; max) {
-        max = this[i];
-      }
-    }
-  return max;
-}
-Array.prototype.getIndex = function (target) {
-  for(var i=0; i &lt;this.length; i++){
-      if(this[i] == target){
-        return i;
-      }
-    }
-  return -1;
-}
-var arr = [1,3,2,6];
-console.log(arr.getMax());
-console.log(arr.getIndex(1));
-</code></pre><p>5. 练习：给字符串对象添加一个toCharArray的方法，然后再添加一个reverse(翻转)的方法。</p>
-<pre><code>String.prototype.toCharArray = function () {
-  var arr = new Array();
-  for (var i=0; i &lt; this.length; i++) {
-    arr.push(this.charAt(i)); // 注意这里也可以用this[i]，因为字符串是类数组，可以通过下标获取值，但推荐还是用charAt
-  }
-  return arr;
-}
-
-// 方式一：
-// String.prototype.reverse = function () {
-//   var str = new String();
-//   for(var i=this.length; i--; i&gt;=0) {
-//     str += this[i];
-//   }
-//   return str;
-// }
-
-// 方式二(推荐)：利用toCharArray的方法,因为数组本身就具有reverse方法
-String.prototype.reverse = function () {
-  var charStr = this.toCharArray();
-  charStr.reverse();
-  return charStr.join(&quot;&quot;);
-}
-var str = &quot;we are family&quot;;
-
-console.log(str.toCharArray()); // (13) [&quot;w&quot;, &quot;e&quot;, &quot; &quot;, &quot;a&quot;, &quot;r&quot;, &quot;e&quot;, &quot; &quot;, &quot;f&quot;, &quot;a&quot;, &quot;m&quot;, &quot;i&quot;, &quot;l&quot;, &quot;y&quot;]
-console.log(str.reverse()); // ylimaf era ew
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2370,7 +2254,7 @@ console.log(str.reverse()); // ylimaf era ew
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
