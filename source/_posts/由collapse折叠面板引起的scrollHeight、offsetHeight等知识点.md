@@ -11,15 +11,15 @@ tags:
 
 首先来看，一般隐藏元素的方式有如下几种：
 
-1. ```display: none;```
-2. ```height: 0;overflow: hidden;```
-3. ```visibility: hidden;```
-4. ```opacity: 0;```
-5. ```transform: scale(0);```
+1. `display: none;`
+2. `height: 0;overflow: hidden;`
+3. `visibility: hidden;`
+4. `opacity: 0;`
+5. `transform: scale(0);`
 
-以上五种，除了第一种```display: none;```是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。
+以上五种，除了第一种`display: none;`是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。
 
-视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是```display: none;```元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有```display: none;```的视觉效果，此时该元素的```clientHeight```，```offsetHeight```为0，但是```scrollHeight```是存在的。因此可以利用```scrollHeight```来得到```display: none;```元素的高度。
+视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是`display: none;`元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有`display: none;`的视觉效果，此时该元素的`clientHeight`，`offsetHeight`为0，但是`scrollHeight`是存在的。因此可以利用`scrollHeight`来得到`display: none;`元素的高度。
 
 
 后记：
@@ -41,12 +41,12 @@ tags:
 >
 > 元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。
 >
-> 如果该元素被隐藏了，比如设置了```display: none```，则offsetHeight为0
+> 如果该元素被隐藏了，比如设置了`display: none`，则offsetHeight为0
 
-在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如```Element.scrollHeight```，```Element.clientHeight```，```HTMLElement.offsetHeight```。这是为什么呢？
+在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如`Element.scrollHeight`，`Element.clientHeight`，`HTMLElement.offsetHeight`。这是为什么呢？
 
 继续查看MDN文档，发现了他们之间的关系：
 
 ![element HTMLElement](https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true)
 
-好了，到此为止我们已经了解高度相关的几个属性了。所以在beforeEnter中我们可以先将过渡元素设置为```height: 0; overflow: hidden;```，在enter钩子中就可以通过el.scrollHeight获取到元素总高度，并将过渡元素的height设置为el.scrollHeight，这样就得到了过渡元素的高度。从而就可以利用transition了。
+好了，到此为止我们已经了解高度相关的几个属性了。所以在beforeEnter中我们可以先将过渡元素设置为`height: 0; overflow: hidden;`，在enter钩子中就可以通过el.scrollHeight获取到元素总高度，并将过渡元素的height设置为el.scrollHeight，这样就得到了过渡元素的高度。从而就可以利用transition了。
