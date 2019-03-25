@@ -103,7 +103,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true">
 <meta property="og:image" content="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true">
-<meta property="og:updated_time" content="2019-03-24T15:09:54.505Z">
+<meta property="og:updated_time" content="2019-03-25T00:35:39.619Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="获取隐藏元素的高度">
 <meta name="twitter:description" content="最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。 对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。 那么如何拿到过渡元">
@@ -337,12 +337,11 @@
 <p>那么如何拿到过渡元素的实际高度呢？</p>
 <p>首先来看，一般隐藏元素的方式有如下几种：</p>
 <ol>
-<li><figure class="highlight plain"><figcaption><span>none;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. ```height: 0;overflow: hidden;</span><br></pre></td></tr></table></figure>
-</li>
-<li><figure class="highlight plain"><figcaption><span>hidden;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4. ```opacity: 0;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>transform: scale(0);</code></p>
-</li>
+<li><code>display: none;</code></li>
+<li><code>height: 0;overflow: hidden;</code></li>
+<li><code>visibility: hidden;</code></li>
+<li><code>opacity: 0;</code></li>
+<li><code>transform: scale(0);</code></li>
 </ol>
 <p>以上五种，除了第一种<code>display: none;</code>是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。</p>
 <p>视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是<code>display: none;</code>元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有<code>display: none;</code>的视觉效果，此时该元素的<code>clientHeight</code>，<code>offsetHeight</code>为0，但是<code>scrollHeight</code>是存在的。因此可以利用<code>scrollHeight</code>来得到<code>display: none;</code>元素的高度。</p>
