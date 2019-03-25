@@ -1,0 +1,52 @@
+---
+title: 获取隐藏元素的高度
+date: 2019-03-22 08:33:17
+tags:
+---
+最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。
+
+对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。这个是为啥捏？后面再说。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。
+
+那么如何拿到过渡元素的实际高度呢？
+
+首先来看，一般隐藏元素的方式有如下几种：
+
+1. ```display: none;```
+2. ```height: 0;overflow: hidden;```
+3. ```visibility: hidden;```
+4. ```opacity: 0;```
+5. ```transform: scale(0);```
+
+以上五种，除了第一种```display: none;```是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。
+
+视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是```display: none;```元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有```display: none;```的视觉效果，此时该元素的```clientHeight```，```offsetHeight```为0，但是```scrollHeight```是存在的。因此可以利用```scrollHeight```来得到```display: none;```元素的高度。
+
+
+后记：
+
+由于scrollHeight、clientHeight、offsetHeight这几个容易让人混淆的概念，每次用到都是百度一下，所以这里再记录一次，决心搞定它！
+
+> scrollHeight
+>
+> 元素内容的总高度，包含滚动区域。该值等于height + padding + 伪元素高度
+
+(图片来自[MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight)
+![srollHeight](https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true)
+
+> clientHeight
+>
+> 元素的可见区域的高度，包括padding，但不包括border，margin，水平滚动条。该值等于heihgt + padding - 水平滚动条高度 + 伪元素高度
+
+> offsetHeight
+>
+> 元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。
+>
+> 如果该元素被隐藏了，比如设置了```display: none```，则offsetHeight为0
+
+在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如```Element.scrollHeight```，```Element.clientHeight```，```HTMLElement.offsetHeight```。这是为什么呢？
+
+继续查看MDN文档，发现了他们之间的关系：
+
+![element HTMLElement](https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true)
+
+好了，到此为止我们已经了解高度相关的几个属性了。所以在beforeEnter中我们可以先将过渡元素设置为```height: 0; overflow: hidden;```，在enter钩子中就可以通过el.scrollHeight获取到元素总高度，并将过渡元素的height设置为el.scrollHeight，这样就得到了过渡元素的高度。从而就可以利用transition了。
