@@ -353,7 +353,6 @@
 <p>scrollHeight</p>
 <p>元素内容的总高度，包含滚动区域。该值等于height + padding + 伪元素高度</p>
 </blockquote>
-<p>(图片来自<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight" target="_blank" rel="noopener">MDN</a><br><img src="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true" alt="srollHeight"></p>
 <blockquote>
 <p>clientHeight</p>
 <p>元素的可见区域的高度，包括padding，但不包括border，margin，水平滚动条。该值等于heihgt + padding - 水平滚动条高度 + 伪元素高度</p>
@@ -363,6 +362,7 @@
 <p>元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。</p>
 <p>如果该元素被隐藏了，比如设置了<code>display: none</code>，则offsetHeight为0</p>
 </blockquote>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true" alt="srollHeight"><br><img src="https://github.com/xixizhangfe/markdownImages/blob/master/clienHeight.png?raw=true" alt="clientHeight"></p>
 <p>在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如<code>Element.scrollHeight</code>，<code>Element.clientHeight</code>，<code>HTMLElement.offsetHeight</code>。这是为什么呢？</p>
 <p>继续查看MDN文档，发现了他们之间的关系：</p>
 <p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true" alt="element HTMLElement"></p>
