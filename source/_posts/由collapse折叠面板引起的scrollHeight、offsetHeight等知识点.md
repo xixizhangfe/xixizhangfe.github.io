@@ -30,8 +30,6 @@ tags:
 >
 > 元素内容的总高度，包含滚动区域。该值等于height + padding + 伪元素高度
 
-![srollHeight](https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true)
-![clientHeight](https://github.com/xixizhangfe/markdownImages/blob/master/clienHeight.png?raw=true)
 > clientHeight
 >
 > 元素的可见区域的高度，包括padding，但不包括border，margin，水平滚动条。该值等于heihgt + padding - 水平滚动条高度 + 伪元素高度
@@ -41,6 +39,9 @@ tags:
 > 元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。
 >
 > 如果该元素被隐藏了，比如设置了`display: none`，则offsetHeight为0
+
+![srollHeight](https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true)
+![clientHeight](https://github.com/xixizhangfe/markdownImages/blob/master/clienHeight.png?raw=true)
 
 在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如`Element.scrollHeight`，`Element.clientHeight`，`HTMLElement.offsetHeight`。这是为什么呢？
 
