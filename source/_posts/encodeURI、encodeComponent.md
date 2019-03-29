@@ -31,7 +31,7 @@ encodeURI不会对`&`, `+`, `=`编码，而这三个在GET和POST请求中是特
 ### 注意事项
 1. 为了避免上面说的那种场景，因此，为了避免服务器收到不可预知的请求，对用户输入的URI部分的内容你都需要用encodeURIComponent进行转义。
 
-2. `encodeURI`、`encodeURIComponent`如果编码一个非高-低位完整(参考下一篇文章)的代理字符，将会抛出一个`URIError`错误。比如：
+2. `encodeURI`、`encodeURIComponent`如果编码一个非高-低位完整的代理字符，将会抛出一个`URIError`错误。比如：
 
 ```
 // 高低位完整
