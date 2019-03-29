@@ -263,6 +263,290 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/29/encodeURI、encodeComponent/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/29/encodeURI、encodeComponent/" itemprop="url">encodeURI、encodeComponent、decodeURI、decodeURIComponent</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-29T17:31:51+08:00">
+                2019-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JS基础知识/" itemprop="url" rel="index">
+                    <span itemprop="name">JS基础知识</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近项目在处理sso问题，需要重定向。这时候用到了<code>encodeURIComponent</code>，突然意识到对这个api不甚了解。特此学习一番。</p>
+<p><code>encodeURI</code>和<code>encodeURIComponent</code>都是对URI进行编码的方法。</p>
+<h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h3><ol>
+<li>输入参数不同：<code>encodeURI</code>输入的参数是一个完整的URI，<code>encodeURIComponent</code>的输入参数URI的组成部分。</li>
+<li>对字符的处理不同，这个见下面的图</li>
+<li>使用场景不同</li>
+</ol>
+<h3 id="一张图解释四个函数对不同字符的处理"><a href="#一张图解释四个函数对不同字符的处理" class="headerlink" title="一张图解释四个函数对不同字符的处理"></a>一张图解释四个函数对不同字符的处理</h3><p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/charactor-type.png?raw=true" alt="字符分类"></p>
+<p>当URI里包含一个没在上面列出的字符或有时不想让给定的保留字符有特殊意义，那么必须编码这个字符。字符被转换成UTF-8编码，首先从UTF-16转换成相应的代码点值的替代。然后返回的字节序列转换为一个字符串，每个字节用一个“%xx”形式的转移序列表示。</p>
+<h3 id="使用场景的不同"><a href="#使用场景的不同" class="headerlink" title="使用场景的不同"></a>使用场景的不同</h3><p>encodeURI不会对<code>&amp;</code>, <code>+</code>, <code>=</code>编码，而这三个在GET和POST请求中是特殊字符，所以如果一个URI要进行HTTP的GET和POST请求，不适合使用<code>encodeURI</code>进行编码，而<code>encodeURIComponent</code>则可以。</p>
+<p>举个例子：</p>
+<p>一个URI是:<code>http://0.0.0.0?comment=Thyme &amp;time=again</code>，本意是<code>comment</code>是变量，值是<code>Thyme &amp;time=again</code>, 如果不使用<code>encodeURIComponent</code>（或者使用<code>encodeURI</code>编码），服务器得到的是<code>http://0.0.0.0?comment=Thyme%20&amp;time=again</code>，此时服务器会解析为两个键值对，<code>comment=Thyme</code>和<code>time=again</code>。</p>
+<p>而如果使用encodeURIComponent对参数进行编码，<code>encodeURIComponent</code>得到的是<code>%3Fcomment%3DThyme%20%26time%3Dagain</code></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><p>为了避免上面说的那种场景，因此，为了避免服务器收到不可预知的请求，对用户输入的URI部分的内容你都需要用encodeURIComponent进行转义。</p>
+</li>
+<li><p><code>encodeURI</code>、<code>encodeURIComponent</code>如果编码一个非高-低位完整(参考下一篇文章)的代理字符，将会抛出一个<code>URIError</code>错误。比如：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 高低位完整</span><br><span class="line">alert(encodeURIComponent(&apos;\uD800\uDFFF&apos;));</span><br><span class="line"></span><br><span class="line">// 只有高位，将抛出&quot;URIError: malformed URI sequence&quot;</span><br><span class="line">alert(encodeURIComponent(&apos;\uD800&apos;));</span><br><span class="line"></span><br><span class="line">// 只有低位，将抛出&quot;URIError: malformed URI sequence&quot;</span><br><span class="line">alert(encodeURIComponent(&apos;\uDFFF&apos;));</span><br></pre></td></tr></table></figure>
+<p>因此，为了防止报错影响程序运行，可以使用try/catch包裹：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function encodeURIFixed() &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    encodeURIComponent()</span><br><span class="line">  &#125; catch() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent" target="_blank" rel="noopener">MDN-encodeURIComponent</a></p>
+<p><a href="https://juejin.im/post/5835836361ff4b0061f38a5d" target="_blank" rel="noopener">一张图看懂encodeURI、encodeURIComponent、decodeURI、decodeURIComponent的区别</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/js模块系统详解/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/js模块系统详解/" itemprop="url">js模块系统详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T09:37:44+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/由collapse折叠面板引起的scrollHeight、offsetHeight等知识点/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1483,262 +1767,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/HTTP代理/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/HTTP代理/" itemprop="url">HTTP代理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:37:41+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="HTTP代理"><a href="#HTTP代理" class="headerlink" title="HTTP代理"></a>HTTP代理</h1><p>代理的实际作用就是一个带有控制的转发服务器，在面对客户端的时候，起着服务器的作用；在面对服务器的时候，起着客户端的作用。</p>
-<p>不同代理有不同的作用，常见的作用有：缓存代理、访问控制、反向代理。</p>
-<h2 id="缓存代理"><a href="#缓存代理" class="headerlink" title="缓存代理"></a>缓存代理</h2><p>当客户端请求一个资源的时候，在客户端和服务器之间可能存在一个代理服务器，该代理服务器会检查自己的缓存中是否有当前客户端请求的资源，并且是否过期。</p>
-<p>如果资源过期或者资源不存在，代理服务器会向服务器请求资源并将该资源缓存下来。</p>
-<p>采用缓存代理可以提高请求速度、降低原始服务器的压力。</p>
-<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>在内网与外网的某个交汇点增加一个代理服务器，当请求通过该代理时，代理会对请求进行处理，比如分类、身份鉴定等。</p>
-<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>正向代理，也叫做前向代理。</p>
-<p>正向代理建立在客户端一侧，由代理来伪装客户端，使得多个客户端在服务端眼里是同一个客户端。</p>
-<p>VPN就是一种正向代理。</p>
-<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>反向代理，建立在服务端一侧，在客户端眼中，代理服务器就是服务器，而真正的服务器对客户端是透明的。</p>
-<p>反向代理一般用于负载均衡。</p>
-<p>当一个请求到达时，反向代理会判断将该请求发到哪个服务端，客户端收到的相应报文是来自全局最优的服务端提供的服务。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks与VPN区别/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/shadowsocks与VPN区别/" itemprop="url">shadowsocks与VPN区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:19:52+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="vpn"><a href="#vpn" class="headerlink" title="vpn"></a>vpn</h1><p>vpn(virtual private network, 虚拟私人网络), 是一种加密通讯技术。</p>
-<p>vpn是一种统称，出现远早于GFW，所以它不是为翻墙而生的，它的目的是数据传输安全和网络匿名。</p>
-<p>既然不是为翻墙而生的，那从翻墙的角度而言，vpn就存在诸多问题，最严重的一个就是流量特征过于明显，GFW目前已经能识别绝大部分的VPN，所以VPN得翻墙方式基本已经废了。</p>
-<p>接入VPN就是接入了一个专有网络，你访问网络的所有流量都通过这个专有网络的出口出去，同时你的IP地址也变成了这个VPN分配的IP地址。</p>
-<h1 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h1><p>是一种socks5的代理，而socks5的代理服务器则通过一个加密通道，将你的请求发给代理服务器，代理服务器将请求转发到目的地。</p>
-<p>你没有加入任何新的网络，只是http/socks数据经过代理服务器的转发送出，并从代理服务器接收响应。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1787,12 +1815,21 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">55</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
 
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
           
 
           
@@ -1800,7 +1837,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>
