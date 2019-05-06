@@ -1,5 +1,5 @@
 ---
-title: js模块系统详解
+title: js模块系统详解(一)
 date: 2019-03-25 09:37:44
 tags:
 ---
@@ -31,7 +31,7 @@ math.add(2, 3);
 因此，浏览器的模块，不能采用”同步加载”，而是要异步加载，因此AMD就诞生了。
 
 
-###
+### AMD
 AMD也是采用require语句，但是语法与CommonJS不同。
 
 ```
@@ -54,3 +54,17 @@ math.add()与math模块加载不是同步的，浏览器不会发生假死。所
 参考：
 
 http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html
+
+
+### ES6的模块系统
+ES6实现了模块规范，完全可以取代CommonJS和AMD，成为服务器和浏览器通用的模块解决方案。
+
+#### ES6的设计思想
+设计思想是：尽量的静态化，也就是编译时加载（静态加载）。
+
+这样在编译时就能确定模块之间的依赖关系、输入和输出的变量。
+
+而CommonJS和AMD只能在运行时才能确定这些东西（运行时加载）(此处可以详看[阮一峰的es6模块系统](http://es6.ruanyifeng.com/#docs/module))。
+
+
+### NodeJS的模块系统
