@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="切莫停下前进的脚步">
+<meta name="description" content="前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。 CommonJSnodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。 nodejs的模块系统，就是参考commonjs规范实现的。 A">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js模块系统详解">
+<meta property="og:title" content="js模块系统详解(一)">
 <meta property="og:url" content="http://yoursite.com/2019/03/25/js模块系统详解/index.html">
 <meta property="og:site_name" content="xixijiang的主页">
-<meta property="og:description" content="切莫停下前进的脚步">
+<meta property="og:description" content="前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。 CommonJSnodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。 nodejs的模块系统，就是参考commonjs规范实现的。 A">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-25T03:17:01.610Z">
+<meta property="og:updated_time" content="2019-05-06T02:43:29.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js模块系统详解">
-<meta name="twitter:description" content="切莫停下前进的脚步">
+<meta name="twitter:title" content="js模块系统详解(一)">
+<meta name="twitter:description" content="前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。 CommonJSnodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。 nodejs的模块系统，就是参考commonjs规范实现的。 A">
 
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title>js模块系统详解 | xixijiang的主页</title>
+  <title>js模块系统详解(一) | xixijiang的主页</title>
   
 
 
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js模块系统详解</h1>
+          <h1 class="post-title" itemprop="name headline">js模块系统详解(一)</h1>
         
 
         <div class="post-meta">
@@ -329,7 +329,29 @@
       
 
       
-        
+        <p>前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。</p>
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>nodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。</p>
+<p>nodejs的模块系统，就是参考commonjs规范实现的。</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD的全称是Asynchronous Module Define，异步模块定义。</p>
+<h3 id="为什么AMD会诞生呢？"><a href="#为什么AMD会诞生呢？" class="headerlink" title="为什么AMD会诞生呢？"></a>为什么AMD会诞生呢？</h3><p>在有了服务端模块后，我们自然也想要客户端模块，而且最好这两个能兼容，一个模块都不用修改，在服务端和客户端可以同时运行。</p>
+<p>但是，CommonJS有一个重大的局限，导致它不适合在浏览器环境运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var math = require(&apos;math);</span><br><span class="line">math.add(2, 3);</span><br></pre></td></tr></table></figure>
+<p>看上面的代码，乍一看似乎没有什么问题。但实际上，第二行代码需要在第一行代码执行后，才能执行。因此必须要等到math.js加载完成后。如果math.js加载时间很长，整个应用就卡在这里了。</p>
+<p>这对于服务端编程并不是一个问题，因为服务端所有的模块都放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时取决于网速，可能要等很长时间。</p>
+<p>因此，浏览器的模块，不能采用”同步加载”，而是要异步加载，因此AMD就诞生了。</p>
+<h3 id="AMD-1"><a href="#AMD-1" class="headerlink" title="AMD"></a>AMD</h3><p>AMD也是采用require语句，但是语法与CommonJS不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require([module], callback);</span><br></pre></td></tr></table></figure>
+<p>其中，第一个参数<code>[module]</code>是所有依赖的模块，是一个数组；第二个参数<code>callback</code>，则是加载成功之后的回调。</p>
+<p>上面的那个代码，如果用AMD实现，则是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&apos;math&apos;], function() &#123;</span><br><span class="line">  math.add(2, 3);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>math.add()与math模块加载不是同步的，浏览器不会发生假死。所以很显然，AMD比较适合浏览器环境。</p>
+<p>参考：</p>
+<p><a href="http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html</a></p>
+<h3 id="ES6的模块系统"><a href="#ES6的模块系统" class="headerlink" title="ES6的模块系统"></a>ES6的模块系统</h3><p>ES6实现了模块规范，完全可以取代CommonJS和AMD，成为服务器和浏览器通用的模块解决方案。</p>
+<h4 id="ES6的设计思想"><a href="#ES6的设计思想" class="headerlink" title="ES6的设计思想"></a>ES6的设计思想</h4><p>设计思想是：尽量的静态化，也就是编译时加载（静态加载）。</p>
+<p>这样在编译时就能确定模块之间的依赖关系、输入和输出的变量。</p>
+<p>而CommonJS和AMD只能在运行时才能确定这些东西（运行时加载）(此处可以详看<a href="http://es6.ruanyifeng.com/#docs/module" target="_blank" rel="noopener">阮一峰的es6模块系统</a>)。</p>
+<h3 id="NodeJS的模块系统"><a href="#NodeJS的模块系统" class="headerlink" title="NodeJS的模块系统"></a>NodeJS的模块系统</h3>
       
     </div>
     
@@ -417,8 +439,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
           <p class="site-author-name" itemprop="name">xixijiang</p>
@@ -431,7 +462,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -478,6 +509,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS"><span class="nav-number">1.</span> <span class="nav-text">CommonJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">2.</span> <span class="nav-text">AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么AMD会诞生呢？"><span class="nav-number">2.1.</span> <span class="nav-text">为什么AMD会诞生呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AMD-1"><span class="nav-number">2.2.</span> <span class="nav-text">AMD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ES6的模块系统"><span class="nav-number">2.3.</span> <span class="nav-text">ES6的模块系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6的设计思想"><span class="nav-number">2.3.1.</span> <span class="nav-text">ES6的设计思想</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJS的模块系统"><span class="nav-number">2.4.</span> <span class="nav-text">NodeJS的模块系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

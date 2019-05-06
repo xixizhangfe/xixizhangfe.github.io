@@ -263,6 +263,370 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/06/js模块系统详解-二/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/06/js模块系统详解-二/" itemprop="url">js模块系统详解(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-06T09:26:27+08:00">
+                2019-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="各个模块系统的语法"><a href="#各个模块系统的语法" class="headerlink" title="各个模块系统的语法"></a>各个模块系统的语法</h2><p>CommonJS的语法是<code>require</code> <code>module.exports</code></p>
+<p>ES6的语法是<code>import</code> <code>export</code> <code>export default</code></p>
+<p>NodeJS的语法是<code>require</code> <code>exports</code> <code>module.exports</code></p>
+<h2 id="require-import-export-module-exports混用"><a href="#require-import-export-module-exports混用" class="headerlink" title="require import export module.exports混用"></a><code>require</code> <code>import</code> <code>export</code> <code>module.exports</code>混用</h2><p>通常我们所做的项目，会遇到<code>require</code> <code>import</code> <code>export</code> <code>module.exports</code>混合使用的情况。</p>
+<p>比如，我所做的一个项目使用了node，在node层schema.js里导出了一个属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// schema.js</span><br><span class="line">exports.rules = &#123;</span><br><span class="line">  name: [&#123;</span><br><span class="line">    pattern: /\w+/,</span><br><span class="line">    message: &apos;支持英文字母、数字、下划线&apos;,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    min: 4,</span><br><span class="line">    max: 32,</span><br><span class="line">    message: &apos;长度范围必须在4~32字符之间&apos;,</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>然后，在前端vue文件里引入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// test.vue</span><br><span class="line">import &#123; rules &#125; from &apos;/path/to/schema.js&apos;;</span><br></pre></td></tr></table></figure>
+<p>对于nodejs模块规范来说，使用exports导出，应该使用require引入。而上面这个例子，是import引入的。那么为什么可以这样做？</p>
+<p>这里我看到了一篇文章，非常好，<a href="https://juejin.im/post/5a2e5f0851882575d42f5609，推荐给大家。下面的内容，也都是抄的这篇文章的。目的是为了加深自己的记忆与理解。" target="_blank" rel="noopener">https://juejin.im/post/5a2e5f0851882575d42f5609，推荐给大家。下面的内容，也都是抄的这篇文章的。目的是为了加深自己的记忆与理解。</a></p>
+<p>链接的文章主要从这几个问题入手：</p>
+<ol>
+<li>为什么有的地方使用<code>require</code>去引用一个模块时需要加上<code>default</code>？<code>require(&#39;xx&#39;).default</code></li>
+<li>经常在各大UI组件引用的文档上会看到说明<code>import { button } from &#39;xx-ui&#39;</code>这样会引入所有组件内容，需要添加额外的babel配置，比如<code>babel-plugin-component</code>?</li>
+<li>为什么可以使用es6的import去引用commonjs规范定义的模块，或者反过来也可以？</li>
+<li>我们在浏览一些npm下载下来的UI组件模块时（比如说element-ui的lib文件夹下），看到的都是webpack编译好的js文件，可以使用import或require再去引用。但是我们平时编译好的js是无法再被其他模块import的，这是为什么？</li>
+<li>babel在模块化的场景中充当了什么角色？以及webpack？哪个起到了关键作用？</li>
+<li>听说es6还有tree-shaking功能，怎么才能使用这个功能？</li>
+</ol>
+<h3 id="webpack在模块化中的作用"><a href="#webpack在模块化中的作用" class="headerlink" title="webpack在模块化中的作用"></a>webpack在模块化中的作用</h3><p>webpack本身维护了一套模块系统，这套模块系统兼容了所有前端历史进程下的模块规范，包括<code>amd</code> <code>commonjs</code> <code>es6</code>等。下面只对<code>commonjs</code> <code>es6</code>规范进行说明。</p>
+<p>模块化的实现其实就在最后编译的文件内。</p>
+<p>先看一下这个demo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// webpack</span><br><span class="line"></span><br><span class="line">const path = require(&apos;path&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">  entry: &apos;./main.js&apos;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, &apos;dist&apos;),</span><br><span class="line">    filename: &apos;bundle.js&apos;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// main.js</span><br><span class="line">import a from &apos;./a&apos;;</span><br><span class="line"></span><br><span class="line">export default a;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// a.js</span><br><span class="line"></span><br><span class="line">export default 333;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack编译后的js</span><br><span class="line"></span><br><span class="line">(function(modules) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  function __webpack_require__(moduleId) &#123;</span><br><span class="line">    var module =  &#123;</span><br><span class="line">      i: moduleId,</span><br><span class="line">      l: false,</span><br><span class="line">      exports: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);</span><br><span class="line">    return module.exports;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return __webpack_require__(0);</span><br><span class="line">&#125;)(&#123;</span><br><span class="line">  &quot;./client/a.js&quot;:</span><br><span class="line">  (function (module, __webpack_exports__, __webpack_require__) &#123;</span><br><span class="line"></span><br><span class="line">    &quot;use strict&quot;;</span><br><span class="line">    Object.defineProperty(exports, &apos;__esModule&apos;, &#123; value: true &#125;);</span><br><span class="line">    /* harmony default export */ __webpack_exports__[&quot;default&quot;] = (333);</span><br><span class="line">  &#125;),</span><br><span class="line">  &quot;./client/main.js&quot;:</span><br><span class="line">  (function (module, __webpack_exports__, __webpack_require__) &#123;</span><br><span class="line"></span><br><span class="line">    &quot;use strict&quot;;</span><br><span class="line">    Object.defineProperty(exports, &apos;__esModule&apos;, &#123; value: true &#125;);</span><br><span class="line">    /* harmony import */ var _a_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./a.js */ &quot;./client/a.js&quot;);</span><br><span class="line">    /* harmony default export */ __webpack_exports__[&quot;default&quot;] = (&apos;main.js&apos;);</span><br><span class="line">    console.log(&apos;a&apos;, _a_js__WEBPACK_IMPORTED_MODULE_0__[&quot;default&quot;]);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上面这段js就是使用webpack编译后的代码（经过精简），其中就包含了webpack的运行时代码，就是关于模块的实现。</p>
+<p>其实这段js就是一个自执行函数，这个函数的入参是个对象（注意原文可能由于webpack版本问题，写的是数组。本文用的是webpack4），对象的内容包括了所有依赖的模块。</p>
+<p>自执行逻辑相信大家都知道。那么最关键的，也是与require、import有关的，是<code>__webpack_require__</code>这个函数。它是<code>require</code>或者<code>import</code>的替代。而<code>__webpack_exports__</code>就是模块的<code>module.exports</code>的引用。比如，入口模块中调用了<code>__webpack_require__(1)</code>, 那么就会得到1这个模块的<code>module.exports</code>。</p>
+<p>注意上面的例子，我们都是采用es6的规范，如果把引入的方式改成commonjs呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// main.js</span><br><span class="line">let a = require(&apos;./a.js&apos;);</span><br><span class="line"></span><br><span class="line">export default a;</span><br><span class="line">console.log(a);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack编译后的js</span><br><span class="line"></span><br><span class="line">(function(modules) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  function __webpack_require__(moduleId) &#123;</span><br><span class="line">    var module =  &#123;</span><br><span class="line">      i: moduleId,</span><br><span class="line">      l: false,</span><br><span class="line">      exports: &#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);</span><br><span class="line">    return module.exports;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return __webpack_require__(0);</span><br><span class="line">&#125;)(&#123;</span><br><span class="line">  &quot;./client/a.js&quot;:</span><br><span class="line">  (function (module, __webpack_exports__, __webpack_require__) &#123;</span><br><span class="line"></span><br><span class="line">    &quot;use strict&quot;;</span><br><span class="line">    Object.defineProperty(exports, &apos;__esModule&apos;, &#123; value: true &#125;);</span><br><span class="line">    /* harmony default export */ __webpack_exports__[&quot;default&quot;] = (333);</span><br><span class="line">  &#125;),</span><br><span class="line">  &quot;./client/main.js&quot;:</span><br><span class="line">  (function (module, __webpack_exports__, __webpack_require__) &#123;</span><br><span class="line"></span><br><span class="line">    &quot;use strict&quot;;</span><br><span class="line">    Object.defineProperty(exports, &apos;__esModule&apos;, &#123; value: true &#125;);</span><br><span class="line">    let a = __webpack_require__(/*! ./a.js */ &quot;./client/a.js&quot;);</span><br><span class="line">    /* harmony default export */ __webpack_exports__[&quot;default&quot;] = (&apos;main.js&apos;);</span><br><span class="line">    console.log(&apos;a&apos;, a);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>此时，发现编译后的结果少了把a.js转换的过程，</p>
+<p><code>/* harmony import */ var _a_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./a.js */ &quot;./client/a.js&quot;);</code></p>
+<p>变成了</p>
+<p><code>let a = __webpack_require__(/*! ./a.js */ &quot;./client/a.js&quot;);</code></p>
+<p>这说明，webpack在模块化时如果发现是es6规范，就会通过<strong>webpack</strong>require将其转成webpack规范。</p>
+<p>目前这种编译后的js，将入口模块的输出(即<code>module.exports</code>)进行输出没有任何作用，只会作用于当前作用域。这个js并不能被其他模块继续以<code>require</code>或<code>import</code>的方式引用。</p>
+<h3 id="babel的作用"><a href="#babel的作用" class="headerlink" title="babel的作用"></a>babel的作用</h3><p>webpack的模块化方案是把es6模块化转换成webpack的模块化，但是其余的es6语法还需要做兼容性处理。babel专门用于处理es6转换es5。当然这也包括es6的模块语法的转换。</p>
+<p>其实两者的转换思路差不多，区别在于webpack的原生转换 可以多做一步静态分析，使用tree-shaking技术（下面会讲到）</p>
+<p>babel能提前将es6的import等模块关键字转换成commonjs的规范。这样webpack就无需再做处理，直接使用webpack运行时定义的<strong>webpack_require</strong>处理。</p>
+<p>这里就解释了问题5。</p>
+<p>babel是如何转换es6模块的？</p>
+<h4 id="导出模块"><a href="#导出模块" class="headerlink" title="导出模块"></a>导出模块</h4><p>es6的导出模块写法有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export default 123;</span><br><span class="line"></span><br><span class="line">export const a = 123;</span><br><span class="line"></span><br><span class="line">const b = 3;</span><br><span class="line">const c = 4;</span><br><span class="line">export &#123; b, c &#125;;</span><br></pre></td></tr></table></figure>
+<p>babel会将这些统统转成commonjs的exports:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">exports.default = 123;</span><br><span class="line">exports.a = 123;</span><br><span class="line">exports.b = 3;</span><br><span class="line">exports.c = 4;</span><br><span class="line">exports.__esModule = true;</span><br></pre></td></tr></table></figure>
+<p>babel转换es6的模块输出逻辑非常简单，即将所有输出都赋值给exports，并带上一个__esModule表明这是个由es6转换来的commonjs输出。</p>
+<p>同样，对于import，也会转成require。</p>
+<h4 id="引入default"><a href="#引入default" class="headerlink" title="引入default"></a>引入default</h4><p>对于最常见的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import a from &apos;./a.js&apos;;</span><br></pre></td></tr></table></figure>
+<p>es6的本意是引入<code>a.js</code>里的default输出，但是转成commonjs后，<code>var a = require(&#39;./a.js&#39;)</code>得到的是整个对象，不是es6的本意，所以需要对a进行处理。</p>
+<p>我们在导出中提到，default输出会赋值给导出对象的default属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exports.default = 123;</span><br></pre></td></tr></table></figure>
+<p>所以babel加了个help <code>_interopRequireDefault</code>函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function _interopRequireDefault(obj) &#123;</span><br><span class="line">    return obj &amp;&amp; obj.__esModule</span><br><span class="line">        ? obj</span><br><span class="line">        : &#123; &apos;default&apos;: obj &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var _a = require(&apos;assert&apos;);</span><br><span class="line">var _a2 = _interopRequireDefault(_a);</span><br><span class="line"></span><br><span class="line">var a = _a2[&apos;default&apos;];</span><br></pre></td></tr></table></figure>
+<p>所以这里最后的a变量就是require的值的default属性。如果原先就是commonjs规范，那么a就是那个模块的导出对象。</p>
+<h4 id="引入-通配符"><a href="#引入-通配符" class="headerlink" title="引入*通配符"></a>引入*通配符</h4><p>es6使用<code>import * as a from &#39;./a.js&#39;</code>的本意是将es6模块的所有命名输出以及default输出打包成一个对象赋值给a变量。</p>
+<p>而通过<code>var a = require(&#39;./a.js&#39;)</code>就能实现上述意图。</p>
+<p>所以直接返回这个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (obj &amp;&amp; obj.__esModule) &#123;</span><br><span class="line">   return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果本来就是commonjs规范，导出时没有default属性，需要添加一个default属性，并把整个模块对象再次赋值给default属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">function _interopRequireWildcard(obj) &#123;</span><br><span class="line">    if (obj &amp;&amp; obj.__esModule) &#123;</span><br><span class="line">        return obj;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        var newObj = &#123;&#125;; // (A)</span><br><span class="line">        if (obj != null) &#123;</span><br><span class="line">            for (var key in obj) &#123;</span><br><span class="line">                if (Object.prototype.hasOwnProperty.call(obj, key))</span><br><span class="line">                    newObj[key] = obj[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        newObj.default = obj;</span><br><span class="line">        return newObj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以<code>import { a } from &#39;./a.js&#39;</code>直接换成<code>require(&#39;./a.js&#39;).a</code>即可。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>即使我们使用了es6的模块系统，如果借助babel的转换，es6的模块系统最终还是会转换成commonjs的规范。所以，如果我们是使用babel转换es6模块，混合使用es6的模块和commonjs的规范是没有问题的，因为最终都会转换成commonjs。</p>
+<p>这里就解释了问题3。</p>
+<h3 id="babel5-amp-babel6"><a href="#babel5-amp-babel6" class="headerlink" title="babel5 &amp; babel6"></a>babel5 &amp; babel6</h3><p>es6的<code>export default</code>都会被转换成exports.default，即使这个模块只有这一个输出。</p>
+<p>我们现在再把<code>main.js</code>改一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// main.js</span><br><span class="line"></span><br><span class="line">import a from &apos;./a.js&apos;;</span><br><span class="line">let a2 = require(&apos;./a.js&apos;);</span><br><span class="line"></span><br><span class="line">export default &apos;main.js&apos;;</span><br><span class="line"></span><br><span class="line">console.log(&apos;a&apos;, a);</span><br><span class="line">console.log(&apos;a2&apos;, a2);</span><br></pre></td></tr></table></figure>
+<p>会发现，打印出来的内容是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">333</span><br><span class="line">Module &#123;default: 333, __esModule: true, Symbol(Symbol.toStringTag): &quot;Module&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>会发现，通过<code>require</code>引入es6模块，得到的是整个对象，这时候需要<code>require(&#39;./a.js&#39;).default</code>得到想要的结果。</p>
+<p>这里就解释了问题1。</p>
+<p>在babel5时代，大部分人在用require去引用es6输出的default，只是把default输出看做是一个模块的默认输出，所以babel5对这个逻辑做了hack，如果一个es6模块只有一个default输出，那么在转换成commonjs的时候也一起赋值给module.exports，即整个导出对象被赋值了default所对应的值。这样就不需要加default。</p>
+<p>但这样做是不符合es6的定义的，在es6的定义里，default只是个名字，没有任何意义。</p>
+<h3 id="webpack编译后的js，如何再被其他模块引用"><a href="#webpack编译后的js，如何再被其他模块引用" class="headerlink" title="webpack编译后的js，如何再被其他模块引用"></a>webpack编译后的js，如何再被其他模块引用</h3><p>通过配置output.libraryTarget指定构建完的js的用途。</p>
+<h4 id="默认var"><a href="#默认var" class="headerlink" title="默认var"></a>默认var</h4><p>如果指定了<code>output.library = &#39;test&#39;</code>，入口模块返回的module.exports暴露给全局<code>var test = returned_module_exports</code></p>
+<h4 id="commonjs"><a href="#commonjs" class="headerlink" title="commonjs"></a>commonjs</h4><p>如果library: ‘spon-ui’入口模块返回的module.exports赋值给<code>exports[&#39;spon-ui&#39;]</code></p>
+<h4 id="commonjs2"><a href="#commonjs2" class="headerlink" title="commonjs2"></a>commonjs2</h4><p>入口模块返回的module.exports 赋值给module.exports</p>
+<p>所以element-ui的构建方式采用commonjs2，导出的组件的js最后都会赋值给module.exports，供其他模块引用。</p>
+<p>这就解释了问题4</p>
+<h2 id="模块依赖的优化"><a href="#模块依赖的优化" class="headerlink" title="模块依赖的优化"></a>模块依赖的优化</h2><h3 id="按需加载的原理"><a href="#按需加载的原理" class="headerlink" title="按需加载的原理"></a>按需加载的原理</h3><p>我们在使用各大 UI 组件库时都会被介绍到为了避免引入全部文件，请使用<code>babel-plugin-component</code>等babel 插件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Button, Select &#125; from &apos;element-ui&apos;</span><br></pre></td></tr></table></figure>
+<p>由前文可知，import会先转换为commonjs。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a = require(&apos;element-ui&apos;);</span><br><span class="line">var Button = a.Button;</span><br><span class="line">var Select = a.Select;</span><br></pre></td></tr></table></figure>
+<p><code>var a = require(&#39;element-ui&#39;);</code> 这个过程就会将所有组件都引入进来了。</p>
+<p>所以<code>babel-plugin-component</code>就做了一件事，将<code>import { Button, Select } from &#39;element-ui&#39;</code>转换成了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import Button from &apos;element-ui/lib/button&apos;</span><br><span class="line">import Select from &apos;element-ui/lib/select&apos;</span><br></pre></td></tr></table></figure>
+<p>即使转换成了commonjs规范，也只是引入自己这个组件的js，将引入量减少到最低。</p>
+<p>这里解释了问题2</p>
+<h3 id="tree-shaking"><a href="#tree-shaking" class="headerlink" title="tree-shaking"></a>tree-shaking</h3><p>这个就直接看原文吧。</p>
+<p>参考链接<a href="https://juejin.im/post/5a2e5f0851882575d42f5609" target="_blank" rel="noopener">https://juejin.im/post/5a2e5f0851882575d42f5609</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/webpack优化项目打包速度、体积等/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/26/webpack优化项目打包速度、体积等/" itemprop="url">webpack优化项目打包速度、体积等</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-26T15:57:11+08:00">
+                2019-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>计划从这几个点来优化</p>
+<ol>
+<li>webpack打包速度</li>
+<li>打包体积</li>
+</ol>
+<h2 id="打包速度"><a href="#打包速度" class="headerlink" title="打包速度"></a>打包速度</h2><p>版本webpack4</p>
+<p>速度对比</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>第一次</th>
+<th>第二次</th>
+<th>第三次</th>
+<th>第四次</th>
+<th>第五次</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前</td>
+<td>36911</td>
+<td>35917</td>
+<td>35934</td>
+<td>35493</td>
+<td>36468</td>
+<td>36144.6</td>
+</tr>
+<tr>
+<td>优化后</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/29/encodeURI、encodeComponent/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -447,7 +811,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/25/js模块系统详解/" itemprop="url">js模块系统详解</a></h1>
+                <a class="post-title-link" href="/2019/03/25/js模块系统详解/" itemprop="url">js模块系统详解(一)</a></h1>
         
 
         <div class="post-meta">
@@ -499,7 +863,29 @@
       
         
           
-            
+            <p>前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。</p>
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>nodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。</p>
+<p>nodejs的模块系统，就是参考commonjs规范实现的。</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD的全称是Asynchronous Module Define，异步模块定义。</p>
+<h3 id="为什么AMD会诞生呢？"><a href="#为什么AMD会诞生呢？" class="headerlink" title="为什么AMD会诞生呢？"></a>为什么AMD会诞生呢？</h3><p>在有了服务端模块后，我们自然也想要客户端模块，而且最好这两个能兼容，一个模块都不用修改，在服务端和客户端可以同时运行。</p>
+<p>但是，CommonJS有一个重大的局限，导致它不适合在浏览器环境运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var math = require(&apos;math);</span><br><span class="line">math.add(2, 3);</span><br></pre></td></tr></table></figure>
+<p>看上面的代码，乍一看似乎没有什么问题。但实际上，第二行代码需要在第一行代码执行后，才能执行。因此必须要等到math.js加载完成后。如果math.js加载时间很长，整个应用就卡在这里了。</p>
+<p>这对于服务端编程并不是一个问题，因为服务端所有的模块都放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时取决于网速，可能要等很长时间。</p>
+<p>因此，浏览器的模块，不能采用”同步加载”，而是要异步加载，因此AMD就诞生了。</p>
+<h3 id="AMD-1"><a href="#AMD-1" class="headerlink" title="AMD"></a>AMD</h3><p>AMD也是采用require语句，但是语法与CommonJS不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require([module], callback);</span><br></pre></td></tr></table></figure>
+<p>其中，第一个参数<code>[module]</code>是所有依赖的模块，是一个数组；第二个参数<code>callback</code>，则是加载成功之后的回调。</p>
+<p>上面的那个代码，如果用AMD实现，则是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&apos;math&apos;], function() &#123;</span><br><span class="line">  math.add(2, 3);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>math.add()与math模块加载不是同步的，浏览器不会发生假死。所以很显然，AMD比较适合浏览器环境。</p>
+<p>参考：</p>
+<p><a href="http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html</a></p>
+<h3 id="ES6的模块系统"><a href="#ES6的模块系统" class="headerlink" title="ES6的模块系统"></a>ES6的模块系统</h3><p>ES6实现了模块规范，完全可以取代CommonJS和AMD，成为服务器和浏览器通用的模块解决方案。</p>
+<h4 id="ES6的设计思想"><a href="#ES6的设计思想" class="headerlink" title="ES6的设计思想"></a>ES6的设计思想</h4><p>设计思想是：尽量的静态化，也就是编译时加载（静态加载）。</p>
+<p>这样在编译时就能确定模块之间的依赖关系、输入和输出的变量。</p>
+<p>而CommonJS和AMD只能在运行时才能确定这些东西（运行时加载）(此处可以详看<a href="http://es6.ruanyifeng.com/#docs/module" target="_blank" rel="noopener">阮一峰的es6模块系统</a>)。</p>
+<h3 id="NodeJS的模块系统"><a href="#NodeJS的模块系统" class="headerlink" title="NodeJS的模块系统"></a>NodeJS的模块系统</h3>
           
         
       
@@ -1529,244 +1915,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/按位非-妙用/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/26/按位非-妙用/" itemprop="url">按位非~妙用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-26T16:28:55+08:00">
-                2018-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/Object-values、Object-keys、OBject-entries/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/26/Object-values、Object-keys、OBject-entries/" itemprop="url">Object.values、Object.keys、OBject.entries</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-26T16:28:21+08:00">
-                2018-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1815,7 +1963,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

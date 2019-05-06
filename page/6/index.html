@@ -263,6 +263,477 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-三/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-三/" itemprop="url">利用html5 video打造播放器(三)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T16:51:53+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8/" target="_blank" rel="noopener">利用html5 video打造播放器(一)</a></p>
+<p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8-%E4%BA%8C/" target="_blank" rel="noopener">利用html5 video打造播放器(二)</a></p>
+<p>上一篇我们已经介绍了基本样式的实现，接下来我们实现相关的事件。</p>
+<hr>
+<p>（1）首先，在js文件里，添加如下函数：</p>
+<pre><code>pro.initEvent = function() {
+    var that = this;
+}
+</code></pre><p>（2）点击播放按钮，视频开始播放，那就给按钮添加一个tap事件吧，在pro.initEvent函数里加上：</p>
+<pre><code>// 给播放按钮图片添加事件
+this.vimg.addEventListener(&apos;tap&apos;, function() {
+    this.style.display = &apos;none&apos;;
+    that.video.play();
+})
+</code></pre><p> 这时候点击按钮，就可以播放了。并且，按钮也消失了。</p>
+<p> （3）这时候光播放还不行，还得暂停啊，那就给视频加一个tap事件吧，在pro.initEvent函数里加上：</p>
+<pre><code> // 视频点击暂停或播放事件
+this.video.addEventListener(&apos;tap&apos;, function() {
+    if (this.paused) {
+        // 如果播放完毕，就从头开始播放
+        if (this.ended) {
+            this.currentTime = 0;
+        }
+        // 暂停时点击就播放
+        this.play();
+    } else {
+        // 播放时点击就暂停
+        this.pause();
+    }
+})
+</code></pre><p> 这时候我们再去点击视频所在区域，发现就可以停止了。</p>
+<p> （3）接下来就是控制条了，我们想让它在播放时消失，暂停时显现，在pro.initEvent函数里加上：</p>
+<pre><code> // 视频播放事件
+this.video.addEventListener(&apos;play&apos;, function() {
+    that.vimg.style.display = &apos;none&apos;;
+    that.vControls.classList.add(&apos;vhidden&apos;);
+
+    // 注意这里我们只是把控制条变成透明了，如果我们写了控制条的点击事件，那么变成透明后点击控制条位置还是会触发事件，所以我们可以写一段定时，让控制条3.5s后隐藏
+    // 这里写成3.4s只是为了保险，如果没写animation-fill-mode:forwards样式，并且这里设置定时是3.5s，就会闪一下
+    that.vCtrolTime = setTimeout(function() {
+        that.vControls.style.visibility = &apos;hidden&apos;;
+    }, 3400);
+})
+
+this.video.addEventListener(&apos;pause&apos;, function() {
+    // 暂停时显示播放按钮
+    that.vimg.style.display = &apos;block&apos;;
+    that.vControls.classList.remove(&apos;vhidden&apos;);
+    that.vControls.style.visibility = &apos;visible&apos;;
+    that.vCtrolTime &amp;&amp; clearTimeout(that.vCtrolTime);
+})
+</code></pre><p>同时呢，我们应该在css文件里写上动画：</p>
+<pre><code>@keyframes vhide {0% {opacity: 1;}100% {opacity: 0;}}
+.vhidden{
+      animation: vhide 3.5s ease-in;
+      -webkit-animation: vhide 3.5s ease-in;
+      // animation-fill-mode: forwards;
+      // -webkit-animation-fill-mode: forwards;
+}
+</code></pre><p>这样，我们就实现了播放、暂停、控制条动画。</p>
+<p>（4）好，现在开始显示视频总时间</p>
+<p>首先我们得获取视频元信息，在pro.initEvent函数里加上：</p>
+<pre><code>// 获取视频元信息
+this.video.addEventListener(&apos;loadedmetadata&apos;, function() {
+    that.vDuration = this.duration;
+    that.vControls.querySelector(&apos;.duration&apos;).innerHTML = stom(this.duration);
+});
+</code></pre><p>这里的stom函数是时间转换函数，如下：</p>
+<pre><code>// 时间格式化
+function stom(t) {
+    var h = Math.floor(t / 3600);
+    h &lt; 10 &amp;&amp; (h = &apos;0&apos; + h);
+    var m = Math.floor(t % 3600 / 60);
+    if (m &lt; 10) {
+        m = &apos;0&apos; + m;
+    }
+    return h + &apos;:&apos; + m + &apos;:&apos; + (t % 3600 % 60 / 100).toFixed(2).slice(-2);
+}
+</code></pre><p>此时发现，已经有总时间啦~</p>
+<p>（5）下面就开始获取当前播放了多少时间</p>
+<pre><code>this.video.addEventListener(&apos;timeupdate&apos;, function() {
+    var currentPos = this.currentTime; // 获取当前播放的位置
+    // 更新进度条
+    var percentage = 100 * currentPos / that.vDuration;
+    // 设置宽度
+    that.vControls.querySelector(&apos;.timeBar&apos;).style.width = percentage + &apos;%&apos;;
+    that.vControls.querySelector(&apos;.current&apos;).innerHTML = stom(currentPos);
+})
+</code></pre><p>至此，我们实现了进度条时间的显示。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-二/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-二/" itemprop="url">利用html5 video打造播放器(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T14:47:44+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有了video的基本知识（<a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8/" target="_blank" rel="noopener">利用html5 video打造播放器(一)</a>)，接下来我们要量身定做播放器了。</p>
+<hr>
+<p>那么我们的这个播放器要有什么功能呢？</p>
+<p>1、自定义播放按钮</p>
+<p>2、自定义的进度条，能够显示视频总时间，当前播放了多长时间</p>
+<p>3、点击播放按钮，视频开始播放，按钮消失，进度条逐渐消失</p>
+<p>4、点击视频，可以切换播放/暂停状态；如果切换为暂停，则播放按钮和进度条重新显示</p>
+<p>5、全屏播放</p>
+<p>6、手势拨动前进、快退</p>
+<p>7、重力感应</p>
+<hr>
+<p>下面开始：</p>
+<p>（1）新建video-demo.html文件：</p>
+<pre><code>&lt;div class=&quot;my-video&quot;&gt;
+    &lt;!-- webkit-playsinline : 在ios中，加入此属性，可以关闭自动全屏播放 --&gt;
+    &lt;!-- object-fit:fill : 视频充满video容器的大小 --&gt;
+    &lt;video class=&quot;&quot; style=&quot;&quot; id=&quot;video1&quot;&gt;
+        &lt;source src=&quot;2.mp4&quot; type=&quot;video/mp4&quot;&gt;
+        &lt;source src=&quot;2.ogg&quot; type=&quot;video/ogg&quot;&gt; 设备不支持Video标签。
+    &lt;/video&gt;
+&lt;/div&gt;
+</code></pre><p>（2）然后新建video-demo.css文件设置样式：</p>
+<pre><code>html, body{
+      height: 100%;
+}
+.my-video{
+      position: relative;
+      background: black;
+}
+
+.my-video video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      onject-fit: fill;
+}
+</code></pre><p>并在video-demo.html里引入该css文件：</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/video-demo.css&quot;&gt;
+</code></pre><p>此时，应该能看到页面了。</p>
+<p>（3）接下来我们要用到mui框架，所以需要在video-demo.html引入mui对应的js文件</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/mui.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>（4）下面我们新建video-demo.js文件，动态添加播放按钮和进度条，记得把该js文件引入到html里：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/video-demo.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>（5）在video-demo.js里，我们先写上整体结构：</p>
+<pre><code>(function($) {
+    var myVideo = function(dom) {
+        var that = this;
+        $.ready(function() {
+            that.video = document.querySelector(dom || &apos;video&apos;);
+            that.vRoom = that.video.parentNode;
+            // 元素初始化
+            that.initEm();
+            // 事件初始化
+            that.initEvent();
+            //  记录信息
+            that.initInfo();
+        });
+    }
+    var nv = null;
+    $.myVideo = function(dom) {
+        return nv || (nv = new myVideo(dom));
+    }
+}(mui))
+</code></pre><p>其中，</p>
+<p>initEm是用于初始化元素，即动态添加播放按钮和控制条；</p>
+<p>initEvent是用于放置我们需要的事件函数；</p>
+<p>initInfo是用于处理相关信息，比如视频的元数据，小屏、全屏时对应的信息。</p>
+<p>然后如果要使用myVideo对应的这些函数，就要在html里加入调用：</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+  var v = mui.myVideo();
+&lt;/script&gt;
+</code></pre><p>（6）接下来我们首先填充initEm()函数</p>
+<pre><code>var pro = myVideo.prototype;
+
+pro.initEm = function() {
+    // 动态添加播放按钮
+    this.vimg = document.createElement(&quot;img&quot;);
+    // 如果img的src设置为本地资源的话，那么以后使用会出现很多问题，比如，页面层级发生变化时，你要去修改video-demo.js,为避免夜长梦多，我们将图片转换为base64 
+    // this.vimg.src = &quot;img/play.png&quot;;
+    // 以下就是base64编码，可以网上搜索在线转换工具，这里就没写上编码，太长了
+    this.vimg.src = &apos;data:image/png;base64...&apos;;
+    this.vimg.className = &apos;play-img&apos;;
+    this.vRoom.appendChild(this.vimg);
+
+    // 动态添加控制条
+    this.vControls = document.createElement(&apos;div&apos;);
+    this.vControls.classList.add(&apos;controls&apos;);
+    this.vControls.innerHTML = &apos;&lt;div&gt;&lt;div class=&quot;progressBar&quot;&gt;&lt;div class=&quot;timeBar&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span class=&quot;current&quot;&gt;00:00&lt;/span&gt;/&lt;span class=&quot;duration&quot;&gt;00:00&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span class=&quot;fill&quot;&gt;全屏&lt;/span&gt;&lt;/div&gt;&apos;;
+    this.vRoom.appendChild(this.vControls);
+}
+</code></pre><p>此时应该能看到播放按钮和控制条了，只是样式不对。</p>
+<p>（7）接下来我们设置播放按钮的样式</p>
+<pre><code>.my-video .play-img{
+  position: absolute;
+  width: 15%;
+  z-index: 99;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%)
+}
+</code></pre><p>（8）然后设置控制条的样式</p>
+<pre><code>.my-video .controls{
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 0.8rem;
+  color: white;
+  position: absolute;
+  bottom:0;
+  background: rgba(0, 0, 0, .55);
+  display: flex;
+}
+
+.my-video .controls &gt; * {
+  flex: 1;
+}
+
+.my-video .controls &gt; *:nth-child(1) {
+  flex: 6;
+}
+.my-video .controls &gt; *:nth-child(2) {
+  flex: 2;
+}
+
+.my-video .controls .progressBar{
+  margin: 0.75rem 5%;
+  position: relative;
+  width: 90%;
+  height: 0.5rem;
+  background: rgba(200, 200, 200, .55);
+  border-radius: 10px;
+}
+
+.my-video .controls .timeBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(99, 110, 225, .85);
+    border-radius: 10px;
+}
+</code></pre><p>此时应该能看到这样了：<br><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/3.png" alt="detail"></p>
+<p>至此，我们的基本样式已经搞定了，下面就是一些事件了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1283,7 +1754,7 @@ console.log(me) //Uncaught ReferenceError: me is not defined `
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
