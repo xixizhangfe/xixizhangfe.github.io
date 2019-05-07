@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="对于控制台系统来说，最常用的就是表单了。而表单是需要校验的，有时候写个正则，搞半天都不对，特此记录下来，方便查找。 校验字符串是否是JSON格式首先，自然想到的是使用JSON.parse(str)，但是单纯的使用JSON.parse(str)不能完全检验一个字符串是JSON格式，有许多例外： 1234567JSON.parse(&amp;apos;&amp;quot;aaa&amp;quot;&amp;apos;); // aa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据校验">
+<meta property="og:url" content="http://yoursite.com/2019/05/07/数据校验/index.html">
+<meta property="og:site_name" content="xixijiang的主页">
+<meta property="og:description" content="对于控制台系统来说，最常用的就是表单了。而表单是需要校验的，有时候写个正则，搞半天都不对，特此记录下来，方便查找。 校验字符串是否是JSON格式首先，自然想到的是使用JSON.parse(str)，但是单纯的使用JSON.parse(str)不能完全检验一个字符串是JSON格式，有许多例外： 1234567JSON.parse(&amp;apos;&amp;quot;aaa&amp;quot;&amp;apos;); // aa">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-07T02:41:33.523Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据校验">
+<meta name="twitter:description" content="对于控制台系统来说，最常用的就是表单了。而表单是需要校验的，有时候写个正则，搞半天都不对，特此记录下来，方便查找。 校验字符串是否是JSON格式首先，自然想到的是使用JSON.parse(str)，但是单纯的使用JSON.parse(str)不能完全检验一个字符串是JSON格式，有许多例外： 1234567JSON.parse(&amp;apos;&amp;quot;aaa&amp;quot;&amp;apos;); // aa">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/07/数据校验/">
+
+
+
+
+
+  <title>数据校验 | xixijiang的主页</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xixijiang的主页</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/数据校验/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据校验</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T09:41:56+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于控制台系统来说，最常用的就是表单了。而表单是需要校验的，有时候写个正则，搞半天都不对，特此记录下来，方便查找。</p>
+<h2 id="校验字符串是否是JSON格式"><a href="#校验字符串是否是JSON格式" class="headerlink" title="校验字符串是否是JSON格式"></a>校验字符串是否是JSON格式</h2><p>首先，自然想到的是使用<code>JSON.parse(str)</code>，但是单纯的使用<code>JSON.parse(str)</code>不能完全检验一个字符串是JSON格式，有许多例外：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JSON.parse(&apos;&quot;aaa&quot;&apos;); // aaa</span><br><span class="line">JSON.parse(&apos;123&apos;); // 123</span><br><span class="line">JSON.parse(&apos;true&apos;); // true</span><br><span class="line">JSON.parse(&apos;false&apos;); // false</span><br><span class="line">JSON.parse(&apos;[&quot;a&quot;]&apos;); // [&quot;a&quot;]</span><br><span class="line">JSON.parse(&apos;&#123;&#125;&apos;); // &#123;&#125;</span><br><span class="line">JSON.parse(&apos;null&apos;); // null</span><br></pre></td></tr></table></figure>
+<p>JS数据类型有字符串、数字、布尔值、数组、对象、Null、Undefined，经过测试，使用<code>JSON.parse</code>能够转换成功的有：数字、字符串、布尔值、数组、空对象、null、json，而其中正确的JSON格式有：数组、空对象、json</p>
+<p>所以，得出结论，如果<code>JSON.parse</code>能够转换成功，并且转换后的类型为object，且不等于null，那么这个字符串就是JSON格式的字符串。</p>
+<p>所以代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function isJSON(str) &#123;</span><br><span class="line">    if (typeof str === &apos;string&apos;) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            var obj = JSON.parse(str);</span><br><span class="line">            if(typeof obj === &apos;object&apos; &amp;&amp; obj )&#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; catch(e) &#123;</span><br><span class="line">            console.log(&apos;error：&apos;+str+&apos;!!!&apos;+e);</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(&apos;It is not a string!&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考资料：<a href="https://www.cnblogs.com/lanleiming/p/7096973.html" target="_blank" rel="noopener">https://www.cnblogs.com/lanleiming/p/7096973.html</a></p>
+<h2 id="数字相关"><a href="#数字相关" class="headerlink" title="数字相关"></a>数字相关</h2><p>这里经常犯的错误是，<code>\d{0, 7}</code>经常错写成<code>\d{0-7}</code></p>
+<h3 id="非负整数"><a href="#非负整数" class="headerlink" title="非负整数"></a>非负整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^\d+$/</span><br></pre></td></tr></table></figure>
+<h3 id="正整数"><a href="#正整数" class="headerlink" title="正整数"></a>正整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[1-9]&#123;1&#125;(\d+)?$/g</span><br></pre></td></tr></table></figure>
+<h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^-?\d+$/</span><br></pre></td></tr></table></figure>
+<h3 id="限制范围的整数"><a href="#限制范围的整数" class="headerlink" title="限制范围的整数"></a>限制范围的整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 1-100之间的整数</span><br><span class="line">/^([1-9]&#123;1&#125;\d?|100)$/g</span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^(\.\d+)|(-?\d+(\.\d*)?)$/</span><br></pre></td></tr></table></figure>
+<h3 id="限制小数位数"><a href="#限制小数位数" class="headerlink" title="限制小数位数"></a>限制小数位数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^-?\d+(\.\d&#123;0,7&#125;)?$/</span><br></pre></td></tr></table></figure>
+<h2 id="字符串相关"><a href="#字符串相关" class="headerlink" title="字符串相关"></a>字符串相关</h2><h3 id="大小写字母、数字、下划线、中划线"><a href="#大小写字母、数字、下划线、中划线" class="headerlink" title="大小写字母、数字、下划线、中划线"></a>大小写字母、数字、下划线、中划线</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[a-zA-Z0-9_-]+$/g</span><br></pre></td></tr></table></figure>
+<h3 id="限制字符串长度"><a href="#限制字符串长度" class="headerlink" title="限制字符串长度"></a>限制字符串长度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 只能输入64个字符</span><br><span class="line">/^.&#123;1,64&#125;$/g</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/06/js模块系统详解-二/" rel="next" title="js模块系统详解(二)">
+                <i class="fa fa-chevron-left"></i> js模块系统详解(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="xixijiang">
+          <p class="site-author-name" itemprop="name">xixijiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">切莫停下前进的脚步</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#校验字符串是否是JSON格式"><span class="nav-number">1.</span> <span class="nav-text">校验字符串是否是JSON格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数字相关"><span class="nav-number">2.</span> <span class="nav-text">数字相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非负整数"><span class="nav-number">2.1.</span> <span class="nav-text">非负整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正整数"><span class="nav-number">2.2.</span> <span class="nav-text">正整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整数"><span class="nav-number">2.3.</span> <span class="nav-text">整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限制范围的整数"><span class="nav-number">2.4.</span> <span class="nav-text">限制范围的整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字"><span class="nav-number">2.5.</span> <span class="nav-text">数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限制小数位数"><span class="nav-number">2.6.</span> <span class="nav-text">限制小数位数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串相关"><span class="nav-number">3.</span> <span class="nav-text">字符串相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#大小写字母、数字、下划线、中划线"><span class="nav-number">3.1.</span> <span class="nav-text">大小写字母、数字、下划线、中划线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#限制字符串长度"><span class="nav-number">3.2.</span> <span class="nav-text">限制字符串长度</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xixijiang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -263,6 +263,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/07/数据校验/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/数据校验/" itemprop="url">数据校验</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-07T09:41:56+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对于控制台系统来说，最常用的就是表单了。而表单是需要校验的，有时候写个正则，搞半天都不对，特此记录下来，方便查找。</p>
+<h2 id="校验字符串是否是JSON格式"><a href="#校验字符串是否是JSON格式" class="headerlink" title="校验字符串是否是JSON格式"></a>校验字符串是否是JSON格式</h2><p>首先，自然想到的是使用<code>JSON.parse(str)</code>，但是单纯的使用<code>JSON.parse(str)</code>不能完全检验一个字符串是JSON格式，有许多例外：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JSON.parse(&apos;&quot;aaa&quot;&apos;); // aaa</span><br><span class="line">JSON.parse(&apos;123&apos;); // 123</span><br><span class="line">JSON.parse(&apos;true&apos;); // true</span><br><span class="line">JSON.parse(&apos;false&apos;); // false</span><br><span class="line">JSON.parse(&apos;[&quot;a&quot;]&apos;); // [&quot;a&quot;]</span><br><span class="line">JSON.parse(&apos;&#123;&#125;&apos;); // &#123;&#125;</span><br><span class="line">JSON.parse(&apos;null&apos;); // null</span><br></pre></td></tr></table></figure>
+<p>JS数据类型有字符串、数字、布尔值、数组、对象、Null、Undefined，经过测试，使用<code>JSON.parse</code>能够转换成功的有：数字、字符串、布尔值、数组、空对象、null、json，而其中正确的JSON格式有：数组、空对象、json</p>
+<p>所以，得出结论，如果<code>JSON.parse</code>能够转换成功，并且转换后的类型为object，且不等于null，那么这个字符串就是JSON格式的字符串。</p>
+<p>所以代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function isJSON(str) &#123;</span><br><span class="line">    if (typeof str === &apos;string&apos;) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            var obj = JSON.parse(str);</span><br><span class="line">            if(typeof obj === &apos;object&apos; &amp;&amp; obj )&#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; catch(e) &#123;</span><br><span class="line">            console.log(&apos;error：&apos;+str+&apos;!!!&apos;+e);</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    console.log(&apos;It is not a string!&apos;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考资料：<a href="https://www.cnblogs.com/lanleiming/p/7096973.html" target="_blank" rel="noopener">https://www.cnblogs.com/lanleiming/p/7096973.html</a></p>
+<h2 id="数字相关"><a href="#数字相关" class="headerlink" title="数字相关"></a>数字相关</h2><p>这里经常犯的错误是，<code>\d{0, 7}</code>经常错写成<code>\d{0-7}</code></p>
+<h3 id="非负整数"><a href="#非负整数" class="headerlink" title="非负整数"></a>非负整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^\d+$/</span><br></pre></td></tr></table></figure>
+<h3 id="正整数"><a href="#正整数" class="headerlink" title="正整数"></a>正整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[1-9]&#123;1&#125;(\d+)?$/g</span><br></pre></td></tr></table></figure>
+<h3 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^-?\d+$/</span><br></pre></td></tr></table></figure>
+<h3 id="限制范围的整数"><a href="#限制范围的整数" class="headerlink" title="限制范围的整数"></a>限制范围的整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 1-100之间的整数</span><br><span class="line">/^([1-9]&#123;1&#125;\d?|100)$/g</span><br></pre></td></tr></table></figure>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^(\.\d+)|(-?\d+(\.\d*)?)$/</span><br></pre></td></tr></table></figure>
+<h3 id="限制小数位数"><a href="#限制小数位数" class="headerlink" title="限制小数位数"></a>限制小数位数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^-?\d+(\.\d&#123;0,7&#125;)?$/</span><br></pre></td></tr></table></figure>
+<h2 id="字符串相关"><a href="#字符串相关" class="headerlink" title="字符串相关"></a>字符串相关</h2><h3 id="大小写字母、数字、下划线、中划线"><a href="#大小写字母、数字、下划线、中划线" class="headerlink" title="大小写字母、数字、下划线、中划线"></a>大小写字母、数字、下划线、中划线</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^[a-zA-Z0-9_-]+$/g</span><br></pre></td></tr></table></figure>
+<h3 id="限制字符串长度"><a href="#限制字符串长度" class="headerlink" title="限制字符串长度"></a>限制字符串长度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 只能输入64个字符</span><br><span class="line">/^.&#123;1,64&#125;$/g</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/06/js模块系统详解-二/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1784,137 +1920,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Object-assign/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/15/Object-assign/" itemprop="url">Object.assign</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-15T09:31:42+08:00">
-                2018-10-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>语法：<br>Object.assign(target, …source)</p>
-<p>1、Object.assign是将一个或多个源对象的<strong>自身的</strong>且<strong>可枚举</strong>的属性复制到目标对象。即，继承属性和不可枚举属性是不能拷贝的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = Object.create(&#123;foo: 1&#125;, &#123; // foo是个继承属性</span><br><span class="line">	bar: &#123;</span><br><span class="line">		value: 2, // bar是个不可枚举属性。</span><br><span class="line">	&#125;,</span><br><span class="line">	baz: &#123;</span><br><span class="line">		value: 3,</span><br><span class="line">		enumerable: true, // baz是个自身可枚举属性。</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var copy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(copy); // &#123;baz: 3&#125;</span><br></pre></td></tr></table></figure>
-<p>2、 该方法使用源对象的[[Get]]和目标对象的[[Set]]，所以它会调用相关getter和setter。<br>3、 String类型和Symbol类型的属性都会被拷贝</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = &#123;a: 1&#125;;</span><br><span class="line">var obj2 = &#123;[Symbol(&apos;foo)]: 2&#125;;</span><br><span class="line">var obj = Object.assign(&#123;&#125;, obj1, obj2);</span><br><span class="line">console.log(obj); // &#123;a: 1, [Symbol(&apos;foo&apos;)]: 2&#125;</span><br><span class="line">Object.getOwnPropertySymbols(obj); // [Symbol(foo)]</span><br></pre></td></tr></table></figure>
-<p>4、 在出现错误的情况下，会打断后续拷贝任务，但已拷贝的会保留在目标对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var target = Object.defineProperty(&#123;&#125;, &apos;foo&apos;, &#123;</span><br><span class="line">	value: 1,</span><br><span class="line">	writable: false,</span><br><span class="line">&#125;); // target的foo属性是个只读属性</span><br><span class="line"></span><br><span class="line">Object.assign(target, &#123;bar: 2&#125;, &#123;foo2: 3, foo: 3, foo3: 3&#125;, &#123;baz: 4&#125;);</span><br><span class="line">// TypeError: &apos;foo&apos; is read-only</span><br><span class="line">// 注意这个异常是在拷贝第二个源对象的第二个属性时发生的</span><br><span class="line">console.log(target); // &#123;bar: 2, foo2: 3, foo: 1&#125;</span><br></pre></td></tr></table></figure>
-<p>5、 不会跳过值为null或undefined的对象</p>
-<p>6、 针对深拷贝，需要使用其他方法。因为Object.assign()拷贝的是属性值。如果源对象的属性值是一个指向对象的引用，它也只拷贝那个引用值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = &#123;a: 0, b: &#123;c: 0&#125;&#125;;</span><br><span class="line">var obj2 = Object.assign(&#123;&#125;, obj1);</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 0&#125;&#125;</span><br><span class="line"></span><br><span class="line">obj1.a = 1;</span><br><span class="line">console.log(JSON.stringify(obj1)); // &#123;a: 1, b: &#123;c: 0&#125;&#125;</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 0&#125;&#125; obj2.a不会受影响</span><br><span class="line"></span><br><span class="line">obj2.b.c = 3;</span><br><span class="line">console.log(JSON.stringify(obj1)); // &#123;a: 1, b: &#123;c: 3&#125;&#125; obj1.b.c也会变化</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 3&#125;&#125;</span><br><span class="line"></span><br><span class="line">// 深拷贝</span><br><span class="line">obj1 = &#123;a: 0, b: &#123;c: 0&#125;&#125;;</span><br><span class="line">var obj3 = JSON.parse(JSON.stringify(obj1));</span><br><span class="line">obj1.a = 4;</span><br><span class="line">obj1.b.c = 4;</span><br><span class="line">console.log(JSON.stringify(obj3)); // &#123;a: 0, b: &#123;c: 0&#125;&#125;</span><br></pre></td></tr></table></figure>
-<p>7、原始类型会被包装成对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var v1 = &quot;abc&quot;;</span><br><span class="line">var v2 = true;</span><br><span class="line">var v3 = 10;</span><br><span class="line">var v4 = Symbol(&apos;foo&apos;);</span><br><span class="line"></span><br><span class="line">var obj = Object.assign(&#123;&#125;, v1, null, v2, undefined, v3, v4);</span><br><span class="line"></span><br><span class="line">// 原始类型会被包装，null和undefined会被忽略</span><br><span class="line">// 注意，只有字符串的包装对象才可能有自身可枚举属性</span><br><span class="line">console.log(obj); // &#123;0: &apos;a&apos;, 1: &apos;b&apos;, 2: &apos;c&apos;&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1963,7 +1968,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

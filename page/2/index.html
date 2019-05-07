@@ -263,6 +263,137 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Object-assign/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/15/Object-assign/" itemprop="url">Object.assign</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-15T09:31:42+08:00">
+                2018-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>语法：<br>Object.assign(target, …source)</p>
+<p>1、Object.assign是将一个或多个源对象的<strong>自身的</strong>且<strong>可枚举</strong>的属性复制到目标对象。即，继承属性和不可枚举属性是不能拷贝的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = Object.create(&#123;foo: 1&#125;, &#123; // foo是个继承属性</span><br><span class="line">	bar: &#123;</span><br><span class="line">		value: 2, // bar是个不可枚举属性。</span><br><span class="line">	&#125;,</span><br><span class="line">	baz: &#123;</span><br><span class="line">		value: 3,</span><br><span class="line">		enumerable: true, // baz是个自身可枚举属性。</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var copy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">console.log(copy); // &#123;baz: 3&#125;</span><br></pre></td></tr></table></figure>
+<p>2、 该方法使用源对象的[[Get]]和目标对象的[[Set]]，所以它会调用相关getter和setter。<br>3、 String类型和Symbol类型的属性都会被拷贝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = &#123;a: 1&#125;;</span><br><span class="line">var obj2 = &#123;[Symbol(&apos;foo)]: 2&#125;;</span><br><span class="line">var obj = Object.assign(&#123;&#125;, obj1, obj2);</span><br><span class="line">console.log(obj); // &#123;a: 1, [Symbol(&apos;foo&apos;)]: 2&#125;</span><br><span class="line">Object.getOwnPropertySymbols(obj); // [Symbol(foo)]</span><br></pre></td></tr></table></figure>
+<p>4、 在出现错误的情况下，会打断后续拷贝任务，但已拷贝的会保留在目标对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var target = Object.defineProperty(&#123;&#125;, &apos;foo&apos;, &#123;</span><br><span class="line">	value: 1,</span><br><span class="line">	writable: false,</span><br><span class="line">&#125;); // target的foo属性是个只读属性</span><br><span class="line"></span><br><span class="line">Object.assign(target, &#123;bar: 2&#125;, &#123;foo2: 3, foo: 3, foo3: 3&#125;, &#123;baz: 4&#125;);</span><br><span class="line">// TypeError: &apos;foo&apos; is read-only</span><br><span class="line">// 注意这个异常是在拷贝第二个源对象的第二个属性时发生的</span><br><span class="line">console.log(target); // &#123;bar: 2, foo2: 3, foo: 1&#125;</span><br></pre></td></tr></table></figure>
+<p>5、 不会跳过值为null或undefined的对象</p>
+<p>6、 针对深拷贝，需要使用其他方法。因为Object.assign()拷贝的是属性值。如果源对象的属性值是一个指向对象的引用，它也只拷贝那个引用值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var obj1 = &#123;a: 0, b: &#123;c: 0&#125;&#125;;</span><br><span class="line">var obj2 = Object.assign(&#123;&#125;, obj1);</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 0&#125;&#125;</span><br><span class="line"></span><br><span class="line">obj1.a = 1;</span><br><span class="line">console.log(JSON.stringify(obj1)); // &#123;a: 1, b: &#123;c: 0&#125;&#125;</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 0&#125;&#125; obj2.a不会受影响</span><br><span class="line"></span><br><span class="line">obj2.b.c = 3;</span><br><span class="line">console.log(JSON.stringify(obj1)); // &#123;a: 1, b: &#123;c: 3&#125;&#125; obj1.b.c也会变化</span><br><span class="line">console.log(JSON.stringify(obj2)); // &#123;a: 0, b: &#123;c: 3&#125;&#125;</span><br><span class="line"></span><br><span class="line">// 深拷贝</span><br><span class="line">obj1 = &#123;a: 0, b: &#123;c: 0&#125;&#125;;</span><br><span class="line">var obj3 = JSON.parse(JSON.stringify(obj1));</span><br><span class="line">obj1.a = 4;</span><br><span class="line">obj1.b.c = 4;</span><br><span class="line">console.log(JSON.stringify(obj3)); // &#123;a: 0, b: &#123;c: 0&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>7、原始类型会被包装成对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var v1 = &quot;abc&quot;;</span><br><span class="line">var v2 = true;</span><br><span class="line">var v3 = 10;</span><br><span class="line">var v4 = Symbol(&apos;foo&apos;);</span><br><span class="line"></span><br><span class="line">var obj = Object.assign(&#123;&#125;, v1, null, v2, undefined, v3, v4);</span><br><span class="line"></span><br><span class="line">// 原始类型会被包装，null和undefined会被忽略</span><br><span class="line">// 注意，只有字符串的包装对象才可能有自身可枚举属性</span><br><span class="line">console.log(obj); // &#123;0: &apos;a&apos;, 1: &apos;b&apos;, 2: &apos;c&apos;&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/按位非-妙用/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1536,165 +1667,6 @@ setTimeout.call(myArray, myArray.myMethod, 2500, 2); // prints &quot;two&quot; a
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/被誉为神器的requestAnimationFrame/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/28/被誉为神器的requestAnimationFrame/" itemprop="url">被誉为神器的requestAnimationFrame</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-28T16:56:26+08:00">
-                2017-07-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="setTimeout和setInterval的问题"><a href="#setTimeout和setInterval的问题" class="headerlink" title="setTimeout和setInterval的问题"></a>setTimeout和setInterval的问题</h3><p>我们知道js动画的核心技术是计时器。编写动画循环的关键是要知道延迟多长时间执行。一方面，循环时间必须足够短，才能让不同的动画效果显得平滑流畅；另一方面，循环间隔还要足够长，这样才能保证浏览器有能力渲染产生的变化。</p>
-<p>大多数电脑显示器的刷新频率是60Hz，大概相当于每秒重绘60次。大多数浏览器都会对重绘操作加以限制，不超过显示器的重绘频率，因为即使超过那个频率用户体验也不会有所提升，因此，最平滑动画的最佳循环间隔是1000ms/60，约等于16.6ms。</p>
-<p>而setTimeout和setInterval的问题是，它们都不精确。它们的内在运行机制决定了时间间隔参数实际上只是指定了把动画代码添加到浏览区UI线程队列中，以等待执行的时间。如果队列前面已经加入了其他任务，那动画代码就要等前面的任务完成后才执行，</p>
-<h3 id="requestAnimationFrame的好处"><a href="#requestAnimationFrame的好处" class="headerlink" title="requestAnimationFrame的好处"></a>requestAnimationFrame的好处</h3><p>requestAnimationFrame采用系统时间间隔，保持最佳绘制效率。不会因为间隔时间过短，造成过度重绘，增加开销；也不会因为间隔时间太长，使用动画卡顿不流畅，让各种动画效果能够有一个统一的刷新机制，从而节省系统资源，提高系统性能，改善视觉效果。</p>
-<h3 id="requestAnimationFrame的特点"><a href="#requestAnimationFrame的特点" class="headerlink" title="requestAnimationFrame的特点"></a>requestAnimationFrame的特点</h3><ul>
-<li>requestAnimationFrame会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率</li>
-<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流。这当然意味着更少的CPU、GPU和内存使用量</li>
-<li>requestAnimationFrame是由浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的使用，并且如果页面不是激活状态的话，动画会自动暂停，有效节省了CPU开销。</li>
-</ul>
-<h3 id="requestAnimationFrame的使用"><a href="#requestAnimationFrame的使用" class="headerlink" title="requestAnimationFrame的使用"></a>requestAnimationFrame的使用</h3><p>equestAnimationFrame的用法与settimeout很相似，只是不需要设置时间间隔而已。requestAnimationFrame使用一个回调函数作为参数，这个回调函数会在浏览器重绘之前调用。它返回一个整数，表示定时器的编号，这个值可以传递给cancelAnimationFrame用于取消这个函数的执行。</p>
-<pre><code>requestID = requestAnimationFrame(callback); 
-//控制台输出1和0
-var timer = requestAnimationFrame(function(){
-    console.log(0);
-}); 
-console.log(timer);//1
-</code></pre><h3 id="cancelAnimationFrame方法用于取消定时器"><a href="#cancelAnimationFrame方法用于取消定时器" class="headerlink" title="cancelAnimationFrame方法用于取消定时器"></a>cancelAnimationFrame方法用于取消定时器</h3><pre><code>//控制台什么都不输出
-var timer = requestAnimationFrame(function(){
-    console.log(0);
-}); 
-cancelAnimationFrame(timer);
-</code></pre><h3 id="cancelAnimationFrame的兼容性"><a href="#cancelAnimationFrame的兼容性" class="headerlink" title="cancelAnimationFrame的兼容性"></a>cancelAnimationFrame的兼容性</h3><p>IE9-浏览器不支持该方法，可以使用setTimeout来兼容。</p>
-<pre><code>if(!window.requestAnimationFrame){
-        var lastTime = 0;
-        window.requestAnimationFrame = function(callback){
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0,16.7-(currTime - lastTime));
-            var id  = window.setTimeout(function(){
-                callback(currTime + timeToCall);
-            },timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        }
-    }
-</code></pre><p>取消动画</p>
-<pre><code>if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1743,7 +1715,7 @@ cancelAnimationFrame(timer);
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

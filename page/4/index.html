@@ -263,6 +263,939 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/22/react笔记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/22/react笔记/" itemprop="url">react笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-22T09:56:23+08:00">
+                2017-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1、初识react"><a href="#1、初识react" class="headerlink" title="1、初识react"></a>1、初识react</h2><p><strong>angular缺点</strong>：作为MVVM框架过重，不适用与移动端开发；UI封装比较复杂，难以重用。</p>
+<p><strong>React</strong>：</p>
+<p>1、不是一个完整的MVC,MVVM框架，重点在于view层</p>
+<p>2、react与web components不冲突</p>
+<p>3、react比angular“轻”</p>
+<p>4、机制：virtual DOM，单向数据绑定</p>
+<p>5、组件化的开发思路：高度可重用</p>
+<p><strong>应用场景</strong></p>
+<p>1、复杂场景下的高性能</p>
+<p>2、重用组件库，组件组合</p>
+<p>3、“懒”</p>
+<h2 id="2、JSX语法（JS-XML）"><a href="#2、JSX语法（JS-XML）" class="headerlink" title="2、JSX语法（JS XML）"></a>2、JSX语法（JS XML）</h2><p>语法糖：对语言功能没有影响，更方便程序员使用，可读性更好</p>
+<pre><code>const element = &lt;h1&gt;hello, world.&lt;/h1&gt;;
+</code></pre><p>这就是JSX，既不是一个字符串，也不是HTML。</p>
+<ul>
+<li><p>JSX更像JS，而不是XML。</p>
+</li>
+<li><p>JSX产生react元素（参见最后一条）</p>
+</li>
+<li><p>JSX可以嵌入表达式</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const element = (</span><br><span class="line">	&lt;h1&gt;</span><br><span class="line">   		Hello, &#123;formatName(user)&#125;!</span><br><span class="line"> 		&lt;/h1&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JSX也是一种表达式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function getGreeting(user) &#123;</span><br><span class="line"> 		if (user) &#123;</span><br><span class="line">   		return &lt;h1&gt;Hello, &#123;formatName(user)&#125;!&lt;/h1&gt;;</span><br><span class="line"> 		&#125;</span><br><span class="line"> 		return &lt;h1&gt;Hello, Stranger.&lt;/h1&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JSX里可以指定属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const element = &lt;div tabIndex=&quot;0&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const element = &lt;img src=&#123;user.avatarUrl&#125;&gt;&lt;/img&gt;</span><br></pre></td></tr></table></figure>
+<p><code>注意</code>： 在属性中使用表达式时，花括号两边不能加引号</p>
+<ul>
+<li>JSX标签元素也可以包含子元素</li>
+<li>JSX可以阻止XSS攻击</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const title = response.potentialMaliciousInput;</span><br><span class="line">// this is safe</span><br><span class="line">const element = &lt;h1&gt;&#123;title&#125;&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<p>默认情况下，react DOM在渲染元素之前，可以escape任何嵌入在JSX中的值，这样你就无法注入任何没有在程序里明确写出来的的东西。在被渲染前，所有的东西都被转换成字符串，这就阻止了XSS攻击。</p>
+<ul>
+<li>JSX代表Objects</li>
+</ul>
+<p>babel会将JSX编译成React.createElement()调用。下面两种写法是等价的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const element = (</span><br><span class="line"> 		&lt;h1 className=&quot;greeting&quot;&gt;</span><br><span class="line">   		Hello, world!</span><br><span class="line"> 		&lt;/h1&gt;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const element = React.createElement(</span><br><span class="line"> 		&apos;h1&apos;,</span><br><span class="line"> 		&#123;className: &apos;greeting&apos;&#125;,</span><br><span class="line"> 		&apos;Hello, world!&apos;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>React.createElement()会帮助我们做一些检查，得到bug-free的代码，它本质上创建的对象如下：</p>
+<pre><code>// 注意，这只是一个简化的结构
+const element = {
+      type: &apos;h1&apos;,
+      props: {
+        className: &apos;greeting&apos;,
+        children: &apos;Hello, world&apos;
+      }
+};
+</code></pre><p>这些对象叫做”React elements”。<strong>其实就是屏幕上显示的内容的一种语言描述</strong>。</p>
+<p>React读取这些对象，并用他们去构建DOM树，并且保持实时更新。</p>
+<h2 id="3、如何更新渲染的元素"><a href="#3、如何更新渲染的元素" class="headerlink" title="3、如何更新渲染的元素"></a>3、如何更新渲染的元素</h2><p>React element是不可改变的，一旦创建好一个element，就无法改变它的children和attribute。<strong>一个element就像电影里的一帧：代表某个时间点的UI</strong>。</p>
+<ul>
+<li><p>更新UI的唯一方式就是创建一个新的element，并且传入ReactDOM.render().<br>钟表例子：</p>
+<pre><code>function tick() {
+    const element = (
+        &lt;div&gt;
+              &lt;h1&gt;Hello, world!&lt;/h1&gt;
+              &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt;
+        &lt;/div&gt;
+      );
+    ReactDOM.render(
+          element,
+          document.getElementById(&apos;root&apos;)
+    );
+}
+
+setInterval(tick, 1000);
+</code></pre></li>
+</ul>
+<p><strong>注意</strong>：react应用一般只调用ReactDOM一次，以后将介绍这样的代码是如何被封装到stateful components.</p>
+<h3 id="3-1-只在必要的时候调用ReactDOM"><a href="#3-1-只在必要的时候调用ReactDOM" class="headerlink" title="3.1 只在必要的时候调用ReactDOM"></a>3.1 只在必要的时候调用ReactDOM</h3><p>React DOM将某个元素及其子元素与原来做比较，只在必要的时候更新DOM。<br>就拿上面的例子来说，打开控制台查看元素，发现其实只有时间那部分在更新，其他都没有更新。</p>
+<p>这大概就是React内部机制之一吧~~</p>
+<h2 id="4、Components和Props"><a href="#4、Components和Props" class="headerlink" title="4、Components和Props"></a>4、Components和Props</h2><p>组件将UI分成独立的、可复用的块，每个组件相当于一个函数，可以接受任意输入（叫做Props），并返回能够描述屏幕内容的React Elements。</p>
+<h3 id="4-1-functional-and-class-components"><a href="#4-1-functional-and-class-components" class="headerlink" title="4.1 functional and class components"></a>4.1 functional and class components</h3><ul>
+<li><p>函数式组件：定义组件最简单的方式就是写一个JS函数</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Welcome(props) &#123;</span><br><span class="line">	return &lt;h1&gt;hello, &#123;props.name&#125;&lt;/h1&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>class组件：也可以使用class定义组件</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Welcome extends React.component &#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		return &lt;h1&gt;hello, &#123;this.props.name&#125;&lt;/h1&gt;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>使用class定义的组件具有一些额外的特点。</strong></p>
+<h3 id="4-2-渲染组件"><a href="#4-2-渲染组件" class="headerlink" title="4.2 渲染组件"></a>4.2 渲染组件</h3><p>react elements出来可以表示DOM 标签，还可以表示用户自定义的组件。</p>
+<pre><code>const element = &lt;div /&gt;;
+
+const element = &lt;Welcome name=&quot;sara&quot; /&gt;
+</code></pre><p>第二行中，Welcome是一个用户自定义组件，name=”sara”是属性，它会作为props传递给组件。</p>
+<pre><code>function Welcome(props) {
+      return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+}
+
+const element = &lt;Welcome name=&quot;Sara&quot; /&gt;;
+ReactDOM.render(
+      element,
+      document.getElementById(&apos;root&apos;)
+);
+</code></pre><p>以上代码会在页面上渲染出 “Hello, Sara”。</p>
+<p><strong>警告</strong>： 组件名必须是大写字母开头！！！    </p>
+<h3 id="4-3-组件组合"><a href="#4-3-组件组合" class="headerlink" title="4.3 组件组合"></a>4.3 组件组合</h3><p>一个组件里可以引用其他组件。</p>
+<pre><code>function Welcome(props) {
+  return &lt;h1&gt;hello, {props.name}&lt;/h1&gt;;
+}
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome name=&quot;sara&quot; /&gt;
+      &lt;Welcome name=&quot;ming&quot; /&gt;
+      &lt;Welcome name=&quot;li&quot; /&gt;
+    &lt;/div&gt;
+  )
+}
+
+ReactDOM.render(
+  &lt;App /&gt;,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><h3 id="4-4-组件抽象"><a href="#4-4-组件抽象" class="headerlink" title="4.4 组件抽象"></a>4.4 组件抽象</h3><p>我们先写一个例子</p>
+<pre><code>function Comment(props) {
+  return (
+    &lt;div className=&quot;Comment&quot;&gt;
+      &lt;div className=&quot;UserInfo&quot;&gt;
+        &lt;img className=&quot;Avatar&quot; src={props.author.avatarUrl} alt={props.author.name}/&gt;
+        &lt;div className=&quot;UserInfo-name&quot;&gt;
+          {props.author.name}
+        &lt;/div&gt;
+    &lt;/div&gt;
+      &lt;div className=&quot;Comment-text&quot;&gt;
+        {props.text}
+      &lt;/div&gt;
+      &lt;div className=&quot;Comment-date&quot;&gt;
+        {formateDate(props.date)}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+function formateDate(props) {
+  return props.toLocaleDateString();
+}
+
+const comment = {
+  date: new Date(),
+  text: &apos;I hope you enjoy learning React!&apos;,
+  author: {
+    name: &apos;Hello Kitty&apos;,
+    avatarUrl: &apos;http://placekitten.com/g/64/64&apos;
+  }
+};
+const element = (
+  Comment(comment)
+);
+
+ReactDOM.render(
+  element,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><p>上述例子没有将一些功能模块抽取成组件，下面我们抽象成组件：</p>
+<pre><code>function Comment(props) {
+  return (
+    &lt;div className=&quot;Comment&quot;&gt;
+      &lt;UserInfo user={props.author} /&gt;
+      &lt;div className=&quot;Comment-text&quot;&gt;
+        {props.text}
+      &lt;/div&gt;
+      &lt;div className=&quot;Comment-date&quot;&gt;
+        {formateDate(props.date)}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+
+function formateDate(props) {
+  return props.toLocaleDateString();
+}
+
+function UserInfo(props) {
+  return (
+    &lt;div className=&quot;UserInfo&quot;&gt;
+      &lt;Avatar user={props.user} /&gt;
+      &lt;div className=&quot;UserInfo-name&quot;&gt;
+        {props.user.name}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}
+function Avatar(props) {
+  return (
+    &lt;img className=&quot;Avatar&quot; src={props.user.avatarUrl} alt={props.user.name} /&gt;
+  );
+
+}
+
+const comment = {
+  date: new Date(),
+  text: &apos;I hope you enjoy learning React!&apos;,
+  author: {
+    name: &apos;Hello Kitty&apos;,
+    avatarUrl: &apos;http://placekitten.com/g/64/64&apos;
+  }
+};
+const element = (
+  Comment(comment)
+);
+
+ReactDOM.render(
+  element,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><h3 id="4-5-props是只读的"><a href="#4-5-props是只读的" class="headerlink" title="4.5 props是只读的"></a>4.5 props是只读的</h3><p>不要尝试修改props！！！</p>
+<h2 id="5、状态和生命周期"><a href="#5、状态和生命周期" class="headerlink" title="5、状态和生命周期"></a>5、状态和生命周期</h2><p>在第3部分，我们说了一个钟表的例子，现在我们利用上面讲的组件抽象，可以抽象成这个样子：</p>
+<pre><code>function tick() {
+    ReactDOM.render(
+      &lt;Clock date={new Date()} /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+  }
+
+  function Clock(props) {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+        &lt;h2&gt;It is {props.date.toLocaleTimeString()}.&lt;/h2&gt;
+      &lt;/div&gt;
+    )
+  }
+
+  setInterval(tick, 1000);
+</code></pre><p>但是这样写之后，Clock并不能控制date，所以我们想把它封装成这个样子：</p>
+<pre><code>ReactDOM.render(
+      &lt;Clock /&gt;,
+      document.getElementById(&apos;root&apos;)
+);
+</code></pre><p>这样我们就需要引入了state。</p>
+<p>state与props类似， 但是state是组件私有的，并且完全由组件自己控制。</p>
+<p>第4部分，我们说过，使用class定义的组件具有一些额外的特点，那么局部state就是它的一个特点，只对class可用的特点。</p>
+<p>那么如何将一个函数组件转化成class组件呢？</p>
+<h3 id="5-1-将函数转化成class"><a href="#5-1-将函数转化成class" class="headerlink" title="5.1 将函数转化成class"></a>5.1 将函数转化成class</h3><p>可遵循以下步骤：</p>
+<ul>
+<li>新建一个class扩展React.Component，名字与原函数名字相同</li>
+<li>添加一个空方法render() {}</li>
+<li>把函数的主体放到render方法里</li>
+<li>把props替换成this.props</li>
+<li><p>删除原来的空函数</p>
+<p>  function tick() {</p>
+<pre><code>  ReactDOM.render(
+    &lt;Clock date={new Date()} /&gt;,
+    document.getElementById(&apos;root&apos;)
+  );
+}
+class Clock extends React.Component {
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;Hello, world!&lt;/h1&gt;
+        &lt;h2&gt;It is {this.props.date.toLocaleTimeString()}.&lt;/h2&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+
+setInterval(tick, 1000);
+</code></pre><p>这样Clock是一个class，而不是函数。</p>
+</li>
+</ul>
+<p>这就能让我们使用额外的特点，比如局部状态和生命周期钩子。</p>
+<h3 id="5-2-给class添加局部状态"><a href="#5-2-给class添加局部状态" class="headerlink" title="5.2 给class添加局部状态"></a>5.2 给class添加局部状态</h3><ul>
+<li>把this.props.date替换成this.state.date</li>
+<li>给class添加一个class constructor，并给this.state一个初始值。</li>
+<li>传递props给base constructor （class组件应当都调用base constructor）</li>
+<li>从<code>&lt;Clock /&gt;</code>元素中去除<code>date</code> prop</li>
+</ul>
+<p>结果如下：</p>
+<pre><code>function tick() {
+    ReactDOM.render(
+      &lt;Clock /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+  }
+  class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+
+    render() {
+      return (
+        &lt;div&gt;
+          &lt;h1&gt;Hello, world!&lt;/h1&gt;
+          &lt;h2&gt;It is {this.state.date.toLocaleTimeString()}.&lt;/h2&gt;
+        &lt;/div&gt;
+      )
+    }
+  }
+
+  setInterval(tick, 1000);
+</code></pre><p>当然，经过上述修改后的只是一个静态时钟，时间不会变。</p>
+<p>接下来我们给Clock设置自己的定时器。</p>
+<h3 id="5-3-给class添加生命周期"><a href="#5-3-给class添加生命周期" class="headerlink" title="5.3 给class添加生命周期"></a>5.3 给class添加生命周期</h3><p>当组件被销毁时，他们占用的资源应该被释放。</p>
+<p>当Clock第一次被渲染到DOM中时，我们想<strong>设置</strong>一个定时器，这就是’mounting’。</p>
+<p>当Clock对应的DOM被移除时，我们想<em>清除</em>这个定时器，这就是’unmounting’。</p>
+<pre><code>class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+
+    componentDidMount() {
+      this.timerId = setInterval(() =&gt; this.tick(), 1000);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerId);
+    }
+
+    tick() {
+      this.setState({date: new Date()});
+    }
+    render() {
+      return (
+        &lt;div&gt;
+          &lt;h1&gt;Hello, world!&lt;/h1&gt;
+          &lt;h2&gt;It is {this.state.date.toLocaleTimeString()}.&lt;/h2&gt;
+        &lt;/div&gt;
+      )
+    }
+  }
+
+  ReactDOM.render(
+      &lt;Clock /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><p>此时，时钟可以正常走了。</p>
+<p>下面我们分析一下整个工作过程：</p>
+<p>（1）当<clock>被传递给ReactDOM.render()，react调用Clock组件的constructor，然后初始化当前的状态，this.state。</clock></p>
+<p>（2）然后react调用Clock组件的render()方法，这时react就知道了该显示什么到屏幕上，react就会更新DOM去匹配Clock的render输出。</p>
+<p>（3）当Clock输入插入DOM中时，react调用componentDidMount()生命周期钩子，在这里面，Clock组件让浏览器设置一个定时器去调用tick()函数。</p>
+<p>（4）每隔一秒，浏览器调用tick()方法，在这里面，Clock组件通过setState去调度UI的更新。由于setState()，react知道state已经变化了，它就会再次调用render()方法去看看应该如何展示在屏幕上。这时候，render()中的this.state.date变了，react也相应的去更新DOM。</p>
+<p>(5)如果组件从DOM中永久移除了，react调用componentWillUnmount()生命周期钩子，去清除定时器。</p>
+<h3 id="5-4-正确使用state"><a href="#5-4-正确使用state" class="headerlink" title="5.4 正确使用state"></a>5.4 正确使用state</h3><h4 id="5-4-1-不要直接修改state"><a href="#5-4-1-不要直接修改state" class="headerlink" title="5.4.1 不要直接修改state"></a>5.4.1 不要直接修改state</h4><p>错误示范：</p>
+<pre><code>// wrong
+this.state.comment = &apos;hello&apos;;
+</code></pre><p>正确示范,使用setState():</p>
+<pre><code>// correct
+this.setState({comment: &apos;hello&apos;});
+</code></pre><p>只有在constructor里才能使用<code>this.state</code></p>
+<h4 id="5-4-2-state的更新可能是异步的"><a href="#5-4-2-state的更新可能是异步的" class="headerlink" title="5.4.2 state的更新可能是异步的"></a>5.4.2 state的更新可能是异步的</h4><p>为了性能，react可能会将多个setState()调用放到同一批更新里。</p>
+<p>因此this.props和this.state可能更新的不同步，不应该依赖他们的值来计算下一个状态。</p>
+<p>比如：下面这个代码就很可能无法更新counter。</p>
+<pre><code>// Wrong
+this.setState({
+      counter: this.state.counter + this.props.increment,
+});
+</code></pre><p>我们应该使用setState的第二种方式，即接收一个函数而不是一个对象，这个函数接受两个参数，原先的状态作为第一个参数，实施更新时的props作为第二个参数。</p>
+<pre><code>// Correct
+this.setState((prevState, props) =&gt; ({
+      counter: prevState.counter + props.increment
+}));
+</code></pre><h4 id="5-4-3-state的更新被合并了"><a href="#5-4-3-state的更新被合并了" class="headerlink" title="5.4.3 state的更新被合并了"></a>5.4.3 state的更新被合并了</h4><p>当调用setState()时，react将你提供的对象合并到当前state。</p>
+<p>比如，你的state可能包含几个独立的变量：</p>
+<pre><code>constructor(props) {
+    super(props);
+    this.state = {
+          posts: [],
+          comments: []
+    };
+  }
+</code></pre><p>然后你用不同的setState()更新他们：</p>
+<pre><code>componentDidMount() {
+    fetchPosts().then(response =&gt; {
+      this.setState({
+        posts: response.posts
+      });
+    });
+
+    fetchComments().then(response =&gt; {
+      this.setState({
+        comments: response.comments
+      });
+    });
+  }
+</code></pre><p>由于合并，this.setState({comments})不影响this.state.posts，但是将完整的替换this.state.comments。</p>
+<h3 id="5-5-数据向下流动"><a href="#5-5-数据向下流动" class="headerlink" title="5.5 数据向下流动"></a>5.5 数据向下流动</h3><p>也就是说组件不会知道他的props里的数据来自哪里。</p>
+<p>这就是“自顶向下”或者“单一”数据流。</p>
+<p>由指定组件拥有的任何state，以及被这个state驱动的任何data和UI只能影响其下面的元素。</p>
+<p>无论这个组件是有状态的还是无状态的，都被视为这个组件的细节，也都是可能随时间变化的，可以在有状态组件里使用无状态组件，反之亦然。</p>
+<h2 id="6-处理事件"><a href="#6-处理事件" class="headerlink" title="6. 处理事件"></a>6. 处理事件</h2><p>处理react元素的事件与处理DOM元素的事件类似，有以下几点区别：</p>
+<ul>
+<li>react事件使用camelCase命名，而不是全小写</li>
+<li>事件处理器是一个函数，而不是一个字符串</li>
+</ul>
+<p>举个例子：</p>
+<pre><code>// HTML
+&lt;button onclick=&quot;activateLaser()&quot;&gt;
+    Activate Lasers
+&lt;/button&gt;
+
+// React
+&lt;button onClick={activateLaser}&gt;
+    Activate Lasers
+&lt;/button&gt;
+</code></pre><ul>
+<li>不能直接返回<code>false</code>阻止默认事件，必须调用<code>preventDefault</code>。</li>
+</ul>
+<p>举个例子：</p>
+<pre><code>// HTML
+&lt;a href=&quot;#&quot; onclick=&quot;console.log(&apos;the link was clicked.&apos;); return false&quot;&gt;
+    Click me
+&lt;/a&gt;
+
+// React
+function ActionLink() {
+    function handleClick(e) {
+        console.log(&apos;the link was clicked.&apos;);
+        e.preventDefaul();
+    }
+    return (
+        &lt;a href=&quot;#&quot; onClick={handleClick}&gt;
+            Click me
+        &lt;/a&gt;
+    );
+}
+</code></pre><ul>
+<li>react中一般不需要调用addEventListener来对DOM元素添加监听。</li>
+</ul>
+<p>举个例子：</p>
+<pre><code>class Toggle extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {isToggleOn: true};
+       // This binding is necessary to make `this` work in the callback
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+      this.setState(prevState =&gt; ({
+        isToggleOn: !prevState.isToggleOn
+      }));
+    }
+    render() {
+      return (
+        &lt;button onClick={this.handleClick}&gt;
+          {this.state.isToggleOn?&apos;ON&apos;:&apos;OFF&apos;}
+        &lt;/button&gt;
+      )
+    }
+  }
+
+  ReactDOM.render(
+      &lt;Toggle /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><p>这里要注意this的绑定，如果我们不在constructor里绑定this给handleClick，那么在调用handleClick时this将会是undefined。这里还有两种写法，</p>
+<p>第二种，属性初始化语法</p>
+<pre><code>// 采用属性初始化语法
+// 方式二
+    handleClick = ()=&gt;{
+      this.setState(prevState =&gt; ({
+        isToggleOn: !prevState.isToggleOn
+      }));
+    }
+</code></pre><p>第三种，使用箭头函数</p>
+<pre><code>render() {
+      return (
+        &lt;button onClick={(e) =&gt; this.handleClick(e)}&gt;
+          {this.state.isToggleOn?&apos;ON&apos;:&apos;OFF&apos;}
+        &lt;/button&gt;
+      )
+    }
+</code></pre><p><strong>第三种方式不推荐。</strong>因为每次button渲染时都会创建一个新回调函数，当我们把这个回调函数传递给子组件时，子组件会重复渲染。</p>
+<h2 id="7-条件渲染"><a href="#7-条件渲染" class="headerlink" title="7. 条件渲染"></a>7. 条件渲染</h2><p>如果我们有两个组件，需要根据条件渲染其中一个，这时候就可以用if来实现：</p>
+<p>比如我们有这么两个组件：</p>
+<pre><code>function UserGreeting(props) {
+      return &lt;h1&gt;Welcome back!&lt;/h1&gt;;
+}
+
+function GuestGreeting(props) {
+      return &lt;h1&gt;Please sign up.&lt;/h1&gt;;
+}
+</code></pre><p>为了实现这两个组件只渲染其中一个，我们创建一个Greeting元素，根据是否登录展示其中一个组件：</p>
+<pre><code>function UserGreeting() {
+    return &lt;h1&gt;Welcom back!&lt;/h1&gt;
+  }
+
+  function GuestGreeting() {
+    return &lt;h1&gt;Please sign up&lt;/h1&gt;
+  }
+
+  function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if(props.isLoggedIn) {
+      return &lt;UserGreeting /&gt;;
+    }
+    return &lt;GuestGreeting /&gt;;
+  }
+
+  ReactDOM.render(
+      &lt;Greeting isLoggedIn={true} /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><h3 id="7-1-元素变量"><a href="#7-1-元素变量" class="headerlink" title="7.1 元素变量"></a>7.1 元素变量</h3><p>我们可以使用变量存储元素。</p>
+<p>比如这里我们有两个按钮，表示登录退出：</p>
+<pre><code>function LoginButton (props) {
+    return (
+      &lt;button onClick={props.onClick}&gt;
+        Login
+      &lt;/button&gt;
+    )
+  }
+
+  function LogoutButton (props) {
+    return (
+      &lt;button onClick={props.onClick}&gt;
+        Logout
+      &lt;/button&gt;
+    )
+  }
+</code></pre><p>我们将创建一个状态组件<code>LoginControl</code>.</p>
+<pre><code>class LoginControl extends React.Component {
+    constructor (props) {
+      super(props);
+      this.state={
+        isLoggedIn: false
+      };
+      this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      this.handleLoginClick = this.handleLoginClick.bind(this);
+    }
+
+    handleLogoutClick() {
+      this.setState({isLoggedIn: false})
+    }
+
+    handleLoginClick() {
+      this.setState({isLoggedIn: true})
+    }
+
+    render() {
+      const isLoggedIn = this.state.isLoggedIn;
+      let button = null;
+      if(isLoggedIn) {
+        button = &lt;LogoutButton onClick={this.handleLogoutClick}/&gt;;
+      } else {
+        button = &lt;LoginButton onClick={this.handleLoginClick}/&gt;;
+      }
+
+      return (
+        &lt;div&gt;
+          &lt;Greeting isLoggedIn={isLoggedIn}/&gt;
+          {button}
+        &lt;/div&gt;
+      );
+    }
+  }
+
+  function UserGreeting(props) {
+    return &lt;h1&gt;Welcome back!&lt;/h1&gt;;
+  }
+
+  function GuestGreeting(props) {
+    return &lt;h1&gt;Please sign up.&lt;/h1&gt;;
+  }
+
+  function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return &lt;UserGreeting /&gt;;
+    }
+    return &lt;GuestGreeting /&gt;;
+  }
+
+  function LoginButton (props) {
+    return (
+      &lt;button onClick={props.onClick}&gt;
+        Login
+      &lt;/button&gt;
+    )
+  }
+
+  function LogoutButton (props) {
+    return (
+      &lt;button onClick={props.onClick}&gt;
+        Logout
+      &lt;/button&gt;
+    )
+  }
+
+  ReactDOM.render(
+      &lt;LoginControl /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><p>当我们使用一个变量，并使用<code>if</code>语句，是一个比较好的方式来渲染一个组件。但有时候，你想去使用一个更短的语法，这里有几种方式：</p>
+<h3 id="7-2-inline-if-with-logical-amp-amp-operator"><a href="#7-2-inline-if-with-logical-amp-amp-operator" class="headerlink" title="7.2 inline if with logical &amp;&amp; operator"></a>7.2 inline if with logical &amp;&amp; operator</h3><p>通过{}，我们可以嵌入任何表达式到JSX，当然也包括JS逻辑运算符&amp;&amp;，这对于条件渲染时很方便的,<br>true &amp;&amp; expression将取决于expression，</p>
+<p>false &amp;&amp; expression将取决于false。</p>
+<pre><code>function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Hello!&lt;/h1&gt;
+      {unreadMessages.length &gt; 0 &amp;&amp;
+        &lt;h2&gt;
+          You have {unreadMessages.length} unread messages.
+        &lt;/h2&gt;
+      }
+    &lt;/div&gt;
+  );
+}
+
+const messages = [&apos;React&apos;, &apos;Re: React&apos;, &apos;Re:Re: React&apos;];
+ReactDOM.render(
+  &lt;Mailbox unreadMessages={messages} /&gt;,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><h3 id="7-3-inline-if-else-with-Conditional-Operator"><a href="#7-3-inline-if-else-with-Conditional-Operator" class="headerlink" title="7.3 inline if-else with Conditional Operator"></a>7.3 inline if-else with Conditional Operator</h3><p>就是三目运算符：condition ? true: false</p>
+<pre><code>render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    &lt;div&gt;
+      The user is &lt;b&gt;{isLoggedIn ? &apos;currently&apos; : &apos;not&apos;}&lt;/b&gt; logged in.
+    &lt;/div&gt;
+  );
+}
+</code></pre><h3 id="7-4-阻止元素渲染"><a href="#7-4-阻止元素渲染" class="headerlink" title="7.4 阻止元素渲染"></a>7.4 阻止元素渲染</h3><p>在极少数情况下，我们希望组件能够隐藏自己，即使它是由另一个组件渲染的，要实现这点，只需要在它的render函数里return null即可。</p>
+<pre><code>function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+
+  return (
+    &lt;div className=&quot;warning&quot;&gt;
+      Warning!
+    &lt;/div&gt;
+  );
+}
+
+class Page extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true}
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+
+  handleToggleClick() {
+    this.setState(prevState =&gt; ({
+      showWarning: !prevState.showWarning
+    }));
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;WarningBanner warn={this.state.showWarning} /&gt;
+        &lt;button onClick={this.handleToggleClick}&gt;
+          {this.state.showWarning ? &apos;Hide&apos; : &apos;Show&apos;}
+        &lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+ReactDOM.render(
+  &lt;Page /&gt;,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><h2 id="8-lists和keys"><a href="#8-lists和keys" class="headerlink" title="8. lists和keys"></a>8. lists和keys</h2><h3 id="8-1-渲染多个组件"><a href="#8-1-渲染多个组件" class="headerlink" title="8.1 渲染多个组件"></a>8.1 渲染多个组件</h3><p>使用map()函数：</p>
+<pre><code>const number = [1,2,3];
+const listItems = number.map((number) =&gt; {
+  return &lt;li&gt;{number}&lt;/li&gt;
+});
+
+ReactDOM.render(
+    &lt;ul&gt;{listItems}&lt;/ul&gt;,
+    document.getElementById(&apos;root&apos;)
+  );
+</code></pre><h3 id="8-2-基本的list组件"><a href="#8-2-基本的list组件" class="headerlink" title="8.2 基本的list组件"></a>8.2 基本的list组件</h3><p>通常我们会在一个组件内部渲染列表：</p>
+<p>上面的例子可以改为：</p>
+<pre><code>function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =&gt; 
+      &lt;li&gt;{number}&lt;/li&gt;
+    );
+    return (
+      &lt;ul&gt;{listItems}&lt;/ul&gt;
+    );
+  }
+
+  const numbers = [1,2,3];
+  ReactDOM.render(
+      &lt;NumberList numbers={numbers} /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><p>当我们运行这段代码时，发现会有警告，应该给list 元素提供一个key 的属性。“key”是一个特殊的字符串属性，当我们创建元素的list时应该包含这个属性（原因在后面），好，下面我们加上这个属性：</p>
+<pre><code>function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =&gt;
+      &lt;li key={number.toString()}&gt;{number}&lt;/li&gt;
+    );
+    return (
+      &lt;ul&gt;{listItems}&lt;/ul&gt;
+    );
+  }
+
+  const numbers = [1,2,3];
+  ReactDOM.render(
+      &lt;NumberList numbers={numbers} /&gt;,
+      document.getElementById(&apos;root&apos;)
+    );
+</code></pre><h3 id="8-3-Keys"><a href="#8-3-Keys" class="headerlink" title="8.3 Keys"></a>8.3 Keys</h3><p>key有助于识别哪些项目已经更改、添加或删除。应该给数组中的元素赋予key，使元素具有稳定的标识：</p>
+<pre><code>const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =&gt;
+      &lt;li key={number.toString()}&gt;
+        {number}
+      &lt;/li&gt;
+);
+</code></pre><p>选择key的最佳方法是使用唯一标识其兄弟之间的列表项的字符串。大多数情况下，将使用数据中的id作为key：</p>
+<pre><code>const todoItems = todos.map((todo) =&gt;
+      &lt;li key={todo.id}&gt;
+        {todo.text}
+      &lt;/li&gt;
+);
+</code></pre><p>如果没有稳定的id，那就使用item的index作为最后的解决方案：</p>
+<pre><code>const todoItems = todos.map((todo, index) =&gt;
+      // Only do this if items have no stable IDs
+      &lt;li key={index}&gt;
+        {todo.text}
+      &lt;/li&gt;
+);
+</code></pre><p><strong>不建议使用index作为key，如果items能被重排序</strong></p>
+<h3 id="8-4-抽象带key的组件"><a href="#8-4-抽象带key的组件" class="headerlink" title="8.4 抽象带key的组件"></a>8.4 抽象带key的组件</h3><p>key只有在数组的上下文里才有意义。</p>
+<p>比如，如果想抽象一个ListItem组件，应该让这个key在<listitem>元素上，而不是在<li>元素上：</li></listitem></p>
+<p>错误的写法：</p>
+<pre><code>function ListItem(props) {
+  const value = props.value;
+  return (
+    // Wrong! There is no need to specify the key here:
+    &lt;li key={value.toString()}&gt;
+      {value}
+    &lt;/li&gt;
+  );
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =&gt;
+    // Wrong! The key should have been specified here:
+    &lt;ListItem value={number} /&gt;
+  );
+  return (
+    &lt;ul&gt;
+      {listItems}
+    &lt;/ul&gt;
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  &lt;NumberList numbers={numbers} /&gt;,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><p>正确的写法：</p>
+<pre><code>function ListItem(props) {
+  // Correct! There is no need to specify the key here:
+  return &lt;li&gt;{props.value}&lt;/li&gt;;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =&gt;
+    // Correct! Key should be specified inside the array.
+    &lt;ListItem key={number.toString()}
+              value={number} /&gt;
+  );
+  return (
+    &lt;ul&gt;
+      {listItems}
+    &lt;/ul&gt;
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  &lt;NumberList numbers={numbers} /&gt;,
+  document.getElementById(&apos;root&apos;)
+);
+</code></pre><p><strong>总结：在map()调用中的元素都需要key。</strong></p>
+<h3 id="8-5-keys在兄弟之间必须是唯一的"><a href="#8-5-keys在兄弟之间必须是唯一的" class="headerlink" title="8.5 keys在兄弟之间必须是唯一的"></a>8.5 keys在兄弟之间必须是唯一的</h3><p>key在他们的兄弟之间必须唯一，全局可以不唯一。</p>
+<p>当我们产生两个不同的数组时，可以用相同的key。</p>
+<p>key只是作为react的提示，但它不能传递到你的组件里，比如    下面的例子：</p>
+<pre><code>const content = posts.map((post) =&gt;
+      &lt;Post
+        key={post.id}
+        id={post.id}
+        title={post.title} /&gt;
+);
+</code></pre><p>上面例子，post组件能读取到props.id,但不能读取到props.key。</p>
+<h3 id="8-6-把map-嵌入在JSX里"><a href="#8-6-把map-嵌入在JSX里" class="headerlink" title="8.6 把map()嵌入在JSX里"></a>8.6 把map()嵌入在JSX里</h3><pre><code>function NumberList(props) {
+      const numbers = props.numbers;
+      return (
+        &lt;ul&gt;
+              {numbers.map((number) =&gt;
+                &lt;ListItem key={number.toString()}
+              value={number} /&gt;
+              )}
+        &lt;/ul&gt;
+      );
+}
+</code></pre><p>采取那种方式取决于代码和自己习惯。</p>
+<h2 id="9-表单"><a href="#9-表单" class="headerlink" title="9. 表单"></a>9. 表单</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/21/nodejs速学笔记（一）/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2863,394 +3796,6 @@ export default {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/水平、垂直居中/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/水平、垂直居中/" itemprop="url">水平、垂直居中</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T10:23:15+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>接连两次面试被问到水平、垂直居中，答了几种方法，但感觉面试官并不是很满意啊，特意再整理一下各种方法~</p>
-<h2 id="该元素宽高已知"><a href="#该元素宽高已知" class="headerlink" title="该元素宽高已知"></a>该元素宽高已知</h2><h3 id="1-absolute-负margin"><a href="#1-absolute-负margin" class="headerlink" title="1. absolute+负margin"></a>1. absolute+负margin</h3><p>父元素：relative</p>
-<p>该元素：absolute, left: 50%, top: 50%, margin-left: 负的该元素宽度的一半，margin-right: 负的该元素高度的一半</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;style&gt;
-    .div1 {
-      width: 100%;
-      height: 200px;
-      background-color: gray;
-      position:relative;
-    }
-
-    .div2 {
-      width:50px;
-      height:50px;
-      background-color:red;
-      position:absolute;
-      left:50%;
-      top:50%;
-      margin-left:-25px;
-      margin-top:-25px;
-    }
-&lt;/style&gt;
-
-    &lt;div class=&quot;div1&quot;&gt;
-        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
-    &lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id="2-绝对定位居中技术（Absolute-Centering）absolute-margin-auto"><a href="#2-绝对定位居中技术（Absolute-Centering）absolute-margin-auto" class="headerlink" title="2. 绝对定位居中技术（Absolute Centering）absolute, margin:auto"></a>2. 绝对定位居中技术（Absolute Centering）absolute, margin:auto</h3><p>这种方法的原理参见：<a href="http://www.xixizhang.info/2017/07/19/%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E5%B1%85%E4%B8%AD%E6%8A%80%E6%9C%AF-Absolute-Centering/" target="_blank" rel="noopener">绝对定位居中技术(Absolute Centering)</a></p>
-<p>父元素设置为:relative</p>
-<p>该元素设置为: absolute, left:0, top: 0, right:0,bottom:0, marign:auto</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;style&gt;
-    .div1 {
-      width: 100%;
-      height: 200px;
-      background-color: gray;
-      position:relative;
-    }
-
-    .div2 {
-      width:50px;
-      height:50px;
-      background-color:red;
-      margin:auto;
-      position:absolute;
-      left:0;
-      top:0;
-      right:0;
-      bottom:0;
-    }
-&lt;/style&gt;
-
-    &lt;div class=&quot;div1&quot;&gt;
-        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
-    &lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id="3-flex布局"><a href="#3-flex布局" class="headerlink" title="3. flex布局"></a>3. flex布局</h3><p>父元素：display:flex, justify-content: center, align-items: center</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;style&gt;
-    .div1 {
-      display:flex;
-      width: 100%;
-      height: 200px;
-      background-color: gray;
-      /* flex-direction:row; */
-      justify-content:center;
-      align-items:center;
-    }
-
-    .div2 {
-      /* flex: 0 1 auto; */
-      width:50px;
-      height:50px;
-      background-color:red;
-
-    }
-&lt;/style&gt;
-
-    &lt;div class=&quot;div1&quot;&gt;
-        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
-    &lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h2 id="该元素宽高未知"><a href="#该元素宽高未知" class="headerlink" title="该元素宽高未知"></a>该元素宽高未知</h2><h3 id="1-absolute-transform"><a href="#1-absolute-transform" class="headerlink" title="1. absolute, transform"></a>1. absolute, transform</h3><p>父元素相对定位</p>
-<p>子元素绝对定位，把定宽的负margin换成transform</p>
-<pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;style&gt;
-    .div1 {
-      position:relative;
-      width: 100%;
-      height: 200px;
-      background-color: gray;
-    }
-
-    .div2 {
-      position: absolute;
-      background-color:red;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%)
-    }
-&lt;/style&gt;
-
-    &lt;div class=&quot;div1&quot;&gt;
-        &lt;div class=&quot;div2&quot;&gt;Abfkadf;&lt;/div&gt;
-    &lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id="2-flex布局"><a href="#2-flex布局" class="headerlink" title="2.flex布局"></a>2.flex布局</h3><pre><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;&lt;/title&gt;
-&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;style&gt;
-    .div1 {
-      display: flex;
-      width: 100%;
-      height: 200px;
-      background-color: gray;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .div2 {
-      /* position: absolute; */
-      background-color:red;
-    }
-&lt;/style&gt;
-
-    &lt;div class=&quot;div1&quot;&gt;
-        &lt;div class=&quot;div2&quot;&gt;hhhhhh;&lt;/div&gt;
-    &lt;/div&gt;
-
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="table-cell"><a href="#table-cell" class="headerlink" title="table-cell"></a>table-cell</h3><pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
-    &lt;title&gt;Demo001_displayTable&lt;/title&gt;
-    &lt;style&gt;
-    /*** table-cell middle center组合使用 ***/
-
-    .cell {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-        width: 240px;
-        height: 180px;
-        border: 1px solid #666;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div class=&quot;cell&quot;&gt;
-        &lt;p&gt;我爱你&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;cell&quot;&gt;
-        &lt;p&gt;我爱你&lt;/p&gt;
-        &lt;p&gt;亲爱的中国&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;cell&quot;&gt;
-        &lt;p&gt;我爱你&lt;/p&gt;
-        &lt;p&gt;亲爱的中国&lt;/p&gt;
-        &lt;div style=&quot;width:100px;height:50px;border:1px solid #ccc;display:inline-block&quot;&gt;div(inline-block)&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><h3 id="inline-block-1"><a href="#inline-block-1" class="headerlink" title="inline-block 1"></a>inline-block 1</h3><ul>
-<li>首先要了解垂直方向的对齐排版需使用 vertical-align，并且只应用于inline level, inline-block level 及 table-cells 元素上；</li>
-<li>其次 vertical-align 的对齐就基于每个 line box（行框） 的，简单的说，inline level元素按照 Normal flow 水平排版出一行就会形成一个line box，其高度由内容形成，如果换行，则又是另一个line box，所有一段文本可能会分布在多个line box里，这些不重叠的line box被称作为a vertical stack of line boxes（一个垂直堆叠的线框集合）这些。</li>
-<li>换句话说，我们的垂直居中是要在每个line box中进行处理。而上例中我们想让一行文本在名叫demo的高100px的容器里垂直居中，这时有个问题就是demo容器并非该行文本的line box，所以就算定义vertical-laign为middle也无法让该行文本在demo容器中垂直居中。我们知道line box的高度是由内容形成的，这时我们可以额外创建一个与该行文本处于同一line box的元素，同时将新增元素的高度定义为与demo容器相同，此时line box的高度将与demo一致，文本将会在line box内垂直居中，即同样实现了在demo容器中垂直居中。本例我们使用伪对象::after来创建那个新增元素，可以设置新增元素为不可见。</li>
-<li><p>当然，该方案也是有局限性的，因为IE8以下的浏览器不支持伪对象::after</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">   &lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">   &lt;head&gt;</span><br><span class="line">       &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">       &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</span><br><span class="line">       &lt;title&gt;Demo001_displayTable&lt;/title&gt;</span><br><span class="line">       &lt;style&gt;</span><br><span class="line">       #demo &#123;</span><br><span class="line">           height: 100px;</span><br><span class="line">           text-align: center;</span><br><span class="line">       &#125;</span><br><span class="line">       #demo:after &#123;</span><br><span class="line">           display: inline-block;</span><br><span class="line">           width: 0;</span><br><span class="line">           height: 100%;</span><br><span class="line">           vertical-align: middle;</span><br><span class="line">           content: &apos;&apos;;</span><br><span class="line">       &#125;</span><br><span class="line">       #demo p &#123;</span><br><span class="line">           display: inline-block;</span><br><span class="line">           vertical-align: middle;</span><br><span class="line">       &#125;</span><br><span class="line">       &lt;/style&gt;</span><br><span class="line">   &lt;/head&gt;</span><br><span class="line"></span><br><span class="line">   &lt;body&gt;</span><br><span class="line">       &lt;div id=&quot;demo&quot;&gt;</span><br><span class="line">           &lt;p&gt;水平垂直居中的随意内容&lt;/p&gt;</span><br><span class="line">       &lt;/div&gt;</span><br><span class="line">   &lt;/body&gt;</span><br><span class="line"></span><br><span class="line">   &lt;/html&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="inline-block-2"><a href="#inline-block-2" class="headerlink" title="inline-block 2"></a>inline-block 2</h3><ul>
-<li>其实如果理解了line box概念，写上述2个例子时，就肯定知道会存在这个杯具。如上，CSS不变，只将文本变长。之前得以实现垂直居中，主要是将文本所在line box撑高了，而如果新增的元素被过长文本挤换行，则它们将不再处于同一line box，那么垂直居中将失效。你可能存疑，不是已将新增元素width设置为0了吗？怎么还能被挤换行。这时你应该知道一个常识，inline level或inline-block level的元素之间的间隙问题，对此问题不做详述。</li>
-</ul>
-<p>以下是终极版，包含浏览器兼容，过长问题</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
-    &lt;title&gt;Demo001_displayTable&lt;/title&gt;
-    &lt;style&gt;
-    #demo {
-        height: 100px;
-        text-align: center;
-        font-size: 0;
-    }
-
-    #demo:after,
-    #demo span {
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
-        width: 0;
-        height: 100%;
-        vertical-align: middle;
-    }
-
-    #demo:after {
-        content: &apos;&apos;;
-    }
-
-    #demo p {
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
-        vertical-align: middle;
-        font-size: 16px;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div id=&quot;demo&quot;&gt;
-        &lt;p&gt;这是一个终极实现的水平垂直居中实例&lt;/p&gt;
-        &lt;!--[if lt IE 8]&gt;&lt;span&gt;&lt;/span&gt;&lt;![endif]--&gt;
-    &lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><p>参考：<a href="http://demo.doyoe.com/css/alignment/" target="_blank" rel="noopener">http://demo.doyoe.com/css/alignment/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3299,7 +3844,7 @@ export default {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">58</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
