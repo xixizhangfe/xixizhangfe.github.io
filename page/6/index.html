@@ -263,6 +263,1122 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/css定位属性/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/css定位属性/" itemprop="url">css定位属性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T22:09:08+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>说到定位属性，首先想到的是relative，absolute等等，但今天一查，原来面试官口中说的定位属性原来不仅仅是这些~~~~</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>版本</th>
+<th>继承性</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position</td>
+<td>css2</td>
+<td>无</td>
+<td>用来设置文档对象的定位方式</td>
+</tr>
+<tr>
+<td>z-index</td>
+<td>css2</td>
+<td>无</td>
+<td>用来设置文档对象的层叠顺序，必须定位position属性为absolute、relative、或fixed，此取值方可生效</td>
+</tr>
+<tr>
+<td>top</td>
+<td>css2</td>
+<td>无</td>
+<td>用来设置文档对象与其最近一个定位的父对象顶部相关的位置，仅当定义position属性值为absolute、relative、fixed，此取值方可生效</td>
+</tr>
+<tr>
+<td>right</td>
+<td>css2</td>
+<td>无</td>
+<td>检索或这是对象与其最近一个定位的父对象右边相关的位置</td>
+</tr>
+<tr>
+<td>bottom</td>
+<td>css2</td>
+<td>无</td>
+<td>检索或设置与其最近一个定位的父对象底边相关的位置</td>
+</tr>
+<tr>
+<td>left</td>
+<td>css2</td>
+<td>无</td>
+<td>检索或设置与其最近一个定位的父对象左边相关的位置</td>
+</tr>
+</tbody>
+</table>
+<h4 id="position对应的值"><a href="#position对应的值" class="headerlink" title="position对应的值"></a>position对应的值</h4><ul>
+<li>绝对定位(position: absolute)</li>
+</ul>
+<p>绝对定位的作用是将元素<strong>从文档流中拖出来</strong>，然后使用left，right，top，bottom属性相对于其最近的一个具有定位属性的父包含块(containing block)进行绝对定位，而且是<strong>相对于其边框内边缘的，而不是其padding内边缘</strong>。如果不存在这样的包含块，则相对于body元素定位。</p>
+<p>原来的空间会被其他元素挤占。</p>
+<p>元素在最终位置时也不会挤占其他元素的空间，而是浮动到其他元素的上方。</p>
+<ul>
+<li>相对定位(postition: relative)</li>
+</ul>
+<p>通过left,right,top,bottom属性确定元素在正常文档流中的偏移位置，相对定位完成的过程是首先按static(float)方式生成一个元素（并且元素像层一样浮动起来），然后相对于以前的位置移动，移动方向和幅度由left，right，top，bottom属性确定，<strong>偏移前的位置保留不动，没有脱离文档流</strong>。</p>
+<p>原来的空间不会被其他元素挤占。</p>
+<p>元素在最终位置时也不会挤占其他元素的空间，它浮动到其他元素的上方。</p>
+<ul>
+<li>固定定位(positition: fixed)</li>
+</ul>
+<p>与absolute定位类型类似，但它相对移动的坐标是视图（屏幕内的网页窗口）本身，由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，不会受文档流动影响。</p>
+<ul>
+<li>position: static</li>
+</ul>
+<p>是默认值。就是按正常的布局流从上到下从左到右布局，没有指定position，默认是static。</p>
+<ul>
+<li>position: inherit</li>
+</ul>
+<p>继续父元素的position值</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/javascript组件化开发方式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/javascript组件化开发方式/" itemprop="url">javascript组件化开发方式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T19:46:07+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/1.mp4?raw=true" alt=""></p>
+<p>看到要求后，第一反应就是我们最普通的写法（小白写法）：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;inputBox&quot;&gt;&lt;span id=&quot;res&quot;&gt;0&lt;/span&gt;个字
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    $(function () {
+      var input = $(&apos;#inputBox&apos;);
+      input.on(&apos;keyup&apos;, function () {
+        var num = input.val();
+        if(num.length !== 0) {
+          $(&apos;#res&apos;).html(num.length);
+        }else{
+          $(&apos;#res&apos;).html(&apos;0&apos;);
+        }
+      })
+
+    })
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>待更新~~</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/" itemprop="url">html5 localstorage/sessionstorage/cookie (local storage篇)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T16:05:36+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>local storage与session storage用法相同，这里以local storage为例。</p>
+<h4 id="检测浏览器是否支持localStorage"><a href="#检测浏览器是否支持localStorage" class="headerlink" title="检测浏览器是否支持localStorage"></a>检测浏览器是否支持localStorage</h4><pre><code>if(window.localStorage){
+    alert(&apos;support localStorage&apos;);
+}else {
+    alert(&apos;does not support localStorage&apos;);
+}
+</code></pre><h4 id="存储数据的方法"><a href="#存储数据的方法" class="headerlink" title="存储数据的方法"></a>存储数据的方法</h4><p>直接给window.localStorage添加一个属性，例如：<code>window.localStorage.a</code>或者<code>window.localStorage[&#39;a&#39;]</code>。它的读取、写、删除操作方法非常简单，是以键值对的方式存在的，如下：</p>
+<pre><code>localStorage.a = 1; 
+localStorage[&apos;a&apos;] = &apos;abc&apos;; // 会覆盖上面的值
+localStorage.setItem(&apos;b&apos;, &quot;isaac&quot;);
+var a1 = localStorage[&quot;a&quot;];//获取a的值
+var a2 = localStorage.a;//获取a的值
+var b = localStorage.getItem(&quot;b&quot;);//获取b的值
+localStorage.removeItem(&quot;a&quot;); //清除a的值
+</code></pre><p>这里推荐使用的当然是setItem和getItem，removeItem。</p>
+<p>如果希望一次性清除所有的键值，可以使用clear()。</p>
+<p>另外，html5还提供了一个key方法，可以在不知道有哪些键值的时候使用，如下：</p>
+<pre><code>var storage = window.localStorage;
+function showStorage(){
+    for(var i=0;i&lt;storage.length;i++){
+          // key(i)获得相应的键，再用getItem()方法获得对应的值
+          document.write(storage.key(i)+ &quot; : &quot; +             storage.getItem(storage.key(i)) + &quot;&lt;br&gt;&quot;);
+    }
+}
+</code></pre><h5 id="下面是一个简单的例子，实现计数器："><a href="#下面是一个简单的例子，实现计数器：" class="headerlink" title="下面是一个简单的例子，实现计数器："></a>下面是一个简单的例子，实现计数器：</h5><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;input type=&quot;button&quot;&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    function showStorage(){
+      document.getElementsByTagName(&apos;input&apos;)[0].value = storage.pageLoadCount;
+    }
+    var storage = window.localStorage;
+    if(!storage.getItem(&quot;pageLoadCount&quot;)){
+      storage.setItem(&quot;pageLoadCount&quot;, 0);
+    } 
+    storage.pageLoadCount = parseInt(storage.getItem(&quot;pageLoadCount&quot;)) +1;
+    showStorage();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>不断刷新页面就能看到数字每次加一。</p>
+<p><strong>需要注意的是：html5本地存储只能存字符串，任何格式存储的时候都会被自动转成字符串，所以读取的时候，需要自己进行类型转换，这就是上面例子中使用parseInt的原因之一</strong>    </p>
+<p><strong>另外，在iPhone/iPad上有时设置setItem()时会出现诡异的QUOTA_EXCEEDED_ERR错误，这时一般在setItem之前，先removeItem()就ok了。</strong>（暂时还没做过移动端）</p>
+<h4 id="storage事件"><a href="#storage事件" class="headerlink" title="storage事件"></a>storage事件</h4><p>html5的本地存储，还提供了一个storage事件，可以对键值对的改变进行监听，使用方法如下：</p>
+<pre><code>if(window.addEventListener){
+  window.addEventListener(&apos;storage&apos;, handle_storage, false);
+}else if(window.attachEvent){
+  window.attachEvent(&quot;onstorage&quot;, handle_storage);
+}
+
+function handle_storage(e){
+  if(!e){
+    e=window.event;
+  }
+}
+</code></pre><p>对于事件变量e，是一个StorageEvent对象，提供了一些实用的属性，可以很好的观察键值对的变化：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">key</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">添加、删除、或者修改的名</td>
+</tr>
+<tr>
+<td style="text-align:left">oldValue</td>
+<td style="text-align:center">Any</td>
+<td style="text-align:center">修改前的值，如果是新加的键，该属性的值为null</td>
+</tr>
+<tr>
+<td style="text-align:left">newValue</td>
+<td style="text-align:center">Any</td>
+<td style="text-align:center">修改后的值，如果是新机的键，该属性的值为null</td>
+</tr>
+<tr>
+<td style="text-align:left">url/uri</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">触发storage键值对改变对应的方法所在页面的url/uri</td>
+</tr>
+</tbody>
+</table>
+<h5 id="那怎么使用storage事件呢？"><a href="#那怎么使用storage事件呢？" class="headerlink" title="那怎么使用storage事件呢？"></a>那怎么使用storage事件呢？</h5><p>当同源页面的某个页面修改了localStorage，其余的同源页面只要注册了storage事件，就会触发。</p>
+<p>所以，这个例子需要以下条件：</p>
+<p>（1）同一个浏览器打开了两个同源页面</p>
+<p>（2）其中一个网页修改了localStorage</p>
+<p>（3）另一个网页注册了storage事件</p>
+<p><strong>很容易犯的错误，在同一个网页修改本地存储，又在同一个网页监听，这样是没有效果的</strong></p>
+<p>例子：<br>在网页A：监听了storage事件：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    window.addEventListener(&apos;storage&apos;, function(e){
+    alert(e.newValue);
+  })
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>在网页B：修改了localStorage</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;script type=&quot;text/javascript&quot;&gt;
+    localStorage.clear();
+    localStorage.setItem(&apos;foo&apos;, &apos;bar&apos;);
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>运行：将上面两个网页保存，放到同一个服务器上，然后，先打开A.html, 再打开B.html，就会看到A.html会弹出提示，注意两个网页要同源。（同源页面：一个大网站的所有小页面）</p>
+<p>对于没有服务器的童鞋，可以这样：<br>比如先打开一个<a href="http://www.baidu.com，在控制台里输入：" target="_blank" rel="noopener">www.baidu.com，在控制台里输入：</a></p>
+<pre><code>window.addEventListener(&apos;storage&apos;, function(e){
+    alert(e.newValue);
+</code></pre><p>再打开一个<a href="http://www.baidu.com，在控制台里输入：" target="_blank" rel="noopener">www.baidu.com，在控制台里输入：</a></p>
+<pre><code>localStorage.clear();
+localStorage.setItem(&apos;foo&apos;, &apos;bar&apos;);
+</code></pre><p>然后此时第一个页面就会弹出提示框了。</p>
+<h5 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h5><p>如果非得要在同一网页监听怎么办？可以重写localStorage的方法，抛出自定义事件。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;title&gt;A&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script&gt;
+    var orignalSetItem = localStorage.setItem;
+    localStorage.setItem = function(key,newValue){
+        var setItemEvent = new Event(&quot;setItemEvent&quot;);
+        setItemEvent.newValue = newValue;
+        window.dispatchEvent(setItemEvent);
+        orignalSetItem.apply(this,arguments);
+    }
+    window.addEventListener(&quot;setItemEvent&quot;, function (e) {
+        alert(e.newValue);
+    });
+    localStorage.setItem(&quot;nm&quot;,&quot;1234&quot;);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;html&gt;
+</code></pre><h4 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h4><p>js使用json格式比较多，而localStorage存储的是字符串，如果希望把json格式的数据存储在本地，需要调用JSON.stringify()将其转为字符串。</p>
+<p>如果从localStorage中读取数据，可以调用JSON.parse()将其转换为json对象。</p>
+<p>参考自：<a href="http://blog.csdn.net/csethcrm/article/details/7409862" target="_blank" rel="noopener">http://blog.csdn.net/csethcrm/article/details/7409862</a><br>    <a href="http://blog.csdn.net/ruangong1203/article/details/52841135" target="_blank" rel="noopener">http://blog.csdn.net/ruangong1203/article/details/52841135</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-二/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/html5-localstorage-sessionstorage-cookie-二/" itemprop="url">html5 localstorage/sessionstorage/cookie (cookie篇)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T09:44:15+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="document对象的cookie属性"><a href="#document对象的cookie属性" class="headerlink" title="document对象的cookie属性"></a>document对象的cookie属性</h2><ul>
+<li>cookie是一小段文本信息，伴随在http请求里。</li>
+<li>它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。</li>
+<li>它是<strong>浏览器</strong>提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它</li>
+<li>cookie是存于用户硬盘的一个文件，这个文件通常对应于一个域名，也就是说，<strong>cookie可以跨越同一域名下的多个网页，但不能跨越多个域名调用</strong>。</li>
+</ul>
+<h2 id="cookie的根本用途"><a href="#cookie的根本用途" class="headerlink" title="cookie的根本用途"></a>cookie的根本用途</h2><p>cookie将信息存储于用于硬盘，因此可以作为全局变量，这是它最大的一个优点。</p>
+<p><strong>它最根本的用途是能够帮助web站点保存有关访问者的信息</strong>。</p>
+<h3 id="cookie的几种小用途"><a href="#cookie的几种小用途" class="headerlink" title="cookie的几种小用途"></a>cookie的几种小用途</h3><ul>
+<li>保存用户登录信息：这是最常用的，可以通过cookie保存用户的id</li>
+<li>创建购物车：把已选商品保存在cookie中，可以实现不同页面之间数据的同步（<strong>同一域名下可以共享cookie</strong>），同时在提交订单的时候又会把这些cookie传到后台。</li>
+<li>跟踪用户行为：通过cookie记录用户的偏好信息，然后向用户推荐个性化推广信息。<strong>这是可以禁用的，也是cookie的缺点之一</strong>。</li>
+</ul>
+<h2 id="cookie是如何工作的？"><a href="#cookie是如何工作的？" class="headerlink" title="cookie是如何工作的？"></a>cookie是如何工作的？</h2><p>cookie是存在于用户硬盘中的，用户每次访问站点时，浏览器会根据URL在本地硬盘上查找与该URL有关的cookie，如果该cookie存在，就会将该cookie填充进request header里的cookie字段，与http请求一起发送到该站点。</p>
+<h2 id="cookie的格式和常见的属性"><a href="#cookie的格式和常见的属性" class="headerlink" title="cookie的格式和常见的属性"></a>cookie的格式和常见的属性</h2><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/4.png" alt=""><br>字符串规律：</p>
+<ul>
+<li>每个cookie都是键值对的形式</li>
+<li>名称和值都必须是<strong>URL编码</strong>的</li>
+<li>两对cookie之间用分号和空格隔开</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/5.png" alt=""><br>name、value不必多说，自然是cookie的名和值。</p>
+<p>domain，path，expires/max-age，size，http，secure等均是cookie的属性</p>
+<p>我们先手动添加几个cookie，代码如下：</p>
+<pre><code>document.cookie = &quot;test1=myCookie1;&quot;
+document.cookie = &quot;test2=myCookie2; domain=.google.com.hk; path=/webhp&quot;
+document.cookie = &quot;test3=myCookie3; domain=.google.com.hk; expires=Sat, 04 Nov 2017 16:00:00 GMT; secure&quot;
+document.cookie = &quot;test4=myCookie4; domain=.google.com.hk; max-age=10800;&quot;
+</code></pre><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/6.png" alt=""></p>
+<h4 id="domain和path"><a href="#domain和path" class="headerlink" title="domain和path"></a>domain和path</h4><p>这两个共同决定了cookie能被哪些页面共享。</p>
+<p>如果未设置domain和path，则默认为设置cookie的那个域，如test1所示；</p>
+<p>domain可以包含子域，也可以不包含。domain选项中，可以是”.google.com.hk”(不包含子域,表示它对google.com.hk的所有子域都有效)，也可以是”<a href="http://www.google.com.hk&quot;(包含子域)。" target="_blank" rel="noopener">www.google.com.hk&quot;(包含子域)。</a></p>
+<p>path用于控制cookie发送的指定域的路径，默认为”/“，表示指定域下的所有路径都能访问，它是在域名的基础下，指定可以访问的路径。例如cookie设置为”domain=.google.com.hk; path=/webhp”，那么只有”.google.com.hk/webhp”及”/webhp”下的任一子目录如”/webhp/aaa”或”/webhp/bbb”会发送cookie信息，而”.google.com.hk”就不会发送，即使它们来自同一个域。</p>
+<h4 id="expries-max-age失效时间"><a href="#expries-max-age失效时间" class="headerlink" title="expries/max-age失效时间"></a>expries/max-age失效时间</h4><p>expries 和 max-age 是用来决定cookie的生命周期的，也就是cookie何时会被删除。</p>
+<p>expries 表示的是失效时间，准确讲是「时刻」，max-age表示的是生效的「时间段」，以「秒」为单位。</p>
+<p>若 max-age 为正值，则表示 cookie 会在 max-age 秒后失效。如例四中设置”max-age=10800;”，也就是生效时间是3个小时，那么 cookie 将在三小时后失效。</p>
+<p>若 max-age 为负值，则cookie将在浏览器会话结束后失效，即 session，max-age的默认值为-1。若 max-age 为0，则表示删除cookie。</p>
+<h4 id="secure"><a href="#secure" class="headerlink" title="secure"></a>secure</h4><p>默认情况为空，不指定 secure 选项，即不论是 http 请求还是 https 请求，均会发送cookie。</p>
+<p>是 cookie 的安全标志，是cookie中唯一的一个非键值对儿的部分。指定后，cookie只有在使用SSL连接（如HTTPS请求或其他安全协议请求的）时才会发送到服务器。</p>
+<h4 id="httponly（即http）"><a href="#httponly（即http）" class="headerlink" title="httponly（即http）"></a>httponly（即http）</h4><p>httponly属性是用来限制客户端脚本对cookie的访问。将 cookie 设置成 httponly 可以减轻xss（跨站脚本攻击 Cross Site Scripting）攻击的危害，</p>
+<p>防止cookie被窃取，以增强cookie的安全性。（由于cookie中可能存放身份验证信息，放在cookie中容易泄露）</p>
+<p>默认情况是不指定 httponly，即可以通过 js 去访问。</p>
+<h4 id="如何利用以上属性设置cookie？"><a href="#如何利用以上属性设置cookie？" class="headerlink" title="如何利用以上属性设置cookie？"></a>如何利用以上属性设置cookie？</h4><ul>
+<li><p>服务端设置<br>服务器通过发送一个名为Set-cookie的HTTP头来创建一个cookie，作为Response Headers的一部分，每个Set-cookie表示一个cookie（如果想设置多个cookie，需要些多个Set-cookie），每个属性也是以键值对的形式（secure除外），属性间以分号加空格隔开。格式如下(只有cookie的名字和值是必须的):</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-cookie: name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端设置<br>客户端设置cookie的格式和Set-cookie头中使用的格式一样。如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &quot;name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]&quot;</span><br></pre></td></tr></table></figure>
+<p>  若想要添加多个cookie，只能重复执行 document.cookie（如上）。这可能和平时写的 js 不太一样，一般重复赋值是会覆盖的，</p>
+<p>  但对于cookie，重复执行 document.cookie 并「不覆盖」，而是「添加」（针对「不同名」的）。</p>
+</li>
+</ul>
+<h4 id="cookie的缺点"><a href="#cookie的缺点" class="headerlink" title="cookie的缺点"></a>cookie的缺点</h4><ul>
+<li>安全性： 由于cookie在http中是明文传递的，其中包含的数据都可以被他人访问，可能会被篡改、盗用</li>
+<li>大小限制：cookie的大小限制在4kb左右，不适合大量存储</li>
+<li>增加流量：cookie每次请求都会被自动添加到Request Header中，无形中增加了流量。cookie信息越大，对服务器请求的时间越长。</li>
+</ul>
+<h2 id="cookie存储在哪里"><a href="#cookie存储在哪里" class="headerlink" title="cookie存储在哪里"></a>cookie存储在哪里</h2><p>面试被问到，一脸懵….</p>
+<p>cookie失效分为3种：<br>1、设置过期时间失效（只要设置了过期时间cookie就会存储在硬盘里面）<br>2、当会话结束时失效，即关闭浏览器窗口（如果没有设置expires，cookie就会存储在内存里面）<br>3、手动删除cookie失效</p>
+<p>测试1：<br>打开浏览器，进入控制台，输入：</p>
+<pre><code>document.cookie=&quot;test=myCookie1;&quot;
+</code></pre><p>然后打开Application，找到cookie，此时就能看到我们设置的test1了，<br>这时候我们关闭这个网页（注意不是关闭浏览器），再重新打开刚才那个窗口，发现test1还在；<br>如果关闭浏览器，再重新打开刚才那个窗口，发现此时test1已经不见了。</p>
+<p>测试2：<br>打开浏览器，进入控制台，输入：</p>
+<pre><code>document.cookie=&quot;test3=myCookie3; expires=Sat, 04 Nov 2017 16:00:00 GMT;&quot;
+</code></pre><p>关闭浏览器，再重新打开刚才那个窗口，发现此时test3还在。</p>
+<p>转载自：<a href="http://www.cnblogs.com/cxying93/p/6107459.html" target="_blank" rel="noopener">http://www.cnblogs.com/cxying93/p/6107459.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/18/html5-localstorage/" itemprop="url">html5 localstorage/sessionstorage/cookie （一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T09:08:56+08:00">
+                2017-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><p>cookie是小甜饼的意思，它确实非常小，大小在4kb左右。</p>
+<p>cookie主要用途是保存登录信息，比如登录某个网站可以看到“记住密码”，通常是在cookie中存入一段辨别用户身份的数据来实现的。</p>
+<h4 id="localstorage"><a href="#localstorage" class="headerlink" title="localstorage"></a>localstorage</h4><p>这是html5的新特性，用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
+<h4 id="sessionstorage"><a href="#sessionstorage" class="headerlink" title="sessionstorage"></a>sessionstorage</h4><p>sessionstorage与localstorage的接口类似，但保存数据的生命周期不同。</p>
+<p>它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在，但当页面关闭后，sessionstorage中的数据就会被清空。</p>
+<h2 id="三者的异同"><a href="#三者的异同" class="headerlink" title="三者的异同"></a>三者的异同</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">特性</th>
+<th style="text-align:center">cookie</th>
+<th style="text-align:center">localstorage</th>
+<th>sessionstorage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">数据的生命周期</td>
+<td style="text-align:center">可设置失效时间，默认是浏览器关闭后就失效</td>
+<td style="text-align:center">可以永久存储，除非手动清除</td>
+<td>当关闭页面或者浏览器时，才会清除</td>
+</tr>
+<tr>
+<td style="text-align:center">存放数据大小</td>
+<td style="text-align:center">4kb</td>
+<td style="text-align:center">5M</td>
+<td>5M</td>
+</tr>
+<tr>
+<td style="text-align:center">与服务端进行通信</td>
+<td style="text-align:center">携带在http头中，如果使用cookie保存过多数据，会带来性能问题</td>
+<td style="text-align:center">仅在客户端（浏览器）中，不参与和服务器的通信</td>
+<td>仅在客户端（浏览器）中，不参与和服务器的通信</td>
+</tr>
+<tr>
+<td style="text-align:center">易用性</td>
+<td style="text-align:center">需要程序员自己封装，源生的cookie接口不友好</td>
+<td style="text-align:center">源生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
+<td>源生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
+</tr>
+</tbody>
+</table>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><h5 id="cookie-用户是否登录"><a href="#cookie-用户是否登录" class="headerlink" title="cookie: 用户是否登录"></a>cookie: 用户是否登录</h5><p>因为考虑到每个 HTTP 请求都会带着 Cookie 的信息，所以 Cookie 当然是能精简就精简啦，比较常用的一个应用场景就是判断用户是否登录。针对登录过的用户，服务器端会在他登录时往 Cookie 中插入一段加密过的唯一辨识单一用户的辨识码，下次只要读取这个值就可以判断当前用户是否登录啦。曾经还使用 Cookie 来保存用户在电商网站的购物车信息，如今有了 localStorage，似乎在这个方面也可以给 Cookie 放个假了~</p>
+<h5 id="localstorage-购物车，html5游戏产生的一些本地数据"><a href="#localstorage-购物车，html5游戏产生的一些本地数据" class="headerlink" title="localstorage: 购物车，html5游戏产生的一些本地数据"></a>localstorage: 购物车，html5游戏产生的一些本地数据</h5><h5 id="sessionstorage：-表单提交"><a href="#sessionstorage：-表单提交" class="headerlink" title="sessionstorage： 表单提交"></a>sessionstorage： 表单提交</h5><p>如果遇到一些内容特别多的表单，为了优化用户体验，我们可能要把表单页面拆分成多个子页面，然后按步骤引导用户填写。这时候 sessionStorage 的作用就发挥出来了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/html5-video-标签横屏竖屏问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/html5-video-标签横屏竖屏问题/" itemprop="url">html5 video 标签横屏竖屏问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T22:47:37+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在手机上录制的视频有些是横屏的，有些是竖屏的，发现使用video标签播放的时候横屏的视频有时候会变成竖屏播放，即使设置了宽高。所以这个播放方向是如何确定的？</p>
+<p>先说一个场景<br>随便在微信打开一个带有视频的文章 你点击视频 视频播放 你把手机翻转变成横屏<br>你期望的结果是视频边横屏 并且 全屏 但实际当前视窗 已经横屏不知道哪里去了 视频还是在那个小窗口里播放。</p>
+<p><strong> video标签本身不具备响应横竖屏的事件 </strong></p>
+<p>能捕获横竖屏方向的事件和方法</p>
+<p>1、 window.orientation属性与onorientationchange事件</p>
+<pre><code>//判断手机横竖屏状态：
+window.addEventListener(&quot;onorientationchange&quot; in window ? &quot;orientationchange&quot; : &quot;resize&quot;, function() {
+    if (window.orientation === 180 || window.orientation === 0) {
+        alert(&apos;竖屏状态！&apos;);
+    }
+    if (window.orientation === 90 || window.orientation === -90 ){
+        alert(&apos;横屏状态！&apos;);
+    } 
+}, false);
+</code></pre><p>//移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。</p>
+<p>2、resize监听 通过计算来判断<br>3、css媒体查询</p>
+<pre><code>/* 竖屏 */
+@media screen and (orientation:portrait) {
+
+/* portrait-specific styles */
+
+}
+
+/* 横屏 */
+
+@media screen and (orientation:landscape) {
+
+/* landscape-specific styles */
+
+}
+</code></pre><p>屏幕方向对应的window.orientation值：</p>
+<p>ipad,iphone： 90 或 -90 横屏</p>
+<p>ipad,iphone： 0 或180 竖屏</p>
+<p>Andriod：0 或180 横屏</p>
+<p>Andriod： 90 或 -90 竖屏</p>
+<p>转载自：<a href="https://segmentfault.com/q/1010000003913319/a-1020000003919464" target="_blank" rel="noopener">https://segmentfault.com/q/1010000003913319/a-1020000003919464</a></p>
+<p><a href="http://www.cnblogs.com/AnotherLife/p/5764389.html" target="_blank" rel="noopener">http://www.cnblogs.com/AnotherLife/p/5764389.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-四/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1163,810 +2279,11 @@ pro.initEm = function() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/html5触摸事件-tap事件/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/17/html5触摸事件-tap事件/" itemprop="url">html5触摸事件 tap事件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T13:34:47+08:00">
-                2017-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/自定义对象、prototype原型属性/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/16/自定义对象、prototype原型属性/" itemprop="url">自定义对象、prototype原型属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-16T21:24:17+08:00">
-                2017-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="自定义对象"><a href="#自定义对象" class="headerlink" title="自定义对象"></a>自定义对象</h2><p>1. JS没有类，但只要有函数即可创建对象<br>2. 自定义对象的几种方式</p>
-<ul>
-<li><p>方式1: 使用无参的函数创建对象</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function person() &#123;&#125;;</span><br><span class="line">var p1 = new person();</span><br><span class="line">p1.id = &quot;1&quot;;</span><br><span class="line">p1.name = &quot;张三&quot;;</span><br><span class="line">console.log(p1); // person &#123;id: &quot;1&quot;, name: &quot;张三&quot;&#125;</span><br><span class="line">var p2 = new person();</span><br><span class="line">console.log(p2); // person &#123;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<pre><code>这种方式创建的对象的属性不会共享。
-</code></pre><ul>
-<li><p>方式2: 使用带参数的函数创建对象</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function person(id, name) &#123;</span><br><span class="line">	this.id = id;</span><br><span class="line">	this.name = name;</span><br><span class="line">&#125;</span><br><span class="line">var p1 = new person(2, &quot;李四&quot;);</span><br><span class="line">coonsole.log(p1); // person &#123;id: 2, name: &quot;李四&quot;&#125;</span><br><span class="line">var p2 = new person(3, &quot;王五&quot;);</span><br><span class="line">console.log(p2); // person &#123;id: 3, name: &quot;王五&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<ul>
-<li><p>方式3: 使用Object函数创建对象，JS默认创建了一个function Object(){}.</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var p1 = new Object();</span><br><span class="line">p1.id = 1;</span><br><span class="line">p1.name = &quot;张三&quot;;</span><br><span class="line">console.log(p1);//Object &#123;id: 1, name: &quot;张三&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<ul>
-<li><p>方式4: 使用对象字面量的方式创建</p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var p1 = &#123;</span><br><span class="line">	id: 1, // key加不加引号都可以</span><br><span class="line">	name: &quot;张三&quot;</span><br><span class="line">&#125;</span><br><span class="line">console.log(p1); //Object &#123;id: 1, name: &quot;张三&quot;&#125;</span><br></pre></td></tr></table></figure>
-</code></pre></li>
-</ul>
-<p>3. 有了上述基础知识，那我们来实现一个简单的需求：</p>
-<p>编写一个js文件，在js文件中自定义一个数组工具对象，该工具对象要有一个找到最大值的方法，与找元素对应的索引值的方法。<br>如果抛开以上知识，我们可能会这么写：</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-function arrayTool(arr, target) {
-  var max=arr[0];
-  var index = null;
-  for(var i=0; i &lt;arr.length; i++){
-    if(arr[i] &gt; max) {
-      max = arr[i];
-    }
-    if(arr[i] == target){
-      index = i;
-    }
-  }
-  return [max, index];
-}
-console.log(arrayTool([1,3,2,6], 1)); // 
-&lt;/script&gt;
-</code></pre><p>这样写没错，输出结果是：</p>
-<p>  <img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/1.png" alt="result"></p>
-<p>但是，如果有时候我们只想获得最大值，而不想获得索引值呢？那好办，返回的结果取第一个值，<code>console.log(arrayTool([1,3,2,6], 1)[0])</code>不就行了。那如果这个数组工具有很多很多返回的值呢，难不成我们要一个个数是返回数组的第几个值？或者当我们想要其中的一部分返回值的时候，又怎么办呢？是不是很麻烦？</p>
-<p>so，我们就可以利用上面学到的方法啦~</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-function arrayTool(arr, target) {
-  this.getMax = function (arr) {
-    var max=arr[0];
-    for(var i=0; i &lt;arr.length; i++){
-      if(arr[i] &gt; max) {
-        max = arr[i];
-      }
-    }
-    return max;
-  }
-  this.getIndex = function (arr, target) {
-    for(var i=0; i &lt;arr.length; i++){
-      if(arr[i] == target){
-        return i;
-      }
-    }
-    return -1;
-  }
-}
-var tool = new arrayTool();
-var arr = [1,3,2,6];
-console.log(tool.getMax(arr));
-console.log(tool.getIndex(arr, 1));
-&lt;/script&gt;
-</code></pre><p>  输出结果是：</p>
-<p>  <img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/2.png" alt="result"></p>
-<p>  这样我们想得到什么就去调用对应的方法，多简单！</p>
-<h2 id="prototype原型属性"><a href="#prototype原型属性" class="headerlink" title="prototype原型属性"></a>prototype原型属性</h2><p>1. 如果我们想把上述getMax与getIndex方法添加到数组对象中呢？</p>
-<pre><code>// 以下这种方式是不行的，因为Array是内置对象。
-function Array() {
-    this.getMax = function () {
-    }
-    this.getIndex = function () {
-    }
-}
-</code></pre><p>2. Prototype注意的细节</p>
-<pre><code>* prototype是函数(function)的一个必备属性（书面一点的说法是“保留属性”），只要是function，就一定有一个prototype属性
-* prototype的值是一个对象
-* 可以修改任意函数的prototype属性的值
-* 一个对象会自动拥有prototype的所有成员属性和方法
-
-// 猜想Array对象内部结构：
-function Array() {
-    this.prototype = new Object(); // Array对象的必备属性，并且是一个对象
-}
-Array.prototype.getMax = function () {
-    // Array对象的prototype对象的getMax方法
-}
-new Array(); // 这个对象就自动拥有了prototype的所有成员属性和方法，即这里的getMax方法。
-</code></pre><p>3. 作用：给一个方法追加一些功能，就可以使用prototype。（jquery使用较多）<br>4. 解决需求：</p>
-<pre><code>Array.prototype.getMax = function () {
-  var max=this[0];
-    for(var i=0; i &lt;this.length; i++){
-      if(this[i] &gt; max) {
-        max = this[i];
-      }
-    }
-  return max;
-}
-Array.prototype.getIndex = function (target) {
-  for(var i=0; i &lt;this.length; i++){
-      if(this[i] == target){
-        return i;
-      }
-    }
-  return -1;
-}
-var arr = [1,3,2,6];
-console.log(arr.getMax());
-console.log(arr.getIndex(1));
-</code></pre><p>5. 练习：给字符串对象添加一个toCharArray的方法，然后再添加一个reverse(翻转)的方法。</p>
-<pre><code>String.prototype.toCharArray = function () {
-  var arr = new Array();
-  for (var i=0; i &lt; this.length; i++) {
-    arr.push(this.charAt(i)); // 注意这里也可以用this[i]，因为字符串是类数组，可以通过下标获取值，但推荐还是用charAt
-  }
-  return arr;
-}
-
-// 方式一：
-// String.prototype.reverse = function () {
-//   var str = new String();
-//   for(var i=this.length; i--; i&gt;=0) {
-//     str += this[i];
-//   }
-//   return str;
-// }
-
-// 方式二(推荐)：利用toCharArray的方法,因为数组本身就具有reverse方法
-String.prototype.reverse = function () {
-  var charStr = this.toCharArray();
-  charStr.reverse();
-  return charStr.join(&quot;&quot;);
-}
-var str = &quot;we are family&quot;;
-
-console.log(str.toCharArray()); // (13) [&quot;w&quot;, &quot;e&quot;, &quot; &quot;, &quot;a&quot;, &quot;r&quot;, &quot;e&quot;, &quot; &quot;, &quot;f&quot;, &quot;a&quot;, &quot;m&quot;, &quot;i&quot;, &quot;l&quot;, &quot;y&quot;]
-console.log(str.reverse()); // ylimaf era ew
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/Vue-js（-）/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/Vue-js（-）/" itemprop="url">Vue.js（-）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-06T10:06:43+08:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/8.png" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/9.png" alt=""></p>
-<p>我们执行以下代码：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/vue/2.1.3/vue.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;p&gt;{{ message }}&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-    var app = new Vue({
-        el: &apos;#app&apos;,
-        data: {
-            message: &quot;xuxiao is boy&quot;
-        },
-        beforeCreate: function() {
-            console.group(&apos;beforeCreate 创建前状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //undefined
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //undefined 
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message)
-        },
-        created: function() {
-            console.group(&apos;created 创建完毕状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //undefined
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化 
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化
-        },
-        beforeMount: function() {
-            console.group(&apos;beforeMount 挂载前状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + (this.$el)); //已被初始化
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化  
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化  
-        },
-        mounted: function() {
-            console.group(&apos;mounted 挂载结束状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el); //已被初始化
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data); //已被初始化
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message); //已被初始化 
-        },
-        beforeUpdate: function() {
-            console.group(&apos;beforeUpdate 更新前状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
-        },
-        updated: function() {
-            console.group(&apos;updated 更新完成状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
-        },
-        beforeDestroy: function() {
-            console.group(&apos;beforeDestroy 销毁前状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message);
-        },
-        destroyed: function() {
-            console.group(&apos;destroyed 销毁完成状态===============》&apos;);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;el     : &quot; + this.$el);
-            console.log(this.$el);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;data   : &quot; + this.$data);
-            console.log(&quot;%c%s&quot;, &quot;color:red&quot;, &quot;message: &quot; + this.message)
-        }
-    })
-    &lt;/script&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/10.png" alt=""></p>
-<p>可以看出，<br>beforecreated：el 和 data 并未初始化 </p>
-<p>created:完成了 data 数据的初始化，el没有</p>
-<p>beforeMount：完成了 el 和 data 初始化 </p>
-<p>mounted ：完成挂载</p>
-<h2 id="如何用"><a href="#如何用" class="headerlink" title="如何用"></a>如何用</h2><p>beforecreate : 举个栗子：可以在这加个loading事件</p>
-<p>created ：在这结束loading，还做一些初始化，实现函数自执行 </p>
-<p>mounted ： 在这发起后端请求，拿回数据，配合路由钩子做一些事情</p>
-<p>beforeDestory： 你确认删除XX吗？ destoryed ：当前组件已被删除，清空相关内容</p>
-<p>转载自：<a href="https://segmentfault.com/a/1190000008010666" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008010666</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/15/JS中表达式和语句的区别/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/15/JS中表达式和语句的区别/" itemprop="url">JS中表达式和语句的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T15:19:18+08:00">
-                2017-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-语句（statement）和表达式（expression）"><a href="#1-语句（statement）和表达式（expression）" class="headerlink" title="1. 语句（statement）和表达式（expression）"></a>1. 语句（statement）和表达式（expression）</h2><p>JS中的表达式和语句是有区别的。</p>
-<p>两句话总结：</p>
-<ul>
-<li><p>一个表达式会产生一个值，它可以放在任何需要一个值的地方。</p>
-</li>
-<li><p>一个语句是一个行为，比如循环语句，if语句</p>
-</li>
-</ul>
-<p>函数参数需要的是一个值，所以函数参数可以用表达式，不能放if等语句。</p>
-<p>举例子：</p>
-<p>（1）以下三个都是表达式：</p>
-<pre><code>myvar
-3 + x
-myfunc(&quot;a&quot;, &quot;b&quot;)
-</code></pre><p>解释一下：</p>
-<pre><code>var myvar = 1; // 这里定义myvar
-myvar // 输出1， 这里得到的是一个值，所以myvar是一个表达式`
-
-var x = 1;
-3 + x // 4，这里得到的是一个值，所以3+x是一个表达式
-
-function myfunc(a,b){
-    return a+b;
-}
-myfunc(&quot;a&quot;,&quot;b&quot;) // &apos;ab&apos;, 这里得到的是一个值，所以myfunc(&quot;a&quot;,&quot;b&quot;)是一个表达式
-</code></pre><p>（2）循环语句、if语句就是典型的语句。</p>
-<h2 id="2-其他语法"><a href="#2-其他语法" class="headerlink" title="2. 其他语法"></a>2. 其他语法</h2><h3 id="2-1-if语句和条件运算符"><a href="#2-1-if语句和条件运算符" class="headerlink" title="2.1 if语句和条件运算符"></a>2.1 if语句和条件运算符</h3><ul>
-<li><p>if语句</p>
-<p>  // 这是语句<br>  var x;<br>  if (y &gt;= 0) {</p>
-<pre><code>x = y;
-</code></pre><p>  } else {</p>
-<pre><code>x = -y;
-</code></pre><p>  }</p>
-</li>
-<li><p>条件运算符</p>
-<p>  // 这是表达式<br>  var x = (y &gt;=0 ? y : -y);</p>
-</li>
-</ul>
-<p>可以看出，if语句和条件运算符可以实现相同的功能，也就是说上述两段代码是等价的。<br>其中 <code>var x = (y &gt;=0 ? y : -y);</code> 和 <code>(y &gt;=0 ? y : -y)</code> 都分别是一个表达式。</p>
-<h3 id="2-2-分号和逗号表达式"><a href="#2-2-分号和逗号表达式" class="headerlink" title="2.2 分号和逗号表达式"></a>2.2 分号和逗号表达式</h3><p>JS中，使用分号可以连接两个语句：</p>
-<p><code>foo(); bar();</code></p>
-<p>要想连接两个语句，使用的是不常见的逗号运算符：<br>foo(), bar()</p>
-<p>注意：逗号运算符会计算前后两个表达式，然后返回右边表达式的计算结果。例如：</p>
-<pre><code>&quot;a&quot;, &quot;b&quot; // &apos;b&apos;
-var x = (&quot;a&quot;, &quot;b&quot;) 
-x // &apos;b&apos;
-console.log((&quot;a&quot;, &quot;b&quot;)); // b
-</code></pre><h2 id="3-看似语句的表达式"><a href="#3-看似语句的表达式" class="headerlink" title="3. 看似语句的表达式"></a>3. 看似语句的表达式</h2><h3 id="3-1-对象字面量和语句块"><a href="#3-1-对象字面量和语句块" class="headerlink" title="3.1 对象字面量和语句块"></a>3.1 对象字面量和语句块</h3><p>下面是一个对象字面量，也就是一个可以生成一个对象值的表达式：</p>
-<pre><code>{
-    foo: bar(3,5)
-}
-</code></pre><p>不过，同时，它也是一个完全合法的语句，这个语句的组成部分有：</p>
-<ul>
-<li><p>一个代码块：一个由大括号包围的语句序列</p>
-</li>
-<li><p>一个标签：你可以在任何语句前面放置一个标签，这里的foo就是一个标签</p>
-</li>
-<li><p>一条语句：表达式语句bar(3,5)</p>
-</li>
-</ul>
-<p>JS可以有独立的代码块（常见的代码块是依托于循环或者if语句的），下面的代码演示了这种代码块的作用：你可以给它设置一个标签然后跳出这个代码块。</p>
-<pre><code>function test(printTwo){
-    printing: {
-        console.log(&quot;one&quot;);
-        if(!printTwo){
-        break printing;
-    }
-    console.log(&quot;three&quot;);
-    }
-}
-test(false); // one three
-test(true); // one two three
-</code></pre><h3 id="3-2-函数表达式和函数声明"><a href="#3-2-函数表达式和函数声明" class="headerlink" title="3.2 函数表达式和函数声明"></a>3.2 函数表达式和函数声明</h3><p>下面的代码是一个函数表达式：</p>
-<pre><code>function () {}
-</code></pre><p>你还可以给这个函数表达式起一个名字，将它转变为一个命名（非匿名）的函数表达式：</p>
-<pre><code>function foo(){}
-</code></pre><p>这个函数的函数名只存在于函数内部，比如，可以用它来做递归运算：</p>
-<pre><code>var fac = function me(x) {
-    return x &lt;= 1 ? 1: x * me(x-1);
-}
-fac(10) // 362800
-console.log(me) //Uncaught ReferenceError: me is not defined `
-</code></pre><p>一个命名的函数表达式从表面上看起来,和一个函数声明并没有什么区别.但他们的效果是不同的:一个函数表达式产生一个值(一个函数).一个函数声明执行一个动作:将一个函数赋值给一个变量. 此外,只有函数表达式可以被立即调用,函数声明不可以.</p>
-<p>下面的例子是一个立即执行的函数表达式</p>
-<pre><code>(function () { return &apos;abc&apos; }()) // &apos;abc&apos;`
-</code></pre><p>如果省略了小括号，你会得到一个语法错误（函数声明不能匿名）</p>
-<pre><code>function () { return &apos;abc&apos; }() // Uncaught SyntaxError: Unexpected token (`
-</code></pre><p>另外一个能让表达式在表达式上下文被解析的办法是使用一元运算符，比如 + 或者 ！，但是，和使用括号不同的是，这些操作符会改变表达式的运行结果，如果你不关心结果的话，完全可以使用：</p>
-<pre><code>+function () { console.log(&quot;hello&quot;)} () // hello NaN
-</code></pre><p>转载：【链接】[译]JavaScript中:表达式和语句的区别<br><a href="http://www.cnblogs.com/ziyunfei/archive/2012/09/16/2687589.html" target="_blank" rel="noopener">http://www.cnblogs.com/ziyunfei/archive/2012/09/16/2687589.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2010,7 +2327,7 @@ console.log(me) //Uncaught ReferenceError: me is not defined `
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

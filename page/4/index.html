@@ -263,6 +263,1270 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react的5个demo/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/react的5个demo/" itemprop="url">react的5个demo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T21:08:03+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。</p>
+<blockquote>
+<ul>
+<li>demo都是采用<strong>ES6语法</strong>写的，不懂的可以学习一下。</li>
+</ul>
+</blockquote>
+<h1 id="DEMO-1-最简单的react渲染"><a href="#DEMO-1-最简单的react渲染" class="headerlink" title="DEMO 1    - 最简单的react渲染"></a>DEMO 1    - 最简单的react渲染</h1><h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下"><a href="#在浏览器中显示的效果如下" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/12.png" alt="这里写图片描述"></p>
+<h3 id="讲解："><a href="#讲解：" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>页面中，只有<code>&lt;div id=&#39;name&#39;&gt;</code>这里的内容是使用react渲染出来的，代码中这里是空的，依赖下面的js进行渲染</li>
+<li><p>首先看下 <code>class Text extends React.Component</code> 这块，这里是声明一个组件，名字叫做Text,名字随意起，<strong>但第一个字母必须大写</strong>，用来区分html中原生的标签</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其中参数有很多，但都可以省略，唯有<code>render</code>不可以省略，因为这是用来表述这个插件被加载后，显示的是什么样子，它的返回结果，就是加载在页面上最终的样式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">   <span class="tag">&lt;<span class="name">Text</span>/&gt;</span>,</span><br><span class="line">    document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这段代码是用来渲染react组件的，第一个参数是组件，第二个参数是要渲染的位置。</p>
+<ul>
+<li>使用<code>&lt;Text/&gt;</code>的 方式就可以实例化组件，或者写成<code>&lt;Text&gt;&lt;/Text&gt;</code>，要注意下，react中标签的闭合非常严格，<strong>任何标签的关闭与打开必须一一对应</strong>，否则会报错。    </li>
+<li>到目前为止，就完成了一次渲染，将Text组件render函数返回的内容，填充到了id=root的div中。</li>
+</ul>
+<hr>
+<h1 id="DEMO-2-带有参数的react"><a href="#DEMO-2-带有参数的react" class="headerlink" title="DEMO 2    - 带有参数的react"></a>DEMO 2    - 带有参数的react</h1><p>往往在使用中，文本的内容并不是写死的，而是需要被我们指定，这样组件才能更通用。下面介绍下，如何向react中传递参数。</p>
+<p>###代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.props.name&#125;! age=&#123;this.props.age&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;React&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="在浏览器中显示的效果如下-1"><a href="#在浏览器中显示的效果如下-1" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/13.png" alt="这里写图片描述">   </p>
+<h3 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h3><ul>
+<li>首先，这个大体上跟第一个demo类似，唯有实例化Text时，多了参数。</li>
+<li>当我们传递参数时，写了两种方式，一种是 <code>name=&quot;react&quot;</code>另一种是<code>age={11}</code>，这两种写法是有区别的，并不仅仅因为一个是<code>str</code>，一个是<code>int</code>。如果是<code>str</code>这种类型，写成 <code>name=&quot;xxx&quot;</code>或者<code>name={&quot;xxx&quot;}</code>都是可以的，加了{}的意思就是js中的变量，更加精确了。而后者<code>age={181}</code>是不可以去掉{}的，这样会引起异常，所以这里要注意下，并且建议任何类型都加上{}来确保统一。</li>
+<li>当在Text初始化时添加了参数，在组件内部，都收集在this.props中，使用时只要{this.props.name}既可以获取name对应的值，如果取得key并不存在，这里不会报错，只是取到的值是空的。当然可以在<code>getDefaultProps</code>中定义默认的props值，即使在没有传递参数的情况下，也能取到默认值。</li>
+<li>props中的参数，在初始化传递后，便不能再修改。</li>
+</ul>
+<hr>
+<h1 id="DEMO-3-state，react的核心"><a href="#DEMO-3-state，react的核心" class="headerlink" title="DEMO 3        - state，react的核心"></a>DEMO 3        - state，react的核心</h1><p>state算是react的核心了，任何页面的变化，刷新都是state的变化引起。在react中，只要调用了setState都会引起render的重新执行。下面介绍下如何通过键盘事件触发状态变化。</p>
+<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            name: this.props.name</span><br><span class="line">          &#125;;</span><br><span class="line">          this.keyUp = this.keyUp.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        keyUp(e) &#123;</span><br><span class="line">          this.setState(&#123;name: e.target.value&#125;, function() &#123;</span><br><span class="line">            console.log(this.state.name);</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.state.name&#125;!</span><br><span class="line">              &lt;input type=&quot;text&quot; name=&quot;&quot; onKeyUp=&#123;this.keyUp&#125; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;react&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-2"><a href="#在浏览器中显示的效果如下-2" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/14.png" alt="这里写图片描述"></p>
+<h3 id="讲解：-1"><a href="#讲解：-1" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>这次组件中多了一个函数，<code>keyUp</code>，keyUp是我自定义的函数，用来响应键盘事件的。</li>
+<li>我们先看constructor函数，这里constructor接收props，并采用super(props)去继承父组件的方法和属性，`this.state = {<pre><code>  name: this.props.name
+};`是初始化state；另外，`this.keyUp = this.keyUp.bind(this);`是绑定this，否则this是react组件支撑实例，而不是组件实例。
+</code></pre></li>
+<li>再看render函数，文字渲染中加了{this.state.name}，这个是react内部的状态，可以理解是存储数据的k-v结构，这里的v支持的对象较多。{this.state.name}就是引用状态中的name属性，与props的区别在于，如果state中不存在这个属性，是会报错的，所以我们要在constructor中初始化这个状态的初始值。</li>
+<li>render中还多了一个<input onkeyup="{this.keyUp}">，onKeyUp是注册键盘键弹起的事件，当按键按下后弹起，就会触发onKeyUp事件，然后通过绑定的this.keyUp，将事件传递给了自己定义的keyUp函数中。</li>
+<li>keyUp函数中，使用了this.setState({name: e.target.value})，setState是react中内部的函数，专门用来更新状态的，这里是讲状态中name的值变更为引起事件的value值。</li>
+<li>在react中，每次状态的变化，都会引起render函数的重新渲染，这是它自己的机制，我们无需人为处理，当键盘输入内容时，会触发状态变化，导致render重新渲染，渲染的过程会从state中取出变量，所以我们就看到了页面的内容发生了变化。</li>
+<li>我们在setState下面加了一个console，通过控制台可以发现，每次打印的值并不是当前输入的值，而是上一次输入的值，这是怎么回事呢？在setState中，这是一个异步处理的函数，并不是同步的，console在setState后立刻执行了，所以这时候状态还没有真正变更完，所以这里取到的状态仍旧是更新前的。这里要特殊注意下。如果需要在更新状态后，再执行操作怎么办呢，setState还有第二个参数，接受一个callback，我们尝试将keyUp中代码改成这样</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;name: e.target.value&#125;, function()&#123;</span><br><span class="line">    console.log(this.state.name);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这时候log打印出来的只就是我们期望的内容，当每次状态更新成功后，都会调用传进去的callback函数。</li>
+<li>react中渲染dom有自己的优化方式，首先它在内存中构建一套虚拟的dom，每次更新前将虚拟dom与浏览器中dom对比，只讲有变化的部分进行更新，这样大大的提高了性能。或者我们可以重写函数来控制是否刷新，当然这种方式我们并不提倡。</li>
+</ul>
+<hr>
+<h1 id="DEMO-4-网络请求触发状态变化"><a href="#DEMO-4-网络请求触发状态变化" class="headerlink" title="DEMO 4        -    网络请求触发状态变化"></a>DEMO 4        -    网络请求触发状态变化</h1><p>上一节讲到状态变化触发render的重新渲染，这里将常用的网络请求引入，结合到状态变化中。</p>
+<h3 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            username: &apos;&apos;,</span><br><span class="line">            lastGistUrl: &apos;&apos;,</span><br><span class="line">            dateTime: &apos;&apos;</span><br><span class="line">          &#125;</span><br><span class="line">          this.request = this.request.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        request() &#123;</span><br><span class="line">          $.ajax(&#123;</span><br><span class="line">            type: &apos;get&apos;,</span><br><span class="line">            url: this.props.url,</span><br><span class="line">            success: function(result)&#123;</span><br><span class="line">              var lastGist = result[0];</span><br><span class="line">              this.setState(&#123;</span><br><span class="line">                username: lastGist.owner.login,</span><br><span class="line">                lastGistUrl: lastGist.html_url,</span><br><span class="line">                dateTime: new Date().getTime()</span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;.bind(this)</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        componentDidMount() &#123;</span><br><span class="line">          setInterval(this.request, 1000)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              &#123;this.state.username&#125;用户最新的Gist地址为：</span><br><span class="line">              &lt;a href=&#123;this.state.lastGistUrl&#125;&gt;&#123;this.state.lastGistUrl&#125;&lt;/a&gt;</span><br><span class="line">              &lt;div&gt;&#123;this.state.dateTime&#125;&lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text url=&quot;https://api.github.com/users/octocat/gists&quot;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-3"><a href="#在浏览器中显示的效果如下-3" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/15.png" alt="这里写图片描述"> </p>
+<p>###讲解：</p>
+<ul>
+<li>这个例子中，页面每秒会请求一次网络，将请求到的数据中时间戳更新到状态中。</li>
+<li>仍旧是先看代码，相比于上一个例子，这里多了两个函数<code>request</code>和<code>componentDidMount</code>，其中<code>request</code>是请求网络的函数，<code>componentDidMount</code>是react内部的函数，也是react生命周期的一部分，它会在render第一次渲染前执行，而且只会执行一次。</li>
+<li>先看request，一个普通的ajax请求，在success回调中，服务器返回result，然后将里面的值赋给state中的username、lastGistUrl属性。这时状态发生了变化，render函数会重新渲染。</li>
+<li>为什么success回调函数最后会加一个bind(this)？因为这个函数已经不是react内部的函数了，它是一个外部函数，它里面的this并不是react组件中的this，所以要将外部函数绑定到react中，并能使用react内部的方法，例如setState，就要在函数最后bind(this)，这样就完成了绑定。</li>
+<li>再看下<code>componentDidMount</code>函数，这个函数在render渲染前会执行，里面的代码也很简单，增加了一个定时器，1秒钟执行一次request。</li>
+<li>这里应该在加一个回调，就是定时器在初始化时创建，却没有对应的销毁，所以在组件销毁的时候，应该在这个生命周期中销毁定时器。</li>
+</ul>
+<hr>
+<h1 id="DEMO-5-组件的嵌套使用"><a href="#DEMO-5-组件的嵌套使用" class="headerlink" title="DEMO 5        -    组件的嵌套使用"></a>DEMO 5        -    组件的嵌套使用</h1><p>在封装react时，我们往往按照最小单位封装，例如封装一个通用的div，一个通用的span，或者一个通用的table等，所以各自组件对应的方法都会随着组件封装起来，例如div有自己的方法可以更改背景色，span可以有自己的方法更改字体大小，或者table有自己的方法来更新table的内容等~ 这里我们用一个div相互嵌套的例子来查看父子组件如何相互嵌套及调用各自的方法。在下面的例子中，父组件与子组件都有一个方法，来改变自身的背景色，我们实现父子组件相互调用对方的方法，来改变对方的背景色。</p>
+<h3 id="代码：-3"><a href="#代码：-3" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      .child&#123;</span><br><span class="line">        height: 100px;</span><br><span class="line">        width: 200px;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">      li&#123;</span><br><span class="line">        list-style: none;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">        class Parent extends React.Component&#123; </span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.child1ChangeColor=this.child1ChangeColor.bind(this);</span><br><span class="line">            this.child2ChangeColor=this.child2ChangeColor.bind(this);</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          child1ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child1&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          child2ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child2&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123; </span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;parent&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                  &lt;br/&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第一个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第二个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;hr/&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child1&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child2&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            ) </span><br><span class="line">          &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        class Child extends React.Component&#123;</span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123;</span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;child&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        ReactDOM.render(</span><br><span class="line">          &lt;Parent /&gt;, </span><br><span class="line">          document.getElementById(&apos;root&apos;) </span><br><span class="line">        );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在浏览器中显示的效果如下-4"><a href="#在浏览器中显示的效果如下-4" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/16.png" alt="这里写图片描述"></p>
+<h3 id="讲解：-2"><a href="#讲解：-2" class="headerlink" title="讲解："></a>讲解：</h3><ul>
+<li>首先说下，刚打开页面并不是这样的，背景都是白色的。这里的截图是点击各个按钮后变色的样子。</li>
+<li>在这个例子中，蓝色的div是一个父组件，它里面包含了两个子组件，分别是红色和橙色，这两个子组件实际上是一模一样的。我们先看下父组件如何调用子组件。</li>
+<li>代码中，子组件里面定义了changeColor函数，用来接收onClick事件，并将点击的按钮的data-color属性值作为色值，更改到state中的color属性中，然后触发render来更新背景色。在父组件调用子组件时，我们写了<child ref="child1" parentchangecolor="{this.changeColor}">，里面的ref=”child1”就是react中提供的一个属性标签，它与普通的props不同，这里写上ref=”xxx”后，在父组件中，使用this.refs[“child1”]就可以引用对应的子组件，当然这里的ref的值是可以随意定义，只要不重复就好。这样就可以实现组组件引用子组件，然后直接调用里面的方法就好，例如<code>child1ChangeColor</code>中就有<code>this.refs[&quot;child1&quot;].changeColor(e);</code>的使用。连起来说下逻辑，在点击父组件中第一列中的按钮后，触发onClick事件，然后onClick事件后，传递到child1ChangeColor后，将事件传递进入，然后再次传递给子组件的changeColor中，因为子组件的changeColor是更改子组件自身的state，所以这时候子组件再次渲染，于是改变了颜色。这就是父组件调用子组件的逻辑。</child></li>
+<li>再说下子组件何如调用父组件的方法，父组件自身也有一个changeColor函数，用来改变自身的背景色。当父组件调用子组件时，<child ref="child1" parentchangecolor="{this.changeColor}">，通过props，也就是第二个例子中讲的那样，通过参数的方式传递给子组件，这样子组件中就可以使用this.props.parentChangeColor，来把子组件的onClick事件传递给父组件的changeColor方法中，来改变父组件的背景色。这就是子组件调用父组件函数的方法。</child></li>
+<li>还有一种情况，就是一个父组件下有多个子组件，但是子组件中并没有直接的关系，这时候如果一个子组件调用另一个子组件的方法，就得通过他们共同的父组件来作为中转，在父组件中增加函数来作为中转的函数，来实现子组件间的调用。</li>
+</ul>
+<p>github地址：<a href="https://github.com/xixizhangfe/react-demo" target="_blank" rel="noopener">react5个demo</a></p>
+<p>参考：<a href="http://blog.csdn.net/iambinger/article/details/51803606" target="_blank" rel="noopener">http://blog.csdn.net/iambinger/article/details/51803606</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react之生命周期/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/react之生命周期/" itemprop="url">react之生命周期</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:36:31+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-mounting"><a href="#1-mounting" class="headerlink" title="1. mounting"></a>1. mounting</h2><ul>
+<li>constructor()</li>
+<li>componentWillMount()</li>
+<li>render()</li>
+<li>componentDidMount()</li>
+</ul>
+<h4 id="constructor-props"><a href="#constructor-props" class="headerlink" title="constructor(props)"></a>constructor(props)</h4><p>在mount之前，会调用它；</p>
+<p>初始化state的位置；</p>
+<p>也可以使用props来初始化state，但要注意当props更新时，state不会更新。那么除了同步props到state，还可以使用state提升。</p>
+<h4 id="componentWillMount"><a href="#componentWillMount" class="headerlink" title="componentWillMount()"></a>componentWillMount()</h4><p>当要mount的时候立即调用，它的调用发生在render()之前，所以这里设置state不会触发重新render。</p>
+<p>这是唯一一个当服务器渲染时被调用的生命周期钩子，通常我们建议使用constructor()。</p>
+<h4 id="render"><a href="#render" class="headerlink" title="render()"></a>render()</h4><p>被调用时，检查this.props，this.state，然后返回单个React元素，这个返回的React元素可以表示DOM节点，比如<div>,也可以表示自定义的组件, 比如<my-own>。</my-own></div></p>
+<p>也可以返回null或者false，表明我们不想渲染，此时ReactDOM.findDOMNode(this)将返回null。</p>
+<p>render()函数应该是纯函数，意味着不能修改组件的状态，它返回的是被调用时的结果，并且不能直接和浏览器交互。 如果需要和浏览器交互，需要在componentDidMount()或者其他生命周期中执行。如果shouldComponentUpdate()返回false，那么render将不执行。</p>
+<h4 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount()"></a>componentDidMount()</h4><p>当组件挂载之后被调用，需要得到DOM节点的操作应该在这里执行。 </p>
+<p>如果想从远程加载数据，也应在这里执行网络请求。</p>
+<p>这里设置state，会触发重新渲染。</p>
+<h2 id="2-updating"><a href="#2-updating" class="headerlink" title="2. updating"></a>2. updating</h2><ul>
+<li>componentWillReceiveProps()</li>
+<li>shouldComponentUpdate()</li>
+<li>componentWillUpdate()</li>
+<li>render()</li>
+<li>componentDidUpdate()</li>
+</ul>
+<h4 id="componentWillReceiveProps-nextProps"><a href="#componentWillReceiveProps-nextProps" class="headerlink" title="componentWillReceiveProps(nextProps)"></a>componentWillReceiveProps(nextProps)</h4><p>已经挂载的组件接收新的props之前会调用。</p>
+<p>如果需要根据props的变化来更新状态，应该比较this.props和nextProps，并且在这里使用this.setState()执行状态转换。</p>
+<p>即使props没有更新，这个方法也可能被调用，所以如果我们想处理变化，一定要比较当前props和下一个props。（当父组件造成子组件重新渲染时会遇到这种情况。）</p>
+<p>在mounting期间，react不会用初始的props来调用这个方法。只有在一些组件的props可能更新的时候，才会调用这个方法。</p>
+<p>执行this.setState不会触发这个事件。</p>
+<h4 id="shouldComponentUpdate-nextProps-nextState"><a href="#shouldComponentUpdate-nextProps-nextState" class="headerlink" title="shouldComponentUpdate(nextProps, nextState)"></a>shouldComponentUpdate(nextProps, nextState)</h4><p>这个方法能够让react知道组件的输出是否因state或props的改变而受影响。默认就是当state一变化，就会重新渲染，大部分情况下我们使用默认的。</p>
+<p>在rendering之前，当收到新的props或者state时，就会调用这个方法。当初始化渲染时，或者当使用forceUpdate()时，该方法不被调用。</p>
+<p>返回false不能阻止子组件随他们的state重新渲染。如果返回false，那么componentWillUpdate(), render(), componentDidUpdate()不会被调用。</p>
+<p>如果你发现一个组件在表示后很慢（？？？？），可以考虑变成继承式的，从React.PureComponent继承，这意味着该方法此时是shallow prop and state comparision。</p>
+<p>如果你想自己手写，那就可以比较this.props和nextprops，以及this.state和nextState,并返回false告诉react这个更新可以跳过。</p>
+<h4 id="componentWillUpdate-nextProps-nextState"><a href="#componentWillUpdate-nextProps-nextState" class="headerlink" title="componentWillUpdate(nextProps, nextState)"></a>componentWillUpdate(nextProps, nextState)</h4><p>在收到新的props或者state后，rendering之前，调用该方法。</p>
+<p>在这里可以做一些准备工作，来为更新做准备。</p>
+<p>这个方法在初始渲染的时候不会被调用。</p>
+<p>这里不能设置this.setState()，如果想根据props来更新state，应该在componentWillReceiveProps(nextProps)执行。</p>
+<h4 id="componentDidUpdate"><a href="#componentDidUpdate" class="headerlink" title="componentDidUpdate"></a>componentDidUpdate</h4><p>当更新时被调用。</p>
+<p>初始渲染的时候不被调用。</p>
+<p>当组件更新后，应该在这里操作DOM。</p>
+<p>网络请求适合放在这里，只要你比较了当前props和前一个props（当props没变化的时候，进行网络请求可能没有必要）。</p>
+<h2 id="3-unmounting"><a href="#3-unmounting" class="headerlink" title="3. unmounting"></a>3. unmounting</h2><ul>
+<li>componentWillUnmount()</li>
+</ul>
+<h4 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount()"></a>componentWillUnmount()</h4><p>当卸载一个组件时或者销毁一个组件时，会执行。</p>
+<p>可以在这里做一些清除工作，比如清除定时器，取消网络请求，清除在ComponentDidMount中创建的DOM元素。</p>
+<h2 id="4-其他API"><a href="#4-其他API" class="headerlink" title="4. 其他API"></a>4. 其他API</h2><ul>
+<li>setState()</li>
+<li>forceUpdate()</li>
+</ul>
+<h4 id="setState-updater-callback"><a href="#setState-updater-callback" class="headerlink" title="setState(updater, [callback])"></a>setState(updater, [callback])</h4><p>认为setState是一个请求，而不是一个立即执行命令，会更好。因为为了更好的性能，react会延时它，并且在一个pass里同时更新好几个组件。所以react不能保证state的变化能立即生效。</p>
+<p>setState()通常不立即更新组件。所以在componentDidUpdate或者setState的回调函数中去读取this.state，才能保证读取到的值最新的。</p>
+<p>第一个参数是一个updater函数，</p>
+<pre><code>(prevState, props) =&gt; stateChange
+</code></pre><p>prevState是前一个状态，它不应该直接被改变，相反，应该基于prevState和props建造一个新对象，从而展示变化。</p>
+<p>比如，假设我们想增加一个值，</p>
+<pre><code>this.setState((prevState, props) =&gt; {
+      return {counter: prevState.counter + props.step};
+});
+</code></pre><p>由updater函数接收的prevState和props是最新的。输出的updater将和prevState进行shallowly merged。</p>
+<p>第二个参数是一个可选的回调函数，等setState完成并组建被重新渲染后才会执行。但是我们一般建议使用componentDidUpdate()来代替这个逻辑。</p>
+<h4 id="forceUpdate-callback"><a href="#forceUpdate-callback" class="headerlink" title="forceUpdate(callback)"></a>forceUpdate(callback)</h4><p>component.forceUpdate(callback)</p>
+<p>一般只有当state或者props变化时，组件才会重新渲染。但是如果我们想根据其他数据来渲染组件，就可以调用forceUpdate(),从而跳过shouldComponentUpdate()。这会触发子组件正常的生命周期，包括子组件的shouldComponentUpdate()方法。</p>
+<p>一般要避免使用。</p>
+<h2 id="5-Class-properties"><a href="#5-Class-properties" class="headerlink" title="5. Class properties"></a>5. Class properties</h2><ul>
+<li>defaultProps</li>
+<li>displayName</li>
+</ul>
+<h4 id="defaultProps"><a href="#defaultProps" class="headerlink" title="defaultProps"></a>defaultProps</h4><p>设置默认属性，即当一个props是undefined时，才有用。如果是null，则不会采取默认值，还是null。</p>
+<p>举个例子：</p>
+<pre><code>class CustomButton extends React.Component {
+      // ...
+}
+
+CustomButton.defaultProps = {
+      color: &apos;blue&apos;
+};
+</code></pre><p>如果props.color没有提供，则默认就是blue：</p>
+<pre><code>render() {
+    return &lt;CustomButton /&gt; ; // props.color will be set to blue
+  }
+</code></pre><p>如果props.color设置为null，则还是null：</p>
+<pre><code>render() {
+    return &lt;CustomButton color={null} /&gt; ; // props.color will remain null
+  }
+</code></pre><h4 id="displayName"><a href="#displayName" class="headerlink" title="displayName"></a>displayName</h4><p>用于debugging信息。JSX会自动设置这个值。</p>
+<h2 id="6-instance-properties"><a href="#6-instance-properties" class="headerlink" title="6. instance properties"></a>6. instance properties</h2><ul>
+<li>props</li>
+<li>state</li>
+</ul>
+<h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><p>this.props包含这个组件的调用者定义的props。</p>
+<p>this.props.children是一个特殊的prop，通常是由子标签在JSX表达式中定义的，而不是在它自己的标签中。</p>
+<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p>不要直接修改this.state。</p>
+<p>把它当做不可改变的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/状态提升/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/状态提升/" itemprop="url">状态提升</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T15:00:10+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>通常，几个组件拥有相同的数据，此时就需要将这个数据放到最近的公共祖先的状态里。</p>
+<p>接下来，我们将创建一个温度计算器，并根据给定水温判断是否沸腾。最终效果如图所示：<br><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/17.png" alt="result"></p>
+<p>也就是两个输入框分别对应摄氏温度和华氏温度，只要有一个输入框内容变化，另一个也会相应变化，并判断是否会沸腾。</p>
+<p>我们先考虑只有摄氏温度输入框的情况，</p>
+<pre><code>class Calculator extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state={
+        temperature: &apos;&apos;
+      };
+      this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+      this.setState({temperature: e.target.value})
+    }
+
+    render() {
+      return (
+        &lt;fieldset&gt;
+          &lt;legend&gt;Enter temperature in celsius:&lt;/legend&gt;
+          &lt;input onChange={this.handleChange} /&gt;
+          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
+          &lt;/BoilingVerdict&gt;
+        &lt;/fieldset&gt;
+      )
+    }
+  }      
+  function BoilingVerdict(props) {
+    if (props.celsius &gt;= 100) {
+      return &lt;p&gt;The water would boil.&lt;/p&gt;;
+    }
+    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
+  }
+
+  ReactDOM.render(
+    &lt;Calculator /&gt;,
+    document.getElementById(&apos;root&apos;)
+  );
+</code></pre><p>接着我们再考虑有两个输入框的情况，这时候应该把输入框单独作为一个组件提取出来：</p>
+<pre><code>class TemperatureInput extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state={
+        temperature: &apos;&apos;
+      };
+      this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+      this.setState({temperature: e.target.value})
+    }
+
+    render() {
+      return (
+        &lt;fieldset&gt;
+          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
+          &lt;input onChange={this.handleChange} /&gt;
+          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
+          &lt;/BoilingVerdict&gt;
+        &lt;/fieldset&gt;
+      )
+    }
+  }      
+
+  const scaleName = {
+    &apos;c&apos;: &apos;celsius&apos;,
+    &apos;f&apos;: &apos;Fahrenheit&apos;
+  }
+
+  class Calculator extends React.Component {
+    render() {
+      return (
+        &lt;div&gt;
+          &lt;TemperatureInput scale={scaleName.c}/&gt;
+          &lt;TemperatureInput scale={scaleName.f}/&gt;
+        &lt;/div&gt;
+      )
+    }
+  }      
+  function BoilingVerdict(props) {
+    if (props.celsius &gt;= 100) {
+      return &lt;p&gt;The water would boil.&lt;/p&gt;;
+    }
+    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
+  }
+
+  ReactDOM.render(
+    &lt;Calculator /&gt;,
+    document.getElementById(&apos;root&apos;)
+  );
+</code></pre><p>好，现在得到了两个输入框，可是这两个输入框是独立的，一个框的内容不会同步到另一个，由于以前使用vue的时候，我会想到非父子组件通信，也就是通过两个子组件的共同父组件来传递值，react这里也一样，遵循的原则是数据流top-down-flow，所以也不应该考虑一个组件传值给另一个组件，也应该采用公共组件的方式，那么这里我们就应该把我们想要的值放到公共组件Calculator里.</p>
+<p>整个工作流程应该是这样的：两个组件都接受父组件的数据，组件一数据变化了，就去触发父组件的事件，这个被触发的事件就去更新父组件的状态，这一更新状态，react就要去重新render了，因为这时组件二的数据也随着变了，所以也就同步显示了。</p>
+<pre><code>class TemperatureInput extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+      this.props.onTemperatureChange(e.target.value)
+    }
+
+    render() {
+      return (
+        &lt;fieldset&gt;
+          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
+          &lt;input value={this.props.temperature} onChange={this.handleChange}/&gt;
+          &lt;BoilingVerdict celsius={this.props.temperature}&gt;
+          &lt;/BoilingVerdict&gt;
+        &lt;/fieldset&gt;
+      )
+    }
+  }      
+
+  const scaleName = {
+    &apos;c&apos;: &apos;celsius&apos;,
+    &apos;f&apos;: &apos;Fahrenheit&apos;
+  }
+
+  class Calculator extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state={
+        temperature: &apos;&apos;,
+        scale: &apos;c&apos;
+      };
+      this.handleCelsiusChange=this.handleCelsiusChange.bind(this);
+      this.handleFahrenheitChange=this.handleFahrenheitChange.bind(this);
+    }
+
+    handleCelsiusChange(temperature) {
+      this.setState({scale:&apos;c&apos;, temperature});
+    }
+    handleFahrenheitChange(temperature) {
+      this.setState({scale:&apos;f&apos;, temperature});
+    }
+
+    render() {
+      const temperature = this.state.temperature;
+      const scale = this.state.scale;
+      const celsius = scale === &apos;f&apos; ? tryConvert(temperature, toCelsius) : temperature;
+      const fahrenheit = scale === &apos;c&apos; ? tryConvert(temperature, toFahrenheit) : temperature;
+
+      return (
+        &lt;div&gt;
+          &lt;TemperatureInput scale={scaleName.c} temperature={celsius} onTemperatureChange={this.handleCelsiusChange}/&gt;
+          &lt;TemperatureInput scale={scaleName.f} temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange}/&gt;
+        &lt;/div&gt;
+      )
+    }
+  }      
+  function BoilingVerdict(props) {
+    if (props.celsius &gt;= 100) {
+      return &lt;p&gt;The water would boil.&lt;/p&gt;;
+    }
+    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
+  }
+
+  function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+  }
+
+  function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+  }
+
+  function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+      return &apos;&apos;;
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+  }
+
+
+  ReactDOM.render(
+    &lt;Calculator /&gt;,
+    document.getElementById(&apos;root&apos;)
+  );
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/React组件为什么要用super-props/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/React组件为什么要用super-props/" itemprop="url">React组件为什么要用super(props)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T12:14:31+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>要在es5中实现继承，首先定义一个父类：</p>
+<pre><code>//父类
+function sup(name) {
+    this.name = name;
+}
+
+// 定义父类原型上的方法
+sup.prototype.printName = function () {
+    console.log(this.name);
+}
+
+function sub(name, age) {
+    sup.call(this, name) // 调用call方法，继承sup超类属性
+    this.age = age;
+}
+
+sub.prototype = new sup() // 把子类sub的原型对象指向父类的实例化对象，这样可以继承父类sup原型对象上的属性和方法
+sub.prototype.constructor = sub; // 这时会有个问题，子类的constructor属性会指向sup，手动把constructor属性指向子类sub
+// 这时候就能在父类的基础上添加属性和方法了
+sub.prototype.printAge = function () {
+    console.log(this.age)
+}
+</code></pre><p>这时候调用父类生成一个实例化对象:</p>
+<pre><code>let jack = new sub(&apos;jack&apos;, 20)
+jack.printName() // jack
+jack.printAge() // 20
+</code></pre><p>而在es6中实现继承：</p>
+<pre><code>class sup {
+    constructor(name) {
+        this.name = name
+    }
+
+    printName() {
+        console.log(this.name)
+    }
+}
+
+
+class sub extends sup {
+    constructor(name, age) {
+        super(name)
+        this.age = age;
+    }
+
+    printAge () {
+        console.log(this.age)
+    }
+}
+
+let jack = new sub(&apos;jack&apos;, 20)
+jack.printName() // jack
+jack.printAge() // 20
+</code></pre><p>对比发现，在es5中实现继承：</p>
+<p>1、首先得先调用函数的call方法把父类的属性给继承过来</p>
+<p>2、通过new关键字继承父类原型的对象上的方法和属性</p>
+<p>3、最后再通过手动指定constructor属性指向子类对象</p>
+<p>而在es6中实现继承，直接调用super(name)，就可以直接继承父类的属性和方法，所以super作用就相当于上述的实现继承的步骤，不过es6提供了super语法糖，简单化了继承的实现    </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react元素、react组件、react组件支撑实例/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/react元素、react组件、react组件支撑实例/" itemprop="url">react元素、react组件、react组件支撑实例</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T10:00:48+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="React元素是什么"><a href="#React元素是什么" class="headerlink" title="React元素是什么"></a>React元素是什么</h1><p><strong>react元素可以理解为我们说的虚拟DOM。</strong>（虚拟DOM：是DOM在特定时间段应该是怎样的结构的描述）</p>
+<p><strong>react元素仅仅是由一些属性构成的js简单对象，用来描述组件的HTML的结构应该是什么样的，这个对象上不包含任何方法(methods)，仅仅只有数据。</strong></p>
+<p>如果我们平时使用react+JSX，可能不会涉及到这个概念。但实际上呢，JSX语法实际被编译成了React.createElement(), React.createElement()产生的就是React元素，让我们看一个转换过程的例子：</p>
+<pre><code>// 使用JSX语法
+var helloworld = &lt;div&gt;hello world!&lt;/div&gt;
+
+// 然后是JSX被编译成JS的结果
+var helloworld = React.createElement(
+    &quot;div&quot;,
+    null,
+    &quot;hello world&quot;
+);
+
+// 再是处理成JS简单对象后看起来类似这样
+var helloWorld = {
+    key: null,
+    props: {
+        children: &quot;hello world!&quot; // more stuff in here
+    },
+    ref: null,
+    type: &apos;div&apos;
+    // more stuff in here
+}
+</code></pre><h1 id="React组件"><a href="#React组件" class="headerlink" title="React组件"></a>React组件</h1><p>是React组件类的实例。</p>
+<p>一般在JS中我们要得到一个类的实例，通常用new操作符，而React不需要new，而是用ReactDOM.render()把一个React元素渲染成一个特定的DOM元素，并返回一个React组件实例。</p>
+<p>ReactDOM.render()干了什么呢？</p>
+<ul>
+<li>接收一个虚拟DOM元素，将其渲染成一个真实DOM元素，返回（React元素type指定的）组件实例。</li>
+<li>对虚拟DOM执行高效的diff算法。</li>
+</ul>
+<h1 id="组件支撑实例是什么"><a href="#组件支撑实例是什么" class="headerlink" title="组件支撑实例是什么"></a>组件支撑实例是什么</h1><pre><code>...
+// 组件实例
+var componentInstance = ReactDOM.render(&lt;CustomForm /&gt;, document.getElementById(&apos;root&apos;));
+// DOM实例
+var domInstance = ReactDOM.findDOMNode(componentInstance);
+</code></pre><p>组件实例并不是真实的DOM节点，我们可以使用ReactDOM.findDOMNode(),并将组件实例作为其参数。</p>
+<p><strong>组件支撑实例就是引用的真实DOM节点。</strong></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>JSX语法被转译为React.createElement()调用，最终返回我们称之为“React元素”的JS简单对象，你可以将React元素视为基础构建单元。</p>
+<p>React组件实例表示下一个抽象层，ReactDOM.render()接收一个React元素，引用一个真实DOM节点，返回一个React组件实例。该实例可以访问组件类中定义的方法。</p>
+<p>React元素和React组件实例都不是真实DOM元素。</p>
+<p>渲染组件实例产生的DOM元素称之为组件支撑实例，访问它的主要方式是使用ReactDOM.findeDOMNode().</p>
+<p>转载：</p>
+<p><a href="https://segmentfault.com/a/1190000009169542" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009169542</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/React-class与createClass/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/23/React-class与createClass/" itemprop="url">React class与createClass</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T08:55:12+08:00">
+                2017-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="react创建类之class与createClass区别"><a href="#react创建类之class与createClass区别" class="headerlink" title="react创建类之class与createClass区别"></a>react创建类之class与createClass区别</h1><p>以下使用class和createClass两种方式分别写一个组件：</p>
+<pre><code>var InputControlES5 = React.createClass({ 
+      propTypes: { 
+        initialValue: React.PropTypes.string 
+      }, 
+      defaultProps: { 
+        initialValue: &apos;&apos; 
+      }, 
+      // 设置 initial state 
+      getInitialState: function() { 
+        return { 
+          text: this.props.initialValue || &apos;placeholder&apos; 
+        }; 
+      }, 
+      handleChange: function(event) { 
+        this.setState({ 
+          text: event.target.value 
+        }); 
+      }, 
+      render: function() { 
+        return (
+          &lt;div&gt; Type something:
+            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
+          &lt;/div&gt; 
+        ); 
+      } 
+    }); 
+
+
+    class InputControlES6 extends React.Component { 
+      constructor(props) { 
+        super(props); 
+        // 设置 initial state 
+        this.state = { 
+          text: props.initialValue || &apos;placeholder&apos; 
+        }; 
+        // ES6 类中函数必须手动绑定 this.
+        handleChange = this.handleChange.bind(this); 
+      } 
+
+      handleChange(event) { 
+        this.setState({ 
+          text: event.target.value 
+        }); 
+      } 
+
+      render() { 
+        return (
+          &lt;div&gt; Type something:
+            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
+          &lt;/div&gt; 
+        ); 
+      } 
+    } 
+
+    InputControlES6.propTypes = { 
+      initialValue: React.PropTypes.string 
+    }; 
+    InputControlES6.defaultProps = { 
+      initialValue: &apos;&apos; 
+    };
+</code></pre><p>区别如下：</p>
+<h3 id="函数绑定"><a href="#函数绑定" class="headerlink" title="函数绑定"></a>函数绑定</h3><p>createClass在成员函数创建时就已经由react自动绑定好了，需要调用的时候直接使用this.whateverFn即可，函数中的this变量在函数调用时会被正确的设置。</p>
+<p>class中，函数不是自动绑定的，必须手动绑定。有三种方法：</p>
+<ul>
+<li>在构造函数中绑定</li>
+<li>成员函数在定义时使用胖箭头函数</li>
+<li>行内绑定：在调用时使用.bind（不推荐）</li>
+</ul>
+<p>那么es6 class中如果react没有帮我们绑定this，那么此时的this是哪里来的呢？</p>
+<p>有博文说到this本来是指向的生成的Dom节点的div的<a href="https://segmentfault.com/a/1190000009169542" target="_blank" rel="noopener">支撑实例</a>（<a href="https://mingjiezhang.github.io/2016/08/28/%E7%90%86%E8%A7%A3React%E4%B8%ADes6%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6%E7%9A%84this/" target="_blank" rel="noopener">理解React中es6方法创建组件的this</a>）,</p>
+<h3 id="构造函数是否调用super方法"><a href="#构造函数是否调用super方法" class="headerlink" title="构造函数是否调用super方法"></a>构造函数是否调用super方法</h3><p>class需要接受props作为参数，并调用super(props)。</p>
+<p>createClass并不需要这步。</p>
+<h3 id="初始化state"><a href="#初始化state" class="headerlink" title="初始化state"></a>初始化state</h3><p>createClass初始化state，接受一个getInitialState函数作为参数一部分，这个函数会在组件挂载时被调用一次。</p>
+<p>class使用构造函数，在调用super之后，直接设置state即可。</p>
+<h3 id="propTypes和defaultProps的位置"><a href="#propTypes和defaultProps的位置" class="headerlink" title="propTypes和defaultProps的位置"></a>propTypes和defaultProps的位置</h3><p>createClass中将propTypes和defaultProps作为你传入的对象的属性。</p>
+<p>class中，这些变成了类本身的属性，所以他们需要在类定义完成之后被加到类头上。</p>
+<p>如果开启了ES7 的属性初始化器（property initializer），可以使用下面的简写法：</p>
+<pre><code>class Person extends React.Component { 
+      static propTypes = { 
+        name: React.PropTypes.string, 
+        age: React.PropTypes.string 
+      }; 
+      static defaultProps = { 
+        name: &apos;&apos;, 
+        age: -1 
+      }; 
+      ... 
+    }
+</code></pre><h2 id="所以该用哪一个呢？"><a href="#所以该用哪一个呢？" class="headerlink" title="所以该用哪一个呢？"></a>所以该用哪一个呢？</h2><p>Facebook 已经声明 React.createClass 最终会被 ES6 class 取代，不过他们也说「我们不会废弃 React.createClass，直到我们找到目前 mixin 用例的替代方案，并且在语言中支持类属性初始化器」。</p>
+<p>只要有可能，尽量使用无状态函数组件。他们很简单，也会迫使你保持 UI 组件简单。</p>
+<p>对于需要 state、生命周期方法、或（通过 refs）访问底层 DOM 节点的复杂组件，使用 class。</p>
+<p>不过了解全部三种风格总是有好处的。当你在 StackOverflow 或别的地方查问题的时候，你可能会看到 ES5 和 ES6 两种风格的答案。ES6 风格正在积聚人气，但并不是唯一的风格。</p>
+<p>转载自：</p>
+<p><a href="http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html" target="_blank" rel="noopener">http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/22/react笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2576,1231 +3840,11 @@ alog(&apos;err.create&apos;, {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/es6相关/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/20/es6相关/" itemprop="url">es6相关</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T12:53:57+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="箭头函数-胖箭头函数"><a href="#箭头函数-胖箭头函数" class="headerlink" title="箭头函数(胖箭头函数)"></a>箭头函数(胖箭头函数)</h2><h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><ul>
-<li>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
-<li>不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</li>
-<li>不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</li>
-<li>不可以使用yield命令，因此箭头函数不能用作Generator函数。</li>
-</ul>
-<p>this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</p>
-<p>另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/nodejs之koa2框架/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/20/nodejs之koa2框架/" itemprop="url">nodejs之koa2框架</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T12:31:55+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>koa2会自己吧服务器框架搭建好，如果自己用nodejs，需要引入一些http的包，然后写端口，写一堆乱七八糟的，用koa2的话，都只有一个入口文件，就是路由文件，里面包括几大块：</p>
-<ul>
-<li><p>静态文件目录的生命，告诉服务器那个目录是用来放静态文件的，就是一些html，css，js，image什么。</p>
-</li>
-<li><p>还有一块就是路由地址的指向，路由文件给每个子路由文件都分配了一个地址，比如smallCourse，给他分配的可能就是/smallCourse/api。</p>
-</li>
-<li><p>还有一部分是服务器的简单配置，端口号啊等等。</p>
-</li>
-</ul>
-<p>浏览器拿到一个URL地址后，先通过localhost:3000后面的前几个名字去总的路由文件里匹配，找到一样的就去下面的文件下面再匹配，找到一样的地址的函数，就调用。</p>
-<h3 id="express"><a href="#express" class="headerlink" title="express"></a>express</h3><p>express的入门非常简单，通过创建express的Application就构建了一个expressweb实例。下面我们看看例子来感受一下：</p>
-<pre><code>var express = require(&apos;express&apos;);
-var app = express();
-
-app.get(&apos;/&apos;, function (req, res) {
-      res.send(&apos;Hello World!&apos;);
-});
-
-var server = app.listen(3000, function () {
-      var host = server.address().address;
-      var port = server.address().port;
-
-      console.log(&apos;Example app listening at http://%s:%s&apos;, host, port);
-});
-</code></pre><p>express本身封装了路由模块，因此，可以利用express直接处理各种http路由请求。</p>
-<p>在express用四个主要模块：</p>
-<ul>
-<li>Application：web服务器模块，抽象了web服务器的主要接口，如监听、事件、加载中间件、get\post请求等</li>
-<li>Request：请求</li>
-<li>response：响应</li>
-<li>Router：路由</li>
-</ul>
-<p>express用Application、Request、Response、Router四个主要模块，模拟了一个完整的web服务器功能，对了，express还在相当长的一段时期中受到了Connect的影响。在使用express的过程中，你会发现express是一个极简的、灵活的 web 应用开发框架，它提供的这一系列强大的特性，可以帮助你快速创建各种 web 和移动设备应用。</p>
-<h3 id="koa"><a href="#koa" class="headerlink" title="koa"></a>koa</h3><p>koa 是由 express原班人马打造的（TJ），致力于构建更小、更富有表现力、更健壮的 web 框架。使用 koa 编写 web 应用，通过组合不同的 generator，可以免除重复繁琐的回调函数嵌套，并极大地提升错误处理的效率。koa 不在内核方法中绑定任何中间件，它仅仅提供了一个轻量优雅的函数库，使得编写 koa 应用变得得心应手。<br>Koa 包含了像 content-negotiation（内容协商）、cache freshness（缓存刷新）、proxy support（代理支持）和 redirection（重定向）等常用任务方法。 与提供庞大的函数支持不同，Koa只包含很小的一部分，因为Koa并不绑定任何中间件。</p>
-<p>koa中也包含4个主要模块，Application、Request、Response、Context。此时，router已经被排除在内核之外了。其实，koa只是一个“中间架”，几乎所有的功能都需要由第三方中间件来协同完成。例如koa的router模块，就有20多个，优胜劣汰，自由选择……虽然有不规范之嫌，但是，koa是规范的这就足够了。使用koa，可以最大限度的发挥自己的想象力，利用koa，构建各种个性化的web与移动应用。下面我们看看例子来感受一下：</p>
-<pre><code>var koa = require(&apos;koa&apos;);
-var app = koa();
-
-app.use(function *(){
-      this.body = &apos;Hello World&apos;;
-});
-
-app.listen(3000);
-</code></pre><p>没错，就是这么简单，使用了Generator函数，这也是koa和express最大的不同，express是回调函数，koa是用Generator来作为响应器的。</p>
-<p>另外，那个替代了router的context是怎样的呢？下面我们看看例子来感受一下：</p>
-<pre><code>app.use(function *(){
-      this; // is the Context
-      this.request; // is a koa Request
-      this.response; // is a koa Response
-});
-</code></pre><p>另外，koa中还有co这个工具。co是一个“皮”，通过co来包装Generator和yeild，下面我们看看例子来感受一下：</p>
-<h3 id="koa2"><a href="#koa2" class="headerlink" title="koa2"></a>koa2</h3><p>目前，koa2结合了async/await已经成为了最好的web开发框架。上一节，已经讲了koa的主要模块和实现原理，此处，我只是简单说说koa2和koa不同之处，下面我们看看例子来感受一下：</p>
-<pre><code>const Koa = require(&apos;koa&apos;);
-const app = new Koa();
-
-app.use(ctx =&gt; {
-      ctx.body = &apos;Hello World&apos;;
-});
-
-app.listen(3000);
-</code></pre><p>函数式编程，async/await功能，程序简单，好用，真可谓是居家旅行的不二之选呀。通过查看代码，koa2去除了co中间件，进一步的精简了内核，这一点也正好符合当下性冷淡风格的设计潮流……不禁想赞叹一句，TJ不愧是设计师出身呀……</p>
-<p>作者：白昔月<br>链接：<a href="http://www.jianshu.com/p/3806417a1991" target="_blank" rel="noopener">http://www.jianshu.com/p/3806417a1991</a><br>來源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/vue之vuex/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/20/vue之vuex/" itemprop="url">vue之vuex</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T11:01:35+08:00">
-                2017-07-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Vuex是一种<strong>状态管理模式</strong>，采用集中式存储管理应用的所有组件的状态。</p>
-<h2 id="Vuex的核心——store"><a href="#Vuex的核心——store" class="headerlink" title="Vuex的核心——store"></a>Vuex的核心——store</h2><h3 id="store的特点"><a href="#store的特点" class="headerlink" title="store的特点"></a>store的特点</h3><p>store包含应用中大部分的状态（state）。</p>
-<p>Vuex和单纯的全局对象有以下两点不同：</p>
-<p>1. <strong>Vuex的状态存储是响应式的</strong>。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。</p>
-<p>2. <strong>不能直接改变store中的状态</strong>。唯一途径就是显示提交mutations（commit mutations）。这样设计的目的是：我们能跟踪每一个状态的变化。</p>
-<h3 id="store的创建"><a href="#store的创建" class="headerlink" title="store的创建"></a>store的创建</h3><p>store创建时包含：</p>
-<p>state, getters, mutations, actions, modules</p>
-<p>这里给一个例子，在项目里新建store.js，写如下代码</p>
-<pre><code>import Vue from &apos;vue&apos;
-import Vuex from &apos;vuex&apos;
-
-Vue.use(Vuex)
-
-// root state object.
-// each Vuex instance is just a single state tree.
-const state = {
-  count: 0
-}
-
-// mutations are operations that actually mutates the state.
-// each mutation handler gets the entire state tree as the
-// first argument, followed by additional payload arguments.
-// mutations must be synchronous and can be recorded by plugins
-// for debugging purposes.
-const mutations = {
-  increment (state) {
-    state.count++
-  },
-  decrement (state) {
-    state.count--
-  }
-}
-
-// actions are functions that causes side effects and can involve
-// asynchronous operations.
-const actions = {
-  increment: ({ commit }) =&gt; commit(&apos;increment&apos;),
-  decrement: ({ commit }) =&gt; commit(&apos;decrement&apos;),
-  incrementIfOdd ({ commit, state }) {
-    if ((state.count + 1) % 2 === 0) {
-      commit(&apos;increment&apos;)
-    }
-  },
-  incrementAsync ({ commit }) {
-    return new Promise((resolve, reject) =&gt; {
-      setTimeout(() =&gt; {
-        commit(&apos;increment&apos;)
-        resolve()
-      }, 1000)
-    })
-  }
-}
-
-// getters are functions
-const getters = {
-  evenOrOdd: state =&gt; state.count % 2 === 0 ? &apos;even&apos; : &apos;odd&apos;
-}
-
-// A Vuex instance is created by combining the state, mutations, actions,
-// and getters.
-export default new Vuex.Store({
-  state,
-  getters,
-  actions,
-  mutations
-})
-</code></pre><h3 id="getters创建"><a href="#getters创建" class="headerlink" title="getters创建"></a>getters创建</h3><p>getters会暴露为store.getters对象。</p>
-<p>getters传入的参数：</p>
-<p>第一个是state对象，第二个参数（可选），可以是其他getters，比如</p>
-<pre><code>getters: {
-      // ...
-     doneTodosCount: (state, getters) =&gt; {
-        return getters.doneTodos.length
-      }
-}
-</code></pre><h3 id="store里状态的使用"><a href="#store里状态的使用" class="headerlink" title="store里状态的使用"></a>store里状态的使用</h3><p>有了store，那么怎么在组件中使用呢？</p>
-<p>下面给个例子，新建count.vue文件，</p>
-<pre><code>&lt;template&gt;
-  &lt;div id=&quot;app&quot;&gt;
-    Clicked: {{ $store.state.count }} times, count is {{ evenOrOdd }}.
-    &lt;button @click=&quot;increment&quot;&gt;+&lt;/button&gt;
-    &lt;button @click=&quot;decrement&quot;&gt;-&lt;/button&gt;
-    &lt;button @click=&quot;incrementIfOdd&quot;&gt;Increment if odd&lt;/button&gt;
-    &lt;button @click=&quot;incrementAsync&quot;&gt;Increment async&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-import { mapGetters, mapActions } from &apos;vuex&apos;
-
-export default {
-  // computed: mapGetters([
-  //   &apos;evenOrOdd&apos;
-  // ]),
-  computed: {
-    // 使用getters的方式
-    evenOrOdd () {
-      return this.$store.getters.evenOrOdd;
-    }
-  },
-  methods: mapActions([
-    &apos;increment&apos;,
-    &apos;decrement&apos;,
-    &apos;incrementIfOdd&apos;,
-    &apos;incrementAsync&apos;
-  ])
-}
-&lt;/script&gt;
-</code></pre><p>下面开始详细介绍  </p>
-<h4 id="先说怎么获取state"><a href="#先说怎么获取state" class="headerlink" title="先说怎么获取state"></a>先说怎么获取state</h4><p>一个组件从store中读取状态的最简单的办法是在计算属性中返回某个状态：</p>
-<p>比如上面代码中，可以在computed里加上：</p>
-<pre><code>count() {
-    return this.$store.state.count;
-}
-</code></pre><p>当一个组件需要获取多个状态时，可以使用mapState辅助函数帮助我们生成计算属性。</p>
-<p>可以把刚才写的count(){}函数替换为：</p>
-<pre><code>mapState({
-    count: state =&gt; state.count,
-    countAlias: &apos;count&apos;,
-    countPlusLocalState (state) {
-          return state.count + this.localCount
-    }
-})
-</code></pre><p>当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。</p>
-<pre><code>computed: mapState([
-      // 映射 this.count 为 store.state.count
-      &apos;count&apos;
-])
-</code></pre><h4 id="再说怎么获getters"><a href="#再说怎么获getters" class="headerlink" title="再说怎么获getters"></a>再说怎么获getters</h4><p>也是在computed属性里写，如同count.vue里所写，可以用普通函数的形式，也可以用mapGetters.    </p>
-<p>mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性，可以使用对象展开运算符将getters混入computed对象中：</p>
-<pre><code>computed: {
-      // 使用对象展开运算符将 getters 混入 computed 对象中
-    ...mapGetters([
-          &apos;doneTodosCount&apos;,
-          &apos;anotherGetter&apos;,
-          // ...
-    ])
-  }
-</code></pre><h3 id="mutations和actions区别"><a href="#mutations和actions区别" class="headerlink" title="mutations和actions区别"></a>mutations和actions区别</h3><p><strong>mutations只支持同步函数。</strong></p>
-<p>每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，devtools 不知道什么时候回调函数实际上被调用 —— 实质上任何在回调函数中进行的的状态的改变都是不可追踪的。</p>
-<p>Action 类似于 mutation，不同在于：</p>
-<ul>
-<li>Action 提交的是 mutation，而不是直接变更状态。</li>
-<li>Action 可以包含任意异步操作。</li>
-</ul>
-<p>action里面的方法可以通过store.dispatch(‘increment’)触发。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/css浮动float属性/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/css浮动float属性/" itemprop="url">css浮动float属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:17:29+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="浮动的本意"><a href="#浮动的本意" class="headerlink" title="浮动的本意"></a>浮动的本意</h2><p>让文字像流水一样环绕浮动元素。</p>
-<h2 id="怎么才能实现该效果呢"><a href="#怎么才能实现该效果呢" class="headerlink" title="怎么才能实现该效果呢"></a>怎么才能实现该效果呢</h2><p>用<strong>包裹性</strong>和<strong>高度欺骗</strong></p>
-<h3 id="特性一：包裹性"><a href="#特性一：包裹性" class="headerlink" title="特性一：包裹性"></a>特性一：包裹性</h3><p><img src="http://upload-images.jianshu.io/upload_images/1959053-1b1dda5d416c60eb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>代码：</p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
-    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid red;float:left;&quot;&gt;
-    &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
-&lt;/div&gt;
-</code></pre><p>block元素不指定width的话，默认是100%，一旦让该div浮动起来，立刻会像inline元素一样产生包裹性，宽度会随内容自适应。这也是通常float元素需要手动指定width的原因。</p>
-<p>再加一个div的话，效果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-2869f0891d66eee5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
-    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid red;float:left;&quot;&gt;
-    &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid green;&quot;&gt;
-    &lt;img src=&quot;img/25/3.jpg&quot; /&gt; 
-&lt;/div&gt;
-</code></pre><p>效果非常近似与display:inline-block,但相比之下，浮动能设定为左浮和右浮，display:inline-block都是从左到右排列的。（还有些细微差别，两个display:inline-block间会有空隙，但两个float间没有。这不是本篇的主题，暂时略过）。</p>
-<h3 id="特性二：-高度欺骗"><a href="#特性二：-高度欺骗" class="headerlink" title="特性二： 高度欺骗"></a>特性二： 高度欺骗</h3><p>首先声明：其实是CSS层级在起作用，但CSS层级适合单独写一篇，内容实在太多，不适合在这里展开，就理解为高度欺骗吧）</p>
-<p>例1中浮动float被设在了外围div上，因此高度欺骗性没体现出来。现在给内层img元素设定float。所谓一图胜千言：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-200a5280f9711949.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
-    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid red;&quot;&gt;
-    &lt;img style=&quot;border:4px solid yellow;float:left;&quot; src=&quot;img/25/2.jpg&quot; /&gt;
-&lt;/div&gt;
-</code></pre><p>和例子1唯一的区别就是：将外层div的float移到内层img中。这下高度欺骗性体现出来了。例1中给外层div加上浮动，因此外层div会有包裹性，其内容是img图片，所以可以看到红色边框包裹着img。</p>
-<p>例2中外层div没有了浮动，因此红色边框宽度默认是100%全屏。其内容img由于加上了float，使得该img具有了欺骗性。float给img施了个障眼法，让该img的inline-height高度塌陷为0了。这样外层div计算高度时，认为img的高度为0，相当于div的content的高度为0，因此红色边框看起来是一条直线。</p>
-<p>但请注意障眼法毕竟是障眼法，并不是真的让img的高度塌陷为0了，可以看到上图中img的黄色边框还是有正常高度的。如果给div里加点文字，效果如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-5170f426197de08b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>可以看到，外层div在没有手动设定height的前提下，其高度是由内部content的最大高度决定的，由于img的float使得img具有高度塌陷的欺骗性，让div误以为img的line-height为0，因此div的高度就是文字的匿名inline-box的inline-height。</p>
-<p>因此浮动并不是让元素的高度塌陷了，而是让元素具有高度塌陷的欺骗性。骗谁？骗别人！但骗不了自己，元素自身还是有高度的（见上图的黄框）。</p>
-<p>回过头再看看浮动float的本意：让文字像流水一样环绕图片。重要的事情多看几遍…给div设定一个width:200px，并加点文字吧：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-dad6d5b856f3df0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>这就是浮动元素的本意。该效果是很难被其他CSS属性等价地模拟的。</p>
-<p>但就像开头说的，CSS强大的灵活性使得很多CSS属性被用于了创造者都没想到的场景。以float为例，就被广泛用于了布局。是好是坏呢？不知道！西红柿臭鸡蛋先别急着扔。既然撸主不知道，还废话什么？先看看float布局的问题。渣浪微博改版前的好友列表用浮动布局，效果如下:</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-2dca492dbffd770f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<pre><code>&lt;ul&gt;
-  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
-      &lt;div&gt;&lt;img src=&quot;img/25/1.jpg&quot; /&gt;尼古拉斯.旺财&lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
-      &lt;div&gt;&lt;img src=&quot;img/25/2.jpg&quot; /&gt;功夫熊猫&lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
-      &lt;div&gt;&lt;img src=&quot;img/25/3.jpg&quot; /&gt;月野兔&lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
-      &lt;div&gt;&lt;img src=&quot;img/25/4.jpg&quot; /&gt;猫女郎&lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre><p>每个li都设为浮动和定宽，实现了水平布局。但如果好友再长点呢？效果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-ae89f49a5463cae0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>错行啦！常见的修正方案是手动设定一个高度，让文字固定显示一行，用裁掉超行文字的代价以避免错行问题。在撸主看来这就是让CSS属性用于不合原意处的局限性。设固定高度是OK，但如果哪天设计师觉得姓名需要显示两行呢，那固定高度就需要重新计算重新变。如果设计师觉得需要拓宽俄罗斯市场，姓名要显示三行呢？再把固定高度改大点。如果未来Boss脑袋一拍，咦，能不能高度自适应呢？由姓名最大高度的好友来决定每行的高度。你是不是会有准备一下简历的冲动？</p>
-<p>当然现实没这么夸张，高度自适应是个烂大街的技术，将浮动float改成 display:inline-block 就行了，效果如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-17176e9467c1dba7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>代码只需将上面float:left;替换成display: inline-block;，没对齐只需给li加上个vertical-align: top;（上面提到过，相比float，display:inline-block中间会有空隙，眼神好的可以从图中就能看出来，解决方案不是本篇的主题，可以问度娘）。这下高度自适应了，每行的高度都是以名字最长的高度为准。</p>
-<p>回过头看用float来水平布局。是好是坏呢？好处是上手简单，随便什么程度的CSSer都能搞定。坏处是有时需要定高难以自适应。而display:inline-block;属性可是根正苗红的水平布局的属性，可以用其替代float。让float尽量多的干其本职工作：让文字像流水一般环绕浮动元素。所以撸主不知道答案。或许也根本没有正确答案，不停的推翻原有的认识和想法人才能进步。</p>
-<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>这个就相对比较简单了，用clear即可，稍微要注意的是，clear是仅用作于当前元素，例如元素A是浮动元素，靠左显示。元素B是block元素，紧跟在A后面。此时要清除浮动，是在B上色设置clear:left。你在A上设置clear:right是没有用的，因为A的右边没有浮动元素。</p>
-<p>但真的这么简单吗？</p>
-<p>先明确一个概念，用clear确实能达到我们期望的清除浮动的效果，这点没异议。但深入点看，究竟是清除了什么样的浮动呢？一图胜千言：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-576f17a1570dda26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>代码：（给页脚加上clear:left）</p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
-    &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
-        我是浮动元素1
-    &lt;/div&gt;
-    &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
-        我是浮动元素2
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid gray;clear:left;&quot;&gt;我是页脚&lt;/div&gt;
-</code></pre><p>因为浮动元素的高度欺骗性，导致外层div失去了高度（蓝色边框成了一条线）。为了让页脚显示到浮动元素下面，对页脚应用了clear:left。这是常规做法，没有任何新奇之处。但是外层div的高度仍旧处于塌陷状态，我们脑海真真正期望的清除浮动后的样子难道不是下面这样吗？</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1959053-be8e95926b12dab5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>让清除浮动后，原本被欺骗的外层div获得正确的高度！借用文首大神链接的说法，我们脑中期望的其实并不是上图的清除浮动，而是下图的<strong>闭合浮动</strong>。</p>
-<h2 id="闭合浮动"><a href="#闭合浮动" class="headerlink" title="闭合浮动"></a>闭合浮动</h2><p>闭合浮动的实现方法很多，常见的是最后增加一个清除浮动的子元素：</p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
-  &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
-      我是浮动元素1
-  &lt;/div&gt;
-  &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
-      我是浮动元素2
-  &lt;/div&gt;
-  &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;  //加上空白div节点来闭合浮动
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
-</code></pre><p>缺点是会增加一个DOM节点。（话说当初撸主不知道在哪里看到这个做法时，作者并未讲这么做的原因，导致撸主不明白明明页脚加一个clear属性就能搞定的事，为何要大动干戈加一个DOM节点）</p>
-<p>方法二：同样可以在最后增加一个清除浮动的br：将上面代码中<code>&lt;div style=”clear:both;”&gt;&lt;/div&gt;</code>替换成<code>&lt;br clear=”all” /&gt;</code>即可。语义上比空的div标签稍微好一点，但同样会增加一个DOM节点。</p>
-<p>方法三：父元素设置 <code>overflow:hidden</code>（如果你还要兼顾IE6的话，加上<code>*zoom:1;</code>来触发hasLayout）</p>
-<pre><code>&lt;div style=&quot;border:4px solid blue;overflow:hidden;&quot;&gt;
-  &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
-      我是浮动元素1
-  &lt;/div&gt;
-  &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
-      我是浮动元素2
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
-</code></pre><p>这看起来很奇怪。因为子元素的浮动的高度欺骗，导致父元素误认为content高度为0（即蓝色边框为一条线），所以父元素设成overflow:hidden溢出隐藏的话，直觉上应该子元素由于溢出导致不显示才对，即整个页面只显示页脚。但实际效果，父元素设成overflow:hidden溢出隐藏后，竟然神奇地出现了闭合浮动的效果（蓝色边框正确获得了高度）。这是怎么回事呢？靠的是BFC，但BFC说起来又是很长一篇，先略过。你可以先简单地这么理解：浏览器厂商认为要让超出边框部分可以被修剪掉，那么前提就是父元素要正确获得高度，即父元素不能被欺骗导致高度塌陷。浏览器正确获得子元素的高度后给父元素重新设置高度。虽然权威解释肯定是BFC，但撸主这样理解了很久…</p>
-<p>方法四：同上面将父元素设置 的overflow:hidden改成auto，不赘述</p>
-<p>方法五：父元素也设成float。这样确实实现了闭合浮动，但页脚将上移，所以页脚仍旧需要clear:left。还有个缺点是由于浮动的包裹性，你确定父元素真的设成float对页面布局不会产生影响吗？</p>
-<p>方法六：父元素设置display:table。效果OK，页脚也不需要设clear:left，但父元素的盒子模型被改变了，请先确认下这样的改动对页面布局不会产生影响吗？</p>
-<p>方法七：用:after伪元素，思路是用:after元素在div后面插入一个隐藏文本”.”，隐藏文本用clear来实现闭合浮动：</p>
-<pre><code>.clearfix:after {
-  clear: both;
-  content: &quot;.&quot;;   //你头可以改成其他任意文本如“abc”
-  display: block;
-  height: 0;      //高度为0且hidden让该文本彻底隐藏
-  visibility: hidden;
-}
-.clearfix {
-    *zoom: 1;
-}
-
-
-&lt;div style=&quot;border:4px solid blue;&quot; class=&quot;clearfix&quot;&gt;
-  &lt;div style=&quot;width:200px; border:4px solid red; float:left;&quot;&gt;
-      我是浮动元素1
-  &lt;/div&gt;
-  &lt;div style=&quot;width:200px; border:4px solid yellow; float:left;&quot;&gt;
-      我是浮动元素2
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
-</code></pre><p>转载自：<a href="http://www.jianshu.com/p/07eb19957991" target="_blank" rel="noopener">http://www.jianshu.com/p/07eb19957991</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/两列自适应布局/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/两列自适应布局/" itemprop="url">两列自适应布局</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T16:37:53+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-float-margin"><a href="#1-float-margin" class="headerlink" title="1. float+margin"></a>1. float+margin</h2><p>左列：float:left; width:100px;<br>右列: margin-left:100px</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    .left {
-        float: left;
-        width: 100px;
-        background: red;
-    }
-    .main {
-        margin-left: 110px;
-        width: 100%; /*可以不加*/
-        background: green;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
-    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><p>缺点：如果想修改.left的宽度，还需要修改.main 的margin-left。</p>
-<h2 id="2-float-overflow-hidden-触发BFC"><a href="#2-float-overflow-hidden-触发BFC" class="headerlink" title="2. float+overflow:hidden(触发BFC)"></a>2. float+overflow:hidden(触发BFC)</h2><p>左列： float:left; width: 100px;<br>右列: overflow:hidden;</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    .left {
-        float: left;
-        width: 100px;
-        background: red;
-    }
-    .main {
-        overflow: hidden; /*不能加width:100%;*/
-        background: green;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
-    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><p>优点：可以设置浮动的margin来控制间距，想要修改宽度时只修改宽度就行了</p>
-<h2 id="3-绝对定位"><a href="#3-绝对定位" class="headerlink" title="3. 绝对定位"></a>3. 绝对定位</h2><p>左列：float:left;<br>右列: 绝对应为left</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    .left {
-        float: left;
-        /* position: relative; */
-        width: 100px;
-        background: red;
-    }
-
-    .main {
-        position: absolute;
-        left: 100px;
-        width: 100%;
-        background: green;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
-    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><h2 id="4-flex布局"><a href="#4-flex布局" class="headerlink" title="4. flex布局"></a>4. flex布局</h2><p>不多说。</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    .wrapper {
-      display: flex;
-    }
-    .left {
-        flex: 0 1 100px;
-        background: red;
-    }
-
-    .main {
-        flex: 1;
-        background: green;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-  &lt;div class=&quot;wrapper&quot;&gt;
-    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
-    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
-  &lt;/div&gt; 
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre><h2 id="5-让重要内容先渲染"><a href="#5-让重要内容先渲染" class="headerlink" title="5. 让重要内容先渲染"></a>5. 让重要内容先渲染</h2><p>右列：float:left; width: 100%;<br>左列： display: inline-block; margin-left: -100%;width:100px;</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-
-&lt;head&gt;
-    &lt;title&gt;&lt;/title&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-    .main-wrapper {
-      margin-left: 100px;
-    }
-    .left {
-        margin-left: -100%;
-        display: inline-block; /*或者float: left;*/
-        width: 100px;
-        background: red;
-    }
-
-    .main {
-        float: left;
-        width: 100%;
-        background: green;
-    }
-    &lt;/style&gt;
-&lt;/head&gt;
-
-&lt;body&gt;
-    &lt;div class=&quot;main-wrapper&quot;&gt;
-      &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
-&lt;/body&gt;
-
-&lt;/html&gt;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/绝对定位居中技术-Absolute-Centering/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/绝对定位居中技术-Absolute-Centering/" itemprop="url">绝对定位居中技术(Absolute Centering)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T14:24:51+08:00">
-                2017-07-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h2><p>实现水平垂直居中，只需要三点：</p>
-<ul>
-<li>声明元素宽度</li>
-<li>给父元素设置相对定位</li>
-<li><p>给该元素设置类Absolute-Center，如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.Absolute-Center &#123;</span><br><span class="line">     margin: auto;</span><br><span class="line">     left: 0;</span><br><span class="line">     top: 0;</span><br><span class="line">     right: 0;</span><br><span class="line">     bottom: 0;</span><br><span class="line">     overflow: auto; // 建议加上</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>1. 在普通文档流中，margin:auto 的效果等同于margin-top:0; margin-bottom: 0;。</p>
-<p>2. position:absolute;使绝对定位块跳出了文档流，文档流其余部分渲染时绝对定位部分不进行渲染。</p>
-<p>3. 为块区域设置top:0;left:0;bottom:0;right:0;将给浏览器重新分配一个边界框，此时该块将填充至其父元素的所有可用空间，父元素一般为body，或者声明为position:relative;的容器。</p>
-<p>4. 给内容块设置一个width或者height，能够防止内容块占据所有的可用空间，促使浏览器根据新的边界框重新计算margin:auto;</p>
-<p>5. 由于内容块被绝对定位，脱离了正常的文档流，浏览器会给magin-top,margin-bottom相同的值，使元素块在先前定义的边界内居中。</p>
-<p>简而言之： 绝对定位元素不在普通文档流中渲染，因此margin-auto可以使内容在通过top:0;left:0;bottom: 0;right:0;设置的边界内垂直居中。</p>
-<h2 id="误解的地方"><a href="#误解的地方" class="headerlink" title="误解的地方"></a>误解的地方</h2><p>以前一直以为margin:auto; 就是上下左右都是按照可用空间同等分配，这是错的！错的！错的！</p>
-<p><strong>margin: 0 auto; 表示左右根据可用空间同等分配，而上下设置为0</strong></p>
-<h2 id="居中方式"><a href="#居中方式" class="headerlink" title="居中方式"></a>居中方式</h2><h3 id="1-容器内-within-container"><a href="#1-容器内-within-container" class="headerlink" title="1. 容器内(within container)"></a>1. 容器内(within container)</h3><p>这个不多说，就是给父容器设置position:relative;，该元素设置宽高，并加上.Absolute-Center的类。</p>
-<h3 id="2-视区内-within-viewport"><a href="#2-视区内-within-viewport" class="headerlink" title="2. 视区内(within viewport)"></a>2. 视区内(within viewport)</h3><p>想让内容块一只停留在可视区域？给内容块设置为position:fixed;并设置一个z-index:1;层叠属性值即可。</p>
-<h3 id="3-边栏-offsets"><a href="#3-边栏-offsets" class="headerlink" title="3. 边栏(offsets)"></a>3. 边栏(offsets)</h3><p>不懂。。。<br>（待后续研究）</p>
-<p>转载自：<a href="http://blog.csdn.net/freshlover/article/details/11579669" target="_blank" rel="noopener">http://blog.csdn.net/freshlover/article/details/11579669</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -3844,7 +3888,7 @@ export default {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

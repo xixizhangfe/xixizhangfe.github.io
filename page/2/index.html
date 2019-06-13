@@ -263,6 +263,1011 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/25/js模块系统详解/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/25/js模块系统详解/" itemprop="url">js模块系统详解(一)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-25T09:37:44+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前端涉及到的模块规范有：CommonJS、AMD、ES6的模块系统、NodeJS的模块系统。</p>
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>nodeJS的诞生标志着”JavaScript模块化编程“的正式诞生。在浏览器环境下，没有模块化编程，倒也不是很大的问题，毕竟网页程序的复杂性有限。但是在服务端，一定要有模块，与操作系统和其他应用程序互动，否则根本没法编程。</p>
+<p>nodejs的模块系统，就是参考commonjs规范实现的。</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD的全称是Asynchronous Module Define，异步模块定义。</p>
+<h3 id="为什么AMD会诞生呢？"><a href="#为什么AMD会诞生呢？" class="headerlink" title="为什么AMD会诞生呢？"></a>为什么AMD会诞生呢？</h3><p>在有了服务端模块后，我们自然也想要客户端模块，而且最好这两个能兼容，一个模块都不用修改，在服务端和客户端可以同时运行。</p>
+<p>但是，CommonJS有一个重大的局限，导致它不适合在浏览器环境运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var math = require(&apos;math);</span><br><span class="line">math.add(2, 3);</span><br></pre></td></tr></table></figure>
+<p>看上面的代码，乍一看似乎没有什么问题。但实际上，第二行代码需要在第一行代码执行后，才能执行。因此必须要等到math.js加载完成后。如果math.js加载时间很长，整个应用就卡在这里了。</p>
+<p>这对于服务端编程并不是一个问题，因为服务端所有的模块都放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时取决于网速，可能要等很长时间。</p>
+<p>因此，浏览器的模块，不能采用”同步加载”，而是要异步加载，因此AMD就诞生了。</p>
+<h3 id="AMD-1"><a href="#AMD-1" class="headerlink" title="AMD"></a>AMD</h3><p>AMD也是采用require语句，但是语法与CommonJS不同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require([module], callback);</span><br></pre></td></tr></table></figure>
+<p>其中，第一个参数<code>[module]</code>是所有依赖的模块，是一个数组；第二个参数<code>callback</code>，则是加载成功之后的回调。</p>
+<p>上面的那个代码，如果用AMD实现，则是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&apos;math&apos;], function() &#123;</span><br><span class="line">  math.add(2, 3);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>math.add()与math模块加载不是同步的，浏览器不会发生假死。所以很显然，AMD比较适合浏览器环境。</p>
+<p>参考：</p>
+<p><a href="http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/10/asynchronous_module_definition.html</a></p>
+<h3 id="ES6的模块系统"><a href="#ES6的模块系统" class="headerlink" title="ES6的模块系统"></a>ES6的模块系统</h3><p>ES6实现了模块规范，完全可以取代CommonJS和AMD，成为服务器和浏览器通用的模块解决方案。</p>
+<h4 id="ES6的设计思想"><a href="#ES6的设计思想" class="headerlink" title="ES6的设计思想"></a>ES6的设计思想</h4><p>设计思想是：尽量的静态化，也就是编译时加载（静态加载）。</p>
+<p>这样在编译时就能确定模块之间的依赖关系、输入和输出的变量。</p>
+<p>而CommonJS和AMD只能在运行时才能确定这些东西（运行时加载）(此处可以详看<a href="http://es6.ruanyifeng.com/#docs/module" target="_blank" rel="noopener">阮一峰的es6模块系统</a>)。</p>
+<h3 id="NodeJS的模块系统"><a href="#NodeJS的模块系统" class="headerlink" title="NodeJS的模块系统"></a>NodeJS的模块系统</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/22/获取隐藏元素的高度/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/22/获取隐藏元素的高度/" itemprop="url">获取隐藏元素的高度</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-22T08:33:17+08:00">
+                2019-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近组内开发组件库，这是初次参与开发组件库，学到了很多知识。特此记录。</p>
+<p>对于collapse折叠面板来说，难点是展开/折叠的动画效果。首先想到的自然是利用transition来做过渡效果，但是transition对于元素动画起止高度不知道的情况下，无法做出过渡效果。所以，我们要做的就是拿到隐藏的过渡元素的实际高度，并赋值给el.style.height。</p>
+<p>那么如何拿到过渡元素的实际高度呢？</p>
+<p>首先来看，一般隐藏元素的方式有如下几种：</p>
+<ol>
+<li><code>display: none;</code></li>
+<li><code>height: 0;overflow: hidden;</code></li>
+<li><code>visibility: hidden;</code></li>
+<li><code>opacity: 0;</code></li>
+<li><code>transform: scale(0);</code></li>
+</ol>
+<p>以上五种，除了第一种<code>display: none;</code>是真实隐藏，其他的都是视觉隐藏，即仍然在文档流中占有位置。</p>
+<p>视觉隐藏的元素仍然可以获取到元素的高度。所以重点就是<code>display: none;</code>元素的高度如何获取。而我们会发现，第二种方式虽然仍然在文档流中占有位置，但是高度为0，具有<code>display: none;</code>的视觉效果，此时该元素的<code>clientHeight</code>，<code>offsetHeight</code>为0，但是<code>scrollHeight</code>是存在的。因此可以利用<code>scrollHeight</code>来得到<code>display: none;</code>元素的高度。</p>
+<p>后记：</p>
+<p>由于scrollHeight、clientHeight、offsetHeight这几个容易让人混淆的概念，每次用到都是百度一下，所以这里再记录一次，决心搞定它！</p>
+<blockquote>
+<p>scrollHeight</p>
+<p>元素内容的总高度，包含滚动区域。该值等于height + padding + 伪元素高度</p>
+</blockquote>
+<blockquote>
+<p>clientHeight</p>
+<p>元素的可见区域的高度，包括padding，但不包括border，margin，水平滚动条。该值等于heihgt + padding - 水平滚动条高度</p>
+</blockquote>
+<blockquote>
+<p>offsetHeight</p>
+<p>元素的高度，包括padding、border、水平滚动条高度，不包括伪元素。</p>
+<p>如果该元素被隐藏了，比如设置了<code>display: none</code>，则offsetHeight为0</p>
+</blockquote>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/scrollHeight%20offsetHeight%20clientHeight.png?raw=true" alt="srollHeight"><br><img src="https://github.com/xixizhangfe/markdownImages/blob/master/clienHeight.png?raw=true" alt="clientHeight"></p>
+<p>在查看MDN文档时，发现，有的属性是挂载在HTMLElement下的，有的是挂载在Element下的，比如<code>Element.scrollHeight</code>，<code>Element.clientHeight</code>，<code>HTMLElement.offsetHeight</code>。这是为什么呢？</p>
+<p>继续查看MDN文档，发现了他们之间的关系：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/element%20HTMLelement.png?raw=true" alt="element HTMLElement"></p>
+<p>好了，到此为止我们已经了解高度相关的几个属性了。所以在beforeEnter中我们可以先将过渡元素设置为<code>height: 0; overflow: hidden;</code>，在enter钩子中就可以通过el.scrollHeight获取到元素总高度，并将过渡元素的height设置为el.scrollHeight，这样就得到了过渡元素的高度。从而就可以利用transition了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/由vue引发的模板引擎学习（一）字符串模板/" itemprop="url">由vue引发的模板引擎学习（一）字符串模板</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-13T20:32:25+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>又看了一遍vue官方文档，迄今为止是第三遍看了，看第一遍时无比懵逼，看第二遍时加深了一些常用api的理解，而第三遍则是工作近一年后的补盲。确实发现了不少盲点，特此记录。这一篇是讲模板引擎。为什么要写这个？因为看到vue文档说Vue.js使用了基于html的模板语法，一开始不理解什么是基于html的语法，所以进行了学习，从而有了这篇及后续几篇文章。</p>
+<h3 id="2-模板引擎的概念"><a href="#2-模板引擎的概念" class="headerlink" title="2. 模板引擎的概念"></a>2. 模板引擎的概念</h3><p>模板引擎是为了使用户界面与业务数据分离而产生的，它可以生成特定格式的文档，用于网站的模板引擎就会生成一个标准的HTML文档。</p>
+<h3 id="3-web前端模板引擎"><a href="#3-web前端模板引擎" class="headerlink" title="3. web前端模板引擎"></a>3. web前端模板引擎</h3><p>这里将介绍三种模板引擎技术，分别是：</p>
+<ul>
+<li>基于字符串的模板</li>
+<li>基于DOM操作的模板</li>
+<li>基于虚拟DOM的模板</li>
+</ul>
+<h3 id="4-为什么需要模板引擎？"><a href="#4-为什么需要模板引擎？" class="headerlink" title="4. 为什么需要模板引擎？"></a>4. 为什么需要模板引擎？</h3><p>页面中经常有些内容依赖于后端数据。比如，我们有这样一段代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;li&gt;喜洋洋&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;懒洋洋&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;美羊羊&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;灰太狼&lt;/li&gt;</span><br><span class="line">		&lt;li&gt;红太狼&lt;/li&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>实际上面的li里的内容通常是从后端获取的，并不能写死，所以在没有模板引擎的情况下，我们需要这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 这里data应该是请求后端接口得到的，这里只是为了模拟一下</span><br><span class="line">var data = [&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;];</span><br><span class="line">var container = document.getElementById(&apos;container&apos;);</span><br><span class="line">var str = &apos;&lt;ul&gt;&apos;;</span><br><span class="line">for (var i = data.length - 1; i &gt;= 0; i--) &#123;</span><br><span class="line">	str += &apos;&lt;li&gt;&apos; + data[i] + &apos;&lt;/li&gt;&apos;;</span><br><span class="line">&#125;</span><br><span class="line">str += &apos;&lt;/ul&gt;&apos;;</span><br><span class="line">container.innerHTML = str;</span><br></pre></td></tr></table></figure>
+<p>写过的同学应该都有这样的体验：</p>
+<ul>
+<li>开发效率低，字符串拼接写起来麻烦</li>
+<li>容易出错，尤其是结构复杂的情况</li>
+<li>代码看起来不清晰明了</li>
+<li>可维护性低，后期改起来不方便</li>
+<li>可扩展性低，想要增加新需求时更该不方便</li>
+</ul>
+<p>所以这就带来了一些思考，有没有一种方式能将前端结构与数据分开，从而老司机们就创造出了各种基于字符串的模板引擎。</p>
+<h3 id="5-基于字符串的模板引擎"><a href="#5-基于字符串的模板引擎" class="headerlink" title="5. 基于字符串的模板引擎"></a>5. 基于字符串的模板引擎</h3><p>这些模板引擎又分为两类：一种是不包含逻辑处理，只做数据绑定用的，如<a href="https://github.com/janl/mustache.js/blob/master/mustache.js" target="_blank" rel="noopener">mustache.js</a>；另一种是既有逻辑处理，也有数据绑定的，如<a href="http://www.embeddedjs.com/" target="_blank" rel="noopener">ejs</a>。</p>
+<p>下面以EJS的语法为例，实现一个简单的字符串模板引擎、模板引擎的编译流程如下：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/String-based-Template.png?raw=true" alt="基于字符串的模板引擎编译原理"></p>
+<p>还是上面的例子，如果用EJS的语法来写，应该是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;container&quot;&gt;</span><br><span class="line">	&lt;ul&gt;</span><br><span class="line">		&lt;% for (var i = 0; i &lt; data.length; i++) &#123;%&gt;</span><br><span class="line">			&lt;li&gt;&lt;%= data[i] %&gt;&lt;/li&gt;</span><br><span class="line">		&lt;% &#125; %&gt;</span><br><span class="line">	&lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>其中，&lt;%= 和 %&gt;之间的是JS表达式，而在&lt;% 和 %&gt; 之间是普通的JS语句，可以进行逻辑判断和条件循环等操作。</p>
+<p><strong><br>那么模板引擎需要做的事情是什么呢？就是将上述模板编译成第4小结里的js。<br></strong></p>
+<p>那我们现在比较一下第4小结里的js与所写模板的区别，就可以知道如何将模板编译成想要的js：<br>我们将例子中的模板字符串用template表示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var template = `</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;% for(var i=0; i&lt;data.supplies.length; i++) &#123;%&gt;</span><br><span class="line">        &lt;li&gt;&lt;%= data.supplies[i] %&gt;&lt;/li&gt;</span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">`;</span><br></pre></td></tr></table></figure>
+<p>1.我们首先需要将普通html与模板语法区分开<br>这一步可以用正则表达式判断。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 匹配JS语句</span><br><span class="line">var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">// 匹配JS表达式</span><br><span class="line">var expReg = /&lt;%=(.+?)%&gt;/g;</span><br></pre></td></tr></table></figure>
+<p>2.需要定义一个变量str，保存编译后的模板。普通的html无需任何处理，需当做字符串拼接到str上；JS表达式不是当做字符串而是直接拼接到str上；JS语句则不需要拼接，直接执行。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;&apos;;</span><br><span class="line">// 需要定义一个拼接函数</span><br><span class="line">function echo(html) &#123;</span><br><span class="line">	str += html;</span><br><span class="line">&#125;</span><br><span class="line">template = template</span><br><span class="line">	//转换JS表达式</span><br><span class="line">	.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">	// 转换JS语句</span><br><span class="line">	.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line"></span><br><span class="line">// 内容为空的部分</span><br><span class="line">var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">template = template.replace(empty, &apos;&apos;);</span><br></pre></td></tr></table></figure>
+<p>到这一步，得到的template为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">template = &apos;echo(`&lt;ul&gt;`); </span><br><span class="line">  for (var i = 0; i &lt; data.length; i++) &#123; </span><br><span class="line"> echo(`&lt;li&gt;`); </span><br><span class="line"> echo(  data[i]  ); </span><br><span class="line"> echo(`&lt;/li&gt;`); </span><br><span class="line">  &#125;  </span><br><span class="line"> echo(`&lt;/ul&gt;`)&apos;;</span><br></pre></td></tr></table></figure>
+<p>3.此时，我们需要将上面写的代码封装成一个函数，并将模板字符串作为参数传递进去，该函数返回编译后的模板，该函数称之为编译函数compile。这里返回的模板应该是一个函数（实际是个字符串），并且参数是所需要的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function compile(template) &#123;</span><br><span class="line">	// 匹配JS语句</span><br><span class="line">	var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">	// 匹配JS表达式</span><br><span class="line">	var expReg = /&lt;%=(.+?)%&gt;/g;</span><br><span class="line">	</span><br><span class="line">	template = template</span><br><span class="line">		//转换JS表达式</span><br><span class="line">		.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">		// 转换JS语句</span><br><span class="line">		.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">	template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line">	</span><br><span class="line">	// 内容为空的部分</span><br><span class="line">	var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">	template = template.replace(empty, &apos;&apos;);</span><br><span class="line">	</span><br><span class="line">	// 这里借助了es6的语法$&#123;&#125;</span><br><span class="line">	var script = `(function parse(data) &#123;</span><br><span class="line">		var str = &apos;&apos;;</span><br><span class="line">		// 需要定义一个拼接函数</span><br><span class="line">		function echo(html) &#123;</span><br><span class="line">			str += html;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		$&#123;template&#125;</span><br><span class="line">		</span><br><span class="line">		return str;</span><br><span class="line">	&#125;)`;</span><br><span class="line">	return script;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.由于compile函数返回的是个字符串，要想该字符串转为真正的函数执行，需要借助eval，最后再将数据传给compile的子函数parse函数，这样就得到了想到的html结构，最后只需要插入dom即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var parse = eval(compile(template));</span><br><span class="line">var output = parse([&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;]);</span><br><span class="line">document.getElementById(&apos;container&apos;).innerHTML = output;</span><br></pre></td></tr></table></figure>
+<p>完整的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">var parse = eval(compile(template));</span><br><span class="line">var output = parse([&apos;喜洋洋&apos;, &apos;懒洋洋&apos;, &apos;美羊羊&apos;, &apos;灰太狼&apos;, &apos;红太狼&apos;]);</span><br><span class="line">document.getElementById(&apos;container&apos;).innerHTML = output;</span><br><span class="line"></span><br><span class="line">function compile(template) &#123;</span><br><span class="line">	// 匹配JS语句</span><br><span class="line">	var senReg = /&lt;%([\s\S]+?)%&gt;/g;</span><br><span class="line">	// 匹配JS表达式</span><br><span class="line">	var expReg = /&lt;%=(.+?)%&gt;/g;</span><br><span class="line">	</span><br><span class="line">	template = template</span><br><span class="line">		//转换JS表达式</span><br><span class="line">		.replace(expReg, &apos;`); \n echo( $1 ); \n echo(`&apos;)</span><br><span class="line">		// 转换JS语句</span><br><span class="line">		.replace(senReg, &apos;`); \n $1 \n echo(`&apos;);</span><br><span class="line">	template = &apos;echo(`&apos; + template + &apos;`)&apos;;</span><br><span class="line">	</span><br><span class="line">	// 内容为空的部分</span><br><span class="line">	var empty = /echo\(\&quot;\&quot;\);/g;</span><br><span class="line">	template = template.replace(empty, &apos;&apos;);</span><br><span class="line">	</span><br><span class="line">	// 这里借助了es6的语法$&#123;&#125;</span><br><span class="line">	var script = `(function parse(data) &#123;</span><br><span class="line">		var str = &apos;&apos;;</span><br><span class="line">		// 需要定义一个拼接函数</span><br><span class="line">		function echo(html) &#123;</span><br><span class="line">			str += html;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		$&#123;template&#125;</span><br><span class="line">		</span><br><span class="line">		return str;</span><br><span class="line">	&#125;)`;</span><br><span class="line">	return script;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文章：<a href="https://segmentfault.com/a/1190000010313795" target="_blank" rel="noopener">Web前端模板引擎の字符串模板</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/《月亮和六便士》/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/31/《月亮和六便士》/" itemprop="url">《月亮和六便士》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T21:26:38+08:00">
+                2018-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>《月亮和六便士》是英国作家毛姆所写，描述了一个平凡的伦敦证券经纪人思特里克兰德，突然对画画着魔，抛妻弃子，放弃了旁人看来优越美满的生活，奔赴南太平洋的塔希提岛，把生命的价值全部注入绚烂的画布的故事。</p>
+<h2 id="主要人物"><a href="#主要人物" class="headerlink" title="主要人物"></a>主要人物</h2><ul>
+<li>主人公思特里克兰德是伦敦的一个证券经纪人。大家对他印象是：不太爱说话，对文学艺术一点儿也不感兴趣，是一个忠厚老实、索然无味的普通人。他长得魁梧壮实，大手大脚，晚礼服穿在身上有些笨拙，给人的印象多少同一个装扮起来的参加宴会的马车夫差不多。他在夜校学习了一年的画画之后，抛妻弃子，到了巴黎去画画。当然，夜校老师包括其他人都觉得他并没有什么绘画天赋。在巴黎，他生活的穷困潦倒，画的画很少有人买，当然，他也很不情愿卖他的画。他似乎被某种力量控制了，像变了一个人，冷漠无情，说话尖酸刻薄，冷嘲热讽，从不给人留情面，幸灾乐祸，厚颜无耻，总让人觉得自己似乎很愚蠢。他一直说“我必须画画儿，由不得自己”。后来，由于一个船长，他到了塔希提岛，并与当地土著女子结婚，专心画画，一直到病死。也就是在塔希提岛，他创作出了伟大的作品。</li>
+<li>思特里克兰德太太，妻子面容和蔼可亲，端庄典雅，是一位能干的主妇和贤妻良母。虽然不美，但长得很讨人喜欢。可能为了满足内心的某种虚荣，喜欢结交各类文人名士。她对这些文人名士道德伦理上的奇行怪癖感到非常有趣，但是却一分钟也不想按照他们的方式调整自己的生活。小说对思特里克兰德太太的描写很多：<ul>
+<li>“除了她的声音很悦耳外，我没有发现她有什么特别的地方”</li>
+<li>“说话不多，但是她也有一种可爱的本领，能够引导大家的谈话总是围绕着一个共同的话题；一出现冷场，她总能说一句合适的话使谈话继续下去”</li>
+<li>“这一年37岁，身材略高，体态丰腴，但又不显得太胖。她生的并不美，但面庞很讨人喜欢，这可能主要归功于她那双棕色的、非常和蔼的眼睛。她的皮肤血色不太好，一头黑发梳理得非常精巧”。</li>
+<li>为什么思特里克兰德太太喜欢结交文人名士呢？小说是这样描述的：“她为自己创造了一个幻想的天地，生活于其中，感到日常生活所无无从享受到的自由。当她同作家结识以后，她有一种感觉，仿佛过去只能隔着脚灯瞭望的舞台，这回却亲身登上去了。她看着这些人粉墨登场，好像自己的生活也扩大了”</li>
+</ul>
+</li>
+<li>施特略夫，是小说另一个有意思的人物，是一个滑稽角色。他身材又矮又胖，一张滚圆的脸，面色红润，皮肤很白，两颊同嘴唇却总是红通通的，一双蓝眼睛也生得滚圆，戴着一副金边大眼镜，眉毛淡到看不出来。他是一个画家，但他的画很一般，色彩总是很艳丽，俗不可耐。虽然他不是一个高明的画家，但对艺术却有敏锐的鉴赏力，他对绘画、音乐和文学的鉴赏力非常有见地。他总是受人嘲弄挖苦，同行毫不掩饰对他作品的笔试。他很大方，非常重感情，非常善良，虽然被人的嘲弄让他觉得痛苦不堪，但却从不停止给人制造嘲弄的机会，也从来不肯怀恨人。他认为思特里克兰德是个天才，了不起的画家。</li>
+<li>勃朗什，是施特略夫的太太，有一个美丽的身段，她的这种体型对雕塑家比对服装商更有吸引力。她的一头棕色的浓发样式很简单，面色白净，五官秀丽，但并不美艳。她曾是一个罗马贵族的家庭教师，被男主人欺骗了爱情，身临绝境准备自尽时，遇到了好心的施特略夫，并结了婚。由于施特略夫的热心，使她认识了思特里克兰德，一开始她非常讨厌思特里克兰德，认为他没有礼貌，而且很害怕他，后来才认识到自己的内心想法， 她喜欢思特里克兰德，并决定离开她的丈夫，跟思特里克兰德走。但后来发现思特里克兰德并不能给她想象中的生活，非常绝望，喝酸自尽。</li>
+<li>爱塔，是塔希提岛的土著居民，她在鲜花旅店打工，并置办了一小块地产。她喜欢思特里克兰德，并在店长的帮助下，与思特里克兰德结婚，过着简单幸福的生活。</li>
+</ul>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h3><p>六便士是当时英国货币的最小单位。月亮代表高高在上的理想，六便士则是现实的代表。作者探讨了生活与艺术的矛盾和相互作用。小说所揭示的逃避现实的主题，与西方许多人的追求相吻合。</p>
+<h3 id="艺术特色"><a href="#艺术特色" class="headerlink" title="艺术特色"></a>艺术特色</h3><ul>
+<li>观念性：小说表面上是讲描写了主人公的命运和遭遇，实际上表达了自己对艺术与生活关系的思考。艺术的本质究竟是什么？如何处理艺术和经验的关系？传统表达手段是否可靠？驾驭现代思维的崭新形式？在经历了挫折后，主人公终于明白，艺术是具有极大的自主性独立性的东西，变换不同的叙述角度，就会得到不同的结局。现实生活是真实丑陋残酷无情的，因此表面上优美高雅的艺术只是对现实的粉饰，艺术的本质是虚假的。在小说中，主人公还表现出对传统艺术手段的不信任感，这种感觉使他在画画时困难重重，不得不寻找新的适合自己表达的新途径。</li>
+<li>人物的虚化：它的人物既不注重鲜明的个性化特征，也不是某种类型人物的代表，而往往是一种情欲一种精神的象征，人物形象模糊不清，像水墨画上远山背景一样做了虚化处理，给人一种捉摸不定感，读者需要根据作者布置的悬念、暗示、细节、启发或者某种总体氛围去猜测推断，才能逐渐发现隐含在人物背后的象征意义。这在主人公身上突出体现出来。他的行为总是具有不循常规的神秘性，不胜预防的突兀性。他在言语上沉默寡言，说起话来总是半吞半吐欲言又止，或者短小零碎；或者干脆躲开同读者的正面接触，或者通过别的见证人旁敲侧击的侧面暗示。这种表现一方面展示了他对语言的不信任感，语言已经无法表现自己对事物真实意义的探索，所以他在表达时不得不寻找能准确达意的词语，从而犹豫不决。另一方面，他的行为也显示了对暴露真实自我的恐惧和忧虑。最后干脆逃到了思特里克兰德，想以此掩饰真实的自我。主人公的这两种情况，无论是对言语的极度不信任感，还是对袒露自我的恐惧都显示出了很强的现代意味。</li>
+<li></li>
+</ul>
+<h3 id="我的感受"><a href="#我的感受" class="headerlink" title="我的感受"></a>我的感受</h3><p>读完这本书感觉作者深谙人性。比如在思特里克兰德太太说起思特里克兰德的时候：</p>
+<blockquote>
+<p>“你知道，他一点儿也没有文学修养”，她说， “他是个十足的小市民”。她用这个词一点儿也没有贬抑的意思，相反地，倒是怀着一股深情，好像由她自己说出他最大的缺点就可以保护他不受她的朋友们的挖苦似的。</p>
+</blockquote>
+<p>这就写出了我们平时自嘲的心理状态，哈哈哈。</p>
+<p>再比如，有一段描述思特里克兰德的话：</p>
+<blockquote>
+<p>他只不过是一个忠厚老实、索然无味的普通人。一个人可以钦佩他的为人，却不愿意同他待在一起。他是一个毫不引起人注意的人。他可能是一个令人起敬的社会成员，一个诚实的经纪人，一个恪尽职责的丈夫和父亲，但是在他身上你没有必要浪费时间。</p>
+</blockquote>
+<p>我对这段话会感到共鸣，因为我觉得这似乎也是对我自己的一个描述（可能很多人都有这样的想法吧）。我觉得自己就是一个没有存在感的人，让人不会想花时间在自己身上。我一直想改变这种状态，我尽量充实自己，尽量去接触各种东西，以为懂得多一些，就会与别人有更多的共同语言，就会让人觉得我懂得很多，让人越来越觉得我很重要。哈哈哈~当然这几句与小说无关，只是把自己的一些心里想法写出来而已。</p>
+<h3 id="语录"><a href="#语录" class="headerlink" title="语录"></a>语录</h3><ul>
+<li><p>人们满不在乎地谈论美，由于他们说话并不经过深思熟虑，所以美这个词被用的太过泛滥，已经失去了原有的力量。许许多多微不足道的东西都冠以它的名义，于是它所代表的东西变得不再崇高。人们用美来形容裙子、小狗和布道，当遇到真正的美时，他们却又认不出来。人们试图用这种本末倒置来装饰他们毫无价值的思想，结果反而钝化了他们对美的感受力。</p>
+</li>
+<li><p>卑鄙与伟大、恶毒与善良、仇恨与热爱是可以互不排斥地并存在同一颗心里的</p>
+</li>
+<li>魔鬼要干坏事总可以印证《圣经》</li>
+<li>这世上有的是怪人怪事，也许大溪地居民更能理解，大多数人所成为的，并非是他们想成为的人，而是不得不成为的人。</li>
+<li>同情体贴是一种很难得的本领，但是却常常被那些知道自己有这种本领的人滥用了</li>
+<li>我觉得有些人就是生错了地方。造化弄人，他们被抛到某处，却惦念着一个隐约朦胧的故乡。出生地则是异乡，从小熟悉的绿荫小巷、曾经玩耍的拥挤闹市，都只是沿途风景。他们在亲友中也许一辈子都落落寡合，对自己唯一熟悉的环境淡然疏离。也许正是这种陌生感促使他跑遍千山万水寻觅自己永恒的归宿。也许有某种根深蒂固的返祖欲，促使迷途者返回祖先在鸿蒙初辟时离开的故土。有时一个人偶然来到某地，会有莫名其妙的归属感。这就是他寻找的家园，他将融入自己从未见过的环境，与从未谋面的人相伴，似乎生来就和这一切相熟，在这里他终得安歇。</li>
+<li>这正是小说的虚幻所在。对男人来说，爱情往往不过是日常生活纷纷事务中的一个片段，小说却把爱情推崇到根本不现实的重要地位。少数男人会拿爱情当人生头等大事，但这种人没什么意思，就连爱情至上的女人也会轻视他们，被他们追求的女人，固然受了奉承兴奋激动，心里却不怎么舒服，觉得他们没出息。</li>
+<li>也许，要品味生活的浪漫，你得有点儿演员精神，必须像个旁观者，对自己的所作所为既超然事外又忘我投入</li>
+<li>钟爱神话是人类天性。大家贪婪地抓住杰出人物生活中令人诧异或迷惑的事，捏造出自己深信不疑的传说。这是浪漫情调对平庸现实的抗议，传奇故事是人物步入永恒殿堂的最佳武器。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/当我们在谈论前端架构时，我们到底在谈论什么/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/13/当我们在谈论前端架构时，我们到底在谈论什么/" itemprop="url">当我们在谈论前端架构时，我们到底在谈论什么（转）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-13T14:24:20+08:00">
+                2018-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="架构到底是什么？前端架构又是什么？"><a href="#架构到底是什么？前端架构又是什么？" class="headerlink" title="架构到底是什么？前端架构又是什么？"></a>架构到底是什么？前端架构又是什么？</h2><p>我们先看维基百科对软件架构的定义。  </p>
+<blockquote>
+<p>软件架构是一个系统的草图。软件架构描述的对象是直接构成系统的抽象组件。<br>各个组件之间的连接则明确和相对细致地描述组件之间的通讯。在实现阶段，这些抽象组件被细化为实际的组件，比如具体某个类或者对象。<br>在面向对象领域中，组件之间的连接通常用接口来实现。  </p>
+</blockquote>
+<p>传统架构的离家近和前端架构的理解略有不同，这个稍后讨论，我们先看看传统意义上对于软件架构的定义。</p>
+<p>这两句话里可以总结出几个核心名词出来，抽象、解耦、组合，而架构的实际工作，其实就是对这些架构方法和实际场景的梳理把握。</p>
+<p>传统意义上的架构师，在实际项目层面，高级些的负责整个系统的整体分解服务分层设计等，而低级的架构师，则负责其中某些模块的系统分析。在项目产出上看，分别是架构图和系统分析图。</p>
+<p>架构图体现的是整个大型服务包含的模块，及其运行关系。而系统分析，则是每个服务内部的具体逻辑以及与外部服务接驳的方式。</p>
+<p>软件工程师在拿到这些分析之后，就可以用框架将其按照架构师的逻辑来实现，这种工作方式，可以保证大型软件的系统合理解耦，并且可以合理实现。</p>
+<p>而对于软件工程师这一环来说，他们无需关心整个系统是如何运行的，只需要按照系统分析来实现自己部分的逻辑，将大型软件工程化。</p>
+<p><b>这里就引申出了前端架构的重点。</b></p>
+<p>其实，前端在整个软件工程中扮演的只是其中的一部分，它的定位较为特殊，不是独立的子系统，却又跨域于整个系统之间，而且最重要的特点是它的内部极为分散。</p>
+<p>这就造就了我们无法用传统的软件架构来定义“前端架构”这个词汇。实际上，通常所说的前端架构在整体软件工程中扮演的是架构之下，代码之上的一个层面，它关注的不是整个系统的解耦和组合，而是横向的面的开展效率和一致性。（这里排除了非常复杂的SPA应用的场景）</p>
+<p>很多前端同学其实对于“架构”这个词非常的困惑，我觉得没有必要去斟字酌句，非要将它做成一个固定的职位或者职责。</p>
+<p>在项目层面，甚至某个页面层面，遇到复杂的交互和数据逻辑，你做一个抽象，你抽离组件，你设计组件的参数和内部状态，这些是不是架构？当然是！它是一个微小系统的内部架构。</p>
+<p>前端是一个和服务端工程完全悖论的领域，服务端可能从整体来看就是一整个系统，然后抽象，然后分层，最后组合，到了细化的软件层面的时候，就是一些固定的组合逻辑。</p>
+<p>而对于前端来说，没有整体的概念，一个公司的前端，必然是分散于各个业务各个系统之间的，虽然这些业务系统最后可能也是一个整体。</p>
+<p>但是对于前端来说，他们就是分散的，反而在每个前端系统内部，又有一套软件工程的思想，像我刚才说的，针对一个页面进行解耦抽象组合。</p>
+<p><b>所以，我们总结前端架构的第一层含义：某个系统内部的逻辑抽象和组合。</b></p>
+<p>我们继续观察前端系统的特点，前面也提到了，前端的系统是分散的，这个分散不光是最终实现上的分散，甚至连刚才提到的抽象组合也是分散的，甚至在团队上也是分散的，这样分散的局面，如何变得可控而让整个前端开发变成一个工程式的工作？这就引申出了前端届最重要的一个词汇：工程化。</p>
+<p><b>实际上，这就是我们要的总结的前端架构第二层含义：中立于各个系统又植根于各个系统中的前端工程化。</b></p>
+<p><b>工程化的核心关注点是什么？可控，效率！</b></p>
+<p>事实上，接下来讲的一切都是围绕这两点，由【可控】，我们分化出<b>开发框架</b>、<b>开发规范</b>，甚至是<strong>脚手架</strong>的一些开发约束，还有诸多<strong>开发流程</strong>和<strong>开发工具</strong>的保障，诸如<strong>Review机制</strong>和<strong>Eslint检查</strong>、<strong>线上错误报警</strong>等。</p>
+<p>由【效率】，我们分化出<strong>组件库</strong>复用跨业务的组件，<strong>脚手架</strong>将整个流程封装进几个固定的命令，<strong>mock</strong>系统快速模拟数据等。</p>
+<h2 id="架构师的工作方式和职责"><a href="#架构师的工作方式和职责" class="headerlink" title="架构师的工作方式和职责"></a>架构师的工作方式和职责</h2><p>针对上述对架构的定义，我们来看看具体在日常中如何开展架构工作。通常，对于一个成熟的前端团队来说，建立一个专门的架构师小组来说是一个比较合理的结构。</p>
+<p>这个小组可以是虚拟的，也可以是专门的脱离于项目之外的，特别是业务开发较多时其实工程化需要做的事情还是很多的。</p>
+<p>再聊聊架构师的工作方式，首先要抛弃传统的工作思想，之前在业务团队的时候，很多事情都是有专门的人来安排（诸如PM、PD），然后一些技术上的事情则往往草草产出，在成立架构组织后这两个方面都会发生很大的变化。</p>
+<ol>
+<li>脱离于业务之外后，对自我规划、自我任务和时间管理的要求变高了，要有非常强的自我管理意识。</li>
+<li>技术的产出要有严格的流程，因为你产出的是通用方案，要保证技术方案的质量，这时候需要有一套流程，从发现问题到调研到初步方案到评审确认可行性到详细架构系统分析到开始编码到推广到文档。</li>
+<li>之前一整个项目组一起做的流程，现在可能都落到了你头上，看似繁琐但是却是毕业的，因为你是一个专业的架构师。</li>
+</ol>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/%E6%9E%B6%E6%9E%84%E6%B5%81%E7%A8%8B.webp?raw=true" alt="架构流程"></p>
+<p>这里我特别想强调下这种思维的转换，程序员通常比较厌恶这种流程上的事情，喜欢自己捣鼓研究敲代码，殊不知其实对于程序员来说最简单的事情其实就是敲代码，如果你一直想敲代码不想做设计/规划/推广，那绝对是在精神换上偷懒。</p>
+<p>而有挑战的事情是什么呢？是设计，设计数据结构，设计组件，设计解决方案。更有挑战的则是将这些设计做完美，做通用，并落地。</p>
+<p>所以，做架构绝非只是一直在做有意思的事情，底层的调研，代码的实现只是其中一部分，一个很重要的自我衡量的标准就是工作时间中最多只有20%是在写代码，而且越少越好，正如上面所说，你的工作是设计落地完善的通用方案，解决特定的问题，而不是玩新技术给团队挖坑。</p>
+<p>转换了工作角色之后，我们再来聊聊架构的职责。</p>
+<ol>
+<li>宏观上，把控整个团队的技术选型和技术栈，技术发展方向。这看似是一次性的工作，但是却是需要持续优化的。例如推动整个公司向Vue或者React转换，推进ReactNative的实施，需要架构师对这些技术栈有深入的了解，能够正确的权衡选型，评估风险，并且给出切实可落地的方案。</li>
+<li><p>各个技术栈的技术体系。业务开发的技术体系，包含脚手架，开发框架，开发规范，组件库，配套工具等。</p>
+<ul>
+<li><p>细说起来其实是个挺庞大的事情，每一部分都可以展开成一个话题。例如脚手架，其实是在管理规范或者简化一个业务项目从创建到开发到调试到测试到发布的整个过程（通常会做诸多定制）</p>
+</li>
+<li><p>例如开发框架，抛开底层的mvvm框架，上层需要做封装，将一些难以理解的概念或者写法繁琐的东西封装起来，同时糅合一些强制的开发规范，还有就是通过框架层规避开发中可能会出问题的风险点（例如数据类型转换之类）</p>
+</li>
+<li><p>这里提到的每个点可能都是个大工程，而且可能会有好几套体系，例如Vue体系，React native体系。</p>
+</li>
+<li><p>其中有些体系甚至要做到让不是前端的开发去写前端，稍后我会介绍。其封装、规范、工具需要做到简单强大的程度可想而知。</p>
+</li>
+</ul>
+</li>
+<li><p>统一环境管理，开发发布流程制定等。制定公司统一的前端开发方式/流程，中间可能会需要一些工具来提高开发效率，推进这些工具如何融入流程被大家接受等。</p>
+<ul>
+<li><p>还有前端开发需要的测试、预发、线上环境资源管理的方式、权限等。</p>
+</li>
+<li><p>但是业务开发需要做的事情可能就一两步而且非常简单，这种维护方式转化成最终集成结果，把复杂的方案包装成极简的使用方式，这也是架构的重要职责之一。</p>
+</li>
+</ul>
+</li>
+<li><p>提供特殊解决方案，例如服务端渲染，可能原理不难，但是需要有专人将其构建成低入侵、高性能、高可靠、统一的服务集群，业务可以非常低成本的接入，并且不需要关心起运维、可用性、性能问题。</p>
+<ul>
+<li>其他例如 数据统计大点、跨端调用等，都需要做一些统一的封装处理，让业务方方便使用。</li>
+</ul>
+</li>
+<li><p>提供一些特殊的工具和系统，例如性能收集，错误收集，mock系统，在线调试，可视化编辑，短链管理等。</p>
+</li>
+<li>提供业务中除了UI组件之外公用的部分业务，独立维护，我们称之为业务SDK，例如跟金融相关的钱包业务，数据业务，聊天业务，全景业务，都会作为独立的业务系统服务于其他业务。</li>
+</ol>
+<p>转自<a href="https://juejin.im/entry/59800fe651882537d00e0179" target="_blank" rel="noopener">https://juejin.im/entry/59800fe651882537d00e0179</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/11/前端简史/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/11/前端简史/" itemprop="url">前端简史（转）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-11T20:17:06+08:00">
+                2018-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前端从无到有，经历了什么？</p>
+<p>1995年5月，布兰登·艾奇(Brendan Eich，javascript之父)花了10天时间写了第一版javascript。从这时候开始，web开发诞生，为后来前后端的职位细分，奠定了基础。</p>
+<p>正像人类发展史一样，前端开发的历史也经历了几个阶段，回顾整个阶段，我们可以看到前端开发的历史是随着浏览器及相关的javascript api的完善逐渐变化的，10年前，我们关注切图，布局，10年后我们关注移动端体验，多端打通。正式介绍这几个阶段之前，我们先来简单回顾一下第一版js诞生到现在，那些重要的历史时刻：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1994年12月，Netscape公司发布了Navigator 1.0版，市场份额一举超过90%。</span><br><span class="line">1995年12月4日，Netscape公司与Sun公司联合发布了Javascript语言</span><br><span class="line">1996年3月，Navigator 2.0浏览器正式内置了Javascript脚本语言</span><br><span class="line">1996年11月，Netscape公司决定将Javascript提交给国际标准化组织ECMA</span><br><span class="line">1997年7月，ECMA组织发布263号标准文件（ECMA-262）的第一版，规定了浏览器脚本语言的标准，并将这种语言称为ECMAScript。这个版本就是ECMAScript 1.0版</span><br><span class="line">2011年6月，ECMAScript 5.1版发布，并且成为ISO国际标准</span><br><span class="line">2015年6月，ECMAScript 6正式发布，并且更名为ECMAScript 2015</span><br></pre></td></tr></table></figure>
+<p>周边生态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1996年，样式表标准CSS第一版发布</span><br><span class="line">2001年，微软公司时隔5年之后，发布了IE浏览器的下一个版本IE 6，这是当时最先进的浏览器</span><br><span class="line">2002年，Mozilla项目发布了它的浏览器的第一版，后来起名为Firefox</span><br><span class="line">2003年，苹果公司发布了Safari浏览器的第一版</span><br><span class="line">2004年，Google公司发布了Gmail，促成了互联网应用程序（Web Application）这个概念的诞生。</span><br><span class="line">2004年，WHATWG组织成立，致力于加速HTML语言的标准化进程</span><br><span class="line">2005年，Ajax方法正式诞生，Jess James Garrett发明了这个词汇。它开始流行的标志是，2月份发布的Google Maps项目大量采用该方法。它几乎成了新一代网站的标准做法，促成了web 2.0时代的来临。</span><br><span class="line">2006年，jQuery函数库诞生，作者为John Resig。</span><br><span class="line">2008年，V8编译器诞生</span><br><span class="line">2009年，Node.js项目诞生，创始人为Ryan Dahl，它标志着Javascript可以用于服务器端编程，从此网站的前端和后端可以使用同一种语言开发。</span><br><span class="line">2013年5月，Facebook发布UI框架库React，引入了新的JSX语法，使得UI层可以用组件开发</span><br><span class="line">2015年3月，Facebook发布了React Native项目，将React框架移植到了手机端</span><br><span class="line">2015年vuejs发布1.0版本</span><br><span class="line">2016年vuejs2.x版本发布</span><br></pre></td></tr></table></figure>
+<p>有些历史时刻，是对前端开发产生了深远影响的，比如ie6的发布，jQuery的发布，ajax的流行，知历史，我们可以预判到前端的未来发展方向。，知历史，我们可以打通知识体系，尤其是资历尚浅的前端同学。</p>
+<p>下面正式介绍前端开发的几个阶段：</p>
+<h2 id="天地初开"><a href="#天地初开" class="headerlink" title="天地初开"></a>天地初开</h2><p>中国历史，传说中是始于盘古开天辟地，前端的历史始于javascript的诞生，网景公司在发布0.9版本的Navigator浏览器后，立马发现一个问题：Navigator只能浏览页面，浏览器无法与用户互动。比如你登录一个网站输入完用户名点击提交的时候，浏览器并不知道你是否输入了，也无法判断。只能传给服务器去判断。网景公司急于解决浏览器与用户交互这个问题，当时解决这个问题有两个办法，一个是采用现有语言，比如Perl、Python、Tcl、Scheme等，允许他们直接嵌入网页。另一个是发明一种全新的语言。此时，刚入职的34岁的系统程序员Brendan Eich登场了，Brendan Eich的主要方向和兴趣是函数式编程，网景公司招聘他的目的，是研究将Scheme语言作为网页脚本语言的可能性。然鹅，1995年5月，也就是Brendan Eich入职一个后，网景公司做出决策，未来的网页脚本语言必须“看上去与java足够相似”，但是比java简单，使得非专业的网页作者也能很快上手。这个决策实际上将Perl、Python、Tcl、Scheme等非面向对象的语言都排除在外了。Brendan Eich被指定为这种“简化版Java语言”的设计师。但是，他对java一点儿兴趣也没有，为了应付公司安排的任务，他只用了10天时间就把javascript设计出来了…</p>
+<p>总的来说，他的设计思路是这样的：</p>
+<p>（1）借鉴C语言的基本语法<br>（2）借鉴java语言的数据类型和内存管理<br>（3）借鉴Scheme语言，将函数提升到“第一等公民”（first class）的地位<br>（4）借鉴Self语言，使用基于原型（prototype）的继承机制</p>
+<p>所以，javascript实际上是两种语言风格的混合产物—-（简化的）函数式编程+（简化的）面向对象编程。这是由Brendan Eich（函数式编程）和网景公司（面向对象编程）共同决定的。</p>
+<p>由于设计时间太短，语言的一些细节考虑得不够严谨，导致后来很长一段时间，javascript写出来的程序混乱不堪。</p>
+<blockquote>
+<p>the part that is good is not original, and the part that is original is not good. (它的优秀之 处并非原创，它的原创之处并不优秀。)[十八世纪英国文学家约翰逊博士]</p>
+</blockquote>
+<p>不管怎样，javascript诞生了，它的设计之初很简单，就是为了解决浏览器上表单提交的人机交互，而作为一种脚本语言，它天生的设计缺陷为后来的大型应用程序开发，留下了隐患。</p>
+<h2 id="石器时代"><a href="#石器时代" class="headerlink" title="石器时代"></a>石器时代</h2><p>大约2007年，前端处在基于table（表格）布局的时代。<br>哪个时候没有前后端之分，web工程师真的是“全栈”，写的了后端，套的了表格，查的了数据库，写的了js，js主要承载的作用是网页特效（对，如果有前端的话，其实也是写点特效）。</p>
+<p>js写的代码，一般以内联方式放在页面的任何地方，就像一块一块的补丁，看了让人难受，不过还好，这个阶段很快就结束了。（也许很多很烂的政府网站还在用table布局也说不定）</p>
+<h2 id="铜器时代"><a href="#铜器时代" class="headerlink" title="铜器时代"></a>铜器时代</h2><blockquote>
+<p>2001年发布的ie6当时是世界上最先进的浏览器<br>2004年2月9日，Mozilla Firebird改称为“Mozilla Firefox”，简称“Firefox”<br>在2006年年尾，微软发布了rebranded代号的IE7<br>在2008年3月6日，微软发布了IE8的第一个公开测试版本<br>2008年9月2日，Chrome beta测试版本发布</p>
+</blockquote>
+<p>铜器时代，是令人悲伤的一个阶段，因为这个阶段终于有前端开发工程师这个职位了，但是主要工作居然是处理浏览器兼容性问题，上面是那个时代的浏览器情况，虽然ie6在2001年就发布了，但是它持续的时间太长，2012年貌似淘宝才不兼容ie6，大部分的时间，前端同学要兼容ie6、ie7、ie8、ie9、FF、chrome、safari…</p>
+<p>大部分的css代码里会有这样熟悉的hack存在：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.hack&#123;  </span><br><span class="line">    background-color:red; /* All browsers */  </span><br><span class="line">    background-color:blue !important;/* All browsers but IE6 */  </span><br><span class="line">    *background-color:black; /* IE6, IE7 */  </span><br><span class="line">    +background-color:yellow;/* IE6, IE7*/  </span><br><span class="line">    background-color:gray\9; /* IE6, IE7, IE8, IE9, IE10 */  </span><br><span class="line">    background-color:purple\0; /* IE8, IE9, IE10 */  </span><br><span class="line">    background-color:orange\9\0;/*IE9, IE10*/  </span><br><span class="line">    _background-color:green; /* Only works in IE6 */  </span><br><span class="line">    *+background-color:pink; /*  WARNING: Only works in IE7 ? Is it right? */  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那个时候的js代码已经不再内联在页面代码里，转而以文件的方式引入，类似这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=“../your/code/a.js”&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=“../your/code/b.js”&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=“../your/code/c.js”&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=“../your/code/d.js”&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>但是，模块化，依旧毫无头绪，就像上边的代码，如果功能复杂的模块，维护起来难度较大，打包工具基本是借助别人家的ant或者YUI Compressor，前端工程师这个阶段的职责已经开始开发复杂的应用，另外值得注意的是后端MVC的架构开发模式逐渐成熟。</p>
+<p>前端的架构模式呢？不知道在哪里。</p>
+<h2 id="铁器时代"><a href="#铁器时代" class="headerlink" title="铁器时代"></a>铁器时代</h2><p>2006年，Jquery诞生了，时至今日，jquery之所以这么成功，就是处理了大量的浏览器兼容性问题！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&apos;J_Hook&apos;).html(&apos;haha&apos;);</span><br></pre></td></tr></table></figure>
+<p>这样的代码让人重拾对web开发的乐趣，jquery诞生后，各种基于jquery的组件铺天盖地而来，随着html5+css3的支持程度的加强，好日子终于来了。2010年，随着模块加载器（LABjs、RequireJS、SeaJS）的涌现，前端开发的生产效率大幅提高，前端真正可以去关注业务本身，而不用投入太多精力去处理兼容，处理模块关系了，前端的代码可能类似这样了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=“js/jquery.min.js”&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;js/require.js&quot; data-main=&quot;js/main&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>随着2004年ajax技术的出现，异步加载/按需加载盛行起来，我亲身经历了2010~2014年淘宝瀑布流布局的兴起，那时候的前端的代码可能是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!—— your dom element ——&gt;</span><br><span class="line">&lt;div class=‘J_RenderCont’&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!—— your javascript source ——&gt;</span><br><span class="line">&lt;script src=“js/jquery.min.js”&gt;&lt;/script&gt;</span><br><span class="line">&lt;script s</span><br><span class="line"></span><br><span class="line">rc=&quot;js/require.js&quot; data-main=&quot;js/main&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>vm中很少的html代码作为钩子，大部分内容使用js异步渲染的方式在今天的大部分网站非常常见，并将持续很久。</p>
+<h2 id="蒸汽时代"><a href="#蒸汽时代" class="headerlink" title="蒸汽时代"></a>蒸汽时代</h2><p>终于来到了蒸汽时代，生产效率成数量级似的快速增长，这个时代有两件事，特别有历史意义：  </p>
+<blockquote>
+<p>2009年5月，Ryan Dahl在Github上发布了最初版本的部分Node.js包<br>2010年6月8日凌晨1点，史蒂夫·乔布斯在美国Moscone West会展中心举行的苹果全球开发者大会（WWDC 2010）上发布了苹果第四代手机iPhone4</p>
+</blockquote>
+<p>第一件事，对于前端的意义是前端同学可以一个人搞定全栈开发了；<br>第二件事，对于前端的意义是前端同学可以开发在手机上访问的应用了；<br>前端迎来了一个逆天的时代，一个最美好的时代，一个基于Nodejs开发的时代  </p>
+<blockquote>
+<p>Nodejs是一个能够在服务器端运行js的开放源代码，跨平台js运行环境<br>与js语法相同，只是少了浏览器相关的环境（DOM、BOM之类）<br>核心模块包括文件系统I/O、网络（HTTP、TCP、UDP、DNS、TLS/SSL等）、二进制数据流、加密算法、数据流等等</p>
+</blockquote>
+<p>那么nodejs都能做什么呢？  </p>
+<blockquote>
+<ol>
+<li>web框架：express koa</li>
+<li>im及时聊天：socket.io</li>
+<li>api包装：移动端、pc、h5</li>
+<li>http proxy（淘宝首页）/ http proxy延伸，组装rpc服务，作为微服务的一部分</li>
+<li>前端构建工具：grunt/gulp/bower/webpack/fis3</li>
+<li>OS: nodeOS</li>
+<li>跨平台打包工具：nw.js、electron、cordova/phonegap</li>
+<li>编辑器：atom、vscode</li>
+</ol>
+</blockquote>
+<p>哦，为了给其他端工程师留点面子，就不再列举下去了，你只需要知道阿特伍德定律就可以了：  </p>
+<blockquote>
+<p>any application that can be written in JavaScript, will eventually be written in JavaScript</p>
+</blockquote>
+<p>nodejs给前端带来了空前强大的利好，智能手机却给前端带来了前端未有的跳转：  </p>
+<blockquote>
+<ol>
+<li>面向多终端的开发（pc端、移动端）</li>
+<li>很多新概念产生：响应式设计、多端适配</li>
+<li>移动端js框架（库）： zepto、jquery-mobile、kimi、vue、react</li>
+<li>性能调优：首屏渲染、懒加载、webp、300ms延迟、css3、canvas动画</li>
+</ol>
+</blockquote>
+<p>相比于pc端，手机端的硬件网络都受限，前端只能继续挖掘自身的经验并等待着手机硬件的加强（好消息是到17年，智能手机的硬件和依赖的网络情况越来越好）。<br>是选择native还是hybrid？no，我们有weex和react-native，磨平三端的差异已经是必然趋势，说不定未来的某一天，js已经可以直接搞定三端开发，调用系统硬件，处理流畅的动画和人机交互。<br>说道这里，其实前端开发简史2017年之前的部分已经结束了，但是作为前端的一份子，我们可以大胆的憧憬一下下一个时代——基于js的生态时代。</p>
+<h2 id="基于js的生态时代"><a href="#基于js的生态时代" class="headerlink" title="基于js的生态时代"></a>基于js的生态时代</h2><p>这个时代的典型特点是：js已经不再单纯的承担页面脚本的职责，他可以构建复杂的企业应用。<br>各种细分领域，层出不穷，原来想也不敢想的事情，今天都可以用js去做，前端的未来10年将会是多彩纷呈的繁荣景象，现在已经有的领域： </p>
+<p>web框架：<br>vue.js<br>react<br>angularjs</p>
+<p>数据可视化：<br>D3.js<br>Echarts<br>hichcharts  </p>
+<p>移动端打通：<br>weex<br>react native</p>
+<p>桌面软件：<br>electron<br>nw.js</p>
+<p>游戏：<br>cocos2d-x</p>
+<p>VR/AR：<br>aframe<br>three.js<br>react-vr</p>
+<p>企业应用：<br>express<br>koa<br>egg.js</p>
+<p>硬件/互联网：<br>Ruff</p>
+<p>操作系统：<br>os-js</p>
+<h3 id="感谢作者https-zhuanlan-zhihu-com-p-29924966"><a href="#感谢作者https-zhuanlan-zhihu-com-p-29924966" class="headerlink" title="感谢作者https://zhuanlan.zhihu.com/p/29924966"></a>感谢作者<a href="https://zhuanlan.zhihu.com/p/29924966" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29924966</a></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/15/Object-assign/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -750,928 +1755,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks与VPN区别/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/shadowsocks与VPN区别/" itemprop="url">shadowsocks与VPN区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:19:52+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="vpn"><a href="#vpn" class="headerlink" title="vpn"></a>vpn</h1><p>vpn(virtual private network, 虚拟私人网络), 是一种加密通讯技术。</p>
-<p>vpn是一种统称，出现远早于GFW，所以它不是为翻墙而生的，它的目的是数据传输安全和网络匿名。</p>
-<p>既然不是为翻墙而生的，那从翻墙的角度而言，vpn就存在诸多问题，最严重的一个就是流量特征过于明显，GFW目前已经能识别绝大部分的VPN，所以VPN得翻墙方式基本已经废了。</p>
-<p>接入VPN就是接入了一个专有网络，你访问网络的所有流量都通过这个专有网络的出口出去，同时你的IP地址也变成了这个VPN分配的IP地址。</p>
-<h1 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h1><p>是一种socks5的代理，而socks5的代理服务器则通过一个加密通道，将你的请求发给代理服务器，代理服务器将请求转发到目的地。</p>
-<p>你没有加入任何新的网络，只是http/socks数据经过代理服务器的转发送出，并从代理服务器接收响应。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks搭建/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/shadowsocks搭建/" itemprop="url">shadowsocks搭建</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T12:56:23+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>上一篇文章讲了一下shadowsocks翻墙原理（<a href="https://xixizhangfe.github.io/2018/09/16/shadowsocks%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener">shadowsocks翻墙原理</a>）,这里要理论与实践结合了。开始~</p>
-<p>这里我定义一些规则，避免混淆:</p>
-<ul>
-<li>VPS = 你在搬瓦工购买的机器</li>
-<li>ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port</li>
-<li>ss服务IP = VPS的IP = 执行shadowsocks.sh打印出的Your Server IP</li>
-<li>ss服务IP != shadowsocks.json里的server</li>
-<li>加密方式 = 执行shadowsocks.sh打印出的Your Encryption Method = shadowsocks.json里的method</li>
-<li>ssserver = 你在VPS上启动的shadowsocks服务 = shadowsocks服务端</li>
-<li>sslocal = 你在自己的电脑上安装的shadowsocks客户端 = shadowsocks客户端</li>
-<li>ssserver密码 = 执行shadowsocks.sh打印出的password = shadowsocks.json里的password</li>
-</ul>
-<p>文章里可能出现各种叫法，是为了适应不同的语境，不理解的话可以按照上述规则查看。</p>
-<h1 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h1><p>我是在<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>购买的，当然这是师兄推荐的，否则以我的性格又得纠结死在哪儿买…哈哈哈</p>
-<p>我买的是19.9$/年，512M，应该足够用了（嗯，其实就是看这个最便宜 嘿嘿）</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true" alt="搬瓦工套餐选择"></p>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>购买以后呢，就可以在<a href="https://www.bwh1.net/clientarea.php" target="_blank" rel="noopener">我的账户</a>里，点击Services-My service，就能看到了。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-2?raw=true" alt="购买详情"></p>
-<p>然后点击右边的KiwiVM Control Panel进入管理界面。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-3.png?raw=true" alt="管理界面"></p>
-<p>在Main control里可以看到相关配置信息</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-2.png?raw=true" alt="main control"></p>
-<p>然后你可以选择重装系统，也可以使用默认的。我是重新安装了，如果要重新安装，需要先在Main controls里点击stop进行关机，然后点右侧Install new OS,选择右边的操作系统(我选择的是centos-7-x86_64)，然后点击同意，最后点击reload。大概等个1-2分钟，就好了。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-1.png?raw=true" alt="reload"></p>
-<p>Reload后会给一个随机的root用户密码，以及随机端口号。然后点击Main controls，就可以看到你的VPS的IP地址(IP address)和端口号（SSH Port）了，这个是会用到的。（注意：这个端口号只有在登录的时候才会用到，后面配置shadowsocks的时候都不会用到。不要和shadowsocks服务的端口混淆。）</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-3.png?raw=true" alt="reload port"></p>
-<p>稍后，就可以进入虚拟机了，用自带的工具，或者其他ssh工具即可。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-4.png?raw=true" alt="command"></p>
-<p>我觉得自带的不好用，用的是ssh,即在本地终端，用ssh连接：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 分配的端口号(就是上面说的SSH Port)   VPS的IP地址</span><br></pre></td></tr></table></figure>
-<p>然后命令行会提示你输入密码，密码要是不知道，可以通过点击Root password modification，随机产生新的密码。</p>
-<p>输入后，就可以进入登录到你的VPS操作了。</p>
-<h1 id="安装shadowsocks-server端"><a href="#安装shadowsocks-server端" class="headerlink" title="安装shadowsocks server端"></a>安装shadowsocks server端</h1><p>这一步安装的就是上一篇文章中的ss server。</p>
-<p>此处可以利用一个共享的python一键安装脚本。用root用户执行下面的语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget</span><br><span class="line">wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>成功后，就会打出日志，最后几行就是ss server的信息。在后面配置ss local的时候都会用到。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-1.png?raw=true" alt="打印的信息"></p>
-<p>其中，Your password(密码)、Your Encryption Method(加密方式)是那个一键安装脚本里写的默认值，你可以修改那个脚本。密码可以不用改，Your Encryption Method这个是必须要改的，因为脚本默认的是aes-256-gcm，但是后面我们配置ss local时是没有这个选项的，所以我改成了aes-256-cfb。更改的方式也很简单，就是打开/etc/shadowsocks.sh这个脚本，然后找到下图里的内容，应该就在脚本的前面，然后把aes-256-cfb放到第一个（注意：本来aes-256-cfb本来不是在第一个的，第一个是aes-256-gcm，图中是我修改后的）。</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-2.png?raw=true" alt="sh脚本"></p>
-<p>改完后，重新执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>执行完毕后，打印出来的信息就是你刚才修改的。</p>
-<p>这只是修改密码和加密方式的一种方式。你还可以通过/etc/shadowsocks.json来修改。这种方式更简单明了，推荐推荐推荐！！！  </p>
-<p>如果你已经通过上面那个脚本修改了，打开这个文件，就会看到port、password、method和刚才修改后打印出的日志是一样的，但server不一样，是0.0.0.0（表示可以接收任意IP的请求），因此注意这个server不需要修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;port&quot;:&quot;xxxx&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;teddysun.com&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果你想修改port、password、method，就可以改这个文件。然后执行命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks restart</span><br></pre></td></tr></table></figure>
-<p>以后你想修改port、password、method，都可以只修改这个shadowsocks.json文件，然后重启一下shadowsocks就可以了。</p>
-<p>到此，你的ss server就配置成功了。</p>
-<p>当然，如果不放心，你可以做一些验证。</p>
-<ul>
-<li><p>在你自己的电脑，打开终端：</p>
-<ul>
-<li><p>测试你的VPS是否能ping通：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping VPS的IP</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>测试shadowsocks服务端口是否已通</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ss服务IP ss服务端口号</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>在你的VPS机器上</p>
-<ul>
-<li><p>查看进程里是否有ssserver，如果打印出信息就代表ssserver在运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep ssserver</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看服务端口是否在监听，如果打印出信息，则代表端口号在监听</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:shadowsocks.json里的端口号</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看服务状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks status</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>另外，提供一些常用命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动ssserver: service shadowsocks start</span><br><span class="line">停止ssserver: service shadowsocks stop</span><br><span class="line">重启ssserver: service shadowsocks restart</span><br><span class="line">查看ssserver状态: service shadowsocks status</span><br></pre></td></tr></table></figure>
-<h2 id="配置多用户"><a href="#配置多用户" class="headerlink" title="配置多用户"></a>配置多用户</h2><p>如果你想配置多用户，可以把shadowsocks.json改成下图，即把port和password合并：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">	&quot;port1&quot;:&quot;password1&quot;,</span><br><span class="line">	&quot;port2&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="安装shadowsocks客户端"><a href="#安装shadowsocks客户端" class="headerlink" title="安装shadowsocks客户端"></a>安装shadowsocks客户端</h1><p>我的是mac，大家可以根据自己的需要在网上下载，应该很多。这里给出一个地址<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="noopener">下载链接</a>。</p>
-<p>安装后，就会在浏览器看到一个小图标，点击图标，选择服务器-服务器设置，就会弹出下图设置框：</p>
-<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__sslocal%E9%85%8D%E7%BD%AE.jpg?raw=true" alt="sslocal配置"></p>
-<ul>
-<li>点击+号，新建一个服务器</li>
-<li>地址是ss服务IP, 冒号后面的是端口号，就是ss服务端口号</li>
-<li>加密方式就是加密方式</li>
-<li>密码就是ssserver密码</li>
-<li>备注随便填</li>
-<li>点击确定</li>
-<li>另外有三种模式可以选择：PAC自动模式、全局模式、手动模式，PAC自动模式只有在访问被墙的网页时才会走ssserver，全局模式是所有访问的网页都会走ssserver，一般情况下我们就用PAC自动模式就好了，如果访问的某些网站比较慢，比如MDN，可以采用全局模式</li>
-</ul>
-<p>至此，全部配置完毕。可以愉快的上网学习了！</p>
-<h1 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h1><p>配置后，发现还是无法翻墙。可能是ss服务端口号被防火墙阻挡了，因此，可以登录你的VPS，把防火墙关闭，或者把你的ss服务端口号加入到防火墙允许的列表中。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/16/shadowsocks原理/" itemprop="url">shadowsocks原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T11:12:37+08:00">
-                2018-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~</p>
-<h1 id="翻墙的原理"><a href="#翻墙的原理" class="headerlink" title="翻墙的原理"></a>翻墙的原理</h1><p>防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于不同的请求具有不同的数据特征，不同的协议具有不同的特征，比如HTTP/HTTPS这类请求，会很明确的告诉GFW它们要请求哪些域名，再比如TCP请求，它只会告诉GFW它们要请求哪个IP。防火墙采用<strong>黑名单</strong>方式，有域名黑名单和IP黑名单，像常见的国外网站<a href="www.google.com">谷歌</a>，<a href="www.facebook.com">Facebook</a>等都是在黑名单里的（<a href="https://zh.wikipedia.org/zh-hans/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A2%AB%E5%B0%81%E9%94%81%E7%BD%91%E7%AB%99%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">封锁网站列表</a>）。 </p>
-<p>也就是说，当你访问一个在黑名单列表里的网站时，就会被GFW拦截。但如果你有一台国外的服务器，并且这个服务器不在GFW的黑名单列表里，你就可以访问这台服务器了。因此，翻墙的一个方案就出来了：你想看什么网页，就告诉国外的机器，让国外的机器代理抓取，然后送回来。我们要做的就是保证你于国外机器通讯时不被GFW怀疑和窃听。</p>
-<p>ssh tunnel是比较具有代表性的防窃听通讯隧道，通过ssh与境外服务器建立一条加密通道，此时GFW会将通讯当做普通的流量，但是随着用的人越来越多，GFW不干了，它开始通过一些流量特征分析，识别哪些连接是ssh隧道，并对它进行干扰，于是众多隧道都走不通了。</p>
-<h1 id="shadowsocks是如何翻墙的呢？"><a href="#shadowsocks是如何翻墙的呢？" class="headerlink" title="shadowsocks是如何翻墙的呢？"></a>shadowsocks是如何翻墙的呢？</h1><p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true" alt="shadowsocks翻墙原理"></p>
-<h2 id="这里要理解一个概念，就是socks5是什么？"><a href="#这里要理解一个概念，就是socks5是什么？" class="headerlink" title="这里要理解一个概念，就是socks5是什么？"></a>这里要理解一个概念，就是socks5是什么？</h2><p>这是一个比较成熟的代理协议，被大多数操作系统、浏览器、客户端软件支持，以前翻墙大多数是这个协议。</p>
-<p>在GFW外面部署一个socks5协议的server，在GFW内使用一个支持socks5协议的客户端连接server，通过一定的认证和加密将数据通过TCP socket按照socks5协议发送数据包给server，在server端根据socks5协议解密后将明文包转发给某个GFW外的目标机器，从而实现翻墙。</p>
-<p>因为数据都是经过协商加密的，所以一开始GFW是没法发现的，后来socks5协议大量被用于翻墙，GFW就开发相应的流量识别策略，毕竟连接协商阶段的流量是明文的，因此总有办法截掉你的连接，所以socks5开始变得不那么稳定了。</p>
-<h2 id="那么shadowsocks是如何做到的呢？"><a href="#那么shadowsocks是如何做到的呢？" class="headerlink" title="那么shadowsocks是如何做到的呢？"></a>那么shadowsocks是如何做到的呢？</h2><p>再看上面那张图片，shadowsocks在客户端本地部署了一个socks5 server端（也就是shadowsocks软件），用户使用一个支持socks5协议的客户端软件（如浏览器）连接这个socks5 server发送数据。</p>
-<p>这个socks5 server是shadowsocks按照socks5协议开发的，它解密数据为明文后，按照shadowsocks自定义的一种新的通讯协议（GFW没时间来分析这个协议）加密后发送给GFW外部署的shadowsocks server，这个server按照shadowsocks定义的协议解密数据为明文，转发给墙外的目标机。</p>
-<p>shadowsocks之所以在客户端本地启动一个socks5代理server，是因为socks5协议已被大多数操作系统、浏览器、客户端软件支持，因此我们只需要配置一下浏览器通过shadowsocks的socks5 server代理，那么shadowsocks就可以拦截到浏览器的流量，通过重新包装发送给远程的shadowsocks server了，这对于一个新的翻墙工具的普及无疑是很有利的。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/weixin_42075590/article/details/80717291" target="_blank" rel="noopener">shadowsocks原理</a></p>
-<p><a href="https://blog.csdn.net/ai2000ai/article/details/80829131" target="_blank" rel="noopener">shadowsocks原理简介及安装指南</a></p>
-<p>感谢以上作者！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/call与apply/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/29/call与apply/" itemprop="url">call与apply</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T21:42:22+08:00">
-                2017-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h3><p>直接看代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function fn() &#123;</span><br><span class="line">  console.log(this);</span><br><span class="line">&#125;</span><br><span class="line">fn();//window</span><br><span class="line"></span><br><span class="line">fn.call(1);//this=&gt;数字1的包装类对象Number，相当于new Number(1)</span><br><span class="line">fn.call(&apos;str&apos;); // this=&gt;字符串&apos;str&apos;的包装类对象String，相当于new String(&apos;str&apos;)</span><br><span class="line"></span><br><span class="line">fn.call([1,2,3]); // this=&gt;数组[1,2,3]</span><br><span class="line">fn.call(&#123;&#125;); // this=&gt;对象</span><br><span class="line"></span><br><span class="line">fn.call();//window</span><br><span class="line">fn.call(null);//window</span><br><span class="line">fn.call(undefined);//window</span><br><span class="line"></span><br><span class="line">function fn1(name, age)&#123;</span><br><span class="line">  console.log(this, name, age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn1.call(null, &apos;张三&apos;, 20); //window, &apos;张三&apos;,20</span><br><span class="line"></span><br><span class="line">fn1.apply(null, [&apos;张三&apos;,20]); //windwo, &apos;张三&apos;,20</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/数据类型的判断方法大汇总/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/29/数据类型的判断方法大汇总/" itemprop="url">数据类型的判断方法大汇总</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T20:53:15+08:00">
-                2017-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>总的来说，判断数据类型有很多种方法：</p>
-<ul>
-<li>typeof  基本类型可以，但是对于复杂类型不准确</li>
-<li>instanceof</li>
-<li>constructor  比较准确（只是有时constructor会被改变）</li>
-<li>isPrototypeOf</li>
-<li>Object.prototype.toString.call() 最好的</li>
-</ul>
-<h3 id="typeof-返回值："><a href="#typeof-返回值：" class="headerlink" title="typeof 返回值："></a>typeof 返回值：</h3><p>undefined:未定义 （只声明，但是未定义的也是undefined）</p>
-<p>boolean: 布尔值</p>
-<p>number: 数值</p>
-<p>string: 字符串</p>
-<p>object: 对象或null</p>
-<p>function: 函数</p>
-<h3 id="constructor返回值："><a href="#constructor返回值：" class="headerlink" title="constructor返回值："></a>constructor返回值：</h3><p>就是其对应的构造函数（但是constructor有可能被修改）</p>
-<h3 id="instanceof返回值："><a href="#instanceof返回值：" class="headerlink" title="instanceof返回值："></a>instanceof返回值：</h3><p>判断对象是否属于这个构造函数（查找对象与构造函数在原型链上是否有关系）</p>
-<h3 id="Object-prototype-toString-call-返回值"><a href="#Object-prototype-toString-call-返回值" class="headerlink" title="Object.prototype.toString.call()返回值"></a>Object.prototype.toString.call()返回值</h3><p>最准确的</p>
-<p>[object Number]</p>
-<p>[object String] </p>
-<p>[object Boolean] </p>
-<p>[object Array]</p>
-<p>[object Object]</p>
-<p>[object Function] </p>
-<p>[object RegExp] </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 基本数据类型</span><br><span class="line">var num = 3;</span><br><span class="line">var str = &quot;hello&quot;;</span><br><span class="line">var b =false;</span><br><span class="line"></span><br><span class="line">//复杂数据类型</span><br><span class="line">var arr = [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;];</span><br><span class="line">var obj=&#123;&#125;;</span><br><span class="line">var fn = function()&#123;&#125;;</span><br><span class="line">var reg = new RegExp(/a/g);</span><br><span class="line"></span><br><span class="line">console.log(typeof num, num.constructor, Object.prototype.toString.call(num));</span><br><span class="line">console.log(typeof str, str.constructor, Object.prototype.toString.call(str));</span><br><span class="line">console.log(typeof b, b.constructor, Object.prototype.toString.call(b));</span><br><span class="line"></span><br><span class="line">console.log(typeof arr, arr.constructor,  Object.prototype.toString.call(arr));</span><br><span class="line">console.log(typeof obj, obj.constructor, Object.prototype.toString.call(obj));</span><br><span class="line">console.log(typeof fn, fn.constructor,  Object.prototype.toString.call(fn));</span><br><span class="line">console.log(typeof reg, reg.constructor, Object.prototype.toString.call(reg));</span><br></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">number function Number() &#123; [native code] &#125; [object Number] </span><br><span class="line">string function String() &#123; [native code] &#125; [object String] </span><br><span class="line">boolean function Boolean() &#123; [native code] &#125; [object Boolean] </span><br><span class="line">object function Array() &#123; [native code] &#125; [object Array] </span><br><span class="line">object function Object() &#123; [native code] &#125; [object Object] </span><br><span class="line">function function Function() &#123; [native code] &#125; [object Function] </span><br><span class="line">object function RegExp() &#123; [native code] &#125; [object RegExp]</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/setTimeout中的this/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/28/setTimeout中的this/" itemprop="url">setTimeout中的this</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-28T21:17:17+08:00">
-                2017-07-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>setTimeout函数执行的代码是从执行上下文中调用的，与setTimeout调用的函数不同。</p>
-<p>如果在非严格模式下，this将指向全局或者window对象，在严格模式下，是undefined。</p>
-<p>看下面的例子：</p>
-<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
-myArray.myMethod = function (sProperty) {
-    alert(arguments.length &gt; 0 ? this[sProperty] : this);
-};
-
-myArray.myMethod(); // prints &quot;zero,one,two&quot;
-myArray.myMethod(1); // prints &quot;one&quot;
-</code></pre><p>而如果用setTimeout呢？</p>
-<pre><code>setTimeout(myArray.myMethod, 1000); // prints &quot;[object Window]&quot; after 1 second
-setTimeout(myArray.myMethod, 1500, &apos;1&apos;); // prints &quot;undefined&quot; after 1.5 seconds
-</code></pre><p>myArray.myMethod函数被传递给setTimeout，当它被调用时，它的this没有被设置，所以默认指向window对象，并且也没有选项能够传thisArg给setTimeout，使用call也是不行的。</p>
-<pre><code>setTimeout.call(myArray, myArray.myMethod, 2000); // error: &quot;NS_ERROR_XPC_BAD_OP_ON_WN_PROTO: Illegal operation on WrappedNative prototype object&quot;
-setTimeout.call(myArray, myArray.myMethod, 2500, 2); // same error
-</code></pre><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>1、将调用的函数使用一个包裹函数包裹</p>
-<pre><code>setTimeout(function(){myArray.myMethod()}, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
-setTimeout(function(){myArray.myMethod(&apos;1&apos;)}, 2500); // prints &quot;one&quot; after 2.5 seconds
-</code></pre><p>2、箭头函数</p>
-<pre><code>setTimeout(() =&gt; {myArray.myMethod()}, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
-setTimeout(() =&gt; {myArray.myMethod(&apos;1&apos;)}, 2500); // prints &quot;one&quot; after 2.5 seconds
-</code></pre><p>3、bind</p>
-<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
-myBoundMethod = (function (sProperty) {
-    console.log(arguments.length &gt; 0 ? this[sProperty] : this);
-}).bind(myArray);
-
-myBoundMethod(); // prints &quot;zero,one,two&quot; because &apos;this&apos; is bound to myArray in the function
-myBoundMethod(1); // prints &quot;one&quot;
-setTimeout(myBoundMethod, 1000); // still prints &quot;zero,one,two&quot; after 1 second because of the binding
-setTimeout(myBoundMethod, 1500, &quot;1&quot;); // prints &quot;one&quot; after 1.5 seconds
-</code></pre><p>4、重写setTimeout和setInterval函数</p>
-<pre><code>/ Enable setting &apos;this&apos; in JavaScript timers
-
-var __nativeST__ = window.setTimeout, 
-    __nativeSI__ = window.setInterval;
-
-window.setTimeout = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
-  var oThis = this, 
-      aArgs = Array.prototype.slice.call(arguments, 2);
-  return __nativeST__(vCallback instanceof Function ? function () {
-    vCallback.apply(oThis, aArgs);
-  } : vCallback, nDelay);
-};
-
-window.setInterval = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
-  var oThis = this,
-      aArgs = Array.prototype.slice.call(arguments, 2);
-  return __nativeSI__(vCallback instanceof Function ? function () {
-    vCallback.apply(oThis, aArgs);
-  } : vCallback, nDelay);
-};
-</code></pre><p>测试一下：</p>
-<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
-myArray.myMethod = function (sProperty) {
-    alert(arguments.length &gt; 0 ? this[sProperty] : this);
-};
-
-setTimeout(alert, 1500, &apos;Hello world!&apos;); // the standard use of setTimeout and setInterval is preserved, but...
-setTimeout.call(myArray, myArray.myMethod, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
-setTimeout.call(myArray, myArray.myMethod, 2500, 2); // prints &quot;two&quot; after 2.5 seconds
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1715,7 +1803,7 @@ setTimeout.call(myArray, myArray.myMethod, 2500, 2); // prints &quot;two&quot; a
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

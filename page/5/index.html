@@ -263,6 +263,1226 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/es6相关/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/20/es6相关/" itemprop="url">es6相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T12:53:57+08:00">
+                2017-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="箭头函数-胖箭头函数"><a href="#箭头函数-胖箭头函数" class="headerlink" title="箭头函数(胖箭头函数)"></a>箭头函数(胖箭头函数)</h2><h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><ul>
+<li>函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。</li>
+<li>不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</li>
+<li>不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</li>
+<li>不可以使用yield命令，因此箭头函数不能用作Generator函数。</li>
+</ul>
+<p>this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。正是因为它没有this，所以也就不能用作构造函数。</p>
+<p>另外，由于箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/nodejs之koa2框架/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/20/nodejs之koa2框架/" itemprop="url">nodejs之koa2框架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T12:31:55+08:00">
+                2017-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>koa2会自己吧服务器框架搭建好，如果自己用nodejs，需要引入一些http的包，然后写端口，写一堆乱七八糟的，用koa2的话，都只有一个入口文件，就是路由文件，里面包括几大块：</p>
+<ul>
+<li><p>静态文件目录的生命，告诉服务器那个目录是用来放静态文件的，就是一些html，css，js，image什么。</p>
+</li>
+<li><p>还有一块就是路由地址的指向，路由文件给每个子路由文件都分配了一个地址，比如smallCourse，给他分配的可能就是/smallCourse/api。</p>
+</li>
+<li><p>还有一部分是服务器的简单配置，端口号啊等等。</p>
+</li>
+</ul>
+<p>浏览器拿到一个URL地址后，先通过localhost:3000后面的前几个名字去总的路由文件里匹配，找到一样的就去下面的文件下面再匹配，找到一样的地址的函数，就调用。</p>
+<h3 id="express"><a href="#express" class="headerlink" title="express"></a>express</h3><p>express的入门非常简单，通过创建express的Application就构建了一个expressweb实例。下面我们看看例子来感受一下：</p>
+<pre><code>var express = require(&apos;express&apos;);
+var app = express();
+
+app.get(&apos;/&apos;, function (req, res) {
+      res.send(&apos;Hello World!&apos;);
+});
+
+var server = app.listen(3000, function () {
+      var host = server.address().address;
+      var port = server.address().port;
+
+      console.log(&apos;Example app listening at http://%s:%s&apos;, host, port);
+});
+</code></pre><p>express本身封装了路由模块，因此，可以利用express直接处理各种http路由请求。</p>
+<p>在express用四个主要模块：</p>
+<ul>
+<li>Application：web服务器模块，抽象了web服务器的主要接口，如监听、事件、加载中间件、get\post请求等</li>
+<li>Request：请求</li>
+<li>response：响应</li>
+<li>Router：路由</li>
+</ul>
+<p>express用Application、Request、Response、Router四个主要模块，模拟了一个完整的web服务器功能，对了，express还在相当长的一段时期中受到了Connect的影响。在使用express的过程中，你会发现express是一个极简的、灵活的 web 应用开发框架，它提供的这一系列强大的特性，可以帮助你快速创建各种 web 和移动设备应用。</p>
+<h3 id="koa"><a href="#koa" class="headerlink" title="koa"></a>koa</h3><p>koa 是由 express原班人马打造的（TJ），致力于构建更小、更富有表现力、更健壮的 web 框架。使用 koa 编写 web 应用，通过组合不同的 generator，可以免除重复繁琐的回调函数嵌套，并极大地提升错误处理的效率。koa 不在内核方法中绑定任何中间件，它仅仅提供了一个轻量优雅的函数库，使得编写 koa 应用变得得心应手。<br>Koa 包含了像 content-negotiation（内容协商）、cache freshness（缓存刷新）、proxy support（代理支持）和 redirection（重定向）等常用任务方法。 与提供庞大的函数支持不同，Koa只包含很小的一部分，因为Koa并不绑定任何中间件。</p>
+<p>koa中也包含4个主要模块，Application、Request、Response、Context。此时，router已经被排除在内核之外了。其实，koa只是一个“中间架”，几乎所有的功能都需要由第三方中间件来协同完成。例如koa的router模块，就有20多个，优胜劣汰，自由选择……虽然有不规范之嫌，但是，koa是规范的这就足够了。使用koa，可以最大限度的发挥自己的想象力，利用koa，构建各种个性化的web与移动应用。下面我们看看例子来感受一下：</p>
+<pre><code>var koa = require(&apos;koa&apos;);
+var app = koa();
+
+app.use(function *(){
+      this.body = &apos;Hello World&apos;;
+});
+
+app.listen(3000);
+</code></pre><p>没错，就是这么简单，使用了Generator函数，这也是koa和express最大的不同，express是回调函数，koa是用Generator来作为响应器的。</p>
+<p>另外，那个替代了router的context是怎样的呢？下面我们看看例子来感受一下：</p>
+<pre><code>app.use(function *(){
+      this; // is the Context
+      this.request; // is a koa Request
+      this.response; // is a koa Response
+});
+</code></pre><p>另外，koa中还有co这个工具。co是一个“皮”，通过co来包装Generator和yeild，下面我们看看例子来感受一下：</p>
+<h3 id="koa2"><a href="#koa2" class="headerlink" title="koa2"></a>koa2</h3><p>目前，koa2结合了async/await已经成为了最好的web开发框架。上一节，已经讲了koa的主要模块和实现原理，此处，我只是简单说说koa2和koa不同之处，下面我们看看例子来感受一下：</p>
+<pre><code>const Koa = require(&apos;koa&apos;);
+const app = new Koa();
+
+app.use(ctx =&gt; {
+      ctx.body = &apos;Hello World&apos;;
+});
+
+app.listen(3000);
+</code></pre><p>函数式编程，async/await功能，程序简单，好用，真可谓是居家旅行的不二之选呀。通过查看代码，koa2去除了co中间件，进一步的精简了内核，这一点也正好符合当下性冷淡风格的设计潮流……不禁想赞叹一句，TJ不愧是设计师出身呀……</p>
+<p>作者：白昔月<br>链接：<a href="http://www.jianshu.com/p/3806417a1991" target="_blank" rel="noopener">http://www.jianshu.com/p/3806417a1991</a><br>來源：简书<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/vue之vuex/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/20/vue之vuex/" itemprop="url">vue之vuex</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-20T11:01:35+08:00">
+                2017-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Vuex是一种<strong>状态管理模式</strong>，采用集中式存储管理应用的所有组件的状态。</p>
+<h2 id="Vuex的核心——store"><a href="#Vuex的核心——store" class="headerlink" title="Vuex的核心——store"></a>Vuex的核心——store</h2><h3 id="store的特点"><a href="#store的特点" class="headerlink" title="store的特点"></a>store的特点</h3><p>store包含应用中大部分的状态（state）。</p>
+<p>Vuex和单纯的全局对象有以下两点不同：</p>
+<p>1. <strong>Vuex的状态存储是响应式的</strong>。当Vue组件从store中读取状态的时候，若store中的状态发生变化，那么响应的组件也会更新。</p>
+<p>2. <strong>不能直接改变store中的状态</strong>。唯一途径就是显示提交mutations（commit mutations）。这样设计的目的是：我们能跟踪每一个状态的变化。</p>
+<h3 id="store的创建"><a href="#store的创建" class="headerlink" title="store的创建"></a>store的创建</h3><p>store创建时包含：</p>
+<p>state, getters, mutations, actions, modules</p>
+<p>这里给一个例子，在项目里新建store.js，写如下代码</p>
+<pre><code>import Vue from &apos;vue&apos;
+import Vuex from &apos;vuex&apos;
+
+Vue.use(Vuex)
+
+// root state object.
+// each Vuex instance is just a single state tree.
+const state = {
+  count: 0
+}
+
+// mutations are operations that actually mutates the state.
+// each mutation handler gets the entire state tree as the
+// first argument, followed by additional payload arguments.
+// mutations must be synchronous and can be recorded by plugins
+// for debugging purposes.
+const mutations = {
+  increment (state) {
+    state.count++
+  },
+  decrement (state) {
+    state.count--
+  }
+}
+
+// actions are functions that causes side effects and can involve
+// asynchronous operations.
+const actions = {
+  increment: ({ commit }) =&gt; commit(&apos;increment&apos;),
+  decrement: ({ commit }) =&gt; commit(&apos;decrement&apos;),
+  incrementIfOdd ({ commit, state }) {
+    if ((state.count + 1) % 2 === 0) {
+      commit(&apos;increment&apos;)
+    }
+  },
+  incrementAsync ({ commit }) {
+    return new Promise((resolve, reject) =&gt; {
+      setTimeout(() =&gt; {
+        commit(&apos;increment&apos;)
+        resolve()
+      }, 1000)
+    })
+  }
+}
+
+// getters are functions
+const getters = {
+  evenOrOdd: state =&gt; state.count % 2 === 0 ? &apos;even&apos; : &apos;odd&apos;
+}
+
+// A Vuex instance is created by combining the state, mutations, actions,
+// and getters.
+export default new Vuex.Store({
+  state,
+  getters,
+  actions,
+  mutations
+})
+</code></pre><h3 id="getters创建"><a href="#getters创建" class="headerlink" title="getters创建"></a>getters创建</h3><p>getters会暴露为store.getters对象。</p>
+<p>getters传入的参数：</p>
+<p>第一个是state对象，第二个参数（可选），可以是其他getters，比如</p>
+<pre><code>getters: {
+      // ...
+     doneTodosCount: (state, getters) =&gt; {
+        return getters.doneTodos.length
+      }
+}
+</code></pre><h3 id="store里状态的使用"><a href="#store里状态的使用" class="headerlink" title="store里状态的使用"></a>store里状态的使用</h3><p>有了store，那么怎么在组件中使用呢？</p>
+<p>下面给个例子，新建count.vue文件，</p>
+<pre><code>&lt;template&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    Clicked: {{ $store.state.count }} times, count is {{ evenOrOdd }}.
+    &lt;button @click=&quot;increment&quot;&gt;+&lt;/button&gt;
+    &lt;button @click=&quot;decrement&quot;&gt;-&lt;/button&gt;
+    &lt;button @click=&quot;incrementIfOdd&quot;&gt;Increment if odd&lt;/button&gt;
+    &lt;button @click=&quot;incrementAsync&quot;&gt;Increment async&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import { mapGetters, mapActions } from &apos;vuex&apos;
+
+export default {
+  // computed: mapGetters([
+  //   &apos;evenOrOdd&apos;
+  // ]),
+  computed: {
+    // 使用getters的方式
+    evenOrOdd () {
+      return this.$store.getters.evenOrOdd;
+    }
+  },
+  methods: mapActions([
+    &apos;increment&apos;,
+    &apos;decrement&apos;,
+    &apos;incrementIfOdd&apos;,
+    &apos;incrementAsync&apos;
+  ])
+}
+&lt;/script&gt;
+</code></pre><p>下面开始详细介绍  </p>
+<h4 id="先说怎么获取state"><a href="#先说怎么获取state" class="headerlink" title="先说怎么获取state"></a>先说怎么获取state</h4><p>一个组件从store中读取状态的最简单的办法是在计算属性中返回某个状态：</p>
+<p>比如上面代码中，可以在computed里加上：</p>
+<pre><code>count() {
+    return this.$store.state.count;
+}
+</code></pre><p>当一个组件需要获取多个状态时，可以使用mapState辅助函数帮助我们生成计算属性。</p>
+<p>可以把刚才写的count(){}函数替换为：</p>
+<pre><code>mapState({
+    count: state =&gt; state.count,
+    countAlias: &apos;count&apos;,
+    countPlusLocalState (state) {
+          return state.count + this.localCount
+    }
+})
+</code></pre><p>当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。</p>
+<pre><code>computed: mapState([
+      // 映射 this.count 为 store.state.count
+      &apos;count&apos;
+])
+</code></pre><h4 id="再说怎么获getters"><a href="#再说怎么获getters" class="headerlink" title="再说怎么获getters"></a>再说怎么获getters</h4><p>也是在computed属性里写，如同count.vue里所写，可以用普通函数的形式，也可以用mapGetters.    </p>
+<p>mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性，可以使用对象展开运算符将getters混入computed对象中：</p>
+<pre><code>computed: {
+      // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+          &apos;doneTodosCount&apos;,
+          &apos;anotherGetter&apos;,
+          // ...
+    ])
+  }
+</code></pre><h3 id="mutations和actions区别"><a href="#mutations和actions区别" class="headerlink" title="mutations和actions区别"></a>mutations和actions区别</h3><p><strong>mutations只支持同步函数。</strong></p>
+<p>每一条 mutation 被记录，devtools 都需要捕捉到前一状态和后一状态的快照。然而，在上面的例子中 mutation 中的异步函数中的回调让这不可能完成：因为当 mutation 触发的时候，回调函数还没有被调用，devtools 不知道什么时候回调函数实际上被调用 —— 实质上任何在回调函数中进行的的状态的改变都是不可追踪的。</p>
+<p>Action 类似于 mutation，不同在于：</p>
+<ul>
+<li>Action 提交的是 mutation，而不是直接变更状态。</li>
+<li>Action 可以包含任意异步操作。</li>
+</ul>
+<p>action里面的方法可以通过store.dispatch(‘increment’)触发。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/css浮动float属性/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/css浮动float属性/" itemprop="url">css浮动float属性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T22:17:29+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="浮动的本意"><a href="#浮动的本意" class="headerlink" title="浮动的本意"></a>浮动的本意</h2><p>让文字像流水一样环绕浮动元素。</p>
+<h2 id="怎么才能实现该效果呢"><a href="#怎么才能实现该效果呢" class="headerlink" title="怎么才能实现该效果呢"></a>怎么才能实现该效果呢</h2><p>用<strong>包裹性</strong>和<strong>高度欺骗</strong></p>
+<h3 id="特性一：包裹性"><a href="#特性一：包裹性" class="headerlink" title="特性一：包裹性"></a>特性一：包裹性</h3><p><img src="http://upload-images.jianshu.io/upload_images/1959053-1b1dda5d416c60eb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>代码：</p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red;float:left;&quot;&gt;
+    &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+</code></pre><p>block元素不指定width的话，默认是100%，一旦让该div浮动起来，立刻会像inline元素一样产生包裹性，宽度会随内容自适应。这也是通常float元素需要手动指定width的原因。</p>
+<p>再加一个div的话，效果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-2869f0891d66eee5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red;float:left;&quot;&gt;
+    &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid green;&quot;&gt;
+    &lt;img src=&quot;img/25/3.jpg&quot; /&gt; 
+&lt;/div&gt;
+</code></pre><p>效果非常近似与display:inline-block,但相比之下，浮动能设定为左浮和右浮，display:inline-block都是从左到右排列的。（还有些细微差别，两个display:inline-block间会有空隙，但两个float间没有。这不是本篇的主题，暂时略过）。</p>
+<h3 id="特性二：-高度欺骗"><a href="#特性二：-高度欺骗" class="headerlink" title="特性二： 高度欺骗"></a>特性二： 高度欺骗</h3><p>首先声明：其实是CSS层级在起作用，但CSS层级适合单独写一篇，内容实在太多，不适合在这里展开，就理解为高度欺骗吧）</p>
+<p>例1中浮动float被设在了外围div上，因此高度欺骗性没体现出来。现在给内层img元素设定float。所谓一图胜千言：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-200a5280f9711949.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+    &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red;&quot;&gt;
+    &lt;img style=&quot;border:4px solid yellow;float:left;&quot; src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+</code></pre><p>和例子1唯一的区别就是：将外层div的float移到内层img中。这下高度欺骗性体现出来了。例1中给外层div加上浮动，因此外层div会有包裹性，其内容是img图片，所以可以看到红色边框包裹着img。</p>
+<p>例2中外层div没有了浮动，因此红色边框宽度默认是100%全屏。其内容img由于加上了float，使得该img具有了欺骗性。float给img施了个障眼法，让该img的inline-height高度塌陷为0了。这样外层div计算高度时，认为img的高度为0，相当于div的content的高度为0，因此红色边框看起来是一条直线。</p>
+<p>但请注意障眼法毕竟是障眼法，并不是真的让img的高度塌陷为0了，可以看到上图中img的黄色边框还是有正常高度的。如果给div里加点文字，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-5170f426197de08b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>可以看到，外层div在没有手动设定height的前提下，其高度是由内部content的最大高度决定的，由于img的float使得img具有高度塌陷的欺骗性，让div误以为img的line-height为0，因此div的高度就是文字的匿名inline-box的inline-height。</p>
+<p>因此浮动并不是让元素的高度塌陷了，而是让元素具有高度塌陷的欺骗性。骗谁？骗别人！但骗不了自己，元素自身还是有高度的（见上图的黄框）。</p>
+<p>回过头再看看浮动float的本意：让文字像流水一样环绕图片。重要的事情多看几遍…给div设定一个width:200px，并加点文字吧：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-dad6d5b856f3df0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这就是浮动元素的本意。该效果是很难被其他CSS属性等价地模拟的。</p>
+<p>但就像开头说的，CSS强大的灵活性使得很多CSS属性被用于了创造者都没想到的场景。以float为例，就被广泛用于了布局。是好是坏呢？不知道！西红柿臭鸡蛋先别急着扔。既然撸主不知道，还废话什么？先看看float布局的问题。渣浪微博改版前的好友列表用浮动布局，效果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-2dca492dbffd770f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;ul&gt;
+  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
+      &lt;div&gt;&lt;img src=&quot;img/25/1.jpg&quot; /&gt;尼古拉斯.旺财&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
+      &lt;div&gt;&lt;img src=&quot;img/25/2.jpg&quot; /&gt;功夫熊猫&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
+      &lt;div&gt;&lt;img src=&quot;img/25/3.jpg&quot; /&gt;月野兔&lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li style=&quot;width:138px;margin:0 10px;text-align: center;float:left;&quot;&gt;
+      &lt;div&gt;&lt;img src=&quot;img/25/4.jpg&quot; /&gt;猫女郎&lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>每个li都设为浮动和定宽，实现了水平布局。但如果好友再长点呢？效果如下：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-ae89f49a5463cae0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>错行啦！常见的修正方案是手动设定一个高度，让文字固定显示一行，用裁掉超行文字的代价以避免错行问题。在撸主看来这就是让CSS属性用于不合原意处的局限性。设固定高度是OK，但如果哪天设计师觉得姓名需要显示两行呢，那固定高度就需要重新计算重新变。如果设计师觉得需要拓宽俄罗斯市场，姓名要显示三行呢？再把固定高度改大点。如果未来Boss脑袋一拍，咦，能不能高度自适应呢？由姓名最大高度的好友来决定每行的高度。你是不是会有准备一下简历的冲动？</p>
+<p>当然现实没这么夸张，高度自适应是个烂大街的技术，将浮动float改成 display:inline-block 就行了，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-17176e9467c1dba7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>代码只需将上面float:left;替换成display: inline-block;，没对齐只需给li加上个vertical-align: top;（上面提到过，相比float，display:inline-block中间会有空隙，眼神好的可以从图中就能看出来，解决方案不是本篇的主题，可以问度娘）。这下高度自适应了，每行的高度都是以名字最长的高度为准。</p>
+<p>回过头看用float来水平布局。是好是坏呢？好处是上手简单，随便什么程度的CSSer都能搞定。坏处是有时需要定高难以自适应。而display:inline-block;属性可是根正苗红的水平布局的属性，可以用其替代float。让float尽量多的干其本职工作：让文字像流水一般环绕浮动元素。所以撸主不知道答案。或许也根本没有正确答案，不停的推翻原有的认识和想法人才能进步。</p>
+<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><p>这个就相对比较简单了，用clear即可，稍微要注意的是，clear是仅用作于当前元素，例如元素A是浮动元素，靠左显示。元素B是block元素，紧跟在A后面。此时要清除浮动，是在B上色设置clear:left。你在A上设置clear:right是没有用的，因为A的右边没有浮动元素。</p>
+<p>但真的这么简单吗？</p>
+<p>先明确一个概念，用clear确实能达到我们期望的清除浮动的效果，这点没异议。但深入点看，究竟是清除了什么样的浮动呢？一图胜千言：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-576f17a1570dda26.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>代码：（给页脚加上clear:left）</p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+    &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
+        我是浮动元素1
+    &lt;/div&gt;
+    &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
+        我是浮动元素2
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid gray;clear:left;&quot;&gt;我是页脚&lt;/div&gt;
+</code></pre><p>因为浮动元素的高度欺骗性，导致外层div失去了高度（蓝色边框成了一条线）。为了让页脚显示到浮动元素下面，对页脚应用了clear:left。这是常规做法，没有任何新奇之处。但是外层div的高度仍旧处于塌陷状态，我们脑海真真正期望的清除浮动后的样子难道不是下面这样吗？</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-be8e95926b12dab5.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>让清除浮动后，原本被欺骗的外层div获得正确的高度！借用文首大神链接的说法，我们脑中期望的其实并不是上图的清除浮动，而是下图的<strong>闭合浮动</strong>。</p>
+<h2 id="闭合浮动"><a href="#闭合浮动" class="headerlink" title="闭合浮动"></a>闭合浮动</h2><p>闭合浮动的实现方法很多，常见的是最后增加一个清除浮动的子元素：</p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+  &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
+      我是浮动元素1
+  &lt;/div&gt;
+  &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
+      我是浮动元素2
+  &lt;/div&gt;
+  &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;  //加上空白div节点来闭合浮动
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
+</code></pre><p>缺点是会增加一个DOM节点。（话说当初撸主不知道在哪里看到这个做法时，作者并未讲这么做的原因，导致撸主不明白明明页脚加一个clear属性就能搞定的事，为何要大动干戈加一个DOM节点）</p>
+<p>方法二：同样可以在最后增加一个清除浮动的br：将上面代码中<code>&lt;div style=”clear:both;”&gt;&lt;/div&gt;</code>替换成<code>&lt;br clear=”all” /&gt;</code>即可。语义上比空的div标签稍微好一点，但同样会增加一个DOM节点。</p>
+<p>方法三：父元素设置 <code>overflow:hidden</code>（如果你还要兼顾IE6的话，加上<code>*zoom:1;</code>来触发hasLayout）</p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;overflow:hidden;&quot;&gt;
+  &lt;div style=&quot;width:200px;border:4px solid red;float:left;&quot;&gt;
+      我是浮动元素1
+  &lt;/div&gt;
+  &lt;div style=&quot;width:200px;border:4px solid yellow;float:left;&quot;&gt;
+      我是浮动元素2
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
+</code></pre><p>这看起来很奇怪。因为子元素的浮动的高度欺骗，导致父元素误认为content高度为0（即蓝色边框为一条线），所以父元素设成overflow:hidden溢出隐藏的话，直觉上应该子元素由于溢出导致不显示才对，即整个页面只显示页脚。但实际效果，父元素设成overflow:hidden溢出隐藏后，竟然神奇地出现了闭合浮动的效果（蓝色边框正确获得了高度）。这是怎么回事呢？靠的是BFC，但BFC说起来又是很长一篇，先略过。你可以先简单地这么理解：浏览器厂商认为要让超出边框部分可以被修剪掉，那么前提就是父元素要正确获得高度，即父元素不能被欺骗导致高度塌陷。浏览器正确获得子元素的高度后给父元素重新设置高度。虽然权威解释肯定是BFC，但撸主这样理解了很久…</p>
+<p>方法四：同上面将父元素设置 的overflow:hidden改成auto，不赘述</p>
+<p>方法五：父元素也设成float。这样确实实现了闭合浮动，但页脚将上移，所以页脚仍旧需要clear:left。还有个缺点是由于浮动的包裹性，你确定父元素真的设成float对页面布局不会产生影响吗？</p>
+<p>方法六：父元素设置display:table。效果OK，页脚也不需要设clear:left，但父元素的盒子模型被改变了，请先确认下这样的改动对页面布局不会产生影响吗？</p>
+<p>方法七：用:after伪元素，思路是用:after元素在div后面插入一个隐藏文本”.”，隐藏文本用clear来实现闭合浮动：</p>
+<pre><code>.clearfix:after {
+  clear: both;
+  content: &quot;.&quot;;   //你头可以改成其他任意文本如“abc”
+  display: block;
+  height: 0;      //高度为0且hidden让该文本彻底隐藏
+  visibility: hidden;
+}
+.clearfix {
+    *zoom: 1;
+}
+
+
+&lt;div style=&quot;border:4px solid blue;&quot; class=&quot;clearfix&quot;&gt;
+  &lt;div style=&quot;width:200px; border:4px solid red; float:left;&quot;&gt;
+      我是浮动元素1
+  &lt;/div&gt;
+  &lt;div style=&quot;width:200px; border:4px solid yellow; float:left;&quot;&gt;
+      我是浮动元素2
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid gray;&quot;&gt;我是页脚&lt;/div&gt;
+</code></pre><p>转载自：<a href="http://www.jianshu.com/p/07eb19957991" target="_blank" rel="noopener">http://www.jianshu.com/p/07eb19957991</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/两列自适应布局/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/两列自适应布局/" itemprop="url">两列自适应布局</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T16:37:53+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-float-margin"><a href="#1-float-margin" class="headerlink" title="1. float+margin"></a>1. float+margin</h2><p>左列：float:left; width:100px;<br>右列: margin-left:100px</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .left {
+        float: left;
+        width: 100px;
+        background: red;
+    }
+    .main {
+        margin-left: 110px;
+        width: 100%; /*可以不加*/
+        background: green;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
+    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p>缺点：如果想修改.left的宽度，还需要修改.main 的margin-left。</p>
+<h2 id="2-float-overflow-hidden-触发BFC"><a href="#2-float-overflow-hidden-触发BFC" class="headerlink" title="2. float+overflow:hidden(触发BFC)"></a>2. float+overflow:hidden(触发BFC)</h2><p>左列： float:left; width: 100px;<br>右列: overflow:hidden;</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .left {
+        float: left;
+        width: 100px;
+        background: red;
+    }
+    .main {
+        overflow: hidden; /*不能加width:100%;*/
+        background: green;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
+    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p>优点：可以设置浮动的margin来控制间距，想要修改宽度时只修改宽度就行了</p>
+<h2 id="3-绝对定位"><a href="#3-绝对定位" class="headerlink" title="3. 绝对定位"></a>3. 绝对定位</h2><p>左列：float:left;<br>右列: 绝对应为left</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .left {
+        float: left;
+        /* position: relative; */
+        width: 100px;
+        background: red;
+    }
+
+    .main {
+        position: absolute;
+        left: 100px;
+        width: 100%;
+        background: green;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
+    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><h2 id="4-flex布局"><a href="#4-flex布局" class="headerlink" title="4. flex布局"></a>4. flex布局</h2><p>不多说。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .wrapper {
+      display: flex;
+    }
+    .left {
+        flex: 0 1 100px;
+        background: red;
+    }
+
+    .main {
+        flex: 1;
+        background: green;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;div class=&quot;wrapper&quot;&gt;
+    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
+    &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
+  &lt;/div&gt; 
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><h2 id="5-让重要内容先渲染"><a href="#5-让重要内容先渲染" class="headerlink" title="5. 让重要内容先渲染"></a>5. 让重要内容先渲染</h2><p>右列：float:left; width: 100%;<br>左列： display: inline-block; margin-left: -100%;width:100px;</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .main-wrapper {
+      margin-left: 100px;
+    }
+    .left {
+        margin-left: -100%;
+        display: inline-block; /*或者float: left;*/
+        width: 100px;
+        background: red;
+    }
+
+    .main {
+        float: left;
+        width: 100%;
+        background: green;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;main-wrapper&quot;&gt;
+      &lt;div class=&quot;main&quot;&gt;这是右栏&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;left&quot;&gt;这是左栏&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/绝对定位居中技术-Absolute-Centering/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/绝对定位居中技术-Absolute-Centering/" itemprop="url">绝对定位居中技术(Absolute Centering)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T14:24:51+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="水平垂直居中"><a href="#水平垂直居中" class="headerlink" title="水平垂直居中"></a>水平垂直居中</h2><p>实现水平垂直居中，只需要三点：</p>
+<ul>
+<li>声明元素宽度</li>
+<li>给父元素设置相对定位</li>
+<li><p>给该元素设置类Absolute-Center，如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.Absolute-Center &#123;</span><br><span class="line">     margin: auto;</span><br><span class="line">     left: 0;</span><br><span class="line">     top: 0;</span><br><span class="line">     right: 0;</span><br><span class="line">     bottom: 0;</span><br><span class="line">     overflow: auto; // 建议加上</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>1. 在普通文档流中，margin:auto 的效果等同于margin-top:0; margin-bottom: 0;。</p>
+<p>2. position:absolute;使绝对定位块跳出了文档流，文档流其余部分渲染时绝对定位部分不进行渲染。</p>
+<p>3. 为块区域设置top:0;left:0;bottom:0;right:0;将给浏览器重新分配一个边界框，此时该块将填充至其父元素的所有可用空间，父元素一般为body，或者声明为position:relative;的容器。</p>
+<p>4. 给内容块设置一个width或者height，能够防止内容块占据所有的可用空间，促使浏览器根据新的边界框重新计算margin:auto;</p>
+<p>5. 由于内容块被绝对定位，脱离了正常的文档流，浏览器会给magin-top,margin-bottom相同的值，使元素块在先前定义的边界内居中。</p>
+<p>简而言之： 绝对定位元素不在普通文档流中渲染，因此margin-auto可以使内容在通过top:0;left:0;bottom: 0;right:0;设置的边界内垂直居中。</p>
+<h2 id="误解的地方"><a href="#误解的地方" class="headerlink" title="误解的地方"></a>误解的地方</h2><p>以前一直以为margin:auto; 就是上下左右都是按照可用空间同等分配，这是错的！错的！错的！</p>
+<p><strong>margin: 0 auto; 表示左右根据可用空间同等分配，而上下设置为0</strong></p>
+<h2 id="居中方式"><a href="#居中方式" class="headerlink" title="居中方式"></a>居中方式</h2><h3 id="1-容器内-within-container"><a href="#1-容器内-within-container" class="headerlink" title="1. 容器内(within container)"></a>1. 容器内(within container)</h3><p>这个不多说，就是给父容器设置position:relative;，该元素设置宽高，并加上.Absolute-Center的类。</p>
+<h3 id="2-视区内-within-viewport"><a href="#2-视区内-within-viewport" class="headerlink" title="2. 视区内(within viewport)"></a>2. 视区内(within viewport)</h3><p>想让内容块一只停留在可视区域？给内容块设置为position:fixed;并设置一个z-index:1;层叠属性值即可。</p>
+<h3 id="3-边栏-offsets"><a href="#3-边栏-offsets" class="headerlink" title="3. 边栏(offsets)"></a>3. 边栏(offsets)</h3><p>不懂。。。<br>（待后续研究）</p>
+<p>转载自：<a href="http://blog.csdn.net/freshlover/article/details/11579669" target="_blank" rel="noopener">http://blog.csdn.net/freshlover/article/details/11579669</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/水平、垂直居中/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1166,1127 +2386,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/css定位属性/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/18/css定位属性/" itemprop="url">css定位属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T22:09:08+08:00">
-                2017-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>说到定位属性，首先想到的是relative，absolute等等，但今天一查，原来面试官口中说的定位属性原来不仅仅是这些~~~~</p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>版本</th>
-<th>继承性</th>
-<th>简介</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>position</td>
-<td>css2</td>
-<td>无</td>
-<td>用来设置文档对象的定位方式</td>
-</tr>
-<tr>
-<td>z-index</td>
-<td>css2</td>
-<td>无</td>
-<td>用来设置文档对象的层叠顺序，必须定位position属性为absolute、relative、或fixed，此取值方可生效</td>
-</tr>
-<tr>
-<td>top</td>
-<td>css2</td>
-<td>无</td>
-<td>用来设置文档对象与其最近一个定位的父对象顶部相关的位置，仅当定义position属性值为absolute、relative、fixed，此取值方可生效</td>
-</tr>
-<tr>
-<td>right</td>
-<td>css2</td>
-<td>无</td>
-<td>检索或这是对象与其最近一个定位的父对象右边相关的位置</td>
-</tr>
-<tr>
-<td>bottom</td>
-<td>css2</td>
-<td>无</td>
-<td>检索或设置与其最近一个定位的父对象底边相关的位置</td>
-</tr>
-<tr>
-<td>left</td>
-<td>css2</td>
-<td>无</td>
-<td>检索或设置与其最近一个定位的父对象左边相关的位置</td>
-</tr>
-</tbody>
-</table>
-<h4 id="position对应的值"><a href="#position对应的值" class="headerlink" title="position对应的值"></a>position对应的值</h4><ul>
-<li>绝对定位(position: absolute)</li>
-</ul>
-<p>绝对定位的作用是将元素<strong>从文档流中拖出来</strong>，然后使用left，right，top，bottom属性相对于其最近的一个具有定位属性的父包含块(containing block)进行绝对定位，而且是<strong>相对于其边框内边缘的，而不是其padding内边缘</strong>。如果不存在这样的包含块，则相对于body元素定位。</p>
-<p>原来的空间会被其他元素挤占。</p>
-<p>元素在最终位置时也不会挤占其他元素的空间，而是浮动到其他元素的上方。</p>
-<ul>
-<li>相对定位(postition: relative)</li>
-</ul>
-<p>通过left,right,top,bottom属性确定元素在正常文档流中的偏移位置，相对定位完成的过程是首先按static(float)方式生成一个元素（并且元素像层一样浮动起来），然后相对于以前的位置移动，移动方向和幅度由left，right，top，bottom属性确定，<strong>偏移前的位置保留不动，没有脱离文档流</strong>。</p>
-<p>原来的空间不会被其他元素挤占。</p>
-<p>元素在最终位置时也不会挤占其他元素的空间，它浮动到其他元素的上方。</p>
-<ul>
-<li>固定定位(positition: fixed)</li>
-</ul>
-<p>与absolute定位类型类似，但它相对移动的坐标是视图（屏幕内的网页窗口）本身，由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，不会受文档流动影响。</p>
-<ul>
-<li>position: static</li>
-</ul>
-<p>是默认值。就是按正常的布局流从上到下从左到右布局，没有指定position，默认是static。</p>
-<ul>
-<li>position: inherit</li>
-</ul>
-<p>继续父元素的position值</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/javascript组件化开发方式/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/18/javascript组件化开发方式/" itemprop="url">javascript组件化开发方式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T19:46:07+08:00">
-                2017-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/1.mp4?raw=true" alt=""></p>
-<p>看到要求后，第一反应就是我们最普通的写法（小白写法）：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;inputBox&quot;&gt;&lt;span id=&quot;res&quot;&gt;0&lt;/span&gt;个字
-  &lt;script type=&quot;text/javascript&quot;&gt;
-    $(function () {
-      var input = $(&apos;#inputBox&apos;);
-      input.on(&apos;keyup&apos;, function () {
-        var num = input.val();
-        if(num.length !== 0) {
-          $(&apos;#res&apos;).html(num.length);
-        }else{
-          $(&apos;#res&apos;).html(&apos;0&apos;);
-        }
-      })
-
-    })
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>待更新~~</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/18/html5-localstorage-sessionstorage-cookie-local-storage篇/" itemprop="url">html5 localstorage/sessionstorage/cookie (local storage篇)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T16:05:36+08:00">
-                2017-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>local storage与session storage用法相同，这里以local storage为例。</p>
-<h4 id="检测浏览器是否支持localStorage"><a href="#检测浏览器是否支持localStorage" class="headerlink" title="检测浏览器是否支持localStorage"></a>检测浏览器是否支持localStorage</h4><pre><code>if(window.localStorage){
-    alert(&apos;support localStorage&apos;);
-}else {
-    alert(&apos;does not support localStorage&apos;);
-}
-</code></pre><h4 id="存储数据的方法"><a href="#存储数据的方法" class="headerlink" title="存储数据的方法"></a>存储数据的方法</h4><p>直接给window.localStorage添加一个属性，例如：<code>window.localStorage.a</code>或者<code>window.localStorage[&#39;a&#39;]</code>。它的读取、写、删除操作方法非常简单，是以键值对的方式存在的，如下：</p>
-<pre><code>localStorage.a = 1; 
-localStorage[&apos;a&apos;] = &apos;abc&apos;; // 会覆盖上面的值
-localStorage.setItem(&apos;b&apos;, &quot;isaac&quot;);
-var a1 = localStorage[&quot;a&quot;];//获取a的值
-var a2 = localStorage.a;//获取a的值
-var b = localStorage.getItem(&quot;b&quot;);//获取b的值
-localStorage.removeItem(&quot;a&quot;); //清除a的值
-</code></pre><p>这里推荐使用的当然是setItem和getItem，removeItem。</p>
-<p>如果希望一次性清除所有的键值，可以使用clear()。</p>
-<p>另外，html5还提供了一个key方法，可以在不知道有哪些键值的时候使用，如下：</p>
-<pre><code>var storage = window.localStorage;
-function showStorage(){
-    for(var i=0;i&lt;storage.length;i++){
-          // key(i)获得相应的键，再用getItem()方法获得对应的值
-          document.write(storage.key(i)+ &quot; : &quot; +             storage.getItem(storage.key(i)) + &quot;&lt;br&gt;&quot;);
-    }
-}
-</code></pre><h5 id="下面是一个简单的例子，实现计数器："><a href="#下面是一个简单的例子，实现计数器：" class="headerlink" title="下面是一个简单的例子，实现计数器："></a>下面是一个简单的例子，实现计数器：</h5><pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;input type=&quot;button&quot;&gt;
-  &lt;script type=&quot;text/javascript&quot;&gt;
-    function showStorage(){
-      document.getElementsByTagName(&apos;input&apos;)[0].value = storage.pageLoadCount;
-    }
-    var storage = window.localStorage;
-    if(!storage.getItem(&quot;pageLoadCount&quot;)){
-      storage.setItem(&quot;pageLoadCount&quot;, 0);
-    } 
-    storage.pageLoadCount = parseInt(storage.getItem(&quot;pageLoadCount&quot;)) +1;
-    showStorage();
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>不断刷新页面就能看到数字每次加一。</p>
-<p><strong>需要注意的是：html5本地存储只能存字符串，任何格式存储的时候都会被自动转成字符串，所以读取的时候，需要自己进行类型转换，这就是上面例子中使用parseInt的原因之一</strong>    </p>
-<p><strong>另外，在iPhone/iPad上有时设置setItem()时会出现诡异的QUOTA_EXCEEDED_ERR错误，这时一般在setItem之前，先removeItem()就ok了。</strong>（暂时还没做过移动端）</p>
-<h4 id="storage事件"><a href="#storage事件" class="headerlink" title="storage事件"></a>storage事件</h4><p>html5的本地存储，还提供了一个storage事件，可以对键值对的改变进行监听，使用方法如下：</p>
-<pre><code>if(window.addEventListener){
-  window.addEventListener(&apos;storage&apos;, handle_storage, false);
-}else if(window.attachEvent){
-  window.attachEvent(&quot;onstorage&quot;, handle_storage);
-}
-
-function handle_storage(e){
-  if(!e){
-    e=window.event;
-  }
-}
-</code></pre><p>对于事件变量e，是一个StorageEvent对象，提供了一些实用的属性，可以很好的观察键值对的变化：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">属性</th>
-<th style="text-align:center">类型</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">key</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">添加、删除、或者修改的名</td>
-</tr>
-<tr>
-<td style="text-align:left">oldValue</td>
-<td style="text-align:center">Any</td>
-<td style="text-align:center">修改前的值，如果是新加的键，该属性的值为null</td>
-</tr>
-<tr>
-<td style="text-align:left">newValue</td>
-<td style="text-align:center">Any</td>
-<td style="text-align:center">修改后的值，如果是新机的键，该属性的值为null</td>
-</tr>
-<tr>
-<td style="text-align:left">url/uri</td>
-<td style="text-align:center">String</td>
-<td style="text-align:center">触发storage键值对改变对应的方法所在页面的url/uri</td>
-</tr>
-</tbody>
-</table>
-<h5 id="那怎么使用storage事件呢？"><a href="#那怎么使用storage事件呢？" class="headerlink" title="那怎么使用storage事件呢？"></a>那怎么使用storage事件呢？</h5><p>当同源页面的某个页面修改了localStorage，其余的同源页面只要注册了storage事件，就会触发。</p>
-<p>所以，这个例子需要以下条件：</p>
-<p>（1）同一个浏览器打开了两个同源页面</p>
-<p>（2）其中一个网页修改了localStorage</p>
-<p>（3）另一个网页注册了storage事件</p>
-<p><strong>很容易犯的错误，在同一个网页修改本地存储，又在同一个网页监听，这样是没有效果的</strong></p>
-<p>例子：<br>在网页A：监听了storage事件：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;script type=&quot;text/javascript&quot;&gt;
-    window.addEventListener(&apos;storage&apos;, function(e){
-    alert(e.newValue);
-  })
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>在网页B：修改了localStorage</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;script type=&quot;text/javascript&quot;&gt;
-    localStorage.clear();
-    localStorage.setItem(&apos;foo&apos;, &apos;bar&apos;);
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>运行：将上面两个网页保存，放到同一个服务器上，然后，先打开A.html, 再打开B.html，就会看到A.html会弹出提示，注意两个网页要同源。（同源页面：一个大网站的所有小页面）</p>
-<p>对于没有服务器的童鞋，可以这样：<br>比如先打开一个<a href="http://www.baidu.com，在控制台里输入：" target="_blank" rel="noopener">www.baidu.com，在控制台里输入：</a></p>
-<pre><code>window.addEventListener(&apos;storage&apos;, function(e){
-    alert(e.newValue);
-</code></pre><p>再打开一个<a href="http://www.baidu.com，在控制台里输入：" target="_blank" rel="noopener">www.baidu.com，在控制台里输入：</a></p>
-<pre><code>localStorage.clear();
-localStorage.setItem(&apos;foo&apos;, &apos;bar&apos;);
-</code></pre><p>然后此时第一个页面就会弹出提示框了。</p>
-<h5 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h5><p>如果非得要在同一网页监听怎么办？可以重写localStorage的方法，抛出自定义事件。</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head lang=&quot;en&quot;&gt;
-    &lt;title&gt;A&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;script&gt;
-    var orignalSetItem = localStorage.setItem;
-    localStorage.setItem = function(key,newValue){
-        var setItemEvent = new Event(&quot;setItemEvent&quot;);
-        setItemEvent.newValue = newValue;
-        window.dispatchEvent(setItemEvent);
-        orignalSetItem.apply(this,arguments);
-    }
-    window.addEventListener(&quot;setItemEvent&quot;, function (e) {
-        alert(e.newValue);
-    });
-    localStorage.setItem(&quot;nm&quot;,&quot;1234&quot;);
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;html&gt;
-</code></pre><h4 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h4><p>js使用json格式比较多，而localStorage存储的是字符串，如果希望把json格式的数据存储在本地，需要调用JSON.stringify()将其转为字符串。</p>
-<p>如果从localStorage中读取数据，可以调用JSON.parse()将其转换为json对象。</p>
-<p>参考自：<a href="http://blog.csdn.net/csethcrm/article/details/7409862" target="_blank" rel="noopener">http://blog.csdn.net/csethcrm/article/details/7409862</a><br>    <a href="http://blog.csdn.net/ruangong1203/article/details/52841135" target="_blank" rel="noopener">http://blog.csdn.net/ruangong1203/article/details/52841135</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage-sessionstorage-cookie-二/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/18/html5-localstorage-sessionstorage-cookie-二/" itemprop="url">html5 localstorage/sessionstorage/cookie (cookie篇)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T09:44:15+08:00">
-                2017-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="document对象的cookie属性"><a href="#document对象的cookie属性" class="headerlink" title="document对象的cookie属性"></a>document对象的cookie属性</h2><ul>
-<li>cookie是一小段文本信息，伴随在http请求里。</li>
-<li>它存储于访问者的计算机中，每当同一台计算机通过浏览器请求某个页面时，就会发送这个cookie。</li>
-<li>它是<strong>浏览器</strong>提供的一种机制，Javascript可以调用document对象的cookie属性，并创建和获取cookie的值，因此我们可以通过document.cookie访问它</li>
-<li>cookie是存于用户硬盘的一个文件，这个文件通常对应于一个域名，也就是说，<strong>cookie可以跨越同一域名下的多个网页，但不能跨越多个域名调用</strong>。</li>
-</ul>
-<h2 id="cookie的根本用途"><a href="#cookie的根本用途" class="headerlink" title="cookie的根本用途"></a>cookie的根本用途</h2><p>cookie将信息存储于用于硬盘，因此可以作为全局变量，这是它最大的一个优点。</p>
-<p><strong>它最根本的用途是能够帮助web站点保存有关访问者的信息</strong>。</p>
-<h3 id="cookie的几种小用途"><a href="#cookie的几种小用途" class="headerlink" title="cookie的几种小用途"></a>cookie的几种小用途</h3><ul>
-<li>保存用户登录信息：这是最常用的，可以通过cookie保存用户的id</li>
-<li>创建购物车：把已选商品保存在cookie中，可以实现不同页面之间数据的同步（<strong>同一域名下可以共享cookie</strong>），同时在提交订单的时候又会把这些cookie传到后台。</li>
-<li>跟踪用户行为：通过cookie记录用户的偏好信息，然后向用户推荐个性化推广信息。<strong>这是可以禁用的，也是cookie的缺点之一</strong>。</li>
-</ul>
-<h2 id="cookie是如何工作的？"><a href="#cookie是如何工作的？" class="headerlink" title="cookie是如何工作的？"></a>cookie是如何工作的？</h2><p>cookie是存在于用户硬盘中的，用户每次访问站点时，浏览器会根据URL在本地硬盘上查找与该URL有关的cookie，如果该cookie存在，就会将该cookie填充进request header里的cookie字段，与http请求一起发送到该站点。</p>
-<h2 id="cookie的格式和常见的属性"><a href="#cookie的格式和常见的属性" class="headerlink" title="cookie的格式和常见的属性"></a>cookie的格式和常见的属性</h2><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/4.png" alt=""><br>字符串规律：</p>
-<ul>
-<li>每个cookie都是键值对的形式</li>
-<li>名称和值都必须是<strong>URL编码</strong>的</li>
-<li>两对cookie之间用分号和空格隔开</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/5.png" alt=""><br>name、value不必多说，自然是cookie的名和值。</p>
-<p>domain，path，expires/max-age，size，http，secure等均是cookie的属性</p>
-<p>我们先手动添加几个cookie，代码如下：</p>
-<pre><code>document.cookie = &quot;test1=myCookie1;&quot;
-document.cookie = &quot;test2=myCookie2; domain=.google.com.hk; path=/webhp&quot;
-document.cookie = &quot;test3=myCookie3; domain=.google.com.hk; expires=Sat, 04 Nov 2017 16:00:00 GMT; secure&quot;
-document.cookie = &quot;test4=myCookie4; domain=.google.com.hk; max-age=10800;&quot;
-</code></pre><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/6.png" alt=""></p>
-<h4 id="domain和path"><a href="#domain和path" class="headerlink" title="domain和path"></a>domain和path</h4><p>这两个共同决定了cookie能被哪些页面共享。</p>
-<p>如果未设置domain和path，则默认为设置cookie的那个域，如test1所示；</p>
-<p>domain可以包含子域，也可以不包含。domain选项中，可以是”.google.com.hk”(不包含子域,表示它对google.com.hk的所有子域都有效)，也可以是”<a href="http://www.google.com.hk&quot;(包含子域)。" target="_blank" rel="noopener">www.google.com.hk&quot;(包含子域)。</a></p>
-<p>path用于控制cookie发送的指定域的路径，默认为”/“，表示指定域下的所有路径都能访问，它是在域名的基础下，指定可以访问的路径。例如cookie设置为”domain=.google.com.hk; path=/webhp”，那么只有”.google.com.hk/webhp”及”/webhp”下的任一子目录如”/webhp/aaa”或”/webhp/bbb”会发送cookie信息，而”.google.com.hk”就不会发送，即使它们来自同一个域。</p>
-<h4 id="expries-max-age失效时间"><a href="#expries-max-age失效时间" class="headerlink" title="expries/max-age失效时间"></a>expries/max-age失效时间</h4><p>expries 和 max-age 是用来决定cookie的生命周期的，也就是cookie何时会被删除。</p>
-<p>expries 表示的是失效时间，准确讲是「时刻」，max-age表示的是生效的「时间段」，以「秒」为单位。</p>
-<p>若 max-age 为正值，则表示 cookie 会在 max-age 秒后失效。如例四中设置”max-age=10800;”，也就是生效时间是3个小时，那么 cookie 将在三小时后失效。</p>
-<p>若 max-age 为负值，则cookie将在浏览器会话结束后失效，即 session，max-age的默认值为-1。若 max-age 为0，则表示删除cookie。</p>
-<h4 id="secure"><a href="#secure" class="headerlink" title="secure"></a>secure</h4><p>默认情况为空，不指定 secure 选项，即不论是 http 请求还是 https 请求，均会发送cookie。</p>
-<p>是 cookie 的安全标志，是cookie中唯一的一个非键值对儿的部分。指定后，cookie只有在使用SSL连接（如HTTPS请求或其他安全协议请求的）时才会发送到服务器。</p>
-<h4 id="httponly（即http）"><a href="#httponly（即http）" class="headerlink" title="httponly（即http）"></a>httponly（即http）</h4><p>httponly属性是用来限制客户端脚本对cookie的访问。将 cookie 设置成 httponly 可以减轻xss（跨站脚本攻击 Cross Site Scripting）攻击的危害，</p>
-<p>防止cookie被窃取，以增强cookie的安全性。（由于cookie中可能存放身份验证信息，放在cookie中容易泄露）</p>
-<p>默认情况是不指定 httponly，即可以通过 js 去访问。</p>
-<h4 id="如何利用以上属性设置cookie？"><a href="#如何利用以上属性设置cookie？" class="headerlink" title="如何利用以上属性设置cookie？"></a>如何利用以上属性设置cookie？</h4><ul>
-<li><p>服务端设置<br>服务器通过发送一个名为Set-cookie的HTTP头来创建一个cookie，作为Response Headers的一部分，每个Set-cookie表示一个cookie（如果想设置多个cookie，需要些多个Set-cookie），每个属性也是以键值对的形式（secure除外），属性间以分号加空格隔开。格式如下(只有cookie的名字和值是必须的):</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-cookie: name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>客户端设置<br>客户端设置cookie的格式和Set-cookie头中使用的格式一样。如下：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">document.cookie = &quot;name=value[; expires=GMTDate][; domain=domain][; path=path][; secure]&quot;</span><br></pre></td></tr></table></figure>
-<p>  若想要添加多个cookie，只能重复执行 document.cookie（如上）。这可能和平时写的 js 不太一样，一般重复赋值是会覆盖的，</p>
-<p>  但对于cookie，重复执行 document.cookie 并「不覆盖」，而是「添加」（针对「不同名」的）。</p>
-</li>
-</ul>
-<h4 id="cookie的缺点"><a href="#cookie的缺点" class="headerlink" title="cookie的缺点"></a>cookie的缺点</h4><ul>
-<li>安全性： 由于cookie在http中是明文传递的，其中包含的数据都可以被他人访问，可能会被篡改、盗用</li>
-<li>大小限制：cookie的大小限制在4kb左右，不适合大量存储</li>
-<li>增加流量：cookie每次请求都会被自动添加到Request Header中，无形中增加了流量。cookie信息越大，对服务器请求的时间越长。</li>
-</ul>
-<h2 id="cookie存储在哪里"><a href="#cookie存储在哪里" class="headerlink" title="cookie存储在哪里"></a>cookie存储在哪里</h2><p>面试被问到，一脸懵….</p>
-<p>cookie失效分为3种：<br>1、设置过期时间失效（只要设置了过期时间cookie就会存储在硬盘里面）<br>2、当会话结束时失效，即关闭浏览器窗口（如果没有设置expires，cookie就会存储在内存里面）<br>3、手动删除cookie失效</p>
-<p>测试1：<br>打开浏览器，进入控制台，输入：</p>
-<pre><code>document.cookie=&quot;test=myCookie1;&quot;
-</code></pre><p>然后打开Application，找到cookie，此时就能看到我们设置的test1了，<br>这时候我们关闭这个网页（注意不是关闭浏览器），再重新打开刚才那个窗口，发现test1还在；<br>如果关闭浏览器，再重新打开刚才那个窗口，发现此时test1已经不见了。</p>
-<p>测试2：<br>打开浏览器，进入控制台，输入：</p>
-<pre><code>document.cookie=&quot;test3=myCookie3; expires=Sat, 04 Nov 2017 16:00:00 GMT;&quot;
-</code></pre><p>关闭浏览器，再重新打开刚才那个窗口，发现此时test3还在。</p>
-<p>转载自：<a href="http://www.cnblogs.com/cxying93/p/6107459.html" target="_blank" rel="noopener">http://www.cnblogs.com/cxying93/p/6107459.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/html5-localstorage/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/18/html5-localstorage/" itemprop="url">html5 localstorage/sessionstorage/cookie （一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-18T09:08:56+08:00">
-                2017-07-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><p>cookie是小甜饼的意思，它确实非常小，大小在4kb左右。</p>
-<p>cookie主要用途是保存登录信息，比如登录某个网站可以看到“记住密码”，通常是在cookie中存入一段辨别用户身份的数据来实现的。</p>
-<h4 id="localstorage"><a href="#localstorage" class="headerlink" title="localstorage"></a>localstorage</h4><p>这是html5的新特性，用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
-<h4 id="sessionstorage"><a href="#sessionstorage" class="headerlink" title="sessionstorage"></a>sessionstorage</h4><p>sessionstorage与localstorage的接口类似，但保存数据的生命周期不同。</p>
-<p>它只是可以将一部分数据在当前会话中保存下来，刷新页面数据依旧存在，但当页面关闭后，sessionstorage中的数据就会被清空。</p>
-<h2 id="三者的异同"><a href="#三者的异同" class="headerlink" title="三者的异同"></a>三者的异同</h2><table>
-<thead>
-<tr>
-<th style="text-align:center">特性</th>
-<th style="text-align:center">cookie</th>
-<th style="text-align:center">localstorage</th>
-<th>sessionstorage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">数据的生命周期</td>
-<td style="text-align:center">可设置失效时间，默认是浏览器关闭后就失效</td>
-<td style="text-align:center">可以永久存储，除非手动清除</td>
-<td>当关闭页面或者浏览器时，才会清除</td>
-</tr>
-<tr>
-<td style="text-align:center">存放数据大小</td>
-<td style="text-align:center">4kb</td>
-<td style="text-align:center">5M</td>
-<td>5M</td>
-</tr>
-<tr>
-<td style="text-align:center">与服务端进行通信</td>
-<td style="text-align:center">携带在http头中，如果使用cookie保存过多数据，会带来性能问题</td>
-<td style="text-align:center">仅在客户端（浏览器）中，不参与和服务器的通信</td>
-<td>仅在客户端（浏览器）中，不参与和服务器的通信</td>
-</tr>
-<tr>
-<td style="text-align:center">易用性</td>
-<td style="text-align:center">需要程序员自己封装，源生的cookie接口不友好</td>
-<td style="text-align:center">源生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
-<td>源生接口可以接受，亦可再次封装来对Object和Array有更好的支持</td>
-</tr>
-</tbody>
-</table>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><h5 id="cookie-用户是否登录"><a href="#cookie-用户是否登录" class="headerlink" title="cookie: 用户是否登录"></a>cookie: 用户是否登录</h5><p>因为考虑到每个 HTTP 请求都会带着 Cookie 的信息，所以 Cookie 当然是能精简就精简啦，比较常用的一个应用场景就是判断用户是否登录。针对登录过的用户，服务器端会在他登录时往 Cookie 中插入一段加密过的唯一辨识单一用户的辨识码，下次只要读取这个值就可以判断当前用户是否登录啦。曾经还使用 Cookie 来保存用户在电商网站的购物车信息，如今有了 localStorage，似乎在这个方面也可以给 Cookie 放个假了~</p>
-<h5 id="localstorage-购物车，html5游戏产生的一些本地数据"><a href="#localstorage-购物车，html5游戏产生的一些本地数据" class="headerlink" title="localstorage: 购物车，html5游戏产生的一些本地数据"></a>localstorage: 购物车，html5游戏产生的一些本地数据</h5><h5 id="sessionstorage：-表单提交"><a href="#sessionstorage：-表单提交" class="headerlink" title="sessionstorage： 表单提交"></a>sessionstorage： 表单提交</h5><p>如果遇到一些内容特别多的表单，为了优化用户体验，我们可能要把表单页面拆分成多个子页面，然后按步骤引导用户填写。这时候 sessionStorage 的作用就发挥出来了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/html5-video-标签横屏竖屏问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/17/html5-video-标签横屏竖屏问题/" itemprop="url">html5 video 标签横屏竖屏问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T22:47:37+08:00">
-                2017-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在手机上录制的视频有些是横屏的，有些是竖屏的，发现使用video标签播放的时候横屏的视频有时候会变成竖屏播放，即使设置了宽高。所以这个播放方向是如何确定的？</p>
-<p>先说一个场景<br>随便在微信打开一个带有视频的文章 你点击视频 视频播放 你把手机翻转变成横屏<br>你期望的结果是视频边横屏 并且 全屏 但实际当前视窗 已经横屏不知道哪里去了 视频还是在那个小窗口里播放。</p>
-<p><strong> video标签本身不具备响应横竖屏的事件 </strong></p>
-<p>能捕获横竖屏方向的事件和方法</p>
-<p>1、 window.orientation属性与onorientationchange事件</p>
-<pre><code>//判断手机横竖屏状态：
-window.addEventListener(&quot;onorientationchange&quot; in window ? &quot;orientationchange&quot; : &quot;resize&quot;, function() {
-    if (window.orientation === 180 || window.orientation === 0) {
-        alert(&apos;竖屏状态！&apos;);
-    }
-    if (window.orientation === 90 || window.orientation === -90 ){
-        alert(&apos;横屏状态！&apos;);
-    } 
-}, false);
-</code></pre><p>//移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。</p>
-<p>2、resize监听 通过计算来判断<br>3、css媒体查询</p>
-<pre><code>/* 竖屏 */
-@media screen and (orientation:portrait) {
-
-/* portrait-specific styles */
-
-}
-
-/* 横屏 */
-
-@media screen and (orientation:landscape) {
-
-/* landscape-specific styles */
-
-}
-</code></pre><p>屏幕方向对应的window.orientation值：</p>
-<p>ipad,iphone： 90 或 -90 横屏</p>
-<p>ipad,iphone： 0 或180 竖屏</p>
-<p>Andriod：0 或180 横屏</p>
-<p>Andriod： 90 或 -90 竖屏</p>
-<p>转载自：<a href="https://segmentfault.com/q/1010000003913319/a-1020000003919464" target="_blank" rel="noopener">https://segmentfault.com/q/1010000003913319/a-1020000003919464</a></p>
-<p><a href="http://www.cnblogs.com/AnotherLife/p/5764389.html" target="_blank" rel="noopener">http://www.cnblogs.com/AnotherLife/p/5764389.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2330,7 +2434,7 @@ window.addEventListener(&quot;onorientationchange&quot; in window ? &quot;orient
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

@@ -263,6 +263,923 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks与VPN区别/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/shadowsocks与VPN区别/" itemprop="url">shadowsocks与VPN区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T16:19:52+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="vpn"><a href="#vpn" class="headerlink" title="vpn"></a>vpn</h1><p>vpn(virtual private network, 虚拟私人网络), 是一种加密通讯技术。</p>
+<p>vpn是一种统称，出现远早于GFW，所以它不是为翻墙而生的，它的目的是数据传输安全和网络匿名。</p>
+<p>既然不是为翻墙而生的，那从翻墙的角度而言，vpn就存在诸多问题，最严重的一个就是流量特征过于明显，GFW目前已经能识别绝大部分的VPN，所以VPN得翻墙方式基本已经废了。</p>
+<p>接入VPN就是接入了一个专有网络，你访问网络的所有流量都通过这个专有网络的出口出去，同时你的IP地址也变成了这个VPN分配的IP地址。</p>
+<h1 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h1><p>是一种socks5的代理，而socks5的代理服务器则通过一个加密通道，将你的请求发给代理服务器，代理服务器将请求转发到目的地。</p>
+<p>你没有加入任何新的网络，只是http/socks数据经过代理服务器的转发送出，并从代理服务器接收响应。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/shadowsocks搭建/" itemprop="url">shadowsocks搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T12:56:23+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上一篇文章讲了一下shadowsocks翻墙原理（<a href="https://xixizhangfe.github.io/2018/09/16/shadowsocks%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener">shadowsocks翻墙原理</a>）,这里要理论与实践结合了。开始~</p>
+<p>这里我定义一些规则，避免混淆:</p>
+<ul>
+<li>VPS = 你在搬瓦工购买的机器</li>
+<li>ss服务端口号 = 执行shadowsocks.sh打印出的Your Server Port = shadowsocks.json里的port</li>
+<li>ss服务IP = VPS的IP = 执行shadowsocks.sh打印出的Your Server IP</li>
+<li>ss服务IP != shadowsocks.json里的server</li>
+<li>加密方式 = 执行shadowsocks.sh打印出的Your Encryption Method = shadowsocks.json里的method</li>
+<li>ssserver = 你在VPS上启动的shadowsocks服务 = shadowsocks服务端</li>
+<li>sslocal = 你在自己的电脑上安装的shadowsocks客户端 = shadowsocks客户端</li>
+<li>ssserver密码 = 执行shadowsocks.sh打印出的password = shadowsocks.json里的password</li>
+</ul>
+<p>文章里可能出现各种叫法，是为了适应不同的语境，不理解的话可以按照上述规则查看。</p>
+<h1 id="购买VPS"><a href="#购买VPS" class="headerlink" title="购买VPS"></a>购买VPS</h1><p>我是在<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>购买的，当然这是师兄推荐的，否则以我的性格又得纠结死在哪儿买…哈哈哈</p>
+<p>我买的是19.9$/年，512M，应该足够用了（嗯，其实就是看这个最便宜 嘿嘿）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-1.png?raw=true" alt="搬瓦工套餐选择"></p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>购买以后呢，就可以在<a href="https://www.bwh1.net/clientarea.php" target="_blank" rel="noopener">我的账户</a>里，点击Services-My service，就能看到了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-2?raw=true" alt="购买详情"></p>
+<p>然后点击右边的KiwiVM Control Panel进入管理界面。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__%E6%90%AC%E7%93%A6%E5%B7%A5%E8%B4%AD%E4%B9%B0-3.png?raw=true" alt="管理界面"></p>
+<p>在Main control里可以看到相关配置信息</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-2.png?raw=true" alt="main control"></p>
+<p>然后你可以选择重装系统，也可以使用默认的。我是重新安装了，如果要重新安装，需要先在Main controls里点击stop进行关机，然后点右侧Install new OS,选择右边的操作系统(我选择的是centos-7-x86_64)，然后点击同意，最后点击reload。大概等个1-2分钟，就好了。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-1.png?raw=true" alt="reload"></p>
+<p>Reload后会给一个随机的root用户密码，以及随机端口号。然后点击Main controls，就可以看到你的VPS的IP地址(IP address)和端口号（SSH Port）了，这个是会用到的。（注意：这个端口号只有在登录的时候才会用到，后面配置shadowsocks的时候都不会用到。不要和shadowsocks服务的端口混淆。）</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-3.png?raw=true" alt="reload port"></p>
+<p>稍后，就可以进入虚拟机了，用自带的工具，或者其他ssh工具即可。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__vps%E9%85%8D%E7%BD%AE-4.png?raw=true" alt="command"></p>
+<p>我觉得自带的不好用，用的是ssh,即在本地终端，用ssh连接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 分配的端口号(就是上面说的SSH Port)   VPS的IP地址</span><br></pre></td></tr></table></figure>
+<p>然后命令行会提示你输入密码，密码要是不知道，可以通过点击Root password modification，随机产生新的密码。</p>
+<p>输入后，就可以进入登录到你的VPS操作了。</p>
+<h1 id="安装shadowsocks-server端"><a href="#安装shadowsocks-server端" class="headerlink" title="安装shadowsocks server端"></a>安装shadowsocks server端</h1><p>这一步安装的就是上一篇文章中的ss server。</p>
+<p>此处可以利用一个共享的python一键安装脚本。用root用户执行下面的语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget</span><br><span class="line">wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>成功后，就会打出日志，最后几行就是ss server的信息。在后面配置ss local的时候都会用到。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-1.png?raw=true" alt="打印的信息"></p>
+<p>其中，Your password(密码)、Your Encryption Method(加密方式)是那个一键安装脚本里写的默认值，你可以修改那个脚本。密码可以不用改，Your Encryption Method这个是必须要改的，因为脚本默认的是aes-256-gcm，但是后面我们配置ss local时是没有这个选项的，所以我改成了aes-256-cfb。更改的方式也很简单，就是打开/etc/shadowsocks.sh这个脚本，然后找到下图里的内容，应该就在脚本的前面，然后把aes-256-cfb放到第一个（注意：本来aes-256-cfb本来不是在第一个的，第一个是aes-256-gcm，图中是我修改后的）。</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__ssserver%E5%AE%89%E8%A3%85-2.png?raw=true" alt="sh脚本"></p>
+<p>改完后，重新执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
+<p>执行完毕后，打印出来的信息就是你刚才修改的。</p>
+<p>这只是修改密码和加密方式的一种方式。你还可以通过/etc/shadowsocks.json来修改。这种方式更简单明了，推荐推荐推荐！！！  </p>
+<p>如果你已经通过上面那个脚本修改了，打开这个文件，就会看到port、password、method和刚才修改后打印出的日志是一样的，但server不一样，是0.0.0.0（表示可以接收任意IP的请求），因此注意这个server不需要修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;port&quot;:&quot;xxxx&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;password&quot;:&quot;teddysun.com&quot;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想修改port、password、method，就可以改这个文件。然后执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks restart</span><br></pre></td></tr></table></figure>
+<p>以后你想修改port、password、method，都可以只修改这个shadowsocks.json文件，然后重启一下shadowsocks就可以了。</p>
+<p>到此，你的ss server就配置成功了。</p>
+<p>当然，如果不放心，你可以做一些验证。</p>
+<ul>
+<li><p>在你自己的电脑，打开终端：</p>
+<ul>
+<li><p>测试你的VPS是否能ping通：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping VPS的IP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试shadowsocks服务端口是否已通</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ss服务IP ss服务端口号</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在你的VPS机器上</p>
+<ul>
+<li><p>查看进程里是否有ssserver，如果打印出信息就代表ssserver在运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux |grep ssserver</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务端口是否在监听，如果打印出信息，则代表端口号在监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:shadowsocks.json里的端口号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看服务状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service shadowsocks status</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>另外，提供一些常用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">启动ssserver: service shadowsocks start</span><br><span class="line">停止ssserver: service shadowsocks stop</span><br><span class="line">重启ssserver: service shadowsocks restart</span><br><span class="line">查看ssserver状态: service shadowsocks status</span><br></pre></td></tr></table></figure>
+<h2 id="配置多用户"><a href="#配置多用户" class="headerlink" title="配置多用户"></a>配置多用户</h2><p>如果你想配置多用户，可以把shadowsocks.json改成下图，即把port和password合并：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;,</span><br><span class="line">    &quot;local_address&quot;:&quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;local_port&quot;:1080,</span><br><span class="line">    &quot;port_password&quot;:&#123;</span><br><span class="line">	&quot;port1&quot;:&quot;password1&quot;,</span><br><span class="line">	&quot;port2&quot;:&quot;password2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;timeout&quot;:300,</span><br><span class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;,</span><br><span class="line">    &quot;fast_open&quot;:false</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="安装shadowsocks客户端"><a href="#安装shadowsocks客户端" class="headerlink" title="安装shadowsocks客户端"></a>安装shadowsocks客户端</h1><p>我的是mac，大家可以根据自己的需要在网上下载，应该很多。这里给出一个地址<a href="https://github.com/shadowsocks/ShadowsocksX-NG/releases" target="_blank" rel="noopener">下载链接</a>。</p>
+<p>安装后，就会在浏览器看到一个小图标，点击图标，选择服务器-服务器设置，就会弹出下图设置框：</p>
+<p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E6%90%AD%E5%BB%BA__sslocal%E9%85%8D%E7%BD%AE.jpg?raw=true" alt="sslocal配置"></p>
+<ul>
+<li>点击+号，新建一个服务器</li>
+<li>地址是ss服务IP, 冒号后面的是端口号，就是ss服务端口号</li>
+<li>加密方式就是加密方式</li>
+<li>密码就是ssserver密码</li>
+<li>备注随便填</li>
+<li>点击确定</li>
+<li>另外有三种模式可以选择：PAC自动模式、全局模式、手动模式，PAC自动模式只有在访问被墙的网页时才会走ssserver，全局模式是所有访问的网页都会走ssserver，一般情况下我们就用PAC自动模式就好了，如果访问的某些网站比较慢，比如MDN，可以采用全局模式</li>
+</ul>
+<p>至此，全部配置完毕。可以愉快的上网学习了！</p>
+<h1 id="可能出现的问题"><a href="#可能出现的问题" class="headerlink" title="可能出现的问题"></a>可能出现的问题</h1><p>配置后，发现还是无法翻墙。可能是ss服务端口号被防火墙阻挡了，因此，可以登录你的VPS，把防火墙关闭，或者把你的ss服务端口号加入到防火墙允许的列表中。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/shadowsocks原理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/shadowsocks原理/" itemprop="url">shadowsocks原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T11:12:37+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前一直用jj师兄搭建的shadowsocks服务器，前几天师兄说他的快到期了，不打算继续用了，并且他说刚好最近<a href="https://www.bwh1.net/vps-hosting.php" target="_blank" rel="noopener">搬瓦工</a>上最便宜的那款(19.9$/年)有货，于是乎我赶紧抓住机会买了。在搭建的过程中，虽然参考了很多大佬的教程，但也不是那么顺畅。于是决定自己梳理原理，从源头搞起，才能知道自己搭建的哪儿有问题。搞起~</p>
+<h1 id="翻墙的原理"><a href="#翻墙的原理" class="headerlink" title="翻墙的原理"></a>翻墙的原理</h1><p>防火长城（Great Firewall），简称GFW，就是常说的防火墙。由于不同的请求具有不同的数据特征，不同的协议具有不同的特征，比如HTTP/HTTPS这类请求，会很明确的告诉GFW它们要请求哪些域名，再比如TCP请求，它只会告诉GFW它们要请求哪个IP。防火墙采用<strong>黑名单</strong>方式，有域名黑名单和IP黑名单，像常见的国外网站<a href="www.google.com">谷歌</a>，<a href="www.facebook.com">Facebook</a>等都是在黑名单里的（<a href="https://zh.wikipedia.org/zh-hans/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E8%A2%AB%E5%B0%81%E9%94%81%E7%BD%91%E7%AB%99%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">封锁网站列表</a>）。 </p>
+<p>也就是说，当你访问一个在黑名单列表里的网站时，就会被GFW拦截。但如果你有一台国外的服务器，并且这个服务器不在GFW的黑名单列表里，你就可以访问这台服务器了。因此，翻墙的一个方案就出来了：你想看什么网页，就告诉国外的机器，让国外的机器代理抓取，然后送回来。我们要做的就是保证你于国外机器通讯时不被GFW怀疑和窃听。</p>
+<p>ssh tunnel是比较具有代表性的防窃听通讯隧道，通过ssh与境外服务器建立一条加密通道，此时GFW会将通讯当做普通的流量，但是随着用的人越来越多，GFW不干了，它开始通过一些流量特征分析，识别哪些连接是ssh隧道，并对它进行干扰，于是众多隧道都走不通了。</p>
+<h1 id="shadowsocks是如何翻墙的呢？"><a href="#shadowsocks是如何翻墙的呢？" class="headerlink" title="shadowsocks是如何翻墙的呢？"></a>shadowsocks是如何翻墙的呢？</h1><p><img src="https://github.com/xixizhangfe/markdownImages/blob/master/shadowsocks%E5%8E%9F%E7%90%86.jpeg?raw=true" alt="shadowsocks翻墙原理"></p>
+<h2 id="这里要理解一个概念，就是socks5是什么？"><a href="#这里要理解一个概念，就是socks5是什么？" class="headerlink" title="这里要理解一个概念，就是socks5是什么？"></a>这里要理解一个概念，就是socks5是什么？</h2><p>这是一个比较成熟的代理协议，被大多数操作系统、浏览器、客户端软件支持，以前翻墙大多数是这个协议。</p>
+<p>在GFW外面部署一个socks5协议的server，在GFW内使用一个支持socks5协议的客户端连接server，通过一定的认证和加密将数据通过TCP socket按照socks5协议发送数据包给server，在server端根据socks5协议解密后将明文包转发给某个GFW外的目标机器，从而实现翻墙。</p>
+<p>因为数据都是经过协商加密的，所以一开始GFW是没法发现的，后来socks5协议大量被用于翻墙，GFW就开发相应的流量识别策略，毕竟连接协商阶段的流量是明文的，因此总有办法截掉你的连接，所以socks5开始变得不那么稳定了。</p>
+<h2 id="那么shadowsocks是如何做到的呢？"><a href="#那么shadowsocks是如何做到的呢？" class="headerlink" title="那么shadowsocks是如何做到的呢？"></a>那么shadowsocks是如何做到的呢？</h2><p>再看上面那张图片，shadowsocks在客户端本地部署了一个socks5 server端（也就是shadowsocks软件），用户使用一个支持socks5协议的客户端软件（如浏览器）连接这个socks5 server发送数据。</p>
+<p>这个socks5 server是shadowsocks按照socks5协议开发的，它解密数据为明文后，按照shadowsocks自定义的一种新的通讯协议（GFW没时间来分析这个协议）加密后发送给GFW外部署的shadowsocks server，这个server按照shadowsocks定义的协议解密数据为明文，转发给墙外的目标机。</p>
+<p>shadowsocks之所以在客户端本地启动一个socks5代理server，是因为socks5协议已被大多数操作系统、浏览器、客户端软件支持，因此我们只需要配置一下浏览器通过shadowsocks的socks5 server代理，那么shadowsocks就可以拦截到浏览器的流量，通过重新包装发送给远程的shadowsocks server了，这对于一个新的翻墙工具的普及无疑是很有利的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/weixin_42075590/article/details/80717291" target="_blank" rel="noopener">shadowsocks原理</a></p>
+<p><a href="https://blog.csdn.net/ai2000ai/article/details/80829131" target="_blank" rel="noopener">shadowsocks原理简介及安装指南</a></p>
+<p>感谢以上作者！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/call与apply/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/29/call与apply/" itemprop="url">call与apply</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T21:42:22+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="this指向"><a href="#this指向" class="headerlink" title="this指向"></a>this指向</h3><p>直接看代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function fn() &#123;</span><br><span class="line">  console.log(this);</span><br><span class="line">&#125;</span><br><span class="line">fn();//window</span><br><span class="line"></span><br><span class="line">fn.call(1);//this=&gt;数字1的包装类对象Number，相当于new Number(1)</span><br><span class="line">fn.call(&apos;str&apos;); // this=&gt;字符串&apos;str&apos;的包装类对象String，相当于new String(&apos;str&apos;)</span><br><span class="line"></span><br><span class="line">fn.call([1,2,3]); // this=&gt;数组[1,2,3]</span><br><span class="line">fn.call(&#123;&#125;); // this=&gt;对象</span><br><span class="line"></span><br><span class="line">fn.call();//window</span><br><span class="line">fn.call(null);//window</span><br><span class="line">fn.call(undefined);//window</span><br><span class="line"></span><br><span class="line">function fn1(name, age)&#123;</span><br><span class="line">  console.log(this, name, age);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn1.call(null, &apos;张三&apos;, 20); //window, &apos;张三&apos;,20</span><br><span class="line"></span><br><span class="line">fn1.apply(null, [&apos;张三&apos;,20]); //windwo, &apos;张三&apos;,20</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/数据类型的判断方法大汇总/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/29/数据类型的判断方法大汇总/" itemprop="url">数据类型的判断方法大汇总</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-29T20:53:15+08:00">
+                2017-07-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>总的来说，判断数据类型有很多种方法：</p>
+<ul>
+<li>typeof  基本类型可以，但是对于复杂类型不准确</li>
+<li>instanceof</li>
+<li>constructor  比较准确（只是有时constructor会被改变）</li>
+<li>isPrototypeOf</li>
+<li>Object.prototype.toString.call() 最好的</li>
+</ul>
+<h3 id="typeof-返回值："><a href="#typeof-返回值：" class="headerlink" title="typeof 返回值："></a>typeof 返回值：</h3><p>undefined:未定义 （只声明，但是未定义的也是undefined）</p>
+<p>boolean: 布尔值</p>
+<p>number: 数值</p>
+<p>string: 字符串</p>
+<p>object: 对象或null</p>
+<p>function: 函数</p>
+<h3 id="constructor返回值："><a href="#constructor返回值：" class="headerlink" title="constructor返回值："></a>constructor返回值：</h3><p>就是其对应的构造函数（但是constructor有可能被修改）</p>
+<h3 id="instanceof返回值："><a href="#instanceof返回值：" class="headerlink" title="instanceof返回值："></a>instanceof返回值：</h3><p>判断对象是否属于这个构造函数（查找对象与构造函数在原型链上是否有关系）</p>
+<h3 id="Object-prototype-toString-call-返回值"><a href="#Object-prototype-toString-call-返回值" class="headerlink" title="Object.prototype.toString.call()返回值"></a>Object.prototype.toString.call()返回值</h3><p>最准确的</p>
+<p>[object Number]</p>
+<p>[object String] </p>
+<p>[object Boolean] </p>
+<p>[object Array]</p>
+<p>[object Object]</p>
+<p>[object Function] </p>
+<p>[object RegExp] </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 基本数据类型</span><br><span class="line">var num = 3;</span><br><span class="line">var str = &quot;hello&quot;;</span><br><span class="line">var b =false;</span><br><span class="line"></span><br><span class="line">//复杂数据类型</span><br><span class="line">var arr = [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;];</span><br><span class="line">var obj=&#123;&#125;;</span><br><span class="line">var fn = function()&#123;&#125;;</span><br><span class="line">var reg = new RegExp(/a/g);</span><br><span class="line"></span><br><span class="line">console.log(typeof num, num.constructor, Object.prototype.toString.call(num));</span><br><span class="line">console.log(typeof str, str.constructor, Object.prototype.toString.call(str));</span><br><span class="line">console.log(typeof b, b.constructor, Object.prototype.toString.call(b));</span><br><span class="line"></span><br><span class="line">console.log(typeof arr, arr.constructor,  Object.prototype.toString.call(arr));</span><br><span class="line">console.log(typeof obj, obj.constructor, Object.prototype.toString.call(obj));</span><br><span class="line">console.log(typeof fn, fn.constructor,  Object.prototype.toString.call(fn));</span><br><span class="line">console.log(typeof reg, reg.constructor, Object.prototype.toString.call(reg));</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">number function Number() &#123; [native code] &#125; [object Number] </span><br><span class="line">string function String() &#123; [native code] &#125; [object String] </span><br><span class="line">boolean function Boolean() &#123; [native code] &#125; [object Boolean] </span><br><span class="line">object function Array() &#123; [native code] &#125; [object Array] </span><br><span class="line">object function Object() &#123; [native code] &#125; [object Object] </span><br><span class="line">function function Function() &#123; [native code] &#125; [object Function] </span><br><span class="line">object function RegExp() &#123; [native code] &#125; [object RegExp]</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/setTimeout中的this/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/28/setTimeout中的this/" itemprop="url">setTimeout中的this</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-28T21:17:17+08:00">
+                2017-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>setTimeout函数执行的代码是从执行上下文中调用的，与setTimeout调用的函数不同。</p>
+<p>如果在非严格模式下，this将指向全局或者window对象，在严格模式下，是undefined。</p>
+<p>看下面的例子：</p>
+<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
+myArray.myMethod = function (sProperty) {
+    alert(arguments.length &gt; 0 ? this[sProperty] : this);
+};
+
+myArray.myMethod(); // prints &quot;zero,one,two&quot;
+myArray.myMethod(1); // prints &quot;one&quot;
+</code></pre><p>而如果用setTimeout呢？</p>
+<pre><code>setTimeout(myArray.myMethod, 1000); // prints &quot;[object Window]&quot; after 1 second
+setTimeout(myArray.myMethod, 1500, &apos;1&apos;); // prints &quot;undefined&quot; after 1.5 seconds
+</code></pre><p>myArray.myMethod函数被传递给setTimeout，当它被调用时，它的this没有被设置，所以默认指向window对象，并且也没有选项能够传thisArg给setTimeout，使用call也是不行的。</p>
+<pre><code>setTimeout.call(myArray, myArray.myMethod, 2000); // error: &quot;NS_ERROR_XPC_BAD_OP_ON_WN_PROTO: Illegal operation on WrappedNative prototype object&quot;
+setTimeout.call(myArray, myArray.myMethod, 2500, 2); // same error
+</code></pre><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>1、将调用的函数使用一个包裹函数包裹</p>
+<pre><code>setTimeout(function(){myArray.myMethod()}, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
+setTimeout(function(){myArray.myMethod(&apos;1&apos;)}, 2500); // prints &quot;one&quot; after 2.5 seconds
+</code></pre><p>2、箭头函数</p>
+<pre><code>setTimeout(() =&gt; {myArray.myMethod()}, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
+setTimeout(() =&gt; {myArray.myMethod(&apos;1&apos;)}, 2500); // prints &quot;one&quot; after 2.5 seconds
+</code></pre><p>3、bind</p>
+<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
+myBoundMethod = (function (sProperty) {
+    console.log(arguments.length &gt; 0 ? this[sProperty] : this);
+}).bind(myArray);
+
+myBoundMethod(); // prints &quot;zero,one,two&quot; because &apos;this&apos; is bound to myArray in the function
+myBoundMethod(1); // prints &quot;one&quot;
+setTimeout(myBoundMethod, 1000); // still prints &quot;zero,one,two&quot; after 1 second because of the binding
+setTimeout(myBoundMethod, 1500, &quot;1&quot;); // prints &quot;one&quot; after 1.5 seconds
+</code></pre><p>4、重写setTimeout和setInterval函数</p>
+<pre><code>/ Enable setting &apos;this&apos; in JavaScript timers
+
+var __nativeST__ = window.setTimeout, 
+    __nativeSI__ = window.setInterval;
+
+window.setTimeout = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this, 
+      aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeST__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+
+window.setInterval = function (vCallback, nDelay /*, argumentToPass1, argumentToPass2, etc. */) {
+  var oThis = this,
+      aArgs = Array.prototype.slice.call(arguments, 2);
+  return __nativeSI__(vCallback instanceof Function ? function () {
+    vCallback.apply(oThis, aArgs);
+  } : vCallback, nDelay);
+};
+</code></pre><p>测试一下：</p>
+<pre><code>myArray = [&apos;zero&apos;, &apos;one&apos;, &apos;two&apos;];
+myArray.myMethod = function (sProperty) {
+    alert(arguments.length &gt; 0 ? this[sProperty] : this);
+};
+
+setTimeout(alert, 1500, &apos;Hello world!&apos;); // the standard use of setTimeout and setInterval is preserved, but...
+setTimeout.call(myArray, myArray.myMethod, 2000); // prints &quot;zero,one,two&quot; after 2 seconds
+setTimeout.call(myArray, myArray.myMethod, 2500, 2); // prints &quot;two&quot; after 2.5 seconds
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/28/被誉为神器的requestAnimationFrame/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -968,1275 +1885,11 @@ vm.b = 2;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react的5个demo/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/react的5个demo/" itemprop="url">react的5个demo</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T21:08:03+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>下面只讲述5个react的实例，虽然仅有5个，但在常用的开发中，几乎会包含大部分的情况，只要熟练掌握这5个demo，相信一定会解决大部分问题。</p>
-<blockquote>
-<ul>
-<li>demo都是采用<strong>ES6语法</strong>写的，不懂的可以学习一下。</li>
-</ul>
-</blockquote>
-<h1 id="DEMO-1-最简单的react渲染"><a href="#DEMO-1-最简单的react渲染" class="headerlink" title="DEMO 1    - 最简单的react渲染"></a>DEMO 1    - 最简单的react渲染</h1><h3 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="在浏览器中显示的效果如下"><a href="#在浏览器中显示的效果如下" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/12.png" alt="这里写图片描述"></p>
-<h3 id="讲解："><a href="#讲解：" class="headerlink" title="讲解："></a>讲解：</h3><ul>
-<li>页面中，只有<code>&lt;div id=&#39;name&#39;&gt;</code>这里的内容是使用react渲染出来的，代码中这里是空的，依赖下面的js进行渲染</li>
-<li><p>首先看下 <code>class Text extends React.Component</code> 这块，这里是声明一个组件，名字叫做Text,名字随意起，<strong>但第一个字母必须大写</strong>，用来区分html中原生的标签</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by React!</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其中参数有很多，但都可以省略，唯有<code>render</code>不可以省略，因为这是用来表述这个插件被加载后，显示的是什么样子，它的返回结果，就是加载在页面上最终的样式。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span><br><span class="line">   <span class="tag">&lt;<span class="name">Text</span>/&gt;</span>,</span><br><span class="line">    document.getElementById('root')</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这段代码是用来渲染react组件的，第一个参数是组件，第二个参数是要渲染的位置。</p>
-<ul>
-<li>使用<code>&lt;Text/&gt;</code>的 方式就可以实例化组件，或者写成<code>&lt;Text&gt;&lt;/Text&gt;</code>，要注意下，react中标签的闭合非常严格，<strong>任何标签的关闭与打开必须一一对应</strong>，否则会报错。    </li>
-<li>到目前为止，就完成了一次渲染，将Text组件render函数返回的内容，填充到了id=root的div中。</li>
-</ul>
-<hr>
-<h1 id="DEMO-2-带有参数的react"><a href="#DEMO-2-带有参数的react" class="headerlink" title="DEMO 2    - 带有参数的react"></a>DEMO 2    - 带有参数的react</h1><p>往往在使用中，文本的内容并不是写死的，而是需要被我们指定，这样组件才能更通用。下面介绍下，如何向react中传递参数。</p>
-<p>###代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.props.name&#125;! age=&#123;this.props.age&#125;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;React&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="在浏览器中显示的效果如下-1"><a href="#在浏览器中显示的效果如下-1" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/13.png" alt="这里写图片描述">   </p>
-<h3 id="讲解"><a href="#讲解" class="headerlink" title="讲解"></a>讲解</h3><ul>
-<li>首先，这个大体上跟第一个demo类似，唯有实例化Text时，多了参数。</li>
-<li>当我们传递参数时，写了两种方式，一种是 <code>name=&quot;react&quot;</code>另一种是<code>age={11}</code>，这两种写法是有区别的，并不仅仅因为一个是<code>str</code>，一个是<code>int</code>。如果是<code>str</code>这种类型，写成 <code>name=&quot;xxx&quot;</code>或者<code>name={&quot;xxx&quot;}</code>都是可以的，加了{}的意思就是js中的变量，更加精确了。而后者<code>age={181}</code>是不可以去掉{}的，这样会引起异常，所以这里要注意下，并且建议任何类型都加上{}来确保统一。</li>
-<li>当在Text初始化时添加了参数，在组件内部，都收集在this.props中，使用时只要{this.props.name}既可以获取name对应的值，如果取得key并不存在，这里不会报错，只是取到的值是空的。当然可以在<code>getDefaultProps</code>中定义默认的props值，即使在没有传递参数的情况下，也能取到默认值。</li>
-<li>props中的参数，在初始化传递后，便不能再修改。</li>
-</ul>
-<hr>
-<h1 id="DEMO-3-state，react的核心"><a href="#DEMO-3-state，react的核心" class="headerlink" title="DEMO 3        - state，react的核心"></a>DEMO 3        - state，react的核心</h1><p>state算是react的核心了，任何页面的变化，刷新都是state的变化引起。在react中，只要调用了setState都会引起render的重新执行。下面介绍下如何通过键盘事件触发状态变化。</p>
-<h3 id="代码：-1"><a href="#代码：-1" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            name: this.props.name</span><br><span class="line">          &#125;;</span><br><span class="line">          this.keyUp = this.keyUp.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        keyUp(e) &#123;</span><br><span class="line">          this.setState(&#123;name: e.target.value&#125;, function() &#123;</span><br><span class="line">            console.log(this.state.name);</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              hello, this is rendered by &#123;this.state.name&#125;!</span><br><span class="line">              &lt;input type=&quot;text&quot; name=&quot;&quot; onKeyUp=&#123;this.keyUp&#125; /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text name=&quot;react&quot; age=&#123;11&#125;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="在浏览器中显示的效果如下-2"><a href="#在浏览器中显示的效果如下-2" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/14.png" alt="这里写图片描述"></p>
-<h3 id="讲解：-1"><a href="#讲解：-1" class="headerlink" title="讲解："></a>讲解：</h3><ul>
-<li>这次组件中多了一个函数，<code>keyUp</code>，keyUp是我自定义的函数，用来响应键盘事件的。</li>
-<li>我们先看constructor函数，这里constructor接收props，并采用super(props)去继承父组件的方法和属性，`this.state = {<pre><code>  name: this.props.name
-};`是初始化state；另外，`this.keyUp = this.keyUp.bind(this);`是绑定this，否则this是react组件支撑实例，而不是组件实例。
-</code></pre></li>
-<li>再看render函数，文字渲染中加了{this.state.name}，这个是react内部的状态，可以理解是存储数据的k-v结构，这里的v支持的对象较多。{this.state.name}就是引用状态中的name属性，与props的区别在于，如果state中不存在这个属性，是会报错的，所以我们要在constructor中初始化这个状态的初始值。</li>
-<li>render中还多了一个<input onkeyup="{this.keyUp}">，onKeyUp是注册键盘键弹起的事件，当按键按下后弹起，就会触发onKeyUp事件，然后通过绑定的this.keyUp，将事件传递给了自己定义的keyUp函数中。</li>
-<li>keyUp函数中，使用了this.setState({name: e.target.value})，setState是react中内部的函数，专门用来更新状态的，这里是讲状态中name的值变更为引起事件的value值。</li>
-<li>在react中，每次状态的变化，都会引起render函数的重新渲染，这是它自己的机制，我们无需人为处理，当键盘输入内容时，会触发状态变化，导致render重新渲染，渲染的过程会从state中取出变量，所以我们就看到了页面的内容发生了变化。</li>
-<li>我们在setState下面加了一个console，通过控制台可以发现，每次打印的值并不是当前输入的值，而是上一次输入的值，这是怎么回事呢？在setState中，这是一个异步处理的函数，并不是同步的，console在setState后立刻执行了，所以这时候状态还没有真正变更完，所以这里取到的状态仍旧是更新前的。这里要特殊注意下。如果需要在更新状态后，再执行操作怎么办呢，setState还有第二个参数，接受一个callback，我们尝试将keyUp中代码改成这样</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123;name: e.target.value&#125;, function()&#123;</span><br><span class="line">    console.log(this.state.name);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>这时候log打印出来的只就是我们期望的内容，当每次状态更新成功后，都会调用传进去的callback函数。</li>
-<li>react中渲染dom有自己的优化方式，首先它在内存中构建一套虚拟的dom，每次更新前将虚拟dom与浏览器中dom对比，只讲有变化的部分进行更新，这样大大的提高了性能。或者我们可以重写函数来控制是否刷新，当然这种方式我们并不提倡。</li>
-</ul>
-<hr>
-<h1 id="DEMO-4-网络请求触发状态变化"><a href="#DEMO-4-网络请求触发状态变化" class="headerlink" title="DEMO 4        -    网络请求触发状态变化"></a>DEMO 4        -    网络请求触发状态变化</h1><p>上一节讲到状态变化触发render的重新渲染，这里将常用的网络请求引入，结合到状态变化中。</p>
-<h3 id="代码：-2"><a href="#代码：-2" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      #name&#123;</span><br><span class="line">        background: #5bc0de;</span><br><span class="line">        color: white;</span><br><span class="line">        font-size: 24px;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">      class Text extends React.Component &#123;</span><br><span class="line">        constructor(props) &#123;</span><br><span class="line">          super(props);</span><br><span class="line">          this.state = &#123;</span><br><span class="line">            username: &apos;&apos;,</span><br><span class="line">            lastGistUrl: &apos;&apos;,</span><br><span class="line">            dateTime: &apos;&apos;</span><br><span class="line">          &#125;</span><br><span class="line">          this.request = this.request.bind(this);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        request() &#123;</span><br><span class="line">          $.ajax(&#123;</span><br><span class="line">            type: &apos;get&apos;,</span><br><span class="line">            url: this.props.url,</span><br><span class="line">            success: function(result)&#123;</span><br><span class="line">              var lastGist = result[0];</span><br><span class="line">              this.setState(&#123;</span><br><span class="line">                username: lastGist.owner.login,</span><br><span class="line">                lastGistUrl: lastGist.html_url,</span><br><span class="line">                dateTime: new Date().getTime()</span><br><span class="line">              &#125;);</span><br><span class="line">            &#125;.bind(this)</span><br><span class="line">          &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        componentDidMount() &#123;</span><br><span class="line">          setInterval(this.request, 1000)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        render()&#123;</span><br><span class="line">          return (</span><br><span class="line">            &lt;div className=&quot;text&quot;&gt;</span><br><span class="line">              &#123;this.state.username&#125;用户最新的Gist地址为：</span><br><span class="line">              &lt;a href=&#123;this.state.lastGistUrl&#125;&gt;&#123;this.state.lastGistUrl&#125;&lt;/a&gt;</span><br><span class="line">              &lt;div&gt;&#123;this.state.dateTime&#125;&lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ReactDOM.render(</span><br><span class="line">        &lt;Text url=&quot;https://api.github.com/users/octocat/gists&quot;/&gt;,</span><br><span class="line">        document.getElementById(&apos;root&apos;)</span><br><span class="line">      );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="在浏览器中显示的效果如下-3"><a href="#在浏览器中显示的效果如下-3" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/15.png" alt="这里写图片描述"> </p>
-<p>###讲解：</p>
-<ul>
-<li>这个例子中，页面每秒会请求一次网络，将请求到的数据中时间戳更新到状态中。</li>
-<li>仍旧是先看代码，相比于上一个例子，这里多了两个函数<code>request</code>和<code>componentDidMount</code>，其中<code>request</code>是请求网络的函数，<code>componentDidMount</code>是react内部的函数，也是react生命周期的一部分，它会在render第一次渲染前执行，而且只会执行一次。</li>
-<li>先看request，一个普通的ajax请求，在success回调中，服务器返回result，然后将里面的值赋给state中的username、lastGistUrl属性。这时状态发生了变化，render函数会重新渲染。</li>
-<li>为什么success回调函数最后会加一个bind(this)？因为这个函数已经不是react内部的函数了，它是一个外部函数，它里面的this并不是react组件中的this，所以要将外部函数绑定到react中，并能使用react内部的方法，例如setState，就要在函数最后bind(this)，这样就完成了绑定。</li>
-<li>再看下<code>componentDidMount</code>函数，这个函数在render渲染前会执行，里面的代码也很简单，增加了一个定时器，1秒钟执行一次request。</li>
-<li>这里应该在加一个回调，就是定时器在初始化时创建，却没有对应的销毁，所以在组件销毁的时候，应该在这个生命周期中销毁定时器。</li>
-</ul>
-<hr>
-<h1 id="DEMO-5-组件的嵌套使用"><a href="#DEMO-5-组件的嵌套使用" class="headerlink" title="DEMO 5        -    组件的嵌套使用"></a>DEMO 5        -    组件的嵌套使用</h1><p>在封装react时，我们往往按照最小单位封装，例如封装一个通用的div，一个通用的span，或者一个通用的table等，所以各自组件对应的方法都会随着组件封装起来，例如div有自己的方法可以更改背景色，span可以有自己的方法更改字体大小，或者table有自己的方法来更新table的内容等~ 这里我们用一个div相互嵌套的例子来查看父子组件如何相互嵌套及调用各自的方法。在下面的例子中，父组件与子组件都有一个方法，来改变自身的背景色，我们实现父子组件相互调用对方的方法，来改变对方的背景色。</p>
-<h3 id="代码：-3"><a href="#代码：-3" class="headerlink" title="代码："></a>代码：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot; /&gt;</span><br><span class="line">    &lt;title&gt;Hello World&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react@latest/dist/react.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/react-dom@latest/dist/react-dom.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://unpkg.com/babel-standalone@6.15.0/babel.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">      .child&#123;</span><br><span class="line">        height: 100px;</span><br><span class="line">        width: 200px;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">      li&#123;</span><br><span class="line">        list-style: none;</span><br><span class="line">        display: inline-block;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;button id=&quot;name&quot;&gt;DEMO1&lt;/button&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script type=&quot;text/babel&quot;&gt;</span><br><span class="line">        class Parent extends React.Component&#123; </span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.child1ChangeColor=this.child1ChangeColor.bind(this);</span><br><span class="line">            this.child2ChangeColor=this.child2ChangeColor.bind(this);</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          child1ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child1&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          child2ChangeColor(e) &#123;</span><br><span class="line">            this.refs[&apos;child2&apos;].changeColor(e)</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123; </span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;parent&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                  &lt;br/&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第一个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child1ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                      &lt;li&gt;对应第二个child&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                      &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.child2ChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">                  &lt;hr/&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child1&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">                  &lt;Child ref=&quot;child2&quot; parentChangeColor=&#123;this.changeColor&#125;&gt;&lt;/Child&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            ) </span><br><span class="line">          &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        class Child extends React.Component&#123;</span><br><span class="line">          constructor(props) &#123;</span><br><span class="line">            super(props);</span><br><span class="line">            this.state=&#123;</span><br><span class="line">              background: &apos;&apos;</span><br><span class="line">            &#125;;</span><br><span class="line">            this.changeColor=this.changeColor.bind(this);</span><br><span class="line">          &#125;</span><br><span class="line">          changeColor(e) &#123;</span><br><span class="line">            this.setState(&#123;background: $(e.target).css(&quot;background-color&quot;)&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          render() &#123;</span><br><span class="line">            return (</span><br><span class="line">              &lt;div className=&quot;child&quot; style=&#123;&#123;background: this.state.background&#125;&#125;&gt;</span><br><span class="line">                &lt;ul className=&quot;list-inline&quot;&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#286090&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#31b0d5&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#c9302c&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#ec971f&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;li&gt;&lt;button href=&quot;#&quot; style=&#123;&#123;background:&quot;#e6e6e6&quot;&#125;&#125; onClick=&#123;this.props.parentChangeColor&#125;&gt;&amp;nbsp;&lt;/button&gt;&lt;/li&gt;</span><br><span class="line">                  &lt;/ul&gt;</span><br><span class="line">              &lt;/div&gt;</span><br><span class="line">            )</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        ReactDOM.render(</span><br><span class="line">          &lt;Parent /&gt;, </span><br><span class="line">          document.getElementById(&apos;root&apos;) </span><br><span class="line">        );</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="在浏览器中显示的效果如下-4"><a href="#在浏览器中显示的效果如下-4" class="headerlink" title="在浏览器中显示的效果如下"></a>在浏览器中显示的效果如下</h3><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/16.png" alt="这里写图片描述"></p>
-<h3 id="讲解：-2"><a href="#讲解：-2" class="headerlink" title="讲解："></a>讲解：</h3><ul>
-<li>首先说下，刚打开页面并不是这样的，背景都是白色的。这里的截图是点击各个按钮后变色的样子。</li>
-<li>在这个例子中，蓝色的div是一个父组件，它里面包含了两个子组件，分别是红色和橙色，这两个子组件实际上是一模一样的。我们先看下父组件如何调用子组件。</li>
-<li>代码中，子组件里面定义了changeColor函数，用来接收onClick事件，并将点击的按钮的data-color属性值作为色值，更改到state中的color属性中，然后触发render来更新背景色。在父组件调用子组件时，我们写了<child ref="child1" parentchangecolor="{this.changeColor}">，里面的ref=”child1”就是react中提供的一个属性标签，它与普通的props不同，这里写上ref=”xxx”后，在父组件中，使用this.refs[“child1”]就可以引用对应的子组件，当然这里的ref的值是可以随意定义，只要不重复就好。这样就可以实现组组件引用子组件，然后直接调用里面的方法就好，例如<code>child1ChangeColor</code>中就有<code>this.refs[&quot;child1&quot;].changeColor(e);</code>的使用。连起来说下逻辑，在点击父组件中第一列中的按钮后，触发onClick事件，然后onClick事件后，传递到child1ChangeColor后，将事件传递进入，然后再次传递给子组件的changeColor中，因为子组件的changeColor是更改子组件自身的state，所以这时候子组件再次渲染，于是改变了颜色。这就是父组件调用子组件的逻辑。</child></li>
-<li>再说下子组件何如调用父组件的方法，父组件自身也有一个changeColor函数，用来改变自身的背景色。当父组件调用子组件时，<child ref="child1" parentchangecolor="{this.changeColor}">，通过props，也就是第二个例子中讲的那样，通过参数的方式传递给子组件，这样子组件中就可以使用this.props.parentChangeColor，来把子组件的onClick事件传递给父组件的changeColor方法中，来改变父组件的背景色。这就是子组件调用父组件函数的方法。</child></li>
-<li>还有一种情况，就是一个父组件下有多个子组件，但是子组件中并没有直接的关系，这时候如果一个子组件调用另一个子组件的方法，就得通过他们共同的父组件来作为中转，在父组件中增加函数来作为中转的函数，来实现子组件间的调用。</li>
-</ul>
-<p>github地址：<a href="https://github.com/xixizhangfe/react-demo" target="_blank" rel="noopener">react5个demo</a></p>
-<p>参考：<a href="http://blog.csdn.net/iambinger/article/details/51803606" target="_blank" rel="noopener">http://blog.csdn.net/iambinger/article/details/51803606</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react之生命周期/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/react之生命周期/" itemprop="url">react之生命周期</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T16:36:31+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-mounting"><a href="#1-mounting" class="headerlink" title="1. mounting"></a>1. mounting</h2><ul>
-<li>constructor()</li>
-<li>componentWillMount()</li>
-<li>render()</li>
-<li>componentDidMount()</li>
-</ul>
-<h4 id="constructor-props"><a href="#constructor-props" class="headerlink" title="constructor(props)"></a>constructor(props)</h4><p>在mount之前，会调用它；</p>
-<p>初始化state的位置；</p>
-<p>也可以使用props来初始化state，但要注意当props更新时，state不会更新。那么除了同步props到state，还可以使用state提升。</p>
-<h4 id="componentWillMount"><a href="#componentWillMount" class="headerlink" title="componentWillMount()"></a>componentWillMount()</h4><p>当要mount的时候立即调用，它的调用发生在render()之前，所以这里设置state不会触发重新render。</p>
-<p>这是唯一一个当服务器渲染时被调用的生命周期钩子，通常我们建议使用constructor()。</p>
-<h4 id="render"><a href="#render" class="headerlink" title="render()"></a>render()</h4><p>被调用时，检查this.props，this.state，然后返回单个React元素，这个返回的React元素可以表示DOM节点，比如<div>,也可以表示自定义的组件, 比如<my-own>。</my-own></div></p>
-<p>也可以返回null或者false，表明我们不想渲染，此时ReactDOM.findDOMNode(this)将返回null。</p>
-<p>render()函数应该是纯函数，意味着不能修改组件的状态，它返回的是被调用时的结果，并且不能直接和浏览器交互。 如果需要和浏览器交互，需要在componentDidMount()或者其他生命周期中执行。如果shouldComponentUpdate()返回false，那么render将不执行。</p>
-<h4 id="componentDidMount"><a href="#componentDidMount" class="headerlink" title="componentDidMount()"></a>componentDidMount()</h4><p>当组件挂载之后被调用，需要得到DOM节点的操作应该在这里执行。 </p>
-<p>如果想从远程加载数据，也应在这里执行网络请求。</p>
-<p>这里设置state，会触发重新渲染。</p>
-<h2 id="2-updating"><a href="#2-updating" class="headerlink" title="2. updating"></a>2. updating</h2><ul>
-<li>componentWillReceiveProps()</li>
-<li>shouldComponentUpdate()</li>
-<li>componentWillUpdate()</li>
-<li>render()</li>
-<li>componentDidUpdate()</li>
-</ul>
-<h4 id="componentWillReceiveProps-nextProps"><a href="#componentWillReceiveProps-nextProps" class="headerlink" title="componentWillReceiveProps(nextProps)"></a>componentWillReceiveProps(nextProps)</h4><p>已经挂载的组件接收新的props之前会调用。</p>
-<p>如果需要根据props的变化来更新状态，应该比较this.props和nextProps，并且在这里使用this.setState()执行状态转换。</p>
-<p>即使props没有更新，这个方法也可能被调用，所以如果我们想处理变化，一定要比较当前props和下一个props。（当父组件造成子组件重新渲染时会遇到这种情况。）</p>
-<p>在mounting期间，react不会用初始的props来调用这个方法。只有在一些组件的props可能更新的时候，才会调用这个方法。</p>
-<p>执行this.setState不会触发这个事件。</p>
-<h4 id="shouldComponentUpdate-nextProps-nextState"><a href="#shouldComponentUpdate-nextProps-nextState" class="headerlink" title="shouldComponentUpdate(nextProps, nextState)"></a>shouldComponentUpdate(nextProps, nextState)</h4><p>这个方法能够让react知道组件的输出是否因state或props的改变而受影响。默认就是当state一变化，就会重新渲染，大部分情况下我们使用默认的。</p>
-<p>在rendering之前，当收到新的props或者state时，就会调用这个方法。当初始化渲染时，或者当使用forceUpdate()时，该方法不被调用。</p>
-<p>返回false不能阻止子组件随他们的state重新渲染。如果返回false，那么componentWillUpdate(), render(), componentDidUpdate()不会被调用。</p>
-<p>如果你发现一个组件在表示后很慢（？？？？），可以考虑变成继承式的，从React.PureComponent继承，这意味着该方法此时是shallow prop and state comparision。</p>
-<p>如果你想自己手写，那就可以比较this.props和nextprops，以及this.state和nextState,并返回false告诉react这个更新可以跳过。</p>
-<h4 id="componentWillUpdate-nextProps-nextState"><a href="#componentWillUpdate-nextProps-nextState" class="headerlink" title="componentWillUpdate(nextProps, nextState)"></a>componentWillUpdate(nextProps, nextState)</h4><p>在收到新的props或者state后，rendering之前，调用该方法。</p>
-<p>在这里可以做一些准备工作，来为更新做准备。</p>
-<p>这个方法在初始渲染的时候不会被调用。</p>
-<p>这里不能设置this.setState()，如果想根据props来更新state，应该在componentWillReceiveProps(nextProps)执行。</p>
-<h4 id="componentDidUpdate"><a href="#componentDidUpdate" class="headerlink" title="componentDidUpdate"></a>componentDidUpdate</h4><p>当更新时被调用。</p>
-<p>初始渲染的时候不被调用。</p>
-<p>当组件更新后，应该在这里操作DOM。</p>
-<p>网络请求适合放在这里，只要你比较了当前props和前一个props（当props没变化的时候，进行网络请求可能没有必要）。</p>
-<h2 id="3-unmounting"><a href="#3-unmounting" class="headerlink" title="3. unmounting"></a>3. unmounting</h2><ul>
-<li>componentWillUnmount()</li>
-</ul>
-<h4 id="componentWillUnmount"><a href="#componentWillUnmount" class="headerlink" title="componentWillUnmount()"></a>componentWillUnmount()</h4><p>当卸载一个组件时或者销毁一个组件时，会执行。</p>
-<p>可以在这里做一些清除工作，比如清除定时器，取消网络请求，清除在ComponentDidMount中创建的DOM元素。</p>
-<h2 id="4-其他API"><a href="#4-其他API" class="headerlink" title="4. 其他API"></a>4. 其他API</h2><ul>
-<li>setState()</li>
-<li>forceUpdate()</li>
-</ul>
-<h4 id="setState-updater-callback"><a href="#setState-updater-callback" class="headerlink" title="setState(updater, [callback])"></a>setState(updater, [callback])</h4><p>认为setState是一个请求，而不是一个立即执行命令，会更好。因为为了更好的性能，react会延时它，并且在一个pass里同时更新好几个组件。所以react不能保证state的变化能立即生效。</p>
-<p>setState()通常不立即更新组件。所以在componentDidUpdate或者setState的回调函数中去读取this.state，才能保证读取到的值最新的。</p>
-<p>第一个参数是一个updater函数，</p>
-<pre><code>(prevState, props) =&gt; stateChange
-</code></pre><p>prevState是前一个状态，它不应该直接被改变，相反，应该基于prevState和props建造一个新对象，从而展示变化。</p>
-<p>比如，假设我们想增加一个值，</p>
-<pre><code>this.setState((prevState, props) =&gt; {
-      return {counter: prevState.counter + props.step};
-});
-</code></pre><p>由updater函数接收的prevState和props是最新的。输出的updater将和prevState进行shallowly merged。</p>
-<p>第二个参数是一个可选的回调函数，等setState完成并组建被重新渲染后才会执行。但是我们一般建议使用componentDidUpdate()来代替这个逻辑。</p>
-<h4 id="forceUpdate-callback"><a href="#forceUpdate-callback" class="headerlink" title="forceUpdate(callback)"></a>forceUpdate(callback)</h4><p>component.forceUpdate(callback)</p>
-<p>一般只有当state或者props变化时，组件才会重新渲染。但是如果我们想根据其他数据来渲染组件，就可以调用forceUpdate(),从而跳过shouldComponentUpdate()。这会触发子组件正常的生命周期，包括子组件的shouldComponentUpdate()方法。</p>
-<p>一般要避免使用。</p>
-<h2 id="5-Class-properties"><a href="#5-Class-properties" class="headerlink" title="5. Class properties"></a>5. Class properties</h2><ul>
-<li>defaultProps</li>
-<li>displayName</li>
-</ul>
-<h4 id="defaultProps"><a href="#defaultProps" class="headerlink" title="defaultProps"></a>defaultProps</h4><p>设置默认属性，即当一个props是undefined时，才有用。如果是null，则不会采取默认值，还是null。</p>
-<p>举个例子：</p>
-<pre><code>class CustomButton extends React.Component {
-      // ...
-}
-
-CustomButton.defaultProps = {
-      color: &apos;blue&apos;
-};
-</code></pre><p>如果props.color没有提供，则默认就是blue：</p>
-<pre><code>render() {
-    return &lt;CustomButton /&gt; ; // props.color will be set to blue
-  }
-</code></pre><p>如果props.color设置为null，则还是null：</p>
-<pre><code>render() {
-    return &lt;CustomButton color={null} /&gt; ; // props.color will remain null
-  }
-</code></pre><h4 id="displayName"><a href="#displayName" class="headerlink" title="displayName"></a>displayName</h4><p>用于debugging信息。JSX会自动设置这个值。</p>
-<h2 id="6-instance-properties"><a href="#6-instance-properties" class="headerlink" title="6. instance properties"></a>6. instance properties</h2><ul>
-<li>props</li>
-<li>state</li>
-</ul>
-<h4 id="props"><a href="#props" class="headerlink" title="props"></a>props</h4><p>this.props包含这个组件的调用者定义的props。</p>
-<p>this.props.children是一个特殊的prop，通常是由子标签在JSX表达式中定义的，而不是在它自己的标签中。</p>
-<h4 id="state"><a href="#state" class="headerlink" title="state"></a>state</h4><p>不要直接修改this.state。</p>
-<p>把它当做不可改变的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/状态提升/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/状态提升/" itemprop="url">状态提升</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T15:00:10+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通常，几个组件拥有相同的数据，此时就需要将这个数据放到最近的公共祖先的状态里。</p>
-<p>接下来，我们将创建一个温度计算器，并根据给定水温判断是否沸腾。最终效果如图所示：<br><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/17.png" alt="result"></p>
-<p>也就是两个输入框分别对应摄氏温度和华氏温度，只要有一个输入框内容变化，另一个也会相应变化，并判断是否会沸腾。</p>
-<p>我们先考虑只有摄氏温度输入框的情况，</p>
-<pre><code>class Calculator extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;
-      };
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.setState({temperature: e.target.value})
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in celsius:&lt;/legend&gt;
-          &lt;input onChange={this.handleChange} /&gt;
-          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre><p>接着我们再考虑有两个输入框的情况，这时候应该把输入框单独作为一个组件提取出来：</p>
-<pre><code>class TemperatureInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;
-      };
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.setState({temperature: e.target.value})
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
-          &lt;input onChange={this.handleChange} /&gt;
-          &lt;BoilingVerdict celsius={parseFloat(this.state.temperature)}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-
-  const scaleName = {
-    &apos;c&apos;: &apos;celsius&apos;,
-    &apos;f&apos;: &apos;Fahrenheit&apos;
-  }
-
-  class Calculator extends React.Component {
-    render() {
-      return (
-        &lt;div&gt;
-          &lt;TemperatureInput scale={scaleName.c}/&gt;
-          &lt;TemperatureInput scale={scaleName.f}/&gt;
-        &lt;/div&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre><p>好，现在得到了两个输入框，可是这两个输入框是独立的，一个框的内容不会同步到另一个，由于以前使用vue的时候，我会想到非父子组件通信，也就是通过两个子组件的共同父组件来传递值，react这里也一样，遵循的原则是数据流top-down-flow，所以也不应该考虑一个组件传值给另一个组件，也应该采用公共组件的方式，那么这里我们就应该把我们想要的值放到公共组件Calculator里.</p>
-<p>整个工作流程应该是这样的：两个组件都接受父组件的数据，组件一数据变化了，就去触发父组件的事件，这个被触发的事件就去更新父组件的状态，这一更新状态，react就要去重新render了，因为这时组件二的数据也随着变了，所以也就同步显示了。</p>
-<pre><code>class TemperatureInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(e) {
-      this.props.onTemperatureChange(e.target.value)
-    }
-
-    render() {
-      return (
-        &lt;fieldset&gt;
-          &lt;legend&gt;Enter temperature in {this.props.scale}:&lt;/legend&gt;
-          &lt;input value={this.props.temperature} onChange={this.handleChange}/&gt;
-          &lt;BoilingVerdict celsius={this.props.temperature}&gt;
-          &lt;/BoilingVerdict&gt;
-        &lt;/fieldset&gt;
-      )
-    }
-  }      
-
-  const scaleName = {
-    &apos;c&apos;: &apos;celsius&apos;,
-    &apos;f&apos;: &apos;Fahrenheit&apos;
-  }
-
-  class Calculator extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state={
-        temperature: &apos;&apos;,
-        scale: &apos;c&apos;
-      };
-      this.handleCelsiusChange=this.handleCelsiusChange.bind(this);
-      this.handleFahrenheitChange=this.handleFahrenheitChange.bind(this);
-    }
-
-    handleCelsiusChange(temperature) {
-      this.setState({scale:&apos;c&apos;, temperature});
-    }
-    handleFahrenheitChange(temperature) {
-      this.setState({scale:&apos;f&apos;, temperature});
-    }
-
-    render() {
-      const temperature = this.state.temperature;
-      const scale = this.state.scale;
-      const celsius = scale === &apos;f&apos; ? tryConvert(temperature, toCelsius) : temperature;
-      const fahrenheit = scale === &apos;c&apos; ? tryConvert(temperature, toFahrenheit) : temperature;
-
-      return (
-        &lt;div&gt;
-          &lt;TemperatureInput scale={scaleName.c} temperature={celsius} onTemperatureChange={this.handleCelsiusChange}/&gt;
-          &lt;TemperatureInput scale={scaleName.f} temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange}/&gt;
-        &lt;/div&gt;
-      )
-    }
-  }      
-  function BoilingVerdict(props) {
-    if (props.celsius &gt;= 100) {
-      return &lt;p&gt;The water would boil.&lt;/p&gt;;
-    }
-    return &lt;p&gt;The water would not boil.&lt;/p&gt;;
-  }
-
-  function toCelsius(fahrenheit) {
-    return (fahrenheit - 32) * 5 / 9;
-  }
-
-  function toFahrenheit(celsius) {
-    return (celsius * 9 / 5) + 32;
-  }
-
-  function tryConvert(temperature, convert) {
-    const input = parseFloat(temperature);
-    if (Number.isNaN(input)) {
-      return &apos;&apos;;
-    }
-    const output = convert(input);
-    const rounded = Math.round(output * 1000) / 1000;
-    return rounded.toString();
-  }
-
-
-  ReactDOM.render(
-    &lt;Calculator /&gt;,
-    document.getElementById(&apos;root&apos;)
-  );
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/React组件为什么要用super-props/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/React组件为什么要用super-props/" itemprop="url">React组件为什么要用super(props)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T12:14:31+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>要在es5中实现继承，首先定义一个父类：</p>
-<pre><code>//父类
-function sup(name) {
-    this.name = name;
-}
-
-// 定义父类原型上的方法
-sup.prototype.printName = function () {
-    console.log(this.name);
-}
-
-function sub(name, age) {
-    sup.call(this, name) // 调用call方法，继承sup超类属性
-    this.age = age;
-}
-
-sub.prototype = new sup() // 把子类sub的原型对象指向父类的实例化对象，这样可以继承父类sup原型对象上的属性和方法
-sub.prototype.constructor = sub; // 这时会有个问题，子类的constructor属性会指向sup，手动把constructor属性指向子类sub
-// 这时候就能在父类的基础上添加属性和方法了
-sub.prototype.printAge = function () {
-    console.log(this.age)
-}
-</code></pre><p>这时候调用父类生成一个实例化对象:</p>
-<pre><code>let jack = new sub(&apos;jack&apos;, 20)
-jack.printName() // jack
-jack.printAge() // 20
-</code></pre><p>而在es6中实现继承：</p>
-<pre><code>class sup {
-    constructor(name) {
-        this.name = name
-    }
-
-    printName() {
-        console.log(this.name)
-    }
-}
-
-
-class sub extends sup {
-    constructor(name, age) {
-        super(name)
-        this.age = age;
-    }
-
-    printAge () {
-        console.log(this.age)
-    }
-}
-
-let jack = new sub(&apos;jack&apos;, 20)
-jack.printName() // jack
-jack.printAge() // 20
-</code></pre><p>对比发现，在es5中实现继承：</p>
-<p>1、首先得先调用函数的call方法把父类的属性给继承过来</p>
-<p>2、通过new关键字继承父类原型的对象上的方法和属性</p>
-<p>3、最后再通过手动指定constructor属性指向子类对象</p>
-<p>而在es6中实现继承，直接调用super(name)，就可以直接继承父类的属性和方法，所以super作用就相当于上述的实现继承的步骤，不过es6提供了super语法糖，简单化了继承的实现    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/react元素、react组件、react组件支撑实例/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/react元素、react组件、react组件支撑实例/" itemprop="url">react元素、react组件、react组件支撑实例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T10:00:48+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="React元素是什么"><a href="#React元素是什么" class="headerlink" title="React元素是什么"></a>React元素是什么</h1><p><strong>react元素可以理解为我们说的虚拟DOM。</strong>（虚拟DOM：是DOM在特定时间段应该是怎样的结构的描述）</p>
-<p><strong>react元素仅仅是由一些属性构成的js简单对象，用来描述组件的HTML的结构应该是什么样的，这个对象上不包含任何方法(methods)，仅仅只有数据。</strong></p>
-<p>如果我们平时使用react+JSX，可能不会涉及到这个概念。但实际上呢，JSX语法实际被编译成了React.createElement(), React.createElement()产生的就是React元素，让我们看一个转换过程的例子：</p>
-<pre><code>// 使用JSX语法
-var helloworld = &lt;div&gt;hello world!&lt;/div&gt;
-
-// 然后是JSX被编译成JS的结果
-var helloworld = React.createElement(
-    &quot;div&quot;,
-    null,
-    &quot;hello world&quot;
-);
-
-// 再是处理成JS简单对象后看起来类似这样
-var helloWorld = {
-    key: null,
-    props: {
-        children: &quot;hello world!&quot; // more stuff in here
-    },
-    ref: null,
-    type: &apos;div&apos;
-    // more stuff in here
-}
-</code></pre><h1 id="React组件"><a href="#React组件" class="headerlink" title="React组件"></a>React组件</h1><p>是React组件类的实例。</p>
-<p>一般在JS中我们要得到一个类的实例，通常用new操作符，而React不需要new，而是用ReactDOM.render()把一个React元素渲染成一个特定的DOM元素，并返回一个React组件实例。</p>
-<p>ReactDOM.render()干了什么呢？</p>
-<ul>
-<li>接收一个虚拟DOM元素，将其渲染成一个真实DOM元素，返回（React元素type指定的）组件实例。</li>
-<li>对虚拟DOM执行高效的diff算法。</li>
-</ul>
-<h1 id="组件支撑实例是什么"><a href="#组件支撑实例是什么" class="headerlink" title="组件支撑实例是什么"></a>组件支撑实例是什么</h1><pre><code>...
-// 组件实例
-var componentInstance = ReactDOM.render(&lt;CustomForm /&gt;, document.getElementById(&apos;root&apos;));
-// DOM实例
-var domInstance = ReactDOM.findDOMNode(componentInstance);
-</code></pre><p>组件实例并不是真实的DOM节点，我们可以使用ReactDOM.findDOMNode(),并将组件实例作为其参数。</p>
-<p><strong>组件支撑实例就是引用的真实DOM节点。</strong></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>JSX语法被转译为React.createElement()调用，最终返回我们称之为“React元素”的JS简单对象，你可以将React元素视为基础构建单元。</p>
-<p>React组件实例表示下一个抽象层，ReactDOM.render()接收一个React元素，引用一个真实DOM节点，返回一个React组件实例。该实例可以访问组件类中定义的方法。</p>
-<p>React元素和React组件实例都不是真实DOM元素。</p>
-<p>渲染组件实例产生的DOM元素称之为组件支撑实例，访问它的主要方式是使用ReactDOM.findeDOMNode().</p>
-<p>转载：</p>
-<p><a href="https://segmentfault.com/a/1190000009169542" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009169542</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/23/React-class与createClass/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/23/React-class与createClass/" itemprop="url">React class与createClass</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-23T08:55:12+08:00">
-                2017-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="react创建类之class与createClass区别"><a href="#react创建类之class与createClass区别" class="headerlink" title="react创建类之class与createClass区别"></a>react创建类之class与createClass区别</h1><p>以下使用class和createClass两种方式分别写一个组件：</p>
-<pre><code>var InputControlES5 = React.createClass({ 
-      propTypes: { 
-        initialValue: React.PropTypes.string 
-      }, 
-      defaultProps: { 
-        initialValue: &apos;&apos; 
-      }, 
-      // 设置 initial state 
-      getInitialState: function() { 
-        return { 
-          text: this.props.initialValue || &apos;placeholder&apos; 
-        }; 
-      }, 
-      handleChange: function(event) { 
-        this.setState({ 
-          text: event.target.value 
-        }); 
-      }, 
-      render: function() { 
-        return (
-          &lt;div&gt; Type something:
-            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
-          &lt;/div&gt; 
-        ); 
-      } 
-    }); 
-
-
-    class InputControlES6 extends React.Component { 
-      constructor(props) { 
-        super(props); 
-        // 设置 initial state 
-        this.state = { 
-          text: props.initialValue || &apos;placeholder&apos; 
-        }; 
-        // ES6 类中函数必须手动绑定 this.
-        handleChange = this.handleChange.bind(this); 
-      } 
-
-      handleChange(event) { 
-        this.setState({ 
-          text: event.target.value 
-        }); 
-      } 
-
-      render() { 
-        return (
-          &lt;div&gt; Type something:
-            &lt;input onChange={this.handleChange} value={this.state.text} /&gt; 
-          &lt;/div&gt; 
-        ); 
-      } 
-    } 
-
-    InputControlES6.propTypes = { 
-      initialValue: React.PropTypes.string 
-    }; 
-    InputControlES6.defaultProps = { 
-      initialValue: &apos;&apos; 
-    };
-</code></pre><p>区别如下：</p>
-<h3 id="函数绑定"><a href="#函数绑定" class="headerlink" title="函数绑定"></a>函数绑定</h3><p>createClass在成员函数创建时就已经由react自动绑定好了，需要调用的时候直接使用this.whateverFn即可，函数中的this变量在函数调用时会被正确的设置。</p>
-<p>class中，函数不是自动绑定的，必须手动绑定。有三种方法：</p>
-<ul>
-<li>在构造函数中绑定</li>
-<li>成员函数在定义时使用胖箭头函数</li>
-<li>行内绑定：在调用时使用.bind（不推荐）</li>
-</ul>
-<p>那么es6 class中如果react没有帮我们绑定this，那么此时的this是哪里来的呢？</p>
-<p>有博文说到this本来是指向的生成的Dom节点的div的<a href="https://segmentfault.com/a/1190000009169542" target="_blank" rel="noopener">支撑实例</a>（<a href="https://mingjiezhang.github.io/2016/08/28/%E7%90%86%E8%A7%A3React%E4%B8%ADes6%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6%E7%9A%84this/" target="_blank" rel="noopener">理解React中es6方法创建组件的this</a>）,</p>
-<h3 id="构造函数是否调用super方法"><a href="#构造函数是否调用super方法" class="headerlink" title="构造函数是否调用super方法"></a>构造函数是否调用super方法</h3><p>class需要接受props作为参数，并调用super(props)。</p>
-<p>createClass并不需要这步。</p>
-<h3 id="初始化state"><a href="#初始化state" class="headerlink" title="初始化state"></a>初始化state</h3><p>createClass初始化state，接受一个getInitialState函数作为参数一部分，这个函数会在组件挂载时被调用一次。</p>
-<p>class使用构造函数，在调用super之后，直接设置state即可。</p>
-<h3 id="propTypes和defaultProps的位置"><a href="#propTypes和defaultProps的位置" class="headerlink" title="propTypes和defaultProps的位置"></a>propTypes和defaultProps的位置</h3><p>createClass中将propTypes和defaultProps作为你传入的对象的属性。</p>
-<p>class中，这些变成了类本身的属性，所以他们需要在类定义完成之后被加到类头上。</p>
-<p>如果开启了ES7 的属性初始化器（property initializer），可以使用下面的简写法：</p>
-<pre><code>class Person extends React.Component { 
-      static propTypes = { 
-        name: React.PropTypes.string, 
-        age: React.PropTypes.string 
-      }; 
-      static defaultProps = { 
-        name: &apos;&apos;, 
-        age: -1 
-      }; 
-      ... 
-    }
-</code></pre><h2 id="所以该用哪一个呢？"><a href="#所以该用哪一个呢？" class="headerlink" title="所以该用哪一个呢？"></a>所以该用哪一个呢？</h2><p>Facebook 已经声明 React.createClass 最终会被 ES6 class 取代，不过他们也说「我们不会废弃 React.createClass，直到我们找到目前 mixin 用例的替代方案，并且在语言中支持类属性初始化器」。</p>
-<p>只要有可能，尽量使用无状态函数组件。他们很简单，也会迫使你保持 UI 组件简单。</p>
-<p>对于需要 state、生命周期方法、或（通过 refs）访问底层 DOM 节点的复杂组件，使用 class。</p>
-<p>不过了解全部三种风格总是有好处的。当你在 StackOverflow 或别的地方查问题的时候，你可能会看到 ES5 和 ES6 两种风格的答案。ES6 风格正在积聚人气，但并不是唯一的风格。</p>
-<p>转载自：</p>
-<p><a href="http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html" target="_blank" rel="noopener">http://www.w3cplus.com/react/react-es5-createclass-vs-es6-classes.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2280,7 +1933,7 @@ var domInstance = ReactDOM.findDOMNode(componentInstance);
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">64</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
