@@ -937,11 +937,107 @@ module.exports = function selectBlock (
 
 </details>
 
-# 总结
+# 整体流程总结
 ![style处理过程](https://github.com/xixizhangfe/markdownImages/blob/master/vue-loader-1?raw=true)
 
 ![template处理过程](https://github.com/xixizhangfe/markdownImages/blob/master/vue-loader-2?raw=true)
 
+
+# 一些有意思的代码实现
+
+## vue-plugin-loader是如何将rules里配置的规则应用到block里的？
+
+<details>
+<summary>vue-loader-plugin的cloneRules源码</summary>
+
+```javascript
+// vue-loader/lib/plugin.js
+
+// ...
+
+function cloneRule (rule) {
+  const { resource, resourceQuery } = rule
+  // Assuming `test` and `resourceQuery` tests are executed in series and
+  // synchronously (which is true based on RuleSet's implementation), we can
+  // save the current resource being matched from `test` so that we can access
+  // it in `resourceQuery`. This ensures when we use the normalized rule's
+  // resource check, include/exclude are matched correctly.
+  let currentResource
+  const res = Object.assign({}, rule, {
+    resource: {
+      test: resource => {
+        currentResource = resource
+        // 始终返回true，是为了能让ruleSet在执行时能够进入resourceQuery的判断规则
+        // 同时提供currentResource给resourceQuery使用
+        return true
+      }
+    },
+    resourceQuery: query => {
+      const parsed = qs.parse(query.slice(1))
+      // 如果query里没有vue，则说明不是.vue的block，不进行匹配
+      if (parsed.vue == null) {
+        return false
+      }
+      // .vue里给block匹配loader时需要通过lang来匹配。如果没有指定lang，也不进行匹配。
+      // 会发现，在为block生成request时，都会用到attrsToQuery，而style和script会给attrsToQuery分别传递'css', 'js'作为langFallback, customBlock和template则不需要传递
+      // 这是因为我们写代码时style和script可以不写lang，不写默认是css、js。这时候vue-loader需要把默认的加上。
+      // 而customBlock和template没有默认的lang，所以vue-loader不用提供默认的lang。
+      if (resource && parsed.lang == null) {
+        return false
+      }
+      // 这里需要在原资源路径后拼接一个假的后缀，如source.vue.css，这是为了执行resource时，能够通过资源名后缀匹配到loader
+      /* 比如，我们配置了一个规则是:
+        {
+          test: /\.css$/,
+          use: [
+            'vue-style-loader',
+            'css-loader'
+          ]
+        }
+
+        经过new RuleSet后，会变成:
+        {
+          resource: (resource) => {
+            return /\.css$/.test(resource)
+          },
+          use: [
+            'vue-style-loader',
+            'css-loader'
+          ]
+        }
+
+        resource是一个函数，此时利用拼接的fakeResourcePath，resource(fakeResourcePath)就可以匹配成功了
+      */
+      const fakeResourcePath = `${currentResource}.${parsed.lang}`
+      if (resource && !resource(fakeResourcePath)) {
+        return false
+      }
+      if (resourceQuery && !resourceQuery(query)) {
+        return false
+      }
+      return true
+    }
+  })
+
+  if (rule.oneOf) {
+    res.oneOf = rule.oneOf.map(cloneRule)
+  }
+
+  return res
+}
+
+// ...
+
+// replace original rules
+compiler.options.module.rules = [
+  pitcher,
+  ...clonedRules,
+  ...rules
+]
+
+// ...
+```
+</details>
 
 # 文末寄语
 本文只是梳理了vue-loader的整体流程，具体源码细节请参考我写的[源码注释](https://github.com/xixizhangfe/vue-loader)
@@ -949,3 +1045,7 @@ module.exports = function selectBlock (
 通过这篇文章，希望大家能学习到以下知识：
 1. webpack loader的执行顺序，以及.pitch方法的妙用
 2. vue-loader是如何分别处理不同块的？
+
+
+# 扩展知识
+[webpack RuleSet源码分析](https://github.com/CommanderXL/Biu-blog/issues/30)
