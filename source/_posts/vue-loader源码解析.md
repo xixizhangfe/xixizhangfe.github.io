@@ -85,39 +85,12 @@ module.exports = {
 
 </details>
 
-<br>
-<br>
+# 输入与输出
 有了上述知识，我们正式开始vue-loader的源码分析。
-<br>
-<br>
-# 源码结构
-
-首先看一下vue-loader源码结构：
-
-```
-vue-loader/lib/
-  │
-  ├─── codegen/
-  │      ├─── customBlock.js/      生成custom block的js module request
-  │      ├─── hotReload.js/        生成热加载的代码
-  │      ├─── styleInjection.js/   生成style的js module request
-  │      ├─── utils.js/            工具函数
-  ├─── loaders/   vue-loader内部定义的loaders
-  │      ├─── pitcher.js/          pitcher-loader，将所有的单文件组件里的block请求拦截并转成合适的请求
-  │      ├─── stylePostLoader.js/  style-post-loader， 处理scoped css的loader
-  │      ├─── templateLoader.js/   template-loader，编译 html 模板字符串，生成 render/staticRenderFns 函数
-  ├─── runtime/
-  │      ├─── componentNormalizer.js/  将组件标准化
-  ├─── index.d.ts/
-  ├─── index.js/    vue-loader的核心代码
-  ├─── plugin.js/   vue-loader-plugin的核心代码
-  ├─── select.js/   根据不同query类型（script、template等）传递相应的content、map给下一个loader
-```
-
 接下来，我们将通过一个例子，来看vue-loader是怎么工作的(这个例子来自vue-loader/example/)。
 
 <details>
-<summary>展开查看例子代码</summary>
+<summary>展开查看例子代码（输入）</summary>
 
 ```javascript
 // main.js
@@ -147,7 +120,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style module>
 .red {
   color: red;
 }
@@ -250,6 +223,153 @@ module.exports = {
 }
 ```
 </details>
+
+<details>
+<summary>vue-loader输出的代码（输出）</summary>
+
+```javascript
+// template
+  // 来自 import { render, staticRenderFns } from "./source.vue?vue&type=template&id=27e4e96e&lang=pug&" 的结果
+  var render = function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        attrs: {
+          ok: ""
+        }
+      },
+      [
+        _c(
+          "h1",
+          {
+            class: _vm.$style.red
+          },
+        [_vm._v("hello")
+      ])
+    ])
+  }
+
+  var staticRenderFns = []
+
+  render._withStripped = true
+
+  // script
+  // 来自 import script from "./source.vue?vue&type=script&lang=js&" 的结果
+  var script = {
+    data () {
+      return {
+        msg: 'fesfff'
+      }
+    }
+  }
+
+  // style
+  // 来自 import style0 from "./source.vue?vue&type=style&index=0&module=true&lang=css&" 的结果
+  .red {
+    color: red;
+  }
+
+  // 注入style 及 style热加载
+  var cssModules = {}
+    var disposed = false
+
+    function injectStyles (context) {
+      if (disposed) return
+
+      cssModules["$style"] = (style0.locals || style0)
+      Object.defineProperty(this, "$style", {
+        configurable: true,
+        get: function () {
+          return cssModules["$style"]
+        }
+      })
+    }
+
+    module.hot && module.hot.dispose(function (data) {
+      disposed = true
+    })
+
+    module.hot && module.hot.accept(["./source.vue?vue&type=style&index=0&module=true&lang=css&"], function () {
+      var oldLocals = cssModules["$style"]
+      if (oldLocals) {
+        var newLocals = require("./source.vue?vue&type=style&index=0&module=true&lang=css&")
+        if (JSON.stringify(newLocals) !== JSON.stringify(oldLocals)) {
+          cssModules["$style"] = newLocals
+          require("/Users/zhangxixi/knowledge collect/vue-loader/node_modules/_vue-hot-reload-api@2.3.3@vue-hot-reload-api/dist/index.js").rerender("27e4e96e")
+        }
+      }
+    })
+
+    // normalize component
+    import normalizer from "!../lib/runtime/componentNormalizer.js"
+    var component = normalizer(
+      script,
+      render,
+      staticRenderFns,
+      false,
+      injectStyles,
+      null,
+      null
+    )
+
+    // custom blocks
+    // 来自 import block0 from "./source.vue?vue&type=custom&index=0&blockType=foo" 的结果
+    var block0 = comp => {
+      console.log(comp.options.data())
+    }
+
+    if (typeof block0 === 'function') block0(component)
+
+    // hot reload
+    // script 和 template的热加载
+    if (module.hot) {
+      var api = require("/Users/zhangxixi/knowledge collect/vue-loader/node_modules/_vue-hot-reload-api@2.3.3@vue-hot-reload-api/dist/index.js")
+      api.install(require('vue'))
+      if (api.compatible) {
+        module.hot.accept()
+        if (!module.hot.data) {
+          api.createRecord('27e4e96e', component.options)
+        } else {
+          api.reload('27e4e96e', component.options)
+        }
+        module.hot.accept("./source.vue?vue&type=template&id=27e4e96e&lang=pug&", function () {
+          api.rerender('27e4e96e', {
+            render: render,
+            staticRenderFns: staticRenderFns
+          })
+        })
+      }
+    }
+    component.options.__file = "example/source.vue"
+    export default component.exports
+```
+</details>
+
+# 源码结构
+首先看一下vue-loader源码结构：
+
+```
+vue-loader/lib/
+  │
+  ├─── codegen/
+  │      ├─── customBlock.js/      生成custom block的js module request
+  │      ├─── hotReload.js/        生成热加载的代码
+  │      ├─── styleInjection.js/   生成style的js module request
+  │      ├─── utils.js/            工具函数
+  ├─── loaders/   vue-loader内部定义的loaders
+  │      ├─── pitcher.js/          pitcher-loader，将所有的单文件组件里的block请求拦截并转成合适的请求
+  │      ├─── stylePostLoader.js/  style-post-loader， 处理scoped css的loader
+  │      ├─── templateLoader.js/   template-loader，编译 html 模板字符串，生成 render/staticRenderFns 函数
+  ├─── runtime/
+  │      ├─── componentNormalizer.js/  将组件标准化
+  ├─── index.d.ts/
+  ├─── index.js/    vue-loader的核心代码
+  ├─── plugin.js/   vue-loader-plugin的核心代码
+  ├─── select.js/   根据不同query类型（script、template等）传递相应的content、map给下一个loader
+```
 
 # vue-loader-plugin
 
@@ -936,6 +1056,54 @@ module.exports = function selectBlock (
 ```
 
 </details>
+
+最终生成的代码长什么样？
+
+<details>
+<summary>template最终解析代码</summary>
+
+```javascript
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      attrs: {
+        ok: ""
+      }
+    },
+    [
+      _c(
+        "h1",
+        {
+          class: _vm.$style.red
+        },
+      [_vm._v("hello")
+    ])
+  ])
+}
+
+var staticRenderFns = []
+
+render._withStripped = true
+
+export { render, staticRenderFns }
+```
+</details>
+
+<details>
+<summary>style最终解析代码</summary>
+
+```javascript
+  .red[data-v-27e4e96e] {
+    color: red;
+  }
+```
+</details>
+
+
 
 # 整体流程总结
 ![style处理过程](https://github.com/xixizhangfe/markdownImages/blob/master/vue-loader-1?raw=true)
