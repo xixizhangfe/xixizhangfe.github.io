@@ -263,6 +263,192 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器/" itemprop="url">利用html5 video打造播放器（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T13:55:59+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="html5-video标签"><a href="#html5-video标签" class="headerlink" title="html5 video标签"></a>html5 video标签</h2><p>1. video支持的视频格式</p>
+<ul>
+<li>ogg: 带有theora视频编码和vorbis音频编码的ogg文件</li>
+<li>mpeg 4: 带有H.264视频编码和AAC音频编码的MPEG 4文件</li>
+<li>webM: 带有VP8视频编码和Vorbis音频编码的webM文件</li>
+</ul>
+<p>2. 使用方法</p>
+<pre><code>// 方式1
+&lt;video src=&quot;movie.ogg&quot; controls=&quot;controls&quot; &gt;
+    您的浏览器不支持video标签
+&lt;/video&gt;
+
+// 方式2
+&lt;video width=&quot;320&quot; height=&quot;240&quot; controls=&quot;controls&quot;&gt;
+    &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot;&gt;
+    &lt;source src=&quot;movie.ogg&quot; type=&quot;video/ogg&quot;&gt;
+    您的浏览器不支持video标签
+&lt;/video&gt;
+</code></pre><p>说明：video元素可以包含多个source元素，每个source元素可以链接不同的视频文件，浏览器将使用第一个可识别的格式</p>
+<p>3. video标签的属性</p>
+<p>(1) width、height、src属性就不多说了</p>
+<p>(2) 重点说一下controls属性：</p>
+<p>语法：</p>
+<pre><code>&lt;video controls=&quot;controls&quot;/&gt;
+</code></pre><p>controls属性规定浏览器应该为视频提供播放控件。如果设置了该属性，则规定不存在作者设置的脚本控件。</p>
+<p>浏览器控件应该包括：</p>
+<ul>
+<li>播放</li>
+<li>暂停</li>
+<li>定位</li>
+<li>音量</li>
+<li>全屏切换</li>
+<li>字幕（如果可用）</li>
+<li>音轨（如果可用）</li>
+</ul>
+<p>(3) autoplay属性</p>
+<p>语法：</p>
+<pre><code>&lt;video autoplay=&quot;autoplay&quot;/&gt;
+</code></pre><p>如果设置了该属性，视频将自动播放。</p>
+<p>(4) loop属性<br>语法：</p>
+<pre><code>&lt;video loop=&quot;loop&quot;/&gt;
+</code></pre><p>如果设置了该属性，视频将循环播放。</p>
+<p>(5) preload属性</p>
+<p>该属性规定是否在页面加载后载入视频。（如果设置了autoplay属性，则忽略该属性）</p>
+<p>语法：</p>
+<pre><code>&lt;video preload=&quot;load&quot;/&gt;
+</code></pre><p>属性值：</p>
+<p>load： 规定是否预加载视频。可能的值：</p>
+<ul>
+<li>auto-全部预加载</li>
+<li>meta-部分预加载，只预加载视频的元数据（包括尺寸，第一帧，曲目列表，持续时间等）</li>
+<li>none-不进行预加载。可以减少http请求。</li>
+</ul>
+<p>(6) poster属性</p>
+<p>语法：</p>
+<pre><code>&lt;video preload=&quot;URL&quot;/&gt;
+</code></pre><p>规定视频下载时显示的图像，或者在用户点击播放按钮前显示的图像。<br>如果未设置该属性，则使用视频的第一帧来代替。</p>
+<p>(7) muted属性</p>
+<p>语法：</p>
+<pre><code>&lt;video muted/&gt;
+</code></pre><p>规定视频的音频输出应该被静音。</p>
+<p>4. 常用方法</p>
+<p>play(): 开始播放音频/视频<br>pause(): 暂停当前播放的音频/视频</p>
+<p>5. 常用事件</p>
+<p>oncanplay:当文件就绪就可以开始播放时运行的脚本（缓冲已足够开始时）<br>ontimeupdate: 当播放位置改变时运行的脚本（比如当用户快进到媒介中一个不同的位置时）<br>onended: 当媒介已到达结尾时运行的脚本（可发送类似“谢谢观看”之类的信息）</p>
+<p>6. 常用API属性</p>
+<p>duration:返回当前播放视频的总时间（单位是：秒）<br>paused:设置或返回视频是否暂停<br>currentTime: 设置或返回当前播放位置（单位是：秒）<br>ended: 返回视频的播放是否已经结束</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/html5触摸事件-tap事件/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1097,7 +1283,7 @@ console.log(me) //Uncaught ReferenceError: me is not defined `
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

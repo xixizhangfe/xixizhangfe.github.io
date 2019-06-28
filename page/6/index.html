@@ -263,6 +263,259 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/css绝对定位position-absolute/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/css绝对定位position-absolute/" itemprop="url">css绝对定位position:absolute</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T08:57:21+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>absolute的特点：<strong>包裹性</strong>和<strong>高度欺骗</strong>。</p>
+<h2 id="包裹性"><a href="#包裹性" class="headerlink" title="包裹性"></a>包裹性</h2><p>区别就是：下面的图div增加了absolute<br><img src="http://upload-images.jianshu.io/upload_images/1959053-ab541f1e916cbddd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+      &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red; position: absolute;&quot;&gt;
+      &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+</code></pre><p><strong>一旦给元素加上absolute或float就相当于给元素加上了display:inline-block;</strong>。什么意思呢？比如内联元素span默认宽度是自适应的，你给其加上width是不起作用的。要想width定宽，你需要将span设成display:block。但如果你给span加上absolute或float，那span的display属性自动就变成block，就可以指定width了。因此如果看到CSS里absolute/float和display:block同时出现，那display:block就是多余的CSS代码。</p>
+<h2 id="高度欺骗"><a href="#高度欺骗" class="headerlink" title="高度欺骗"></a>高度欺骗</h2><p>上例中给图片外层的div加上absolute，因此高度欺骗未能很好的体现出来，将absolute移到内部图片上，效果就出来了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-7302eeff8ca71445.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+      &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red;&quot;&gt;
+     &lt;img style=&quot;position: absolute;&quot; src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+</code></pre><p>如果你看过CSS浮动float详解会发现效果是一样的。但其背后的原理其实是有区别的，并不完全相同。加点文字就看出来了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-08b7a209c48de873.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid blue;&quot;&gt;
+      &lt;img src=&quot;img/25/1.jpg&quot; /&gt;
+&lt;/div&gt;
+&lt;div style=&quot;border:4px solid red;&quot;&gt;
+      &lt;img style=&quot;position: absolute;&quot; src=&quot;img/25/2.jpg&quot; /&gt;
+      我是一个绝对定位的absolute元素
+&lt;/div&gt;
+</code></pre><p>从图中明显看出文字被图片遮盖了，这点和float不同。float是欺骗父元素，让其父元素误以为其高度塌陷了，但float元素本身仍处于文档流中，文字会环绕着float元素，不会被遮蔽。</p>
+<p>但absolute其实已经不能算是欺骗父元素了，而是<strong>出现了层级关系</strong>。如果处于正常的文档流中的父元素算是凡人的话，那absolute已经得道成仙，用现在的话说已经不在一个次元上。<strong>从父元素的视点看，设成absolute的图片已经完全消失不见了，因此从最左边开始显示文字。而absolute的层级高，所以图片遮盖了文字。</strong></p>
+<h2 id="如何确定定位点"><a href="#如何确定定位点" class="headerlink" title="如何确定定位点"></a>如何确定定位点</h2><ul>
+<li>Case1: 用户只给元素指定了absolute，未指定left/top/right/bottom。此时absolute元素的左上角定位点位置就是<strong>该元素正常文档流里的位置</strong>。如上面图例中，图片熊猫是父元素的第一个孩子，因此左上角定位点就是父元素的content的左上角</li>
+</ul>
+<p>如果将图片熊猫和下面的文字顺序改一下，让其成为父元素的第二个孩子，一图胜千言：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-b71f5cac9b0c127a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;border:4px solid red;&quot;&gt;
+      我是一个绝对定位的absolute元素
+      &lt;img style=&quot;position: absolute;&quot; src=&quot;img/25/2.jpg&quot; /&gt;
+&lt;/div&gt;
+</code></pre><p><strong>结论重复一遍：未指定left/top/right/bottom的absolute元素，其在所处层级中的定位点就是正常文档流中该元素的定位点。</strong></p>
+<ul>
+<li>Case2: 用户给absolute元素指定了left/right，top/bottom</li>
+</ul>
+<p>先简单点，让absolute元素没有position:static以外的父元素。此时absolute所处的层是铺满全屏的，即铺满body。会根据用户指定位置的在body上进行定位。</p>
+<p><strong>通过对left/top/right/bottom的组合设置，由于没有position:static以外的父元素，此时absolute元素可以去任意它想去的地方，天空才是它的极限。</strong></p>
+<h2 id="与relative相爱相杀"><a href="#与relative相爱相杀" class="headerlink" title="与relative相爱相杀"></a>与relative相爱相杀</h2><p>通常我们对relative的认识是：relative主要用于限制absolute</p>
+<p>上面已经说了，如果absolute元素没有position:static以外的父元素，那将相对body定位，天空才是它的极限。<strong>而一旦父元素被设为relative，那absolute子元素将相对于其父元素定位</strong>，就好像一只脚上被绑了绳子的鸟。</p>
+<p>比如你要实现下图iOS里APP右上角的红色圈圈：<br><img src="http://upload-images.jianshu.io/upload_images/1959053-e67ca5077f4b182a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>通常的做法是将APP图片所处的div设成relative，然后红色圈圈设成absolute，再设top/right即可。这样无论用户怎么改变APP图片的位置，红色圈圈永远固定在右上角，例如：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-d15f458bbf4934fa.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>.tipIcon {
+      background-color: #f00;
+      color: #fff;
+      border-radius:50%;
+      text-align: center;
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right:-10px;  //负值为自身体积的一半
+      top:-10px;
+}
+
+&lt;div style=&quot;display: inline-block;position:relative;&quot;&gt;
+      &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+      &lt;span class=&quot;tipIcon&quot;&gt;6&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>这样做效果是OK的，兼容性也OK。但CSS的世界里要实现一个效果可以有很多种方式，具体选用哪个方案是见仁见智的。<strong>我比较看重的标准：一个是简洁，另一个是尽量让每个属性干其本职工作。</strong></p>
+<p>用这两个标准看待上述实现方法，应该是有改进的空间的。<strong>首先外层div多了relative未能简洁到极致。</strong> <strong>其次relative的本职工作是让元素在相对其正常文档流位置进行偏移，但父层div并不需要任何位置偏移</strong>，之所以设成relative唯一的目的是限制absolute子元素的定位点。因此在我看来这并没有让relative干其本职工作。好比小姐的本职工作是服务业，顺便陪客户聊聊天，但纯聊天聊完一个钟，恐怕会被投诉。</p>
+<p>那怎么改进呢？答案在上面探讨absolute定位点时已经说了：未指定left/top/right/bottom的absolute元素，其在所处层级中的定位点就是正常文档流中该元素的定位点。因此改进如下：</p>
+<pre><code>.tipIcon2 {
+  background-color: #f00;
+  color: #fff;
+  border-radius:50%;
+  text-align: center;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin:-10px 0 0 -10px;   //不需要top和right了，改用margin来进行偏移
+}
+
+&lt;div style=&quot;display: inline-block;&quot;&gt;  //父元素不需要relative了
+  &lt;img src=&quot;img/25/2.jpg&quot; /&gt;&lt;!--
+ --&gt;&lt;span class=&quot;tipIcon2&quot;&gt;6&lt;/span&gt; 
+&lt;/div&gt;
+//img和soan间的HTML注释的目的是消除换行符，你也可以将span紧跟在img后面写到一行里
+</code></pre><p>更深入一点看，多一个属性意味着多一层维护。如果用父relative + 子absolute来实现定位，万一将来页面布局要调整，父元素的尺寸需要变换呢？</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-cf38208d2939eeef.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;div style=&quot;display: inline-block; position:relative;width: 200px;&quot;&gt;
+  &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+  &lt;span class=&quot;tipIcon&quot;&gt;6&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>上面仅仅由于父元素的width做了些改变，导致右上角absolute图标错位了。由于absolute和relative耦合在了一起，父元素有点风吹草动（如尺寸变化，或干脆需要去掉relative），子元素需要重新寻找定位点。苦逼的前端仔拿着微薄的工资在那里加班加点，那是大大地不划算。但如果用上例中absolute自身的定位特性，无论父元素怎么折腾，红色的圈圈都牢牢黏在图片的右上角。</p>
+<p>这么说来relative和absolute是否应该彻底断绝关系呢？不是这样的，这段的标题是“和relative相爱相杀”，刚才说的想杀部分，现在说下什么相爱部分。</p>
+<p>用absolute常见的一个案例是透明层覆盖元素。要实现对全屏加一层滤镜怎么办？很容易：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-e3e176326bfcb447.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>.cover {
+    position: absolute;
+    left: 0;right: 0;top: 0;bottom: 0;
+    background-color: #fff;
+    opacity: .5;filter: alpha(opacity=50);
+}
+
+&lt;div style=&quot;display: inline-block;&quot;&gt;
+  &lt;img src=&quot;img/25/2.jpg&quot; /&gt;&lt;!--
+  --&gt;&lt;span class=&quot;tipIcon2&quot;&gt;6&lt;/span&gt;
+&lt;/div&gt;
+现在是全屏滤镜时间
+&lt;span class=&quot;cover&quot;&gt;&lt;/span&gt;
+</code></pre><p>CSS里有个细节值得关注：用absolute的left: 0;right: 0;top: 0;bottom: 0;来实现全屏拉伸，对于absolute元素来说，如果同时设置left和right会水平拉伸，同时设置top和bottom会垂直拉伸。那为何不设width/height为100%呢？代码都贴给你了，可以自己试试。算了告诉你答案吧，前面说了，不设top/right/top/bottom的话absolute会从正常文档流应处的位置开始定位，因此做不到全屏。除非你设置width/height为100%后，同时再设left: 0; top: 0;。这样就显得很啰嗦。</p>
+<p>那我不想全屏滤镜，只希望给图片部分设置滤镜呢？用js计算图片的大小尺寸和定位点后，设置absolute滤镜的尺寸和定位点？太麻烦了。用relative吧</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1959053-3047c6a5bb0e3491.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>&lt;span class=&quot;cover&quot;&gt;&lt;/span&gt; //CSS部分不变
+&lt;div style=&quot;display: inline-block;position: relative;&quot;&gt;
+    &lt;span class=&quot;cover&quot;&gt;&lt;/span&gt;
+    &lt;img src=&quot;img/25/2.jpg&quot; /&gt;
+    &lt;!--
+</code></pre><p>  –&gt;<span class="tipIcon2">6</span><br>    </p>
+<p>结论：</p>
+<p>1.相对定位时，不必拘泥于relative+absolute，试试就去掉relative，充分利用absolute自身定位的特性，将relative和absolute解耦。耦合度越低维护起来越容易，前端仔腾出时间陪女朋友吃饭才是正道。</p>
+<p>2.拉伸平铺时，用relative可以有效限制子absolute元素的拉伸平铺范围（注意是拉伸，不是缩小。要缩小请再加上width/height:100%;）</p>
+<h2 id="和z-index的关系"><a href="#和z-index的关系" class="headerlink" title="和z-index的关系"></a>和z-index的关系</h2><p>z-index被太多的滥用了。几乎成了个定势思维：只要设了absolute就需要同步设置z-index。其实不是这样的。上面所有例子都没有用到z-index，同样正常分层正常覆盖。</p>
+<p>以下情况根本不需要设z-index：</p>
+<ul>
+<li>让absolute元素覆盖正常文档流内元素（不用设z-index，自然覆盖）</li>
+<li>让后一个absolute元素覆盖前一个absolute元素（不用设z-index，只要在HTML端正确设置元素顺序即可）</li>
+</ul>
+<p>那什么时候需要设置z-index呢？当absolute元素覆盖另一个absolute元素，且HTML端不方便调整DOM的先后顺序时，需要设置z-index: 1。非常少见的情况下多个absolute交错覆盖，或者需要显示最高层次的模态对话框时，可以设置z-index &gt; 1。</p>
+<p>比较好的是京东，查看首页源码，设置z-index的地方也只设了1,2,3。少数地方设了11,12,13。我更倾向于理解为是一种内部潜规则，表明更高层级的一种需要。</p>
+<p><strong>如果你的页面不比京东更复杂，那z-index通常设成1,2,3足够了。</strong></p>
+<h2 id="减少重绘和回流的开销"><a href="#减少重绘和回流的开销" class="headerlink" title="减少重绘和回流的开销"></a>减少重绘和回流的开销</h2><p>例如将元素隐藏，你或许会用display:none。</p>
+<p>（这里插一句题外话，用display:none隐藏容易显示难，如果你用的是JQuery等插件，你或许会疑惑，直接用show/hide API不就行了，难在哪里？其中一个难点就是保存隐藏前元素的display属性值。例如A隐藏前display:block，B隐藏前display:inline，A和B都改成none隐藏后，要显示出来时，你必须事先保存元素的display属性值，否则做不到显示后display仍旧是原先的值。而这些工作JQuery插件都替你做好了，才让你产生了隐藏显示很容易的错觉。）</p>
+<p><strong>其实我更推荐的是absolute控制隐藏和显示。方法当然相当简单，如absolute+ top:-9999em，或absolute + visibility:hidden。</strong></p>
+<p>优点是absolute由于层级的关系，隐藏和显示只会重绘，但不会回流（其实我对absolute不会导致回流这一观点是持怀疑态度的，说不会回流显得过于武断，应该是<strong>absolute的回流开销小于正常DOM流中回流的开销</strong>。但我战斗力不够，尚未找到靠谱合理的检测回流的方法）。而<strong>用display:none会导致render tree重绘和回流</strong>。</p>
+<p>另外，考虑到重绘和回流的开销，可以将动画效果放到absolute元素中，避免浏览器将render tree回流。</p>
+<h2 id="转载自："><a href="#转载自：" class="headerlink" title="转载自："></a>转载自：</h2><p>链接：<a href="http://www.jianshu.com/p/a3da5e27d22b" target="_blank" rel="noopener">http://www.jianshu.com/p/a3da5e27d22b</a></p>
+<p>來源：简书</p>
+<p>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/css定位属性/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2093,192 +2346,6 @@ pro.initEm = function() {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器/" itemprop="url">利用html5 video打造播放器（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T13:55:59+08:00">
-                2017-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="html5-video标签"><a href="#html5-video标签" class="headerlink" title="html5 video标签"></a>html5 video标签</h2><p>1. video支持的视频格式</p>
-<ul>
-<li>ogg: 带有theora视频编码和vorbis音频编码的ogg文件</li>
-<li>mpeg 4: 带有H.264视频编码和AAC音频编码的MPEG 4文件</li>
-<li>webM: 带有VP8视频编码和Vorbis音频编码的webM文件</li>
-</ul>
-<p>2. 使用方法</p>
-<pre><code>// 方式1
-&lt;video src=&quot;movie.ogg&quot; controls=&quot;controls&quot; &gt;
-    您的浏览器不支持video标签
-&lt;/video&gt;
-
-// 方式2
-&lt;video width=&quot;320&quot; height=&quot;240&quot; controls=&quot;controls&quot;&gt;
-    &lt;source src=&quot;movie.mp4&quot; type=&quot;video/mp4&quot;&gt;
-    &lt;source src=&quot;movie.ogg&quot; type=&quot;video/ogg&quot;&gt;
-    您的浏览器不支持video标签
-&lt;/video&gt;
-</code></pre><p>说明：video元素可以包含多个source元素，每个source元素可以链接不同的视频文件，浏览器将使用第一个可识别的格式</p>
-<p>3. video标签的属性</p>
-<p>(1) width、height、src属性就不多说了</p>
-<p>(2) 重点说一下controls属性：</p>
-<p>语法：</p>
-<pre><code>&lt;video controls=&quot;controls&quot;/&gt;
-</code></pre><p>controls属性规定浏览器应该为视频提供播放控件。如果设置了该属性，则规定不存在作者设置的脚本控件。</p>
-<p>浏览器控件应该包括：</p>
-<ul>
-<li>播放</li>
-<li>暂停</li>
-<li>定位</li>
-<li>音量</li>
-<li>全屏切换</li>
-<li>字幕（如果可用）</li>
-<li>音轨（如果可用）</li>
-</ul>
-<p>(3) autoplay属性</p>
-<p>语法：</p>
-<pre><code>&lt;video autoplay=&quot;autoplay&quot;/&gt;
-</code></pre><p>如果设置了该属性，视频将自动播放。</p>
-<p>(4) loop属性<br>语法：</p>
-<pre><code>&lt;video loop=&quot;loop&quot;/&gt;
-</code></pre><p>如果设置了该属性，视频将循环播放。</p>
-<p>(5) preload属性</p>
-<p>该属性规定是否在页面加载后载入视频。（如果设置了autoplay属性，则忽略该属性）</p>
-<p>语法：</p>
-<pre><code>&lt;video preload=&quot;load&quot;/&gt;
-</code></pre><p>属性值：</p>
-<p>load： 规定是否预加载视频。可能的值：</p>
-<ul>
-<li>auto-全部预加载</li>
-<li>meta-部分预加载，只预加载视频的元数据（包括尺寸，第一帧，曲目列表，持续时间等）</li>
-<li>none-不进行预加载。可以减少http请求。</li>
-</ul>
-<p>(6) poster属性</p>
-<p>语法：</p>
-<pre><code>&lt;video preload=&quot;URL&quot;/&gt;
-</code></pre><p>规定视频下载时显示的图像，或者在用户点击播放按钮前显示的图像。<br>如果未设置该属性，则使用视频的第一帧来代替。</p>
-<p>(7) muted属性</p>
-<p>语法：</p>
-<pre><code>&lt;video muted/&gt;
-</code></pre><p>规定视频的音频输出应该被静音。</p>
-<p>4. 常用方法</p>
-<p>play(): 开始播放音频/视频<br>pause(): 暂停当前播放的音频/视频</p>
-<p>5. 常用事件</p>
-<p>oncanplay:当文件就绪就可以开始播放时运行的脚本（缓冲已足够开始时）<br>ontimeupdate: 当播放位置改变时运行的脚本（比如当用户快进到媒介中一个不同的位置时）<br>onended: 当媒介已到达结尾时运行的脚本（可发送类似“谢谢观看”之类的信息）</p>
-<p>6. 常用API属性</p>
-<p>duration:返回当前播放视频的总时间（单位是：秒）<br>paused:设置或返回视频是否暂停<br>currentTime: 设置或返回当前播放位置（单位是：秒）<br>ended: 返回视频的播放是否已经结束</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2327,7 +2394,7 @@ pro.initEm = function() {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
