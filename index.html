@@ -263,6 +263,150 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/23/ip、域名关系/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/23/ip、域名关系/" itemprop="url">ip、域名关系</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-23T14:55:20+08:00">
+                2019-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>现象：</p>
+<ol>
+<li>base.xiaojukeji.com不能通过ip访问（参考第3、6点）</li>
+<li>base-test.xiaojukeji.com可以通过ip访问，也可以访问子系统，访问子系统时会自动转成域名。（参考第4点）</li>
+<li>base.xiaojukeji.com不需要绑定host访问，base-pre.xiaojukeji.com需要绑定host</li>
+</ol>
+<p>问题抽象：</p>
+<ol>
+<li>为什么有的网站可以通过ip访问，有的只能通过域名访问？</li>
+<li>为什么几个不同的网站解析后ip是一样的？</li>
+<li>微服务是如何实现的？</li>
+</ol>
+<p>原理：</p>
+<ol>
+<li>Ip、域名、url关系：一个ip可以对应一个或多个域名，url里协议后面//到第一个/之间是域名，ip与域名绑定关系需要申请，申请后才可以通过域名访问。没有绑定域名的ip，如果需要通过域名访问，则需要绑定host。</li>
+<li>一个ip对应多个域名实现方式：虚拟host、反向代理，我们base平台使用的是虚拟host</li>
+<li>如果一个ip对应多个域名，那么通过ip访问就会不知道到底使用哪个服务</li>
+<li>Nginx哪个选项是配置禁止ip访问的？listen 80 default; return 500;</li>
+<li>Nginx通过哪个选项配置通过ip访问时，自动转成域名？通过ip访问时，如果不带端口号，默认访问的是80端口，所以nginx可以监听80端口，并通过rewrite更改url</li>
+<li>Nginx配置多个server就相当于多个虚拟host吗？是的</li>
+<li>线上nginx配置没有第3点禁止ip访问的配置项，为啥还不能通过ip访问？麒麟网关做了配置，把80端口代理到8080。</li>
+<li>线上nginx配置没有80，只有8080，那在通过域名访问时为什么还能正常？麒麟网关做了配置，把80端口代理到8080。</li>
+<li>麒麟网关做了哪些事情？不知道 暂时不去了解</li>
+</ol>
+<p>参考：<br><a href="https://blog.csdn.net/gui951753/article/details/83070180" target="_blank" rel="noopener">https://blog.csdn.net/gui951753/article/details/83070180</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/22/vue源码解析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1599,159 +1743,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/26/webpack优化项目打包速度、体积等/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/26/webpack优化项目打包速度、体积等/" itemprop="url">webpack优化项目打包速度、体积等</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-26T15:57:11+08:00">
-                2019-04-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>计划从这几个点来优化</p>
-<ol>
-<li>webpack打包速度</li>
-<li>打包体积</li>
-</ol>
-<h2 id="打包速度"><a href="#打包速度" class="headerlink" title="打包速度"></a>打包速度</h2><p>版本webpack4</p>
-<p>速度对比</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>第一次</th>
-<th>第二次</th>
-<th>第三次</th>
-<th>第四次</th>
-<th>第五次</th>
-<th>平均</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>优化前</td>
-<td>36911</td>
-<td>35917</td>
-<td>35934</td>
-<td>35493</td>
-<td>36468</td>
-<td>36144.6</td>
-</tr>
-<tr>
-<td>优化后</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1800,7 +1791,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">66</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

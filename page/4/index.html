@@ -263,6 +263,280 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/vue踩坑之路/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/24/vue踩坑之路/" itemprop="url">vue踩坑之路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T17:05:03+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1、检测数组"><a href="#1、检测数组" class="headerlink" title="1、检测数组"></a>1、检测数组</h3><p>Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。</p>
+<p>对于数组，</p>
+<ul>
+<li>直接利用索引修改某个项目，即：vm.items[indexOfItem] = newValue;</li>
+<li>直接修改数组的长度，即：vm.items.length = newLength;</li>
+</ul>
+<p>这两种旧方式虽然可以修改数组，但是不会同步显示在view视图中，需要改成如下方式：</p>
+<ul>
+<li>修改数组中某个项目</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Vue.set</span><br><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br><span class="line">// Array.prototype.splice</span><br><span class="line">vm.items.splice(indexOfItem, 1, newValue)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改数组的长度</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.items.splice(newLength)</span><br></pre></td></tr></table></figure>
+<h3 id="2、检测对象"><a href="#2、检测对象" class="headerlink" title="2、检测对象"></a>2、检测对象</h3><p>Vue不能检测到对象属性的添加或者删除。由于Vue在初始实例化时对属性执行getter/setter转化过程，所以属性必须在data对象上存在才能让vue转换它，这样才能让它是响应的。例如：</p>
+<pre><code>var vm = new Vue({
+    data: {
+        a:1
+    }
+})
+// vm.a是响应的
+vm.b = 2;
+// vm.b 是非响应的
+</code></pre><p><strong>那有什么办法是在实例创建之后添加属性并且让它是响应的？</strong></p>
+<p>对于Vue实例，可以使用<code>$set(key, value)</code>实例方法。Vue不允许在已经创建的实例上动态添加新的根级响应式属性(root-level reactive property)，然而它可以使用Vue.set(object,key, value)方法将响应属性添加到嵌套的对象上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.set(vm.someObject, &apos;b&apos;,2)</span><br></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	this.$set(this.someObject, &apos;b&apos;, 2)</span><br><span class="line">```	</span><br><span class="line">	</span><br><span class="line">有时候想向已有对象上添加一些属性，例如使用 Object.assign() 或 _.extend() 方法来添加属性。但是，添加到对象上的新属性不会触发更新(**但是呢，亲测，如果放在methods里，是可以触发更新的呀！！！只是在console中不会更新，有点奇怪！！！**)。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：</span><br></pre></td></tr></table></figure></p>
+<p>// 代替 <code>Object.assign(this.someObject, { a: 1, b: 2 })</code><br>this.someObject = Object.assign({}, this.someObject, { a: 1, b:2})<br><code>`</code></p>
+<p>综上，我们来举个例子：</p>
+<p>如下代码:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;vue&lt;/title&gt;
+  &lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;style&gt;
+    li:hover {
+      cursor: pointer;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;item,index in items&quot; v-on:click=&quot;handle(index)&quot;&gt;
+        &lt;span&gt;{{item.name}}&lt;/span&gt;
+        &lt;span&gt;{{numbers[index]}}&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    var vm = new Vue({
+      el: &quot;.wrap&quot;,
+      data: {
+        numbers: [],
+        items: [
+          {name: &apos;jjj&apos;},
+          {name: &apos;kkk&apos;},
+          {name: &apos;lll&apos;},
+        ]
+      },
+      methods: {
+        handle: function (index) {
+          // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+           if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+             this.numbers[index] = 1;
+           } else {
+             this.numbers[index]++;
+           }
+        }
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h5 id="1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化："><a href="#1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化：" class="headerlink" title="1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化："></a>1、我们的本意是点击列表，对应的number就加1，可是，我们发现，浏览器不管怎么点都没有变化：</h5><p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/18.png" alt="这里写图片描述"></p>
+<p>此时是不是应该换成我们的正确方法啦~~</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;vue&lt;/title&gt;
+  &lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+  &lt;style&gt;
+    li:hover {
+      cursor: pointer;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;ul&gt;
+      &lt;li v-for=&quot;item,index in items&quot; v-on:click=&quot;handle(index)&quot;&gt;
+        &lt;span&gt;{{item.name}}&lt;/span&gt;
+        &lt;span&gt;{{numbers[index]}}&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    var vm = new Vue({
+      el: &quot;.wrap&quot;,
+      data: {
+        numbers: [],
+        items: [
+          {name: &apos;jjj&apos;},
+          {name: &apos;kkk&apos;},
+          {name: &apos;lll&apos;},
+        ]
+      },
+      methods: {
+        handle: function (index) {
+          // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+           if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+             // this.numbers[index] = 1;
+             Vue.set(this.numbers, index, 1);
+           } else {
+             // this.numbers[index]++;
+             Vue.set(this.numbers, index, ++this.numbers[index]);
+           }
+        }
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>这次发现了，哇塞，变了！</p>
+<p><img src="https://raw.githubusercontent.com/xixizhangfe/markdownImages/master/19.png" alt="这里写图片描述">    </p>
+<p>另外，大家试试第二种正确的方式，把<code>Vue.set(this.numbers, index, 1);</code>换成<code>this.$set(this.numbers, index, 1);</code>，把<code>Vue.set(this.numbers, index, ++this.numbers[index]);</code>换成<code>this.$set(this.numbers, index, ++this.numbers[index])</code>,会发现也是会变化哦~</p>
+<p>当然我们这里说的变化时视图的变化，console里的数据老方法旧方法都是可以变的。</p>
+<h5 id="2、点击时给items中元素添加一个属性，-“id”-index"><a href="#2、点击时给items中元素添加一个属性，-“id”-index" class="headerlink" title="2、点击时给items中元素添加一个属性，{“id”: index}"></a>2、点击时给items中元素添加一个属性，{“id”: index}</h5><p>这里有点奇怪~~~</p>
+<ul>
+<li><p>如果是用老方法,也是可以渲染的，这跟网上的一些说法不同，只是在console中直接这么用确实不能渲染。</p>
+<pre><code>methods: {
+    handle: function (index) {
+      // WHY: 更新数据，view层未渲染，但通过console这个数组可以发现数据确实更新了
+       if (typeof(this.numbers[index]) === &quot;undefined&quot; ) {
+         // this.numbers[index] = 1;
+         // Vue.set(this.numbers, index, 1);
+         // this.$set(this.numbers, index, 1); 
+
+         Object.assign(this.items[index], {&quot;id&quot;: index});
+       } else {
+         // this.numbers[index]++;
+         // Vue.set(this.numbers, index, ++this.numbers[index]);
+         this.$set(this.numbers, index, ++this.numbers[index])
+       }
+    }
+  }
+</code></pre></li>
+</ul>
+<p>这样也是可以的！</p>
+<p>如果把<code>Object.assign(this.items[index], {&quot;id&quot;: index});</code>改成新方法<code>Vue.set(this.items, index, (Object.assign({},this.items[index], {&quot;id&quot;: index})));</code>，当然也没问题，而且在console中使用也没问题。</p>
+<p>所以为了确保无论如何都会渲染，那就采用新方法吧！！！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/vue还是react/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -3203,349 +3477,6 @@ function readGBKText(pathname) {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/21/模板引擎/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/21/模板引擎/" itemprop="url">模板引擎</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-21T08:17:41+08:00">
-                2017-07-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="模板原理"><a href="#模板原理" class="headerlink" title="模板原理"></a>模板原理</h2><p>模板的诞生是为了将显示与数据分离，模板技术多种多样，但其本质是将模板文件和数据通过模板引擎生成最终的HTML代码。<br><img src="https://oss-cn-hangzhou.aliyuncs.com/yqfiles/6c258773c5fc6fca7229b978a7a27b8ff1b326f0.png?_=5518474" alt=""></p>
-<p>模板引擎就是利用正则表达式识别模板标识，并利用数据替换其中的标识符。比如：</p>
-<pre><code>Hello, &lt;%= name%&gt;
-</code></pre><p>数据是<code>{name: &#39;木的树&#39;}</code>，那么通过模板引擎解析后，我们希望得到<code>Hello, 木的树</code>。模板的前半部分是普通字符串，后半部分是模板标识，我们需要将其中的标识符替换为表达式。模板的渲染过程如下：</p>
-<p><img src="https://oss-cn-hangzhou.aliyuncs.com/yqfiles/e437978f5ecc9f4046d63de6cdcce42bdc308ea2.png?_=5518474" alt=""></p>
-<pre><code>//字符串替换的思想
-function tmpl(str, obj) {
-    if (typeof str === &apos;string&apos;) {
-        return str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-            var key = arguments[1];
-            return obj[key];
-        });
-        }
-}
-
-var str = &quot;Hello, &lt;%= name%&gt;&quot;;
-var obj = {name: &quot;Lzz&quot;};
-</code></pre><h2 id="模板引擎"><a href="#模板引擎" class="headerlink" title="模板引擎"></a>模板引擎</h2><h3 id="引擎核心"><a href="#引擎核心" class="headerlink" title="引擎核心"></a>引擎核心</h3><p>上面我们演示是简单的字符串替换，但对于模板引擎来说，要做的事情更复杂些。通常需要以下几个步骤：</p>
-<ul>
-<li>利用正则表达式分解出普通字符串和模板标识符，<code>&lt;%=%&gt;</code>的正则表达式为<code>/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g</code>.</li>
-<li>将模板标识符转换成普通的语言表达式</li>
-<li>生成待执行语句</li>
-<li>将数据填入执行，生成最终的字符串</li>
-</ul>
-<p>Demo代码如下：</p>
-<pre><code>//编译的思想
-function tmpl(str, obj) {
-    if (typeof str === &apos;string&apos;) {
-        var tm = str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-            var key = arguments[1];
-            return &quot;&apos; + obj.&quot; + key; // 在函数字符串中利用&apos;包裹正常字符串
-        });
-        console.log(tm); // Hello, &apos; + obj.name
-        tm = &quot;return &apos;&quot; + tm; //&quot;&apos;Hello&apos; + obj.name&quot;
-        console.log(tm); // return &apos;Hello, &apos; + obj.name
-        var compile = new Function(&apos;obj&apos;, tm);
-        console.log(compile(obj)); // Hello, Lzz
-        return compile(obj);
-    }
-}
-
-var str = &quot;Hello, &lt;%= name%&gt;&quot;;
-var obj = {name: &quot;Lzz&quot;}; // Hello, Lzz
-tmpl(str,obj);
-</code></pre><h3 id="模板编译"><a href="#模板编译" class="headerlink" title="模板编译"></a>模板编译</h3><p>上述代码中有如下部分：</p>
-<pre><code>tm = &quot;return &apos;&quot; + tm; //&quot;&apos;Hello&apos; + obj.name&quot;
-var compile = new Function(&apos;obj&apos;, tm);
-</code></pre><p>为了能够与数据一起执行生成字符串，我们需要将原始的模板字符串转换成一个函数对象。这个过程称为模板编译。模板编译使用了new Function(), 这里通过它创建了一个函数对象，语法如下:</p>
-<pre><code>new Function(arg1, arg2,..., functionbody)
-</code></pre><p><code>Function()</code>构造函数接受多个参数，最后一个参数作为函数体的内容，其之前的参数全部作为生成的新函数的参数。<strong>需要注意的是Function的参数全部是字符串类型，函数体部分对于字符串跟函数表达式一定要区分清楚,初学者往往在对函数体字符串中的普通字符串和表达式的拼接上犯错</strong>。一定要将函数体字符串和内部字符串正确拼接，如：</p>
-<pre><code>new Function(&apos;obj&apos;, &quot;return &apos;Hello,&apos; + obj.name&quot;)
-</code></pre><p>模板编译过程中每次都要利用Function重新生成一个函数，浪费CPU。为此我们可以将函数缓存起来，代码如下：</p>
-<pre><code>//模板预编译
-  var tmpl = (function(){
-      var cache = {};
-      return function(str, obj){
-          if (!typeof str === &apos;string&apos;) {
-              return;
-          }
-          var compile = cache[str];
-          if (!cache[str]) {
-              var tm = str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                  var key = arguments[1];
-                  return &quot;&apos; + obj.&quot; + key;
-              });
-              tm = &quot;return &apos;&quot; + tm; //&quot;&apos;Hello&apos; + obj.name&quot;
-              compile = new Function(&apos;obj&apos;, tm);
-              cache[str] = compile;
-          }
-          return compile(obj); //预编译情况下应该返回compile函数
-      }
-  }());
-  var str = &quot;Hello, &lt;%= name%&gt;&quot;;
-  var obj = {name: &quot;Lzz&quot;};
-  tmpl(str, obj);
-</code></pre><h3 id="利用with"><a href="#利用with" class="headerlink" title="利用with"></a>利用with</h3><p><code>with</code> 语句可以方便地用来引用某个特定对象中已有的属性，但是不能用来给对象添加属性。要给对象创建新的属性，必须明确地引用该对象。  </p>
-<pre><code>with(object instance)  
-{  
-        //代码块  
-}  
-</code></pre><p>有时候，在一个程序代码中，多次需要使用某对象的属性或方法，照以前的写法，都是通过:对象.属性或者对象.方法这样的方式来分别获得该对象的属性和方法，着实有点麻烦，学习了with语句后，可以通过类似如下的方式来实现：  </p>
-<pre><code>with(objInstance)  
-{  
-   var str = 属性1;  
-.....  
-} 
-</code></pre><p>去除了多次写对象名的麻烦。  </p>
-<p>利用<code>with</code>我们可以不用把模板标识符转换成<code>obj.name</code>,只需要保持name标识符即可。</p>
-<pre><code>// 利用with使得变量自己寻找对象, 找不到的视为普通字符串
-// 貌似return后面不能直接跟with
-//模板预编译
-var tmpl = (function(){
-    var cache = {};
-    return function(str, obj){
-        if (!typeof str === &apos;string&apos;) {
-            return;
-        }
-        var compile = cache[str];
-        if (!cache[str]) {
-            var tm = str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                var key = arguments[1];
-                return &quot;&apos; + &quot; + key;
-            });
-            tm = &quot;var tmp = \&quot;\&quot;; with(obj){ tmp = &apos;&quot; + tm + &quot;; } return tmp;&quot;; //&quot;&apos;Hello&apos; + obj.name&quot;
-            compile = new Function(&apos;obj&apos;, tm);
-            cache[str] = compile;
-        }
-        return compile(obj); //预编译情况下应该返回compile函数
-    }
-}());
-var str = &quot;Hello, &lt;%= name%&gt;&quot;;
-var obj = {name: &quot;LZZ&quot;};
-tmpl(str, obj);
-</code></pre><h3 id="XSS漏洞"><a href="#XSS漏洞" class="headerlink" title="XSS漏洞"></a>XSS漏洞</h3><p>如果上面的obj变成<code>var obj = {name: &quot;&lt;script&gt;alert(\&quot;XSS\&quot;)&lt;/script&gt;&quot;};</code>,那么最终生成的结果就会变成：</p>
-<pre><code>&quot;Hello, &lt;script&gt;alert(&quot;XSS&quot;)&lt;/script&gt;&quot;
-</code></pre><p>为此我们需要堵上这个漏洞，基本就是要将形成HTML标签的字符转换成安全的字符，这些字符通常是&amp;, &lt;, &gt;, “, ‘。转换函数如下：</p>
-<pre><code>var strip = function(html) {
-    return String(html)
-    .replace(/&amp;/g, &apos;&amp;amp;&apos;)//&amp;
-    .replace(/&lt;/g, &apos;&amp;lt;&apos;)//左尖号
-    .replace(/&gt;/g, &apos;&amp;gt;&apos;)//右尖号
-    .replace(/&quot;/g, &apos;&amp;quot;&apos;)//双引号&quot;
-    .replace(/&apos;/g, &apos;&amp;#039;&apos;);//IE下不支持&amp;apos;&apos;
-}
-</code></pre><p>这样下来，模板引擎应该变成这样：</p>
-<pre><code>var tmpl = (function() {
-      var cache = {};
-      var strip = function(html) {
-          return String(html)
-              .replace(/&amp;/g, &apos;&amp;amp;&apos;) //&amp;
-              .replace(/&lt;/g, &apos;&amp;lt;&apos;) //左尖号
-              .replace(/&gt;/g, &apos;&amp;gt;&apos;) //右尖号
-              .replace(/&quot;/g, &apos;&amp;quot;&apos;) //双引号&quot;
-              .replace(/&apos;/g, &apos;&amp;#039;&apos;); //IE下不支持&amp;apos;&apos;
-      }
-      return function(str, obj) {
-          if (!typeof str === &apos;string&apos;) {
-              return;
-          }
-          var compile = cache[str];
-          if (!cache[str]) {
-              //var tm = str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-              //    var key = arguments[1];
-              //    return &quot;&apos; + strip(&quot; + key + &quot;)&quot;;
-              //});
-              var tm = str.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                  var code = arguments[1];
-                  return &quot;&apos; + strip(&quot; + code + &quot;)&quot;; //利用escape包裹code
-              }).replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                  var key = arguments[1];
-                  return &quot;&apos; + &quot; + key;
-              });
-              tm = &quot;var tmp = \&quot;\&quot;; with(obj){ tmp = &apos;&quot; + tm + &quot;; } return tmp;&quot;; //&quot;&apos;Hello&apos; + obj.name&quot;
-              compile = new Function(&apos;obj&apos;, &apos;strip&apos;, tm);
-              cache[str] = compile;
-          }
-          return compile(obj, strip); //预编译情况下应该返回compile函数
-      }
-  }());
-
-  var str = &quot;&lt;%= name%&gt;&quot;;
-  var obj = { name: &quot;&lt;script&gt;alert(\&quot;XSS\&quot;)&lt;/script&gt;&quot;}; 
-  tmpl(str, obj);
-</code></pre><p>这时候我们得到如下结果:</p>
-<pre><code>&quot;&amp;lt;script&amp;gt;alert(&amp;quot;XSS&amp;quot;)&amp;lt;/script&amp;gt;&quot;
-</code></pre><h3 id="模板逻辑"><a href="#模板逻辑" class="headerlink" title="模板逻辑"></a>模板逻辑</h3><p>功能稍微强大的模板引擎，都允许在模板中添加一部分逻辑来控制页面的最终渲染。如：</p>
-<pre><code>var str = &quot;&lt;%for(var i = 0; i &lt; 3; i++){%>name is <%= name%=""> <%}%&gt;&quot;; <="" code=""></%}%&gt;&quot;;></%=></code></pre><p>这里我们用&lt;%%&gt;代表逻辑代码&lt;%=%&gt;代表模板中需要替换的标识符。我们的模板代码变成了如下所示：</p>
-<pre><code>//模板逻辑
-  var tmpl = (function() {
-    var cache = {};
-    var strip = function(html) {
-        return String(html)
-            .replace(/&amp;/g, &apos;&amp;amp;&apos;) //&amp;
-            .replace(/&lt;/g, &apos;&amp;lt;&apos;) //左尖号
-            .replace(/&gt;/g, &apos;&amp;gt;&apos;) //右尖号
-            .replace(/&quot;/g, &apos;&amp;quot;&apos;) //双引号&quot;
-            .replace(/&apos;/g, &apos;&amp;#039;&apos;); //IE下不支持&amp;apos;&apos;
-    }
-    return function(str, obj) {
-        debugger;
-        if (!typeof str === &apos;string&apos;) {
-            return;
-        }
-        var compile = cache[str];
-        if (!cache[str]) {
-            var tm = str.replace(/&lt;%\s*([^=][^%&gt;]*)\s*%&gt;/g, function() {
-                var key = arguments[1];
-                console.log(&quot;&apos;;&quot; + key + &quot; tmp+=&apos;&quot;);
-                return &quot;&apos;;&quot; + key + &quot; tmp+=&apos;&quot;; // 逻辑代码需要一块块的拼接起来，为的是拼接成一段合理的函数字符串传递给new Function
-            }).replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                var code = arguments[1];
-                return &quot;&apos; + strip(&quot; + code + &quot;) +&apos;&quot;; //利用escape包裹code ,加入模板逻辑时要注意，保证拼接成正确的函数字符串
-            }).replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-                var key = arguments[1];
-                return &quot;&apos; + &quot; + key + &quot;+ &apos;&quot;; //加入模板逻辑时要注意，保证拼接成正确的函数字符串
-            });
-            debugger;
-            tm = &quot;var tmp = \&quot;\&quot;; with(obj){ tmp = &apos;&quot; + tm + &quot;&apos;; } return tmp;&quot;; //&quot;&apos;Hello&apos; + obj.name&quot;
-            compile = new Function(&apos;obj&apos;, &apos;strip&apos;, tm);
-            cache[str] = compile;
-        }
-        return compile(obj, strip); //预编译情况下应该返回compile函数
-    }
-  }());
-
-  var str = &quot;&lt;%for(var i = 0; i &lt; 3; i++){%>name is <%= name%=""> <%}%&gt;&quot;; var="" obj="{name:" &quot;&lt;script&gt;alert(\&quot;xss\&quot;)&lt;="" script&gt;&quot;};="" tmpl(str,="" obj);="" <="" code=""></%}%&gt;&quot;;></%=></code></pre><p>  第一步，我们将模板中的逻辑表达式找出来，用的正则表达式是<code>/&lt;%\s*([^=][^%&gt;]*)\s*%&gt;/g</code></p>
-<pre><code>str.replace(/&lt;%\s*([^=][^%&gt;]*)\s*%&gt;/g, function() {
-            var key = arguments[1];
-            return &quot;&apos;;&quot; + key + &quot; tmp+=&apos;&quot;; // 逻辑代码需要一块块的拼接起来，为的是拼接成一段合理的函数字符串传递给new Function
-        })
-</code></pre><p>注意在拼接时，为了防止函数字符串中的字符串没有闭合对表达式造成影响，我们在key前后都加了’来保证其中的字符串闭合。<br>第二步, 对可能存在的HTML标签进行转义</p>
-<pre><code>.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-            var code = arguments[1];
-            return &quot;&apos; + strip(&quot; + code + &quot;) +&apos;&quot;; //利用escape包裹code ,加入模板逻辑时要注意，保证拼接成正确的函数字符串
-        })
-</code></pre><p>同样需要注意前后的字符串闭合<br>第三步，像先前一样处理模板标识符</p>
-<pre><code>.replace(/&lt;%=\s*([^%&gt;]+)\s*%&gt;/g, function() {
-            var key = arguments[1];
-            return &quot;&apos; + &quot; + key + &quot;+ &apos;&quot;;//加入模板逻辑时要注意，保证拼接成正确的函数字符串
-        })
-</code></pre><p>仍然要注意其中的字符串闭合问题。</p>
-<p>模板引擎是一个系统的问题，复杂模板还支持模板嵌套，这里就不介绍了，希望此文能够抛砖引玉，让大火带来更好的干货！</p>
-<p>转载自：</p>
-<p><a href="http://www.cnblogs.com/dojo-lzz/p/5518474.html" target="_blank" rel="noopener">http://www.cnblogs.com/dojo-lzz/p/5518474.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3594,7 +3525,7 @@ tmpl(str, obj);
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">66</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
