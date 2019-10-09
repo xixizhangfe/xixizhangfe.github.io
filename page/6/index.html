@@ -263,6 +263,529 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/水平、垂直居中/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/水平、垂直居中/" itemprop="url">水平、垂直居中</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T10:23:15+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>接连两次面试被问到水平、垂直居中，答了几种方法，但感觉面试官并不是很满意啊，特意再整理一下各种方法~</p>
+<h2 id="该元素宽高已知"><a href="#该元素宽高已知" class="headerlink" title="该元素宽高已知"></a>该元素宽高已知</h2><h3 id="1-absolute-负margin"><a href="#1-absolute-负margin" class="headerlink" title="1. absolute+负margin"></a>1. absolute+负margin</h3><p>父元素：relative</p>
+<p>该元素：absolute, left: 50%, top: 50%, margin-left: 负的该元素宽度的一半，margin-right: 负的该元素高度的一半</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+    .div1 {
+      width: 100%;
+      height: 200px;
+      background-color: gray;
+      position:relative;
+    }
+
+    .div2 {
+      width:50px;
+      height:50px;
+      background-color:red;
+      position:absolute;
+      left:50%;
+      top:50%;
+      margin-left:-25px;
+      margin-top:-25px;
+    }
+&lt;/style&gt;
+
+    &lt;div class=&quot;div1&quot;&gt;
+        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="2-绝对定位居中技术（Absolute-Centering）absolute-margin-auto"><a href="#2-绝对定位居中技术（Absolute-Centering）absolute-margin-auto" class="headerlink" title="2. 绝对定位居中技术（Absolute Centering）absolute, margin:auto"></a>2. 绝对定位居中技术（Absolute Centering）absolute, margin:auto</h3><p>这种方法的原理参见：<a href="http://www.xixizhang.info/2017/07/19/%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E5%B1%85%E4%B8%AD%E6%8A%80%E6%9C%AF-Absolute-Centering/" target="_blank" rel="noopener">绝对定位居中技术(Absolute Centering)</a></p>
+<p>父元素设置为:relative</p>
+<p>该元素设置为: absolute, left:0, top: 0, right:0,bottom:0, marign:auto</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+    .div1 {
+      width: 100%;
+      height: 200px;
+      background-color: gray;
+      position:relative;
+    }
+
+    .div2 {
+      width:50px;
+      height:50px;
+      background-color:red;
+      margin:auto;
+      position:absolute;
+      left:0;
+      top:0;
+      right:0;
+      bottom:0;
+    }
+&lt;/style&gt;
+
+    &lt;div class=&quot;div1&quot;&gt;
+        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="3-flex布局"><a href="#3-flex布局" class="headerlink" title="3. flex布局"></a>3. flex布局</h3><p>父元素：display:flex, justify-content: center, align-items: center</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+    .div1 {
+      display:flex;
+      width: 100%;
+      height: 200px;
+      background-color: gray;
+      /* flex-direction:row; */
+      justify-content:center;
+      align-items:center;
+    }
+
+    .div2 {
+      /* flex: 0 1 auto; */
+      width:50px;
+      height:50px;
+      background-color:red;
+
+    }
+&lt;/style&gt;
+
+    &lt;div class=&quot;div1&quot;&gt;
+        &lt;div class=&quot;div2&quot;&gt;A&lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="该元素宽高未知"><a href="#该元素宽高未知" class="headerlink" title="该元素宽高未知"></a>该元素宽高未知</h2><h3 id="1-absolute-transform"><a href="#1-absolute-transform" class="headerlink" title="1. absolute, transform"></a>1. absolute, transform</h3><p>父元素相对定位</p>
+<p>子元素绝对定位，把定宽的负margin换成transform</p>
+<pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+    .div1 {
+      position:relative;
+      width: 100%;
+      height: 200px;
+      background-color: gray;
+    }
+
+    .div2 {
+      position: absolute;
+      background-color:red;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%)
+    }
+&lt;/style&gt;
+
+    &lt;div class=&quot;div1&quot;&gt;
+        &lt;div class=&quot;div2&quot;&gt;Abfkadf;&lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="2-flex布局"><a href="#2-flex布局" class="headerlink" title="2.flex布局"></a>2.flex布局</h3><pre><code>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta http-equiv=&quot;content&quot; content=&quot;text/html&quot; charset=&quot;utf-8&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;style&gt;
+    .div1 {
+      display: flex;
+      width: 100%;
+      height: 200px;
+      background-color: gray;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .div2 {
+      /* position: absolute; */
+      background-color:red;
+    }
+&lt;/style&gt;
+
+    &lt;div class=&quot;div1&quot;&gt;
+        &lt;div class=&quot;div2&quot;&gt;hhhhhh;&lt;/div&gt;
+    &lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="table-cell"><a href="#table-cell" class="headerlink" title="table-cell"></a>table-cell</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Demo001_displayTable&lt;/title&gt;
+    &lt;style&gt;
+    /*** table-cell middle center组合使用 ***/
+
+    .cell {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        width: 240px;
+        height: 180px;
+        border: 1px solid #666;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;cell&quot;&gt;
+        &lt;p&gt;我爱你&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cell&quot;&gt;
+        &lt;p&gt;我爱你&lt;/p&gt;
+        &lt;p&gt;亲爱的中国&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cell&quot;&gt;
+        &lt;p&gt;我爱你&lt;/p&gt;
+        &lt;p&gt;亲爱的中国&lt;/p&gt;
+        &lt;div style=&quot;width:100px;height:50px;border:1px solid #ccc;display:inline-block&quot;&gt;div(inline-block)&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><h3 id="inline-block-1"><a href="#inline-block-1" class="headerlink" title="inline-block 1"></a>inline-block 1</h3><ul>
+<li>首先要了解垂直方向的对齐排版需使用 vertical-align，并且只应用于inline level, inline-block level 及 table-cells 元素上；</li>
+<li>其次 vertical-align 的对齐就基于每个 line box（行框） 的，简单的说，inline level元素按照 Normal flow 水平排版出一行就会形成一个line box，其高度由内容形成，如果换行，则又是另一个line box，所有一段文本可能会分布在多个line box里，这些不重叠的line box被称作为a vertical stack of line boxes（一个垂直堆叠的线框集合）这些。</li>
+<li>换句话说，我们的垂直居中是要在每个line box中进行处理。而上例中我们想让一行文本在名叫demo的高100px的容器里垂直居中，这时有个问题就是demo容器并非该行文本的line box，所以就算定义vertical-laign为middle也无法让该行文本在demo容器中垂直居中。我们知道line box的高度是由内容形成的，这时我们可以额外创建一个与该行文本处于同一line box的元素，同时将新增元素的高度定义为与demo容器相同，此时line box的高度将与demo一致，文本将会在line box内垂直居中，即同样实现了在demo容器中垂直居中。本例我们使用伪对象::after来创建那个新增元素，可以设置新增元素为不可见。</li>
+<li><p>当然，该方案也是有局限性的，因为IE8以下的浏览器不支持伪对象::after</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">   &lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">   &lt;head&gt;</span><br><span class="line">       &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">       &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;</span><br><span class="line">       &lt;title&gt;Demo001_displayTable&lt;/title&gt;</span><br><span class="line">       &lt;style&gt;</span><br><span class="line">       #demo &#123;</span><br><span class="line">           height: 100px;</span><br><span class="line">           text-align: center;</span><br><span class="line">       &#125;</span><br><span class="line">       #demo:after &#123;</span><br><span class="line">           display: inline-block;</span><br><span class="line">           width: 0;</span><br><span class="line">           height: 100%;</span><br><span class="line">           vertical-align: middle;</span><br><span class="line">           content: &apos;&apos;;</span><br><span class="line">       &#125;</span><br><span class="line">       #demo p &#123;</span><br><span class="line">           display: inline-block;</span><br><span class="line">           vertical-align: middle;</span><br><span class="line">       &#125;</span><br><span class="line">       &lt;/style&gt;</span><br><span class="line">   &lt;/head&gt;</span><br><span class="line"></span><br><span class="line">   &lt;body&gt;</span><br><span class="line">       &lt;div id=&quot;demo&quot;&gt;</span><br><span class="line">           &lt;p&gt;水平垂直居中的随意内容&lt;/p&gt;</span><br><span class="line">       &lt;/div&gt;</span><br><span class="line">   &lt;/body&gt;</span><br><span class="line"></span><br><span class="line">   &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="inline-block-2"><a href="#inline-block-2" class="headerlink" title="inline-block 2"></a>inline-block 2</h3><ul>
+<li>其实如果理解了line box概念，写上述2个例子时，就肯定知道会存在这个杯具。如上，CSS不变，只将文本变长。之前得以实现垂直居中，主要是将文本所在line box撑高了，而如果新增的元素被过长文本挤换行，则它们将不再处于同一line box，那么垂直居中将失效。你可能存疑，不是已将新增元素width设置为0了吗？怎么还能被挤换行。这时你应该知道一个常识，inline level或inline-block level的元素之间的间隙问题，对此问题不做详述。</li>
+</ul>
+<p>以下是终极版，包含浏览器兼容，过长问题</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Demo001_displayTable&lt;/title&gt;
+    &lt;style&gt;
+    #demo {
+        height: 100px;
+        text-align: center;
+        font-size: 0;
+    }
+
+    #demo:after,
+    #demo span {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    #demo:after {
+        content: &apos;&apos;;
+    }
+
+    #demo p {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;demo&quot;&gt;
+        &lt;p&gt;这是一个终极实现的水平垂直居中实例&lt;/p&gt;
+        &lt;!--[if lt IE 8]&gt;&lt;span&gt;&lt;/span&gt;&lt;![endif]--&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre><p>参考：<a href="http://demo.doyoe.com/css/alignment/" target="_blank" rel="noopener">http://demo.doyoe.com/css/alignment/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/css盒模型/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/css盒模型/" itemprop="url">css盒模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-19T09:53:40+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="盒模型属性"><a href="#盒模型属性" class="headerlink" title="盒模型属性"></a>盒模型属性</h2><ul>
+<li>margin: 外边距</li>
+<li>border: 内边距</li>
+<li>padding: 边框</li>
+<li>content: 内容</li>
+</ul>
+<h3 id="标准盒模型"><a href="#标准盒模型" class="headerlink" title="标准盒模型"></a>标准盒模型</h3><p>盒模型的宽和高：margin+border+padding+width/height</p>
+<p>设置的width/height:是指content区的</p>
+<h3 id="IE盒模型-怪异模式"><a href="#IE盒模型-怪异模式" class="headerlink" title="IE盒模型(怪异模式)"></a>IE盒模型(怪异模式)</h3><p>盒模型的宽和高：margin+width/height</p>
+<p>widht/height: content+padding+border</p>
+<h2 id="box-sizing"><a href="#box-sizing" class="headerlink" title="box-sizing"></a>box-sizing</h2><p>box-sizing: content-box|border-box|inherit</p>
+<p>当设置为content-box时，采用标准模式解析；</p>
+<p>当设置为border-box时，采用怪异模式解析：</p>
+<p>则设置的width和height：是指border+padding+content</p>
+<h2 id="边界塌陷"><a href="#边界塌陷" class="headerlink" title="边界塌陷"></a>边界塌陷</h2><p>当相邻的两个盒模型上下紧邻的时候，会选择margin值较大的作为外边距，即合并两个外边距取大值，左右外边距不合并。</p>
+<p>如果两个div，一个设置为display:inline-block,一个不设置，那么就不会塌陷。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/19/display-none-overflow-hidden-visibility-hidden之间的区别/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1759,470 +2282,6 @@ window.addEventListener(&quot;onorientationchange&quot; in window ? &quot;orient
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-四/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-四/" itemprop="url">利用html5 video打造播放器(四)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T17:19:44+08:00">
-                2017-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>（1）今天实现全屏、小屏切换<br>    首先要获取到小屏、大屏情况下的视频的宽高</p>
-<pre><code>    pro.initInfo = function() {
-    var that = this;
-    // 在onload状态下，offsetHeight才会获取到正确的值
-    window.onload = function() {
-        that.miniInfo = { // mini状态时的样式
-            zIndex: 1,
-            width: that.video.offsetWidth + &apos;px&apos;,
-            height: that.video.offsetHeight + &apos;px&apos;,
-            position: that.vRoom.style.position,
-            // transform: &apos;translate(0,0) rotate(0deg)&apos;
-
-        }
-        var info = [
-                document.documentElement.clientWidth || document.body.clientWidth,
-                document.documentElement.clientHeight || document.body.clientHeight
-            ],
-            w = info[0],
-            h = info[1],
-            cha = Math.abs(h - w) / 2;
-        that.maxInfo = { // max状态时的样式
-            zIndex: 99,
-            width: h + &apos;px&apos;,
-            height: w + &apos;px&apos;,
-            position: &apos;fixed&apos;,
-            transform: &apos;translate(-&apos; + cha + &apos;px,&apos; + cha + &apos;px) rotate(90deg)&apos;
-        }
-
-    }
-}
-</code></pre><p>（2）其次就是切换小屏、大屏<br>    这里默认初始是小屏，所以应该在初始化时加上<code>this.isMax = false;</code><br>    如下：</p>
-<pre><code>var myVideo = function(dom) {
-    var that = this;
-    console.log(&apos;this&apos;,this);
-    $.ready(function() {
-        that.video = document.querySelector(dom || &apos;video&apos;);
-        that.vRoom = that.video.parentNode;
-        // 元素初始化
-        that.initEm();
-        // 事件初始化
-        that.initEvent();
-        // //  记录信息
-        that.initInfo();
-        // 当前播放模式false为mini播放
-        that.isMax = false;
-    });
-}
-</code></pre><p>当点击全屏按钮时，应该触发切换事件：</p>
-<pre><code>this.vControls.querySelector(&apos;.fill&apos;).addEventListener(&apos;tap&apos;, function() {
-    that.switch();
-})
-</code></pre><p>切换事件函数如下：</p>
-<pre><code>pro.switch = function() {
-    var vR = this.vRoom;
-    var info = this.isMax ? this.miniInfo : this.maxInfo;
-    for (var i in info) {
-        vR.style[i] = info[i];
-    }
-    this.isMax = !this.isMax;
-}
-</code></pre><p>（3）接下来实现快进快退</p>
-<pre><code>// 快进快退
-// 视频手势右滑动事件
-this.video.addEventListener(&apos;swiperight&apos;, function(e) {
-    console.log(&apos;right&apos;);
-    this.currentTime += 5;
-})
-// 视频手势左滑动事件
-this.video.addEventListener(&apos;swipeleft&apos;, function(e) {
-    console.log(&apos;left&apos;);
-    this.currentTime -= 5;
-})
-</code></pre><p>这样是可以实现小屏模式下的快进快退，但是大屏模式下就不行了，难道手机横放还要上下快进快退？</p>
-<p>（4) 处理大屏模式下的快进快退</p>
-<p>这时候我们先给video注册一个事件列表</p>
-<pre><code>var events = {};
-// 增加或者删除事件
-// 给video事件添加一个代理来删除添加事件，
-// isF就是在新增这个事件是否删除之前的这个相同的事件，
-// 因为添加事件用匿名函数的话，是不能删除的，这样设置一个代理就可以把动态添加的事件记录在events里面，便于操作
-pro.eve = function(ename, callback, isF) {
-    if (callback &amp;&amp; typeof(callback) == &apos;function&apos;) {
-        isF &amp;&amp; arguments.callee(ename);
-        events[ename] = callback;
-        this.video.addEventListener(ename, events[ename]);
-        console.log(&apos;删除事件:&apos; + ename);
-        return fun;
-    }
-    var fun = events[ename] || function() {};
-    this.video.removeEventListener(ename, fun);
-    console.log(&apos;删除事件：&apos; + ename);
-    return fun;
-}
-</code></pre><p>这时候补上修改当前播放进度和音量的功能：</p>
-<pre><code>//跳转视频进度 单位 秒
-pro.setCurrentTime = function(t) {
-    this.video.currentTime += t;
-}
-//设置音量大小 单位 百分比 如 0.1
-pro.setVolume = function(v) {
-    this.video.volume += v;
-}
-</code></pre><p>再通过代理给video事件添加左右上下滑动的事件（（3）中那个就不需要了）：</p>
-<pre><code>//视频手势右滑动事件
-this.eve(&apos;swiperight&apos;,function(){
-    if(that.isMax){
-        return that.setVolume(0.2);
-    }
-    that.setCurrentTime(5);
-});
-
-//视频手势左滑动事件
-this.eve(&apos;swipeleft&apos;, function() {
-    if(that.isMax){
-        return that.setVolume(-0.2);
-    }
-    that.setCurrentTime(-5);
-});
-
-//视频手势上滑动事件
-this.eve(&apos;swipeup&apos;,function(){
-    if(that.isMax){
-        return that.setCurrentTime(-5);    
-    }
-    that.setVolume(0.2);
-});
-
-//视频手势下滑动事件
-this.eve(&apos;swipedown&apos;, function() {
-    if(that.isMax){
-        return that.setCurrentTime(5);    
-    }
-    that.setVolume(-0.2);
-});
-</code></pre><p><a href="https://github.com/xixizhangfe/html5" target="_blank" rel="noopener">github源码</a></p>
-<p>参考：<a href="https://segmentfault.com/a/1190000006461476" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006461476</a></p>
-<p>感谢作者！！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-三/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xixijiang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="xixijiang的主页">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-三/" itemprop="url">利用html5 video打造播放器(三)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T16:51:53+08:00">
-                2017-07-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8/" target="_blank" rel="noopener">利用html5 video打造播放器(一)</a></p>
-<p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8-%E4%BA%8C/" target="_blank" rel="noopener">利用html5 video打造播放器(二)</a></p>
-<p>上一篇我们已经介绍了基本样式的实现，接下来我们实现相关的事件。</p>
-<hr>
-<p>（1）首先，在js文件里，添加如下函数：</p>
-<pre><code>pro.initEvent = function() {
-    var that = this;
-}
-</code></pre><p>（2）点击播放按钮，视频开始播放，那就给按钮添加一个tap事件吧，在pro.initEvent函数里加上：</p>
-<pre><code>// 给播放按钮图片添加事件
-this.vimg.addEventListener(&apos;tap&apos;, function() {
-    this.style.display = &apos;none&apos;;
-    that.video.play();
-})
-</code></pre><p> 这时候点击按钮，就可以播放了。并且，按钮也消失了。</p>
-<p> （3）这时候光播放还不行，还得暂停啊，那就给视频加一个tap事件吧，在pro.initEvent函数里加上：</p>
-<pre><code> // 视频点击暂停或播放事件
-this.video.addEventListener(&apos;tap&apos;, function() {
-    if (this.paused) {
-        // 如果播放完毕，就从头开始播放
-        if (this.ended) {
-            this.currentTime = 0;
-        }
-        // 暂停时点击就播放
-        this.play();
-    } else {
-        // 播放时点击就暂停
-        this.pause();
-    }
-})
-</code></pre><p> 这时候我们再去点击视频所在区域，发现就可以停止了。</p>
-<p> （3）接下来就是控制条了，我们想让它在播放时消失，暂停时显现，在pro.initEvent函数里加上：</p>
-<pre><code> // 视频播放事件
-this.video.addEventListener(&apos;play&apos;, function() {
-    that.vimg.style.display = &apos;none&apos;;
-    that.vControls.classList.add(&apos;vhidden&apos;);
-
-    // 注意这里我们只是把控制条变成透明了，如果我们写了控制条的点击事件，那么变成透明后点击控制条位置还是会触发事件，所以我们可以写一段定时，让控制条3.5s后隐藏
-    // 这里写成3.4s只是为了保险，如果没写animation-fill-mode:forwards样式，并且这里设置定时是3.5s，就会闪一下
-    that.vCtrolTime = setTimeout(function() {
-        that.vControls.style.visibility = &apos;hidden&apos;;
-    }, 3400);
-})
-
-this.video.addEventListener(&apos;pause&apos;, function() {
-    // 暂停时显示播放按钮
-    that.vimg.style.display = &apos;block&apos;;
-    that.vControls.classList.remove(&apos;vhidden&apos;);
-    that.vControls.style.visibility = &apos;visible&apos;;
-    that.vCtrolTime &amp;&amp; clearTimeout(that.vCtrolTime);
-})
-</code></pre><p>同时呢，我们应该在css文件里写上动画：</p>
-<pre><code>@keyframes vhide {0% {opacity: 1;}100% {opacity: 0;}}
-.vhidden{
-      animation: vhide 3.5s ease-in;
-      -webkit-animation: vhide 3.5s ease-in;
-      // animation-fill-mode: forwards;
-      // -webkit-animation-fill-mode: forwards;
-}
-</code></pre><p>这样，我们就实现了播放、暂停、控制条动画。</p>
-<p>（4）好，现在开始显示视频总时间</p>
-<p>首先我们得获取视频元信息，在pro.initEvent函数里加上：</p>
-<pre><code>// 获取视频元信息
-this.video.addEventListener(&apos;loadedmetadata&apos;, function() {
-    that.vDuration = this.duration;
-    that.vControls.querySelector(&apos;.duration&apos;).innerHTML = stom(this.duration);
-});
-</code></pre><p>这里的stom函数是时间转换函数，如下：</p>
-<pre><code>// 时间格式化
-function stom(t) {
-    var h = Math.floor(t / 3600);
-    h &lt; 10 &amp;&amp; (h = &apos;0&apos; + h);
-    var m = Math.floor(t % 3600 / 60);
-    if (m &lt; 10) {
-        m = &apos;0&apos; + m;
-    }
-    return h + &apos;:&apos; + m + &apos;:&apos; + (t % 3600 % 60 / 100).toFixed(2).slice(-2);
-}
-</code></pre><p>此时发现，已经有总时间啦~</p>
-<p>（5）下面就开始获取当前播放了多少时间</p>
-<pre><code>this.video.addEventListener(&apos;timeupdate&apos;, function() {
-    var currentPos = this.currentTime; // 获取当前播放的位置
-    // 更新进度条
-    var percentage = 100 * currentPos / that.vDuration;
-    // 设置宽度
-    that.vControls.querySelector(&apos;.timeBar&apos;).style.width = percentage + &apos;%&apos;;
-    that.vControls.querySelector(&apos;.current&apos;).innerHTML = stom(currentPos);
-})
-</code></pre><p>至此，我们实现了进度条时间的显示。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2271,7 +2330,7 @@ function stom(t) {
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

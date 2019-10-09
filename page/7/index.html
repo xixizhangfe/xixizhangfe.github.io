@@ -263,6 +263,470 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-四/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-四/" itemprop="url">利用html5 video打造播放器(四)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T17:19:44+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>（1）今天实现全屏、小屏切换<br>    首先要获取到小屏、大屏情况下的视频的宽高</p>
+<pre><code>    pro.initInfo = function() {
+    var that = this;
+    // 在onload状态下，offsetHeight才会获取到正确的值
+    window.onload = function() {
+        that.miniInfo = { // mini状态时的样式
+            zIndex: 1,
+            width: that.video.offsetWidth + &apos;px&apos;,
+            height: that.video.offsetHeight + &apos;px&apos;,
+            position: that.vRoom.style.position,
+            // transform: &apos;translate(0,0) rotate(0deg)&apos;
+
+        }
+        var info = [
+                document.documentElement.clientWidth || document.body.clientWidth,
+                document.documentElement.clientHeight || document.body.clientHeight
+            ],
+            w = info[0],
+            h = info[1],
+            cha = Math.abs(h - w) / 2;
+        that.maxInfo = { // max状态时的样式
+            zIndex: 99,
+            width: h + &apos;px&apos;,
+            height: w + &apos;px&apos;,
+            position: &apos;fixed&apos;,
+            transform: &apos;translate(-&apos; + cha + &apos;px,&apos; + cha + &apos;px) rotate(90deg)&apos;
+        }
+
+    }
+}
+</code></pre><p>（2）其次就是切换小屏、大屏<br>    这里默认初始是小屏，所以应该在初始化时加上<code>this.isMax = false;</code><br>    如下：</p>
+<pre><code>var myVideo = function(dom) {
+    var that = this;
+    console.log(&apos;this&apos;,this);
+    $.ready(function() {
+        that.video = document.querySelector(dom || &apos;video&apos;);
+        that.vRoom = that.video.parentNode;
+        // 元素初始化
+        that.initEm();
+        // 事件初始化
+        that.initEvent();
+        // //  记录信息
+        that.initInfo();
+        // 当前播放模式false为mini播放
+        that.isMax = false;
+    });
+}
+</code></pre><p>当点击全屏按钮时，应该触发切换事件：</p>
+<pre><code>this.vControls.querySelector(&apos;.fill&apos;).addEventListener(&apos;tap&apos;, function() {
+    that.switch();
+})
+</code></pre><p>切换事件函数如下：</p>
+<pre><code>pro.switch = function() {
+    var vR = this.vRoom;
+    var info = this.isMax ? this.miniInfo : this.maxInfo;
+    for (var i in info) {
+        vR.style[i] = info[i];
+    }
+    this.isMax = !this.isMax;
+}
+</code></pre><p>（3）接下来实现快进快退</p>
+<pre><code>// 快进快退
+// 视频手势右滑动事件
+this.video.addEventListener(&apos;swiperight&apos;, function(e) {
+    console.log(&apos;right&apos;);
+    this.currentTime += 5;
+})
+// 视频手势左滑动事件
+this.video.addEventListener(&apos;swipeleft&apos;, function(e) {
+    console.log(&apos;left&apos;);
+    this.currentTime -= 5;
+})
+</code></pre><p>这样是可以实现小屏模式下的快进快退，但是大屏模式下就不行了，难道手机横放还要上下快进快退？</p>
+<p>（4) 处理大屏模式下的快进快退</p>
+<p>这时候我们先给video注册一个事件列表</p>
+<pre><code>var events = {};
+// 增加或者删除事件
+// 给video事件添加一个代理来删除添加事件，
+// isF就是在新增这个事件是否删除之前的这个相同的事件，
+// 因为添加事件用匿名函数的话，是不能删除的，这样设置一个代理就可以把动态添加的事件记录在events里面，便于操作
+pro.eve = function(ename, callback, isF) {
+    if (callback &amp;&amp; typeof(callback) == &apos;function&apos;) {
+        isF &amp;&amp; arguments.callee(ename);
+        events[ename] = callback;
+        this.video.addEventListener(ename, events[ename]);
+        console.log(&apos;删除事件:&apos; + ename);
+        return fun;
+    }
+    var fun = events[ename] || function() {};
+    this.video.removeEventListener(ename, fun);
+    console.log(&apos;删除事件：&apos; + ename);
+    return fun;
+}
+</code></pre><p>这时候补上修改当前播放进度和音量的功能：</p>
+<pre><code>//跳转视频进度 单位 秒
+pro.setCurrentTime = function(t) {
+    this.video.currentTime += t;
+}
+//设置音量大小 单位 百分比 如 0.1
+pro.setVolume = function(v) {
+    this.video.volume += v;
+}
+</code></pre><p>再通过代理给video事件添加左右上下滑动的事件（（3）中那个就不需要了）：</p>
+<pre><code>//视频手势右滑动事件
+this.eve(&apos;swiperight&apos;,function(){
+    if(that.isMax){
+        return that.setVolume(0.2);
+    }
+    that.setCurrentTime(5);
+});
+
+//视频手势左滑动事件
+this.eve(&apos;swipeleft&apos;, function() {
+    if(that.isMax){
+        return that.setVolume(-0.2);
+    }
+    that.setCurrentTime(-5);
+});
+
+//视频手势上滑动事件
+this.eve(&apos;swipeup&apos;,function(){
+    if(that.isMax){
+        return that.setCurrentTime(-5);    
+    }
+    that.setVolume(0.2);
+});
+
+//视频手势下滑动事件
+this.eve(&apos;swipedown&apos;, function() {
+    if(that.isMax){
+        return that.setCurrentTime(5);    
+    }
+    that.setVolume(-0.2);
+});
+</code></pre><p><a href="https://github.com/xixizhangfe/html5" target="_blank" rel="noopener">github源码</a></p>
+<p>参考：<a href="https://segmentfault.com/a/1190000006461476" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006461476</a></p>
+<p>感谢作者！！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-三/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xixijiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xixijiang的主页">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/17/利用html5-video打造播放器-三/" itemprop="url">利用html5 video打造播放器(三)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T16:51:53+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8/" target="_blank" rel="noopener">利用html5 video打造播放器(一)</a></p>
+<p><a href="http://www.xixizhang.info/2017/07/17/%E5%88%A9%E7%94%A8html5-video%E6%89%93%E9%80%A0%E6%92%AD%E6%94%BE%E5%99%A8-%E4%BA%8C/" target="_blank" rel="noopener">利用html5 video打造播放器(二)</a></p>
+<p>上一篇我们已经介绍了基本样式的实现，接下来我们实现相关的事件。</p>
+<hr>
+<p>（1）首先，在js文件里，添加如下函数：</p>
+<pre><code>pro.initEvent = function() {
+    var that = this;
+}
+</code></pre><p>（2）点击播放按钮，视频开始播放，那就给按钮添加一个tap事件吧，在pro.initEvent函数里加上：</p>
+<pre><code>// 给播放按钮图片添加事件
+this.vimg.addEventListener(&apos;tap&apos;, function() {
+    this.style.display = &apos;none&apos;;
+    that.video.play();
+})
+</code></pre><p> 这时候点击按钮，就可以播放了。并且，按钮也消失了。</p>
+<p> （3）这时候光播放还不行，还得暂停啊，那就给视频加一个tap事件吧，在pro.initEvent函数里加上：</p>
+<pre><code> // 视频点击暂停或播放事件
+this.video.addEventListener(&apos;tap&apos;, function() {
+    if (this.paused) {
+        // 如果播放完毕，就从头开始播放
+        if (this.ended) {
+            this.currentTime = 0;
+        }
+        // 暂停时点击就播放
+        this.play();
+    } else {
+        // 播放时点击就暂停
+        this.pause();
+    }
+})
+</code></pre><p> 这时候我们再去点击视频所在区域，发现就可以停止了。</p>
+<p> （3）接下来就是控制条了，我们想让它在播放时消失，暂停时显现，在pro.initEvent函数里加上：</p>
+<pre><code> // 视频播放事件
+this.video.addEventListener(&apos;play&apos;, function() {
+    that.vimg.style.display = &apos;none&apos;;
+    that.vControls.classList.add(&apos;vhidden&apos;);
+
+    // 注意这里我们只是把控制条变成透明了，如果我们写了控制条的点击事件，那么变成透明后点击控制条位置还是会触发事件，所以我们可以写一段定时，让控制条3.5s后隐藏
+    // 这里写成3.4s只是为了保险，如果没写animation-fill-mode:forwards样式，并且这里设置定时是3.5s，就会闪一下
+    that.vCtrolTime = setTimeout(function() {
+        that.vControls.style.visibility = &apos;hidden&apos;;
+    }, 3400);
+})
+
+this.video.addEventListener(&apos;pause&apos;, function() {
+    // 暂停时显示播放按钮
+    that.vimg.style.display = &apos;block&apos;;
+    that.vControls.classList.remove(&apos;vhidden&apos;);
+    that.vControls.style.visibility = &apos;visible&apos;;
+    that.vCtrolTime &amp;&amp; clearTimeout(that.vCtrolTime);
+})
+</code></pre><p>同时呢，我们应该在css文件里写上动画：</p>
+<pre><code>@keyframes vhide {0% {opacity: 1;}100% {opacity: 0;}}
+.vhidden{
+      animation: vhide 3.5s ease-in;
+      -webkit-animation: vhide 3.5s ease-in;
+      // animation-fill-mode: forwards;
+      // -webkit-animation-fill-mode: forwards;
+}
+</code></pre><p>这样，我们就实现了播放、暂停、控制条动画。</p>
+<p>（4）好，现在开始显示视频总时间</p>
+<p>首先我们得获取视频元信息，在pro.initEvent函数里加上：</p>
+<pre><code>// 获取视频元信息
+this.video.addEventListener(&apos;loadedmetadata&apos;, function() {
+    that.vDuration = this.duration;
+    that.vControls.querySelector(&apos;.duration&apos;).innerHTML = stom(this.duration);
+});
+</code></pre><p>这里的stom函数是时间转换函数，如下：</p>
+<pre><code>// 时间格式化
+function stom(t) {
+    var h = Math.floor(t / 3600);
+    h &lt; 10 &amp;&amp; (h = &apos;0&apos; + h);
+    var m = Math.floor(t % 3600 / 60);
+    if (m &lt; 10) {
+        m = &apos;0&apos; + m;
+    }
+    return h + &apos;:&apos; + m + &apos;:&apos; + (t % 3600 % 60 / 100).toFixed(2).slice(-2);
+}
+</code></pre><p>此时发现，已经有总时间啦~</p>
+<p>（5）下面就开始获取当前播放了多少时间</p>
+<pre><code>this.video.addEventListener(&apos;timeupdate&apos;, function() {
+    var currentPos = this.currentTime; // 获取当前播放的位置
+    // 更新进度条
+    var percentage = 100 * currentPos / that.vDuration;
+    // 设置宽度
+    that.vControls.querySelector(&apos;.timeBar&apos;).style.width = percentage + &apos;%&apos;;
+    that.vControls.querySelector(&apos;.current&apos;).innerHTML = stom(currentPos);
+})
+</code></pre><p>至此，我们实现了进度条时间的显示。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/利用html5-video打造播放器-二/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1546,7 +2010,7 @@ console.log(me) //Uncaught ReferenceError: me is not defined `
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">66</span>
+                <span class="site-state-item-count">68</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
