@@ -101,7 +101,7 @@
 <meta property="og:site_name" content="xixijiang的主页">
 <meta property="og:description" content="现有的： gitstats 安装  git clone git://github.com/hoxu/gitstats.git cd gitstats make install 提示gnuplot not found，需要安装gnuplot brew install gnuplot（这个过程很慢，需要安装大量包） 使用方式：gitstats 项目目录 输出目录  比较好的可视化网站：https://">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T01:11:26.708Z">
+<meta property="og:updated_time" content="2019-11-05T11:07:36.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代码统计">
 <meta name="twitter:description" content="现有的： gitstats 安装  git clone git://github.com/hoxu/gitstats.git cd gitstats make install 提示gnuplot not found，需要安装gnuplot brew install gnuplot（这个过程很慢，需要安装大量包） 使用方式：gitstats 项目目录 输出目录  比较好的可视化网站：https://">
@@ -347,21 +347,72 @@
 <li>按项目、按人员筛选</li>
 <li>code review提出者、评论者</li>
 </ol>
-<p>我们要实现的功能及步骤:</p>
+<p>项目维度：</p>
 <ol>
-<li><p>所有人的commit数（可以按项目、日期筛选）</p>
+<li>可以获取gitlab所有项目</li>
+<li>可以获取某个用户owned所有项目(但无法获取某个用户参与的所有项目)</li>
+<li>可以获取一个项目的所有成员（可以根据返回的username筛选项目）</li>
+</ol>
+<p>commits维度：只能获取指定项目的commits</p>
+<p>我要实现的功能及步骤:</p>
 <ol>
-<li>获取gitlab所有项目<br>2.</li>
+<li>组管理：只能通过group来获取团队的所有项目。手动录入group信息，再从组中拉取所有项目。</li>
+<li>所有项目的commit数（可以按成员、日期筛选）：x轴是项目，y轴是commit数<ol>
+<li>遍历组，获取每个组下的项目和成员</li>
+<li>获取所有成员的项目：先获取所有项目，然后根据username进行筛选</li>
+<li>获取每个项目的commit：循环所有项目，对每个项目获取commit</li>
 </ol>
 </li>
-<li><p>统计每个人的代码量（总计、按项目、按日期）<br>commit数目<br>统计bug量<br>统计+1量<br>实现步骤：</p>
+<li>所有成员的commit数（可以按项目、日期筛选）：x轴是成员，y轴是commit数<ol>
+<li>获取所有成员的项目：先获取所有项目，然后根据username进行筛选</li>
+<li>获取每个项目的commit：循环所有项目，对每个项目获取commit</li>
+<li>把commit分给成员</li>
+</ol>
 </li>
-<li>获取gitlab所有项目<br>2.</li>
+<li>统计+1量</li>
+<li>统计代码量<ol>
+<li>获取所有成员的项目：先获取所有项目，然后根据username进行筛选</li>
+<li>获取每个项目的commit：循环所有项目，对每个项目获取commit</li>
+<li>把commit分给成员</li>
+<li>对每个成员的commit获取详情，统计行数</li>
 </ol>
-<p>gitlab鉴权相关:</p>
+</li>
+</ol>
+<p>如何鉴权？</p>
+<p>gitlab提供三种方式进行鉴权，<a href="https://git.xiaojukeji.com/help/api/README.md#authentication" target="_blank" rel="noopener">鉴权方式</a></p>
+<p>方案一：使用private token</p>
 <ol>
-<li>请求api需要在header中加token，<code>curl --header &quot;Authorization: Bearer OAUTH-TOKEN&quot; https://gitlab.example.com/api/v4/projects</code>，因此需要获取<code>OAUTH-TOKEN</code><br>2.</li>
+<li>一进入页面时，判断session里是否存在private token，不存在则弹窗让用户输入private token。输入完成后，把private token存入session。然后再发请求。</li>
 </ol>
+<p>优点：实现简单</p>
+<p>缺点：</p>
+<ol>
+<li>需要用户手动输入private token</li>
+<li>session有效期过了以后，用户需要重新在gitlab上生成private token（因为gitlab生成token后只能让用户看到一次），然后再输入，比较麻烦</li>
+</ol>
+<p>方案二：使用<a href="https://git.xiaojukeji.com/help/api/oauth2.md#web-application-flow" target="_blank" rel="noopener">oauth2 token</a></p>
+<ol>
+<li>把gitlab当作oauth2服务提供者，注册一个application，设置好回调地址<code>Callback URL</code>，会生成<code>Application ID</code>、<code>Secret</code></li>
+<li>通过<code>https://gitlab.example.com/oauth/authorize?client_id=APP_ID&amp;redirect_uri=REDIRECT_URI&amp;response_type=token&amp;state=YOUR_UNIQUE_STATE_HASH</code>可以得到一个code，这里我应该使用<code>https://git.xiaojukeji.com/oauth/authorize?client_id=APP_ID&amp;redirect_uri=REDIRECT_URI&amp;response_type=token</code>，state可以不加。APP_ID就是<code>Application ID</code></li>
+<li>得到code后，发起<code>post</code>请求至<code>https://gitlab.example/com/oauth/token</code>，参数是<br><code>{
+   &quot;client_id&quot;: &quot;APP_ID&quot;,
+   &quot;client_secret&quot;: &quot;APP_SECRET&quot;,
+   &quot;code&quot;: &quot;RETURN_CODE&quot;,
+   &quot;grant_type&quot;: &quot;authorization_code&quot;,
+   &quot;redirect_uri&quot;: &quot;REDIRECT_URI&quot;
+ }</code><br>这样可以得到如下的返回结果，其中<code>access_token</code>是我们想要的：<br><code>{
+   &quot;access_token&quot;: &quot;1f0af717251950dbd4d73154fdf0a474a5c5119adad999683f5b450c460726aa&quot;,
+   &quot;token_type&quot;: &quot;bearer&quot;,
+   &quot;expires_in&quot;: 7200
+ }</code></li>
+<li>得到<code>access_token</code>后，就可以正常发起请求了</li>
+</ol>
+<p>过程：</p>
+<ol>
+<li>初次访问页面时，判断session里是否有token，若有，则直接请求。</li>
+<li>若无，则重新请求token，存入session</li>
+</ol>
+<p>问题：是否会过期？</p>
 
       
     </div>
@@ -464,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-count">74</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
