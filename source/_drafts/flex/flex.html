@@ -1,0 +1,345 @@
+<html>
+  <head>
+    <style>
+      .container {
+        display: flex;
+        width: 1000px;
+        border: 1px solid #000;
+        margin-top: 50px;
+      }
+      .item-1 {
+        background: red;
+        color: #fff;
+      }
+
+      .item-2 {
+        background: green;
+        color: #fff;
+      }
+
+      .item-3 {
+        background: yellow;
+        color: #000;
+      }
+
+
+      /* eg1 */
+      /* .item-1 {
+        width: 200px;
+      }
+      .item-2 {
+        width: 50px;
+      }
+      .item-3 {
+        width: 50px;
+      } */
+
+
+      /* eg2 */
+      /* .item-1 {
+        width: 200px;
+        flex-grow: 1;
+      }
+      .item-2 {
+        width: 50px;
+        flex-grow: 2;
+      }
+      .item-3 {
+        width: 50px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg3 */
+      /* .item-1 {
+        width: 200px;
+        flex-shrink: 0;
+      }
+      .item-2 {
+        width: 400px;
+        flex-shrink: 0;
+      }
+      .item-3 {
+        width: 600px;
+        flex-shrink: 0;
+      } */
+
+
+      /* eg4 */
+      /* .item-1 {
+        width: 200px;
+        flex-shrink: 1;
+      }
+      .item-2 {
+        width: 400px;
+        flex-shrink: 1;
+      }
+      .item-3 {
+        width: 600px;
+        flex-shrink: 2;
+      } */
+
+
+      /* eg5 */
+      /* .item-1 {
+        width: 200px;
+        flex-basis: 100px;
+      }
+      .item-2 {
+        width: 50px;
+        flex-basis: 300px;
+      }
+      .item-3 {
+        width: 50px;
+        flex-basis: 100px;
+      } */
+
+
+      /* eg6 */
+      /* .item-1 {
+        width: 200px;
+        flex-basis: 100px;
+        flex-grow: 1;
+      }
+      .item-2 {
+        width: 50px;
+        flex-basis: 300px;
+        flex-grow: 2;
+      }
+      .item-3 {
+        width: 50px;
+        flex-basis: 100px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg7 */
+      /* .item-1 {
+        width: 200px;
+        flex-grow: 1;
+        max-width: 300px;
+      }
+      .item-2 {
+        width: 50px;
+        flex-grow: 2;
+        max-width: 300px;
+      }
+      .item-3 {
+        width: 50px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg8 */
+      /* .item-1 {
+        width: 200px;
+        flex-grow: 1;
+        max-width: 300px;
+      }
+      .item-2 {
+        width: 50px;
+        flex-grow: 2;
+        max-width: 200px;
+      }
+      .item-3 {
+        width: 50px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg9 */
+      /* .item-1 {
+        width: 200px;
+        flex-grow: 1;
+        max-width: 300px;
+      }
+      .item-2 {
+        width: 50px;
+        flex-grow: 2;
+        max-width: 285px;
+      }
+      .item-3 {
+        width: 50px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg10 */
+      /* .item-1 {
+        width: 200px;
+        flex-grow: 1;
+        min-width: 350px;
+      }
+      .item-2 {
+        width: 50px;
+        flex-grow: 2;
+      }
+      .item-3 {
+        width: 50px;
+        flex-grow: 3;
+      } */
+
+
+      /* eg11 */
+      .item-1 {
+        width: 200px;
+        flex-shrink: 1;
+        min-width: 200px;
+      }
+      .item-2 {
+        width: 400px;
+        flex-shrink: 1;
+      }
+      .item-3 {
+        width: 600px;
+        flex-shrink: 2;
+      }
+
+      .item-21 {
+        width: 200px;
+        /* max-width: 300px;
+        min-width: 400px; */
+        background: red;
+        color: #fff;
+        flex-grow: 1;
+        /* flex-shrink: 2; */
+        /* flex-basis: 300px; */
+      }
+
+      .item-22 {
+        /* max-width: 300px; */
+        width: 50px;
+        background: green;
+        color: #fff;
+        flex-grow: 2;
+        /* flex-shrink: 1; */
+        /* flex-basis: 100px; */
+      }
+
+      .item-23 {
+        width: 50px;
+        /* max-width: 400px; */
+        background: yellow;
+        color: #000;
+        flex-grow: 3;
+        /* flex-shrink: 2; */
+        /* flex-basis: 200px; */
+      }
+
+      pre {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- eg1 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-1.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg2 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-2.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg3 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-3.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg4 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-4.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg5 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-5.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg6 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-6.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg7 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-7.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg8 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-8.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg9 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-9.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg10 -->
+    <!-- <img style="display: inline-block;width: 100px;" src="./flex-10.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div> -->
+
+    <!-- eg11 -->
+    <img style="display: inline-block;width: 100px;" src="./flex-11.png">
+    <div style="display: inline-block;vertical-align: top;">
+      <div class="container">
+        <div class="item-1">1</div>
+        <div class="item-2">2</div>
+        <div class="item-3">3</div>
+      </div>
+    </div>
+  </body>
+</html>
